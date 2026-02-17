@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndrasNetwork - Delay-Tolerant P2P Mesh Networking</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #0ea5e9;
+            --accent: #10b981;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 50%, #1e1b4b 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--light);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .philosophy-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .philosophy h2 {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+        }
+
+        .philosophy p {
+            color: var(--gray);
+            margin-bottom: 16px;
+        }
+
+        .net-visual {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .node {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+            animation: pulse 3s infinite;
+        }
+
+        .node:nth-child(1) { top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s; }
+        .node:nth-child(2) { top: 10%; left: 30%; animation-delay: 0.5s; }
+        .node:nth-child(3) { top: 10%; right: 30%; animation-delay: 1s; }
+        .node:nth-child(4) { top: 50%; right: 10%; animation-delay: 1.5s; }
+        .node:nth-child(5) { bottom: 10%; right: 30%; animation-delay: 2s; }
+        .node:nth-child(6) { bottom: 10%; left: 30%; animation-delay: 2.5s; }
+        .node:nth-child(7) { top: 50%; left: 10%; animation-delay: 0.8s; }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(99, 102, 241, 0.6); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 0;
+            background: var(--dark);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* Architecture Section */
+        .architecture {
+            padding: 120px 0;
+        }
+
+        .arch-diagram {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 16px;
+            padding: 48px;
+            margin-top: 48px;
+        }
+
+        .arch-layer {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .arch-layer:hover {
+            background: rgba(99, 102, 241, 0.15);
+        }
+
+        .arch-layer h4 {
+            font-size: 1rem;
+            color: var(--light);
+        }
+
+        .arch-layer .modules {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .module-tag {
+            background: rgba(14, 165, 233, 0.2);
+            color: var(--secondary);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+
+        /* Tech Stack Section */
+        .tech-stack {
+            padding: 120px 0;
+            background: var(--dark);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .tech-item {
+            background: var(--card-bg);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tech-item:hover {
+            border-color: var(--primary);
+        }
+
+        .tech-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .tech-item p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            padding: 120px 0;
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 28px;
+        }
+
+        .use-case h4 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .use-case p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Security Section */
+        .security {
+            padding: 120px 0;
+            background: linear-gradient(135deg, var(--dark) 0%, #1e1b4b 100%);
+        }
+
+        .security-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .security h2 {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+        }
+
+        .security-features {
+            list-style: none;
+        }
+
+        .security-features li {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .security-features li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .security-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .crypto-badge {
+            background: var(--card-bg);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .crypto-badge .icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent) 0%, #059669 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .crypto-badge h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .crypto-badge p {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            color: var(--gray);
+            margin-bottom: 32px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .philosophy-content,
+            .security-content {
+                grid-template-columns: 1fr;
+            }
+
+            .net-visual {
+                display: none;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .arch-layer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <nav>
+        <div class="container">
+            <div class="logo">IndrasNetwork</div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#use-cases">Use Cases</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Delay-Tolerant <span>P2P Mesh Networking</span> for the Real World</h1>
+                <p>A complete Rust networking stack with store-and-forward routing, CRDT synchronization, and post-quantum cryptography. Built for networks where connectivity is intermittent and resilience is essential.</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/indrasnetwork/indras" class="btn btn-primary">View on GitHub</a>
+                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="philosophy">
+        <div class="container">
+            <div class="philosophy-content">
+                <div>
+                    <h2>Inspired by Indra's Net</h2>
+                    <p>In Buddhist and Hindu philosophy, Indra's Net describes an infinite web where each node contains a jewel that reflects all other jewels in the network.</p>
+                    <p>IndrasNetwork embodies this concept: every peer is equally important, every connection strengthens the whole, and the network adapts fluidly as nodes come and go.</p>
+                    <p>No central servers. No single points of failure. Just resilient, peer-to-peer communication that works even when the internet doesn't.</p>
+                </div>
+                <div class="net-visual">
+                    <div class="node">A</div>
+                    <div class="node">B</div>
+                    <div class="node">C</div>
+                    <div class="node">D</div>
+                    <div class="node">E</div>
+                    <div class="node">F</div>
+                    <div class="node">G</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Core Capabilities</h2>
+                <p>A complete networking stack designed for challenged environments where traditional approaches fail.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">&#x1F4E6;</div>
+                    <h3>Store-and-Forward Routing</h3>
+                    <p>Messages are held by intermediate nodes until the destination comes online. Automatic delivery with back-propagation confirmations ensure nothing gets lost.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#x23F1;</div>
+                    <h3>Delay-Tolerant Networking</h3>
+                    <p>Multiple routing strategies including Epidemic, Spray-and-Wait, and configurable bundle lifetimes up to 7 days. Perfect for high-latency or intermittent connections.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#x1F504;</div>
+                    <h3>CRDT Synchronization</h3>
+                    <p>Automerge-powered document sync with automatic conflict resolution. Edit offline, sync seamlessly when reconnected. No conflicts, no data loss.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#x1F512;</div>
+                    <h3>End-to-End Encryption</h3>
+                    <p>X25519 key exchange with ChaCha20-Poly1305 authenticated encryption. Messages are sealed packets that relay nodes cannot read.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#x269B;</div>
+                    <h3>Post-Quantum Ready</h3>
+                    <p>ML-KEM-768 key encapsulation and ML-DSA-65 signatures protect against future quantum computing threats. NIST-standardized algorithms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#x1F310;</div>
+                    <h3>NAT Traversal</h3>
+                    <p>Built on Iroh with QUIC transport. Automatic hole punching and relay fallback ensure peers can always connect, regardless of network topology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture" class="architecture">
+        <div class="container">
+            <div class="section-header">
+                <h2>Layered Architecture</h2>
+                <p>Modular design with clear separation of concerns. Use the full stack or just the layers you need.</p>
+            </div>
+            <div class="arch-diagram">
+                <div class="arch-layer">
+                    <h4>Application Layer</h4>
+                    <div class="modules">
+                        <span class="module-tag">indras-notes</span>
+                        <span class="module-tag">chat-app</span>
+                        <span class="module-tag">sync-demo</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <h4>Node Coordination</h4>
+                    <div class="modules">
+                        <span class="module-tag">indras-node</span>
+                        <span class="module-tag">indras-messaging</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <h4>Sync & Gossip</h4>
+                    <div class="modules">
+                        <span class="module-tag">indras-sync</span>
+                        <span class="module-tag">indras-gossip</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <h4>Routing & DTN</h4>
+                    <div class="modules">
+                        <span class="module-tag">indras-routing</span>
+                        <span class="module-tag">indras-dtn</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <h4>Transport</h4>
+                    <div class="modules">
+                        <span class="module-tag">indras-transport</span>
+                        <span class="module-tag">iroh-quic</span>
+                    </div>
+                </div>
+                <div class="arch-layer">
+                    <h4>Core & Storage</h4>
+                    <div class="modules">
+                        <span class="module-tag">indras-core</span>
+                        <span class="module-tag">indras-crypto</span>
+                        <span class="module-tag">indras-storage</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech-stack" class="tech-stack">
+        <div class="container">
+            <div class="section-header">
+                <h2>Technology Stack</h2>
+                <p>Built with modern, battle-tested technologies for performance and reliability.</p>
+            </div>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h4>Rust</h4>
+                    <p>Memory-safe systems programming</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Tokio</h4>
+                    <p>Async runtime for performance</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Iroh</h4>
+                    <p>P2P networking foundation</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Automerge</h4>
+                    <p>CRDT document sync</p>
+                </div>
+                <div class="tech-item">
+                    <h4>redb</h4>
+                    <p>Embedded key-value storage</p>
+                </div>
+                <div class="tech-item">
+                    <h4>Postcard</h4>
+                    <p>Compact binary serialization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="security" class="security">
+        <div class="container">
+            <div class="security-content">
+                <div>
+                    <h2>Security First</h2>
+                    <ul class="security-features">
+                        <li>
+                            <span class="check-icon">&#x2713;</span>
+                            <div>
+                                <strong>Sealed Packets</strong>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Relay nodes cannot read message contents. Privacy is preserved at every hop.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="check-icon">&#x2713;</span>
+                            <div>
+                                <strong>Interface Keys</strong>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Group encryption with secure member onboarding via key invites.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="check-icon">&#x2713;</span>
+                            <div>
+                                <strong>Memory Safety</strong>
+                                <p style="color: var(--gray); font-size: 0.9rem;">Written in Rust. No buffer overflows, use-after-free, or data races.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="check-icon">&#x2713;</span>
+                            <div>
+                                <strong>Quantum Resistant</strong>
+                                <p style="color: var(--gray); font-size: 0.9rem;">NIST-standardized post-quantum algorithms protect against future threats.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="security-visual">
+                    <div class="crypto-badge">
+                        <div class="icon">&#x1F510;</div>
+                        <div>
+                            <h4>ML-KEM-768</h4>
+                            <p>Post-quantum key encapsulation</p>
+                        </div>
+                    </div>
+                    <div class="crypto-badge">
+                        <div class="icon">&#x270D;</div>
+                        <div>
+                            <h4>ML-DSA-65</h4>
+                            <p>Post-quantum digital signatures</p>
+                        </div>
+                    </div>
+                    <div class="crypto-badge">
+                        <div class="icon">&#x1F511;</div>
+                        <div>
+                            <h4>X25519 + ChaCha20</h4>
+                            <p>Modern authenticated encryption</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2>Built For</h2>
+                <p>Real-world applications where traditional networking falls short.</p>
+            </div>
+            <div class="use-cases-grid">
+                <div class="use-case">
+                    <h4>&#x1F4F1; Offline-First Apps</h4>
+                    <p>Chat, notes, and documents that work without internet and sync seamlessly when reconnected.</p>
+                </div>
+                <div class="use-case">
+                    <h4>&#x1F6F0; Satellite Networks</h4>
+                    <p>Handle long delays and intermittent connectivity inherent in space-based communication.</p>
+                </div>
+                <div class="use-case">
+                    <h4>&#x1F3D4; Remote Areas</h4>
+                    <p>Community mesh networks where infrastructure is limited or non-existent.</p>
+                </div>
+                <div class="use-case">
+                    <h4>&#x26A1; Disaster Response</h4>
+                    <p>Communications that work when traditional infrastructure has failed.</p>
+                </div>
+                <div class="use-case">
+                    <h4>&#x1F69A; Vehicular Networks</h4>
+                    <p>Car-to-car and fleet communication with frequent disconnections.</p>
+                </div>
+                <div class="use-case">
+                    <h4>&#x1F4E1; IoT Sensors</h4>
+                    <p>Resource-constrained devices with duty cycling and compact protocols.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Build?</h2>
+            <p>IndrasNetwork is open source and ready for your next project.</p>
+            <div class="cta-buttons" style="justify-content: center;">
+                <a href="https://github.com/indrasnetwork/indras" class="btn btn-primary">Get Started</a>
+                <a href="https://docs.indrasnetwork.io" class="btn btn-secondary">Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>IndrasNetwork is built with <a href="https://www.rust-lang.org/">Rust</a> and <a href="https://iroh.computer/">Iroh</a>. Licensed under MIT/Apache-2.0.</p>
+        </div>
+    </footer>
+</body>
+</html>

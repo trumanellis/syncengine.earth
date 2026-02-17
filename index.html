@@ -1,0 +1,3212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="quiet-protocol">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synchronicity Engine — Where Quests Synchronize Across the Mesh</title>
+  <meta name="description" content="Decentralized collaboration platform for sacred gifting economy. Local-first, censorship-resistant, quantum-secure.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&family=Exo:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* ============================================
+       CSS VARIABLES - BASE/SHARED
+    ============================================ */
+    :root {
+      --void-black: #0a0a0a;
+      --gold: #d4af37;
+      --cyan: #00d4aa;
+      --moss: #7cb87c;
+      --moss-bright: #39ff14;
+      --lilac: #c4a7d7;
+      --deep-teal: #1a2e2e;
+      --parchment: #F7F3E9;
+      --sage: #84A98C;
+      --cyan-neon: #00FFD1;
+      --void-neon: #0a0e0f;
+
+      /* Dynamic theme variables */
+      --bg-primary: var(--void-black);
+      --bg-secondary: #161616;
+      --text-primary: var(--parchment);
+      --text-secondary: var(--moss);
+      --accent-1: var(--gold);
+      --accent-2: var(--cyan);
+      --border-radius: 4px;
+      --glow-effect: none;
+      --heading-font: 'Cormorant Garamond', serif;
+      --body-font: 'JetBrains Mono', monospace;
+      --transition-speed: 200ms;
+    }
+
+    /* ============================================
+       THEME: QUIET PROTOCOL
+    ============================================ */
+    [data-theme="quiet-protocol"] {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #161616;
+      --bg-card: #1a1a1a;
+      --text-primary: #F7F3E9;
+      --text-secondary: #7cb87c;
+      --accent-1: #d4af37;
+      --accent-2: #00d4aa;
+      --border-radius: 4px;
+      --glow-effect: none;
+      --heading-font: 'Cormorant Garamond', serif;
+      --body-font: 'JetBrains Mono', monospace;
+    }
+
+    /* ============================================
+       THEME: MYSTIC TERMINAL
+    ============================================ */
+    [data-theme="mystic"] {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #161616;
+      --bg-card: rgba(26, 26, 26, 0.8);
+      --text-primary: #F7F3E9;
+      --text-secondary: #c4a7d7;
+      --accent-1: #d4af37;
+      --accent-2: #39ff14;
+      --border-radius: 4px;
+      --glow-effect: 0 0 20px currentColor;
+      --heading-font: 'Cormorant Garamond', serif;
+      --body-font: 'JetBrains Mono', monospace;
+    }
+
+    /* ============================================
+       THEME: NEON
+    ============================================ */
+    [data-theme="neon"] {
+      --bg-primary: #0a0e0f;
+      --bg-secondary: #1a2e2e;
+      --bg-card: #1a2e2e;
+      --text-primary: #F7F3E9;
+      --text-secondary: #84A98C;
+      --accent-1: #D4AF37;
+      --accent-2: #00FFD1;
+      --border-radius: 1rem;
+      --glow-effect: 0 0 30px rgba(0, 255, 209, 0.3);
+      --heading-font: 'Exo', sans-serif;
+      --body-font: 'Exo', sans-serif;
+    }
+
+    /* ============================================
+       GLOBAL STYLES
+    ============================================ */
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--body-font);
+      transition: background var(--transition-speed) ease,
+                  color var(--transition-speed) ease;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--heading-font);
+      font-weight: 700;
+      line-height: 1.2;
+      transition: font-family var(--transition-speed) ease;
+    }
+
+    a {
+      color: var(--accent-2);
+      text-decoration: none;
+      transition: color var(--transition-speed) ease,
+                  text-shadow var(--transition-speed) ease;
+    }
+
+    a:hover, a:focus {
+      color: var(--accent-1);
+      text-shadow: var(--glow-effect);
+    }
+
+    /* ============================================
+       HEXAGON PATTERN (MYSTIC THEME ONLY)
+    ============================================ */
+    [data-theme="mystic"] body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.03;
+      z-index: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='87' viewBox='0 0 100 87' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l50 29 50-29v58l-50 29-50-29z' fill='none' stroke='%23d4af37' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: 100px 87px;
+    }
+
+    /* ============================================
+       LAYOUT UTILITIES
+    ============================================ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+    }
+
+    section {
+      padding: 8rem 0;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      section {
+        padding: 5rem 0;
+      }
+    }
+
+    /* ============================================
+       THEME TOGGLE
+    ============================================ */
+    .theme-toggle {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1000;
+    }
+
+    @media (max-width: 640px) {
+      .theme-toggle {
+        top: 1rem;
+        right: 1rem;
+      }
+    }
+
+    .theme-toggle select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-family: var(--body-font);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.625rem 2.5rem 0.625rem 1rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all var(--transition-speed) ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237cb87c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+    }
+
+    @media (max-width: 640px) {
+      .theme-toggle select {
+        font-size: 0.75rem;
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+      }
+    }
+
+    .theme-toggle select:hover,
+    .theme-toggle select:focus {
+      border-color: var(--accent-2);
+      color: var(--accent-2);
+      outline: none;
+      box-shadow: var(--glow-effect), 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .theme-toggle select option {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 0.5rem;
+    }
+
+    /* ============================================
+       HEADER
+    ============================================ */
+    header {
+      padding: 2rem 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: var(--heading-font);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-1);
+      letter-spacing: 0.05em;
+      text-shadow: var(--glow-effect);
+      transition: all var(--transition-speed) ease;
+    }
+
+    @media (max-width: 640px) {
+      .logo {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* ============================================
+       HERO SECTION
+    ============================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10rem 0;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 85vh;
+        padding: 6rem 0;
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      margin-bottom: 2rem;
+      color: var(--accent-1);
+      text-shadow: var(--glow-effect);
+      font-weight: 700;
+    }
+
+    /* Mystic theme: floating animation */
+    @media (prefers-reduced-motion: no-preference) {
+      [data-theme="mystic"] .hero h1 {
+        animation: float 6s ease-in-out infinite;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .hero .subhead {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1.25rem 3rem;
+      background: var(--accent-2);
+      color: var(--void-black);
+      font-family: var(--body-font);
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      border: 2px solid var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .cta-button:hover,
+    .cta-button:focus {
+      background: transparent;
+      color: var(--accent-2);
+      box-shadow: var(--glow-effect);
+      transform: translateY(-2px);
+    }
+
+    /* Neon theme: larger border radius */
+    [data-theme="neon"] .cta-button {
+      border-radius: 2rem;
+      padding: 1.25rem 3.5rem;
+    }
+
+    /* Mystic theme: pulse animation */
+    @media (prefers-reduced-motion: no-preference) {
+      [data-theme="mystic"] .cta-button {
+        animation: pulse 3s ease-in-out infinite;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
+      50% { box-shadow: 0 0 0 15px rgba(57, 255, 20, 0); }
+    }
+
+    /* ============================================
+       SECTION HEADERS
+    ============================================ */
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--accent-1);
+      margin-bottom: 1rem;
+      text-shadow: var(--glow-effect);
+    }
+
+    .section-header p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* ============================================
+       PHILOSOPHY SECTION
+    ============================================ */
+    .philosophy-content {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      padding: 4rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--glow-effect);
+    }
+
+    @media (max-width: 768px) {
+      .philosophy-content {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+
+    .philosophy-content h3 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--accent-2);
+      margin-bottom: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .philosophy-content h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .philosophy-content p {
+      font-size: 1.125rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .philosophy-content em {
+      color: var(--accent-1);
+      font-style: italic;
+    }
+
+    /* ============================================
+       PRINCIPLES GRID
+    ============================================ */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .principles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .principle-card {
+      background: var(--bg-card);
+      padding: 3rem 2rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all var(--transition-speed) ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-speed) ease;
+    }
+
+    .principle-card:hover::before,
+    .principle-card:focus-within::before {
+      transform: scaleX(1);
+    }
+
+    .principle-card:hover,
+    .principle-card:focus-within {
+      transform: translateY(-8px);
+      box-shadow: var(--glow-effect);
+      border-color: var(--accent-2);
+    }
+
+    /* Mystic theme: staggered animation on load */
+    @media (prefers-reduced-motion: no-preference) {
+      [data-theme="mystic"] .principle-card {
+        animation: slideInUp 0.6s ease-out backwards;
+      }
+
+      [data-theme="mystic"] .principle-card:nth-child(1) { animation-delay: 0.1s; }
+      [data-theme="mystic"] .principle-card:nth-child(2) { animation-delay: 0.2s; }
+      [data-theme="mystic"] .principle-card:nth-child(3) { animation-delay: 0.3s; }
+      [data-theme="mystic"] .principle-card:nth-child(4) { animation-delay: 0.4s; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .principle-card h3 {
+      font-size: 1.75rem;
+      color: var(--accent-1);
+      margin-bottom: 1rem;
+    }
+
+    .principle-card p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       HOW IT WORKS
+    ============================================ */
+    .how-it-works-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 640px) {
+      .how-it-works-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .work-item {
+      text-align: center;
+    }
+
+    .work-item-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 2rem;
+      background: var(--bg-card);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--accent-2);
+      font-size: 3rem;
+      color: var(--accent-2);
+      box-shadow: var(--glow-effect);
+      transition: all var(--transition-speed) ease;
+    }
+
+    /* Neon theme: larger border radius for everything */
+    [data-theme="neon"] .work-item-icon {
+      border-radius: 2rem;
+    }
+
+    .work-item:hover .work-item-icon,
+    .work-item:focus-within .work-item-icon {
+      transform: scale(1.1) rotate(5deg);
+      border-color: var(--accent-1);
+      color: var(--accent-1);
+    }
+
+    .work-item h3 {
+      font-size: 1.75rem;
+      color: var(--accent-1);
+      margin-bottom: 1rem;
+    }
+
+    .work-item p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .work-item-link {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--accent-2);
+      text-decoration: none;
+      transition: color var(--transition-speed) ease;
+    }
+
+    .work-item-link:hover {
+      color: var(--accent-1);
+    }
+
+    [data-theme="mystic"] .work-item-link {
+      text-shadow: 0 0 10px rgba(0, 212, 170, 0.3);
+    }
+
+    /* ============================================
+       ECOSYSTEM SECTION
+    ============================================ */
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 640px) {
+      .ecosystem-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ecosystem-card {
+      background: var(--bg-card);
+      padding: 3rem 2.5rem;
+      border-radius: var(--border-radius);
+      border: 2px solid transparent;
+      transition: all var(--transition-speed) ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ecosystem-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+      opacity: 0;
+      transition: opacity var(--transition-speed) ease;
+      z-index: -1;
+    }
+
+    .ecosystem-card:hover::after,
+    .ecosystem-card:focus-within::after {
+      opacity: 0.1;
+    }
+
+    .ecosystem-card:hover,
+    .ecosystem-card:focus-within {
+      border-color: var(--accent-1);
+      transform: translateY(-8px);
+      box-shadow: var(--glow-effect);
+    }
+
+    .ecosystem-card h3 {
+      font-size: 2rem;
+      color: var(--accent-1);
+      margin-bottom: 1rem;
+    }
+
+    .ecosystem-card .domain {
+      font-size: 0.875rem;
+      color: var(--accent-2);
+      margin-bottom: 1.5rem;
+      font-family: var(--body-font);
+    }
+
+    .ecosystem-card p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .ecosystem-card a {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--accent-2);
+      border-radius: var(--border-radius);
+      color: var(--accent-2);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .ecosystem-card a:hover,
+    .ecosystem-card a:focus {
+      background: var(--accent-2);
+      color: var(--void-black);
+    }
+
+    /* ============================================
+       STORY SECTION - COMBINED FLOW
+    ============================================ */
+    .story-section {
+      background: var(--bg-secondary);
+    }
+
+    .story-context {
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      text-align: center;
+      font-size: 1.125rem;
+      line-height: 1.9;
+      color: var(--text-primary);
+    }
+
+    .story-context em {
+      color: var(--accent-1);
+    }
+
+    .story-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .story-card {
+      display: grid;
+      grid-template-columns: 1fr 200px;
+      gap: 2rem;
+      align-items: stretch;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      padding: 1.5rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all var(--transition-speed) ease;
+      min-height: 400px;
+    }
+
+    .story-card:hover {
+      border-color: var(--accent-2);
+      box-shadow: var(--glow-effect);
+    }
+
+    /* Alternate layout for even cards */
+    .story-card:nth-child(even) {
+      grid-template-columns: 200px 1fr;
+    }
+
+    .story-card:nth-child(even) .story-card-text {
+      order: 2;
+    }
+
+    .story-card:nth-child(even) .story-card-mockup {
+      order: 1;
+    }
+
+    /* Hero card with image (first step) */
+    .story-card--hero {
+      grid-template-columns: 1fr auto;
+      gap: 2.5rem;
+      padding: 0;
+      height: 400px;
+    }
+
+    .story-card--hero .story-card-image {
+      margin: 0;
+      height: 400px;
+      order: 2;
+    }
+
+    .story-card--hero .story-card-image img {
+      height: 400px;
+      width: auto;
+      display: block;
+    }
+
+    .story-card--hero .story-card-text {
+      padding: 2.5rem;
+      justify-content: center;
+      order: 1;
+    }
+
+    .story-card-caption {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--text-secondary);
+      opacity: 0.8;
+    }
+
+    @media (max-width: 900px) {
+      .story-card--hero {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .story-card--hero .story-card-image {
+        order: 2;
+        height: auto;
+      }
+
+      .story-card--hero .story-card-image img {
+        width: 100%;
+        height: auto;
+      }
+
+      .story-card--hero .story-card-text {
+        padding: 1.5rem;
+        text-align: center;
+        order: 1;
+      }
+    }
+
+    .story-card-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .story-step-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--bg-secondary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--accent-1);
+      font-size: 1.25rem;
+      transition: all var(--transition-speed) ease;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) {
+      .story-card--hero .story-step-icon {
+        margin: 0 auto;
+      }
+    }
+
+    [data-theme="quiet-protocol"] .story-step-icon {
+      border-radius: 4px;
+    }
+
+    [data-theme="mystic"] .story-step-icon {
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+
+    [data-theme="neon"] .story-step-icon {
+      border-radius: 1rem;
+      border-color: var(--accent-2);
+    }
+
+    .story-card:hover .story-step-icon {
+      transform: scale(1.1);
+      border-color: var(--accent-2);
+    }
+
+    .story-card-text h3 {
+      font-size: 1.25rem;
+      color: var(--accent-1);
+      margin: 0;
+    }
+
+    .story-card-text p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Phone Mockup in Story Card */
+    .story-card-mockup {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .phone-screen {
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent-2);
+      border-radius: var(--border-radius);
+      padding: 0.75rem;
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      font-size: 0.85rem;
+      flex: 1;
+    }
+
+    [data-theme="neon"] .phone-screen {
+      border-radius: 1.25rem;
+      border-width: 2px;
+      box-shadow: 0 0 15px rgba(0, 255, 209, 0.15);
+    }
+
+    [data-theme="mystic"] .phone-screen {
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+    }
+
+    /* Phone Header */
+    .phone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.6rem;
+      color: var(--text-secondary);
+    }
+
+    .app-name {
+      color: var(--accent-2);
+      font-weight: 600;
+    }
+
+    .back-arrow {
+      color: var(--accent-2);
+      font-weight: bold;
+    }
+
+    .phone-time {
+      opacity: 0.7;
+    }
+
+    /* Screen Title */
+    .phone-screen .screen-title {
+      color: var(--accent-1);
+      font-family: var(--heading-font);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Mock Input Group */
+    .mock-input-group {
+      margin-bottom: 0.5rem;
+    }
+
+    .mock-input-group label {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 0.55rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .mock-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0.4rem;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.65rem;
+      color: var(--text-primary);
+    }
+
+    .mock-textarea {
+      min-height: 35px;
+    }
+
+    /* Mock Button */
+    .mock-button {
+      background: var(--accent-1);
+      color: var(--void-black);
+      border-radius: 0.4rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    [data-theme="neon"] .mock-button {
+      border-radius: 0.75rem;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Mock Token Card */
+    .mock-token {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 0.4rem;
+      padding: 0.4rem;
+      margin-bottom: 0.4rem;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .mock-token.selected {
+      border-color: var(--accent-1);
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    [data-theme="mystic"] .mock-token.selected {
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .token-name {
+      color: var(--accent-1);
+      font-size: 0.6rem;
+      font-weight: 600;
+    }
+
+    .token-hours {
+      background: rgba(212, 175, 55, 0.3);
+      border: 1px solid var(--accent-1);
+      border-radius: 0.2rem;
+      padding: 0.1rem 0.3rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--accent-1);
+    }
+
+    .token-desc {
+      color: var(--text-secondary);
+      font-size: 0.5rem;
+      margin-top: 0.15rem;
+    }
+
+    /* Quest Preview */
+    .quest-preview {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--accent-1);
+      border-radius: 0.4rem;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quest-preview-title {
+      color: var(--accent-1);
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .quest-preview-token {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.55rem;
+      color: var(--text-secondary);
+    }
+
+    /* QR Display */
+    .qr-display {
+      background: white;
+      border-radius: 0.4rem;
+      padding: 0.5rem;
+      text-align: center;
+    }
+
+    .qr-mock {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto;
+      background: #f0f0f0;
+      border: 2px solid #333;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: #666;
+      font-weight: bold;
+    }
+
+    .qr-corner {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #000;
+    }
+
+    .qr-corner.tl { top: 3px; left: 3px; border-right: none; border-bottom: none; }
+    .qr-corner.tr { top: 3px; right: 3px; border-left: none; border-bottom: none; }
+    .qr-corner.bl { bottom: 3px; left: 3px; border-right: none; border-top: none; }
+
+    .qr-label {
+      color: #666;
+      font-size: 0.5rem;
+      margin-top: 0.3rem;
+    }
+
+    /* Mock Upload */
+    .mock-upload {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 0.4rem;
+      padding: 0.6rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .mock-upload .upload-icon {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .mock-upload span:last-child {
+      color: var(--text-secondary);
+      font-size: 0.5rem;
+    }
+
+    /* Success Display */
+    .success-display {
+      text-align: center;
+      padding: 0.4rem 0;
+    }
+
+    .success-display .success-icon {
+      width: 35px;
+      height: 35px;
+      margin: 0 auto 0.4rem;
+      background: rgba(0, 212, 170, 0.15);
+      border: 2px solid var(--accent-2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--accent-2);
+    }
+
+    .success-display .success-title {
+      color: var(--accent-1);
+      font-family: var(--heading-font);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Connection Card */
+    .connection-card {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--accent-1);
+      border-radius: 0.4rem;
+      padding: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .connection-badge {
+      background: rgba(0, 212, 170, 0.1);
+      border: 1px solid var(--accent-2);
+      border-radius: 0.75rem;
+      padding: 0.15rem 0.4rem;
+      font-size: 0.5rem;
+      color: var(--accent-2);
+      display: inline-block;
+      margin-bottom: 0.3rem;
+    }
+
+    .provider-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .provider-avatar {
+      width: 22px;
+      height: 22px;
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid var(--accent-1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+    }
+
+    .provider-name {
+      color: var(--accent-1);
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+
+    .provider-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .provider-role {
+      color: var(--text-secondary);
+      font-size: 0.5rem;
+    }
+
+    .hint-text {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0.4rem;
+      padding: 0.35rem;
+      font-size: 0.5rem;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .story-card {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+        padding: 1.25rem;
+      }
+
+      .story-card:nth-child(even) .story-card-text,
+      .story-card:nth-child(even) .story-card-mockup {
+        order: unset;
+      }
+
+      .story-card-mockup {
+        max-width: 220px;
+        margin: 0 auto;
+      }
+
+      .story-card-text h3 {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* ============================================
+       REDISTRIBUTION SECTION
+    ============================================ */
+    .redistribution-section {
+      background: var(--bg-secondary);
+    }
+
+    .redistribution-flow {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .redistribution-flow {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    .flow-step {
+      flex: 1;
+      max-width: 320px;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step-number {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1.5rem;
+      background: var(--bg-card);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--accent-2);
+      font-family: var(--heading-font);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-2);
+      transition: all var(--transition-speed) ease;
+    }
+
+    [data-theme="neon"] .flow-step-number {
+      border-radius: 1rem;
+    }
+
+    .flow-step:hover .flow-step-number {
+      background: var(--accent-2);
+      color: var(--void-black);
+      transform: scale(1.1);
+    }
+
+    .moon-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    [data-theme="mystic"] .moon-icon {
+      animation: moonGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes moonGlow {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        transform: scale(1);
+      }
+      50% {
+        text-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
+        transform: scale(1.1);
+      }
+    }
+
+    .flow-step h3 {
+      font-size: 1.5rem;
+      color: var(--accent-1);
+      margin-bottom: 1rem;
+    }
+
+    .flow-step p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .redistribution-quote {
+      max-width: 700px;
+      margin: 4rem auto 0;
+      padding: 2rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--accent-1);
+      font-style: italic;
+    }
+
+    .redistribution-quote p {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .redistribution-quote em {
+      color: var(--accent-2);
+      font-style: normal;
+    }
+
+    /* ============================================
+       AI ORACLE SECTION
+    ============================================ */
+    .oracle-section {
+      position: relative;
+    }
+
+    .oracle-teaser {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      padding: 4rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .oracle-teaser {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+
+    [data-theme="mystic"] .oracle-teaser {
+      box-shadow: 0 0 40px rgba(196, 167, 215, 0.1);
+    }
+
+    [data-theme="mystic"] .oracle-teaser::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(196, 167, 215, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    [data-theme="neon"] .oracle-teaser {
+      border: 2px solid var(--accent-2);
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 255, 209, 0.05) 100%);
+    }
+
+    .oracle-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--accent-1);
+      border-radius: 2rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-1);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .oracle-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .oracle-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .oracle-item {
+      text-align: center;
+    }
+
+    .oracle-item-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+      color: var(--accent-2);
+    }
+
+    .oracle-item h4 {
+      font-size: 1.25rem;
+      color: var(--accent-1);
+      margin-bottom: 0.75rem;
+    }
+
+    .oracle-item p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       JOIN SECTION
+    ============================================ */
+    .join-section {
+      background: var(--bg-secondary);
+    }
+
+    .join-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 968px) {
+      .join-content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+    .join-info h3 {
+      font-size: 2rem;
+      color: var(--accent-1);
+      margin-bottom: 1.5rem;
+    }
+
+    .join-info p {
+      font-size: 1.125rem;
+      line-height: 1.9;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .join-features {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .join-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .join-features li::before {
+      content: '◈';
+      color: var(--accent-2);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .join-cta {
+      background: var(--bg-card);
+      padding: 3rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .join-cta {
+        padding: 2rem 1.5rem;
+      }
+    }
+
+    .join-cta h3 {
+      font-size: 1.75rem;
+      color: var(--accent-1);
+      margin-bottom: 1rem;
+    }
+
+    .join-cta p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .cta-large {
+      display: inline-block;
+      padding: 1.5rem 4rem;
+      background: var(--accent-1);
+      color: var(--void-black);
+      font-family: var(--body-font);
+      font-size: 1.125rem;
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      border: 2px solid var(--accent-1);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .cta-large:hover,
+    .cta-large:focus {
+      background: transparent;
+      color: var(--accent-1);
+      box-shadow: var(--glow-effect);
+      transform: translateY(-3px);
+    }
+
+    [data-theme="neon"] .cta-large {
+      border-radius: 2rem;
+    }
+
+    .legal-note {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      opacity: 0.8;
+      margin-top: 1.5rem;
+    }
+
+    .legal-note a {
+      color: var(--accent-2);
+    }
+
+    /* ============================================
+       MESH NETWORK VISUALIZATION
+    ============================================ */
+    .mesh-visualization {
+      margin-bottom: 4rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mesh-svg {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .mesh-caption {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    /* Connection lines */
+    .mesh-line {
+      stroke: var(--accent-2);
+      stroke-width: 1.5;
+      opacity: 0.3;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .mesh-line--outer {
+      opacity: 0.2;
+      stroke-dasharray: 4 4;
+    }
+
+    .mesh-line--cross {
+      opacity: 0.15;
+    }
+
+    /* Data pulses */
+    .data-pulse {
+      fill: var(--accent-2);
+      opacity: 0.8;
+    }
+
+    /* Node styling */
+    .node-glow {
+      fill: transparent;
+      stroke: var(--accent-1);
+      stroke-width: 2;
+      opacity: 0.3;
+      animation: nodeGlow 3s ease-in-out infinite;
+    }
+
+    .node-core {
+      fill: var(--bg-secondary);
+      stroke: var(--accent-1);
+      stroke-width: 2;
+      transition: all var(--transition-speed) ease;
+    }
+
+    .mesh-node:hover .node-core {
+      fill: rgba(212, 175, 55, 0.2);
+      stroke-width: 3;
+    }
+
+    .node-label {
+      fill: var(--accent-1);
+      font-family: var(--body-font);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* Central node special styling */
+    .mesh-node--central .node-glow {
+      stroke: var(--accent-2);
+      opacity: 0.4;
+      animation: centralGlow 2s ease-in-out infinite;
+    }
+
+    .mesh-node--central .node-core {
+      stroke: var(--accent-2);
+      stroke-width: 3;
+    }
+
+    .mesh-node--central .node-label {
+      fill: var(--accent-2);
+      font-size: 12px;
+    }
+
+    @keyframes nodeGlow {
+      0%, 100% { opacity: 0.2; r: 22; }
+      50% { opacity: 0.4; r: 25; }
+    }
+
+    @keyframes centralGlow {
+      0%, 100% { opacity: 0.3; r: 28; }
+      50% { opacity: 0.6; r: 32; }
+    }
+
+    /* Mystic theme enhancements */
+    [data-theme="mystic"] .mesh-line {
+      opacity: 0.4;
+      filter: drop-shadow(0 0 3px var(--accent-2));
+    }
+
+    [data-theme="mystic"] .data-pulse {
+      filter: drop-shadow(0 0 6px var(--accent-2));
+    }
+
+    [data-theme="mystic"] .node-core {
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+    }
+
+    [data-theme="mystic"] .mesh-node--central .node-core {
+      filter: drop-shadow(0 0 12px rgba(57, 255, 20, 0.5));
+    }
+
+    [data-theme="mystic"] .mesh-visualization {
+      background: rgba(26, 26, 26, 0.6);
+    }
+
+    /* Neon theme enhancements */
+    [data-theme="neon"] .mesh-line {
+      stroke-width: 2;
+      opacity: 0.35;
+    }
+
+    [data-theme="neon"] .data-pulse {
+      r: 5;
+    }
+
+    [data-theme="neon"] .node-core {
+      stroke-width: 3;
+    }
+
+    [data-theme="neon"] .mesh-visualization {
+      border-radius: 1rem;
+      border-color: var(--accent-2);
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .data-pulse animateMotion {
+        display: none;
+      }
+
+      .node-glow,
+      .mesh-node--central .node-glow {
+        animation: none;
+        opacity: 0.3;
+      }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 600px) {
+      .mesh-visualization {
+        padding: 1rem;
+      }
+
+      .mesh-svg {
+        min-height: 200px;
+      }
+
+      .node-label {
+        font-size: 9px;
+      }
+
+      .mesh-node--central .node-label {
+        font-size: 10px;
+      }
+    }
+
+    /* ============================================
+       ENHANCED HOW IT WORKS (Gatherings)
+    ============================================ */
+    .gatherings-highlight {
+      margin-top: 5rem;
+      padding: 3rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .gatherings-highlight {
+        padding: 2rem 1.5rem;
+        margin-top: 3rem;
+      }
+    }
+
+    .gatherings-highlight h3 {
+      font-size: 2rem;
+      color: var(--accent-1);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .gatherings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .gatherings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .gatherings-item {
+      text-align: center;
+    }
+
+    .gatherings-item h4 {
+      font-size: 1.5rem;
+      color: var(--accent-2);
+      margin-bottom: 1rem;
+    }
+
+    .gatherings-item p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       FOOTER (Enhanced)
+    ============================================ */
+    footer {
+      background: var(--bg-secondary);
+      padding: 5rem 0 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 0;
+    }
+
+    footer .tagline {
+      font-family: var(--heading-font);
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      color: var(--accent-1);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    footer .links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    footer .links a {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      transition: all var(--transition-speed) ease;
+    }
+
+    footer .links a:hover,
+    footer .links a:focus {
+      color: var(--accent-2);
+      text-shadow: var(--glow-effect);
+    }
+
+    /* Glossary Terms */
+    .footer-glossary {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      text-align: left;
+    }
+
+    .footer-glossary h4 {
+      font-size: 1.25rem;
+      color: var(--accent-1);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .glossary-item {
+      font-size: 0.875rem;
+    }
+
+    .glossary-item strong {
+      color: var(--accent-2);
+    }
+
+    .glossary-item span {
+      color: var(--text-secondary);
+    }
+
+    footer .copyright {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      margin-top: 2rem;
+    }
+
+    /* ============================================
+       MOON CYCLE DIAGRAM
+    ============================================ */
+    .moon-cycle-diagram {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .moon-svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .cycle-ring {
+      stroke: var(--accent-2);
+      opacity: 0.3;
+    }
+
+    .gradient-start {
+      stop-color: var(--accent-1);
+    }
+
+    .gradient-end {
+      stop-color: var(--accent-2);
+    }
+
+    /* Moon phase circles */
+    .phase-circle {
+      fill: var(--bg-secondary);
+      stroke: var(--text-secondary);
+      stroke-width: 1;
+      opacity: 0.6;
+    }
+
+    .phase-circle--active {
+      fill: var(--bg-card);
+      stroke: var(--accent-1);
+      stroke-width: 3;
+      opacity: 1;
+    }
+
+    .phase-inner {
+      fill: var(--text-secondary);
+      opacity: 0.8;
+    }
+
+    .phase-inner--new {
+      fill: var(--bg-primary);
+      stroke: var(--accent-1);
+      stroke-width: 1;
+    }
+
+    .phase-inner--full {
+      fill: var(--text-primary);
+      opacity: 0.9;
+    }
+
+    .phase-shadow {
+      fill: var(--bg-primary);
+      opacity: 0.9;
+    }
+
+    .phase-label {
+      font-family: var(--body-font);
+      font-size: 10px;
+      fill: var(--text-secondary);
+    }
+
+    .phase-label--active {
+      font-size: 12px;
+      font-weight: 600;
+      fill: var(--accent-1);
+    }
+
+    /* Center content */
+    .center-icon {
+      font-size: 24px;
+    }
+
+    .center-label {
+      font-family: var(--body-font);
+      font-size: 11px;
+      fill: var(--text-secondary);
+      text-anchor: middle;
+    }
+
+    .center-arrow {
+      stroke: var(--accent-2);
+      opacity: 0.6;
+    }
+
+    .center-arrow-head {
+      fill: var(--accent-2);
+      opacity: 0.6;
+    }
+
+    .cycle-label {
+      font-family: var(--heading-font);
+      font-size: 14px;
+      fill: var(--accent-2);
+      font-weight: 600;
+    }
+
+    /* Mystic theme */
+    [data-theme="mystic"] .phase-circle--active {
+      filter: url(#moonGlow);
+    }
+
+    [data-theme="mystic"] .cycle-ring {
+      opacity: 0.5;
+      stroke: var(--accent-1);
+    }
+
+    [data-theme="mystic"] .moon-cycle-diagram {
+      box-shadow: 0 0 40px rgba(212, 175, 55, 0.1);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      [data-theme="mystic"] .phase-circle--active {
+        animation: moonPhaseGlow 4s ease-in-out infinite;
+      }
+    }
+
+    @keyframes moonPhaseGlow {
+      0%, 100% { filter: url(#moonGlow) drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+      50% { filter: url(#moonGlow) drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); }
+    }
+
+    /* Neon theme */
+    [data-theme="neon"] .moon-cycle-diagram {
+      border: 2px solid var(--accent-2);
+      border-radius: 1rem;
+    }
+
+    [data-theme="neon"] .cycle-ring {
+      opacity: 0.5;
+      stroke-width: 3;
+    }
+
+    [data-theme="neon"] .phase-circle--active {
+      stroke: var(--accent-2);
+      stroke-width: 4;
+    }
+
+    [data-theme="neon"] .phase-label--active {
+      fill: var(--accent-2);
+    }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .moon-cycle-diagram {
+        padding: 1rem;
+      }
+
+      .moon-svg {
+        max-width: 100%;
+      }
+    }
+
+    /* ============================================
+       INTEGRATED TOKEN LIFECYCLE
+    ============================================ */
+    .token-lifecycle {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    /* Connecting line behind the steps */
+    .token-lifecycle::before {
+      content: '';
+      position: absolute;
+      top: 45px;
+      left: 60px;
+      right: 60px;
+      height: 2px;
+      background: linear-gradient(90deg,
+        var(--accent-1) 0%,
+        var(--accent-2) 50%,
+        var(--accent-1) 100%);
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    .lifecycle-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .lifecycle-step-icon {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 3px solid var(--accent-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      transition: all var(--transition-speed) ease;
+      position: relative;
+    }
+
+    .lifecycle-step-icon::after {
+      content: '';
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid var(--accent-2);
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      opacity: 0.7;
+    }
+
+    .lifecycle-step:last-child .lifecycle-step-icon::after {
+      display: none;
+    }
+
+    .lifecycle-step:hover .lifecycle-step-icon {
+      transform: scale(1.1);
+      border-color: var(--accent-2);
+      box-shadow: var(--glow-effect);
+    }
+
+    .lifecycle-step--final .lifecycle-step-icon {
+      border-color: var(--accent-2);
+      border-width: 4px;
+    }
+
+    .lifecycle-step h3 {
+      font-size: 1.1rem;
+      color: var(--accent-1);
+      margin-bottom: 0.75rem;
+      font-family: var(--heading-font);
+    }
+
+    .lifecycle-step p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      max-width: 180px;
+    }
+
+    /* Mystic theme enhancements */
+    [data-theme="mystic"] .lifecycle-step-icon {
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    [data-theme="mystic"] .lifecycle-step:hover .lifecycle-step-icon {
+      box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
+    }
+
+    [data-theme="mystic"] .token-lifecycle::before {
+      background: linear-gradient(90deg,
+        transparent 0%,
+        var(--accent-1) 10%,
+        var(--accent-2) 50%,
+        var(--accent-1) 90%,
+        transparent 100%);
+      opacity: 0.6;
+      height: 3px;
+      filter: blur(1px);
+    }
+
+    [data-theme="mystic"] .lifecycle-step--final .lifecycle-step-icon {
+      box-shadow: 0 0 25px rgba(57, 255, 20, 0.3);
+    }
+
+    /* Neon theme enhancements */
+    [data-theme="neon"] .lifecycle-step-icon {
+      border-width: 2px;
+      background: var(--bg-primary);
+    }
+
+    [data-theme="neon"] .lifecycle-step-icon::after {
+      border-left-color: var(--accent-1);
+    }
+
+    [data-theme="neon"] .token-lifecycle::before {
+      height: 3px;
+      opacity: 0.5;
+    }
+
+    /* Tablet: 3 + 2 layout */
+    @media (max-width: 1024px) {
+      .token-lifecycle {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .token-lifecycle::before {
+        display: none;
+      }
+
+      .lifecycle-step {
+        flex: 0 0 30%;
+      }
+
+      .lifecycle-step-icon::after {
+        display: none;
+      }
+    }
+
+    /* Mobile: Single column */
+    @media (max-width: 600px) {
+      .token-lifecycle {
+        flex-direction: column;
+        align-items: center;
+        gap: 2.5rem;
+      }
+
+      .lifecycle-step {
+        flex: none;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .lifecycle-step p {
+        max-width: none;
+      }
+
+      .lifecycle-step-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+      }
+    }
+
+    /* ============================================
+       IMAGE PLACEHOLDERS
+    ============================================ */
+    .img-placeholder {
+      background: var(--bg-card);
+      border: 2px dashed var(--accent-2);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .img-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0, 212, 170, 0.05) 100%);
+      pointer-events: none;
+    }
+
+    .img-placeholder-icon {
+      font-size: 3rem;
+      opacity: 0.6;
+    }
+
+    .img-placeholder-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent-1);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .img-placeholder-suggestion {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      max-width: 300px;
+      line-height: 1.6;
+    }
+
+    .img-placeholder--hero {
+      min-height: 300px;
+      margin-top: 3rem;
+    }
+
+    .img-placeholder--wide {
+      min-height: 250px;
+      margin: 3rem 0;
+    }
+
+    .img-placeholder--card {
+      min-height: 150px;
+      margin-bottom: 1.5rem;
+    }
+
+    .img-placeholder--inline {
+      min-height: 180px;
+      width: 100%;
+    }
+
+    /* Ecosystem card images */
+    .ecosystem-card .img-placeholder--card {
+      margin: 0 0 1.5rem 0;
+      min-height: 120px;
+    }
+
+    /* Gatherings images */
+    .gatherings-item .img-placeholder--inline {
+      margin-bottom: 1.5rem;
+      min-height: 150px;
+    }
+
+    /* Oracle illustration */
+    .oracle-illustration {
+      max-width: 400px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Join section image */
+    .join-image {
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .img-placeholder {
+        min-height: 150px;
+        padding: 1.5rem;
+      }
+
+      .img-placeholder--hero {
+        min-height: 200px;
+      }
+
+      .img-placeholder--wide {
+        min-height: 180px;
+      }
+    }
+
+    /* ============================================
+       ACCESSIBILITY
+    ============================================ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--accent-2);
+      outline-offset: 4px;
+    }
+
+    /* ============================================
+       REDUCED MOTION
+    ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <select id="themeSelect" aria-label="Select theme">
+      <option value="quiet-protocol">Quiet Protocol</option>
+      <option value="mystic">Mystic Terminal</option>
+      <option value="neon">Neon</option>
+    </select>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">Synchronicity Engine</div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Where Quests Synchronize Across the Mesh</h1>
+      <p class="subhead">
+        A decentralized platform for sacred gifting economy. No surveillance. No central control.
+        Just humans collaborating through conscious choice, building the world we know is possible.
+      </p>
+      <a href="#story" class="cta-button">Enter the Field</a>
+    </div>
+  </section>
+
+  <!-- The Story Section -->
+  <section id="story" class="story-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>The Maracuja Cheesecake</h2>
+        <p>How a sacred economy actually works</p>
+      </div>
+
+      <p class="story-context">
+        Picture yourself at a <em>Gathering of the Tribe</em>—a spiritual community market where
+        gifts and gratitude flow freely. You spot a baker's stall with the most beautiful
+        cheesecake you've ever seen...
+      </p>
+
+      <!-- Combined Story Steps with App Mockups -->
+      <div class="story-flow">
+
+        <!-- Step 1: You See It (with Sacred Bazaar scene) -->
+        <div class="story-card story-card--hero">
+          <figure class="story-card-image">
+            <img
+              src="refs/A Portal into SyncEngine/MaracujaCheesecake.png"
+              alt="A baker at the Sacred Bazaar with maracuja cheesecake, raw brownies, and other delicious offerings"
+              loading="lazy"
+            />
+          </figure>
+          <div class="story-card-text">
+            <div class="story-step-icon">👀</div>
+            <h3>1. You See It</h3>
+            <p>At the Sacred Bazaar, maracuja cheesecake catches your eye. The baker recommends it—you know this is what you want.</p>
+            <span class="story-card-caption">The Sacred Bazaar: where gifts and gratitude flow freely</span>
+          </div>
+        </div>
+
+        <!-- Step 2: Manifest a Quest -->
+        <div class="story-card">
+          <div class="story-card-text">
+            <div class="story-step-icon">✨</div>
+            <h3>2. Manifest a Quest</h3>
+            <p>Open SyncEngine on your phone and create a Quest: "Delicious cheesecake"</p>
+          </div>
+          <div class="story-card-mockup">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <span class="app-name">SyncEngine</span>
+                <span class="phone-time">3:45 PM</span>
+              </div>
+              <div class="screen-title">New Quest</div>
+              <div class="mock-input-group">
+                <label>What do you seek?</label>
+                <div class="mock-input">Delicious cheesecake</div>
+              </div>
+              <div class="mock-input-group">
+                <label>Details</label>
+                <div class="mock-input mock-textarea">That maracuja cheesecake looks amazing!</div>
+              </div>
+              <div class="mock-button">Next: Attach Tokens</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Attach Your Token -->
+        <div class="story-card">
+          <div class="story-card-text">
+            <div class="story-step-icon">🌿</div>
+            <h3>3. Attach Your Token</h3>
+            <p>Drag over the Token you earned last week—8 hours helping your neighbor clear invasive eucalyptus.</p>
+          </div>
+          <div class="story-card-mockup">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <span class="back-arrow">←</span>
+                <span class="phone-time">3:45 PM</span>
+              </div>
+              <div class="screen-title">Attach Tokens</div>
+              <div class="mock-token selected">
+                <div class="token-row">
+                  <span class="token-name">🌳 Eucalyptus Token</span>
+                  <span class="token-hours">8h</span>
+                </div>
+                <div class="token-desc">Helping neighbor clear invasives</div>
+              </div>
+              <div class="mock-token">
+                <div class="token-row">
+                  <span class="token-name">🍞 Sourdough Token</span>
+                  <span class="token-hours">2h</span>
+                </div>
+                <div class="token-desc">Teaching starter cultivation</div>
+              </div>
+              <div class="mock-button">Create Quest Card</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Share the QR -->
+        <div class="story-card">
+          <div class="story-card-text">
+            <div class="story-step-icon">📱</div>
+            <h3>4. Share the QR</h3>
+            <p>A card appears with a QR code. Show it to the baker so they can view and fulfill your Quest.</p>
+          </div>
+          <div class="story-card-mockup">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <span class="back-arrow">←</span>
+                <span class="phone-time">3:46 PM</span>
+              </div>
+              <div class="screen-title">Your Quest</div>
+              <div class="quest-preview">
+                <div class="quest-preview-title">🍰 Delicious cheesecake</div>
+                <div class="quest-preview-token">
+                  <span>🌳 Eucalyptus Token</span>
+                  <span class="token-hours">8h</span>
+                </div>
+              </div>
+              <div class="qr-display">
+                <div class="qr-mock">
+                  <div class="qr-corner tl"></div>
+                  <div class="qr-corner tr"></div>
+                  <div class="qr-corner bl"></div>
+                  <span>QR</span>
+                </div>
+                <div class="qr-label">Show to provider</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Proof of Service -->
+        <div class="story-card">
+          <div class="story-card-text">
+            <div class="story-step-icon">✓</div>
+            <h3>5. Proof of Service</h3>
+            <p>They scan, hand you a slice of cheesecake, and post their Proof of Service.</p>
+          </div>
+          <div class="story-card-mockup">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <span class="back-arrow">←</span>
+                <span class="phone-time">3:50 PM</span>
+              </div>
+              <div class="screen-title">Post Proof</div>
+              <div class="mock-input-group">
+                <label>What did you provide?</label>
+                <div class="mock-input">Maracuja Cheesecake Slice</div>
+              </div>
+              <div class="mock-upload">
+                <span class="upload-icon">📸</span>
+                <span>Add photo</span>
+              </div>
+              <div class="mock-button">Submit Proof</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 6: Connection Made -->
+        <div class="story-card">
+          <div class="story-card-text">
+            <div class="story-step-icon">🔗</div>
+            <h3>6. Connection Made</h3>
+            <p>Release your Token to them. Now you're connected through the mesh—ready for future exchanges.</p>
+          </div>
+          <div class="story-card-mockup">
+            <div class="phone-screen">
+              <div class="phone-header">
+                <span class="app-name">SyncEngine</span>
+                <span class="phone-time">3:52 PM</span>
+              </div>
+              <div class="success-display">
+                <div class="success-icon">✓</div>
+                <div class="success-title">Complete!</div>
+              </div>
+              <div class="connection-card">
+                <div class="connection-badge">🤝 New Connection</div>
+                <div class="provider-row">
+                  <span class="provider-avatar">🧑‍🍳</span>
+                  <div class="provider-info">
+                    <span class="provider-name">The Baker</span>
+                    <span class="provider-role">Community Chef</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hint-text">💡 Coordinate future exchanges directly!</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Token Economy Section -->
+  <section id="tokens">
+    <div class="container">
+      <div class="section-header">
+        <h2>Tokens of Gratitude</h2>
+        <p>The currency of a gift economy</p>
+      </div>
+
+      <div class="token-lifecycle" role="list" aria-label="Token lifecycle: from service to stewardship">
+        <!-- Step 1: Act of Service -->
+        <div class="lifecycle-step" role="listitem">
+          <div class="lifecycle-step-icon">🌱</div>
+          <h3>Act of Service</h3>
+          <p>Tokens are born through real contribution—ecological restoration, teaching skills, helping neighbors, healing work.</p>
+        </div>
+
+        <!-- Step 2: Token Created -->
+        <div class="lifecycle-step" role="listitem">
+          <div class="lifecycle-step-icon">✨</div>
+          <h3>Token Created</h3>
+          <p>Each Token carries the weight of hours of collective attention. Higher-impact service generates higher-value Tokens.</p>
+        </div>
+
+        <!-- Step 3: Attached to Quest -->
+        <div class="lifecycle-step" role="listitem">
+          <div class="lifecycle-step-icon">📎</div>
+          <h3>Attached to Quest</h3>
+          <p>When you want something from the community, attach your Token to a Quest—a conscious expression of your desire.</p>
+        </div>
+
+        <!-- Step 4: Proof & Transfer -->
+        <div class="lifecycle-step" role="listitem">
+          <div class="lifecycle-step-icon">✓</div>
+          <h3>Proof of Service</h3>
+          <p>The provider fulfills your Quest and documents it. The community validates authentic service, creating a web of trust.</p>
+        </div>
+
+        <!-- Step 5: Stewardship -->
+        <div class="lifecycle-step lifecycle-step--final" role="listitem">
+          <div class="lifecycle-step-icon">🤲</div>
+          <h3>Stewardship</h3>
+          <p>Release the Token to those who serve you. They become stewards—free to use it or pass it forward through the mesh.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section id="philosophy">
+    <div class="container">
+      <div class="section-header">
+        <h2>The Vision</h2>
+        <p>Technology in service of human agency, not corporate extraction</p>
+      </div>
+
+      <div class="philosophy-content">
+        <h3>Decentralized Collaboration Without Surveillance</h3>
+        <p>
+          The Synchronicity Engine is built on a radical premise: that humans can coordinate
+          meaningful work without centralized platforms harvesting their data. Your quests, your
+          contacts, your data—they stay with you, synchronized across a gossip-based mesh network
+          that respects your sovereignty.
+        </p>
+
+        <h3>Sacred Language for Sacred Work</h3>
+        <p>
+          We call them <em>quests</em>, not tasks—because a quest is a conscious choice to manifest
+          change in the world. When you <em>manifest a quest</em>, you're not just checking off a
+          to-do item. When the <em>field resonates</em>, your intention is propagating through the
+          mesh. Language shapes reality. Technology should serve the sacred.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Principles Section -->
+  <section id="principles">
+    <div class="container">
+      <div class="section-header">
+        <h2>Core Principles</h2>
+        <p>The architectural foundations of sovereign collaboration</p>
+      </div>
+
+      <div class="principles-grid">
+        <div class="principle-card">
+          <h3>Local-First</h3>
+          <p>
+            Your data lives on your device. You own it. You control it. The mesh synchronizes
+            changes peer-to-peer, with no central database mining your intentions for profit.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h3>Censorship-Resistant</h3>
+          <p>
+            No corporation, government, or algorithm can silence your quests. The mesh topology
+            ensures that as long as peers connect, the field resonates. Decentralization is
+            liberation.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h3>Quantum-Secure</h3>
+          <p>
+            Your identity is protected by ML-DSA-65 post-quantum cryptography layered with
+            Ed25519. Even as quantum computing emerges, your sovereignty remains intact.
+          </p>
+        </div>
+
+        <div class="principle-card">
+          <h3>Gossip-Based Sync</h3>
+          <p>
+            Like humans sharing stories around a fire, the mesh propagates changes through
+            organic peer connections. No central server. No single point of failure. Just
+            resilient, living networks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Monthly Redistribution Section -->
+  <section id="redistribution" class="redistribution-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Monthly New Moon Redistribution</h2>
+        <p>How abundance flows back to those who serve</p>
+      </div>
+
+      <div class="redistribution-flow">
+        <div class="flow-step">
+          <div class="flow-step-number">
+            <span class="moon-icon">🌑</span>
+          </div>
+          <h3>The Call Goes Out</h3>
+          <p>Every New Moon, a notification ripples through the network: "$X is ready to flow back to the community"—excess funds beyond operating costs.</p>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-step-number">2</div>
+          <h3>Gratitude Bidding</h3>
+          <p>Members bid their service-earned Tokens of Gratitude. The Tokens you've accumulated through Acts of Service become your claim on the redistribution.</p>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-step-number">3</div>
+          <h3>Proportional Distribution</h3>
+          <p>Your share equals your hours divided by total hours bid. Serve more, receive more. The sacred economy rewards those who give.</p>
+        </div>
+      </div>
+
+      <div class="redistribution-quote">
+        <p>"If you bid Tokens worth <em>333 hours</em> and I bid <em>111 hours</em>, your slice is 3x mine. Real resources flow proportionally to real service."</p>
+      </div>
+
+      <!-- Moon Cycle Diagram -->
+      <div class="moon-cycle-diagram">
+        <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" class="moon-svg" aria-labelledby="moonTitle moonDesc" role="img">
+          <title id="moonTitle">New Moon Redistribution Cycle</title>
+          <desc id="moonDesc">Circular diagram showing the monthly redistribution tied to the lunar cycle, with New Moon as the trigger point</desc>
+
+          <defs>
+            <!-- Gradient for the cycle ring -->
+            <linearGradient id="cycleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" class="gradient-start"/>
+              <stop offset="100%" class="gradient-end"/>
+            </linearGradient>
+
+            <!-- Glow filter for mystic theme -->
+            <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Outer cycle ring -->
+          <circle cx="250" cy="200" r="140" class="cycle-ring" fill="none" stroke-width="2"/>
+
+          <!-- Moon phases around the circle -->
+          <g class="moon-phases">
+            <!-- New Moon (top) - highlighted -->
+            <g transform="translate(250, 60)" class="moon-phase moon-phase--new">
+              <circle r="24" class="phase-circle phase-circle--active"/>
+              <circle r="20" class="phase-inner phase-inner--new"/>
+              <text y="45" text-anchor="middle" class="phase-label phase-label--active">New Moon</text>
+            </g>
+
+            <!-- Waxing Crescent -->
+            <g transform="translate(348, 102)" class="moon-phase">
+              <circle r="16" class="phase-circle"/>
+              <path d="M0,-14 A14,14 0 0,1 0,14 A8,14 0 0,0 0,-14" class="phase-inner"/>
+            </g>
+
+            <!-- First Quarter -->
+            <g transform="translate(390, 200)" class="moon-phase">
+              <circle r="16" class="phase-circle"/>
+              <path d="M0,-14 A14,14 0 0,1 0,14 L0,-14" class="phase-inner"/>
+            </g>
+
+            <!-- Waxing Gibbous -->
+            <g transform="translate(348, 298)" class="moon-phase">
+              <circle r="16" class="phase-circle"/>
+              <circle r="14" class="phase-inner"/>
+              <path d="M0,-14 A14,14 0 0,0 0,14 A6,14 0 0,1 0,-14" class="phase-shadow"/>
+            </g>
+
+            <!-- Full Moon (bottom) -->
+            <g transform="translate(250, 340)" class="moon-phase">
+              <circle r="18" class="phase-circle"/>
+              <circle r="14" class="phase-inner phase-inner--full"/>
+            </g>
+
+            <!-- Waning Gibbous -->
+            <g transform="translate(152, 298)" class="moon-phase">
+              <circle r="16" class="phase-circle"/>
+              <circle r="14" class="phase-inner"/>
+              <path d="M0,-14 A14,14 0 0,1 0,14 A6,14 0 0,0 0,-14" class="phase-shadow"/>
+            </g>
+
+            <!-- Last Quarter -->
+            <g transform="translate(110, 200)" class="moon-phase">
+              <circle r="16" class="phase-circle"/>
+              <path d="M0,-14 A14,14 0 0,0 0,14 L0,-14" class="phase-inner"/>
+            </g>
+
+            <!-- Waning Crescent -->
+            <g transform="translate(152, 102)" class="moon-phase">
+              <circle r="16" class="phase-circle"/>
+              <path d="M0,-14 A14,14 0 0,0 0,14 A8,14 0 0,1 0,-14" class="phase-inner"/>
+            </g>
+          </g>
+
+          <!-- Center content: The cycle steps -->
+          <g class="cycle-center">
+            <!-- Bid icon -->
+            <g transform="translate(200, 175)">
+              <text class="center-icon">🎫</text>
+              <text y="25" class="center-label">Bid Tokens</text>
+            </g>
+
+            <!-- Arrow -->
+            <path d="M235,200 L265,200" class="center-arrow" stroke-width="2" fill="none"/>
+            <polygon points="262,196 270,200 262,204" class="center-arrow-head"/>
+
+            <!-- Receive icon -->
+            <g transform="translate(300, 175)">
+              <text class="center-icon">💫</text>
+              <text y="25" class="center-label">Receive</text>
+            </g>
+
+            <!-- Circular arrow indicating cycle -->
+            <path d="M220,230 Q250,260 280,230" class="center-arrow" stroke-width="2" fill="none"/>
+            <polygon points="278,234 285,228 276,226" class="center-arrow-head"/>
+          </g>
+
+          <!-- "Every Month" label -->
+          <text x="250" y="270" text-anchor="middle" class="cycle-label">Every New Moon</text>
+
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Simple concepts, profound implications</p>
+      </div>
+
+      <!-- Animated Mesh Network Visualization -->
+      <div class="mesh-visualization" aria-label="Animated mesh network showing interconnected nodes">
+        <svg viewBox="0 0 800 300" class="mesh-svg" role="img">
+          <title>Mesh Network Topology</title>
+          <desc>An animated visualization of peer-to-peer nodes connected in a mesh network, with data pulses traveling between them</desc>
+
+          <!-- Connection lines (behind nodes) -->
+          <g class="mesh-connections">
+            <!-- Central hub connections -->
+            <line x1="400" y1="150" x2="200" y2="80" class="mesh-line"/>
+            <line x1="400" y1="150" x2="600" y2="80" class="mesh-line"/>
+            <line x1="400" y1="150" x2="150" y2="200" class="mesh-line"/>
+            <line x1="400" y1="150" x2="650" y2="200" class="mesh-line"/>
+            <line x1="400" y1="150" x2="280" y2="250" class="mesh-line"/>
+            <line x1="400" y1="150" x2="520" y2="250" class="mesh-line"/>
+
+            <!-- Outer connections -->
+            <line x1="200" y1="80" x2="600" y2="80" class="mesh-line mesh-line--outer"/>
+            <line x1="200" y1="80" x2="150" y2="200" class="mesh-line"/>
+            <line x1="600" y1="80" x2="650" y2="200" class="mesh-line"/>
+            <line x1="150" y1="200" x2="280" y2="250" class="mesh-line"/>
+            <line x1="650" y1="200" x2="520" y2="250" class="mesh-line"/>
+            <line x1="280" y1="250" x2="520" y2="250" class="mesh-line mesh-line--outer"/>
+
+            <!-- Cross connections -->
+            <line x1="200" y1="80" x2="280" y2="250" class="mesh-line mesh-line--cross"/>
+            <line x1="600" y1="80" x2="520" y2="250" class="mesh-line mesh-line--cross"/>
+          </g>
+
+          <!-- Data pulses traveling along connections -->
+          <g class="mesh-pulses">
+            <circle r="4" class="data-pulse">
+              <animateMotion dur="2s" repeatCount="indefinite" path="M400,150 L200,80"/>
+            </circle>
+            <circle r="4" class="data-pulse">
+              <animateMotion dur="2.5s" repeatCount="indefinite" path="M200,80 L600,80"/>
+            </circle>
+            <circle r="4" class="data-pulse">
+              <animateMotion dur="1.8s" repeatCount="indefinite" path="M400,150 L650,200"/>
+            </circle>
+            <circle r="4" class="data-pulse">
+              <animateMotion dur="2.2s" repeatCount="indefinite" path="M150,200 L280,250"/>
+            </circle>
+            <circle r="4" class="data-pulse">
+              <animateMotion dur="3s" repeatCount="indefinite" path="M600,80 L400,150 L280,250"/>
+            </circle>
+            <circle r="4" class="data-pulse">
+              <animateMotion dur="2.8s" repeatCount="indefinite" path="M520,250 L400,150 L200,80"/>
+            </circle>
+          </g>
+
+          <!-- Network nodes -->
+          <g class="mesh-nodes">
+            <!-- Central node (You) -->
+            <g class="mesh-node mesh-node--central" transform="translate(400, 150)">
+              <circle r="28" class="node-glow"/>
+              <circle r="20" class="node-core"/>
+              <text y="5" text-anchor="middle" class="node-label">You</text>
+            </g>
+
+            <!-- Peer nodes -->
+            <g class="mesh-node" transform="translate(200, 80)">
+              <circle r="22" class="node-glow"/>
+              <circle r="15" class="node-core"/>
+              <text y="4" text-anchor="middle" class="node-label">A</text>
+            </g>
+
+            <g class="mesh-node" transform="translate(600, 80)">
+              <circle r="22" class="node-glow"/>
+              <circle r="15" class="node-core"/>
+              <text y="4" text-anchor="middle" class="node-label">B</text>
+            </g>
+
+            <g class="mesh-node" transform="translate(150, 200)">
+              <circle r="22" class="node-glow"/>
+              <circle r="15" class="node-core"/>
+              <text y="4" text-anchor="middle" class="node-label">C</text>
+            </g>
+
+            <g class="mesh-node" transform="translate(650, 200)">
+              <circle r="22" class="node-glow"/>
+              <circle r="15" class="node-core"/>
+              <text y="4" text-anchor="middle" class="node-label">D</text>
+            </g>
+
+            <g class="mesh-node" transform="translate(280, 250)">
+              <circle r="22" class="node-glow"/>
+              <circle r="15" class="node-core"/>
+              <text y="4" text-anchor="middle" class="node-label">E</text>
+            </g>
+
+            <g class="mesh-node" transform="translate(520, 250)">
+              <circle r="22" class="node-glow"/>
+              <circle r="15" class="node-core"/>
+              <text y="4" text-anchor="middle" class="node-label">F</text>
+            </g>
+          </g>
+        </svg>
+        <p class="mesh-caption">The mesh self-organizes—no central coordinator required</p>
+      </div>
+
+      <div class="how-it-works-content">
+        <div class="work-item">
+          <div class="work-item-icon">◈</div>
+          <h3>Realms</h3>
+          <p>
+            Shared spaces where quests converge. Each realm is a container for collaborative
+            intention—a project, a community, a movement. Join realms that resonate with your purpose.
+          </p>
+        </div>
+
+        <div class="work-item">
+          <div class="work-item-icon">◬</div>
+          <h3>The Mesh</h3>
+          <p>
+            Like <em>Indra's Net</em> in Buddhist philosophy—an infinite web where each jewel reflects
+            all others—the mesh is a peer-to-peer network where every node strengthens the whole.
+            No intermediaries. No gatekeepers. Changes propagate through the web of trust you cultivate.
+          </p>
+          <a href="network.html" class="work-item-link">Explore the technical architecture →</a>
+        </div>
+
+        <div class="work-item">
+          <div class="work-item-icon">◉</div>
+          <h3>Contacts & Trust</h3>
+          <p>
+            Your contact list is your network. Share realms and quests with people you trust.
+            The mesh extends as far as your relationships do, creating organic boundaries of collaboration.
+          </p>
+        </div>
+      </div>
+
+      <!-- Gatherings Highlight -->
+      <div class="gatherings-highlight">
+        <h3>Where the Mesh Manifests Physically</h3>
+        <div class="gatherings-grid">
+          <div class="gatherings-item">
+            <!-- IMAGE: Gathering Ceremony -->
+            <div class="img-placeholder img-placeholder--inline">
+              <span class="img-placeholder-icon">🔥</span>
+              <span class="img-placeholder-label">Gathering Ceremony</span>
+              <span class="img-placeholder-suggestion">Circle of people around a fire or in a natural setting. Diverse community, sacred geometry, dusk lighting. Feeling of connection and reverence.</span>
+            </div>
+            <h4>Gatherings of the Tribe</h4>
+            <p>Spiritual community gatherings hosted at Temples around the world. Co-created worship, ceremony, and connection—however Spirit moves the community.</p>
+          </div>
+          <div class="gatherings-item">
+            <!-- IMAGE: Market Exchange -->
+            <div class="img-placeholder img-placeholder--inline">
+              <span class="img-placeholder-icon">🤝</span>
+              <span class="img-placeholder-label">Token Exchange</span>
+              <span class="img-placeholder-suggestion">Close-up of hands exchanging goods, phone showing QR code, artisan products. Warm colors, human connection emphasized.</span>
+            </div>
+            <h4>The Sacred Bazaar</h4>
+            <p>At the close of every Gathering, a marketplace emerges where Quests are fulfilled, Tokens flow, and the gift economy becomes tangible, delicious reality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Oracle Section -->
+  <section id="oracle" class="oracle-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Oracle Assistants</h2>
+        <p>AI companions trained on collective wisdom</p>
+      </div>
+
+      <div class="oracle-teaser">
+        <span class="oracle-badge">The Vision — Coming Soon</span>
+
+        <!-- IMAGE: Oracle Illustration -->
+        <div class="oracle-illustration">
+          <div class="img-placeholder">
+            <span class="img-placeholder-icon">🔮</span>
+            <span class="img-placeholder-label">Oracle Assistant</span>
+            <span class="img-placeholder-suggestion">Ethereal AI figure emerging from collective light/wisdom. Not robotic—more like a luminous guide. Soft glows, sacred geometry patterns, blend of digital and organic.</span>
+          </div>
+        </div>
+
+        <div class="oracle-content">
+          <div class="oracle-item">
+            <span class="oracle-item-icon">🧙‍♂️</span>
+            <h4>Community Wisdom Keepers</h4>
+            <p>AI companions trained exclusively on the collective highest wisdom of community members—not corporate data harvesting.</p>
+          </div>
+
+          <div class="oracle-item">
+            <span class="oracle-item-icon">🌟</span>
+            <h4>Reflecting the Best of Us</h4>
+            <p>Members consciously contribute their highest-self knowledge. The Oracle becomes a living repository of collective excellence.</p>
+          </div>
+
+          <div class="oracle-item">
+            <span class="oracle-item-icon">🔮</span>
+            <h4>Growing Intelligence</h4>
+            <p>Compute power flows where collective intention focuses. The more the community serves, the wiser the Oracle becomes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join the Tribe Section -->
+  <section id="join" class="join-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Join the Tribe</h2>
+        <p>Become a steward of the sacred economy</p>
+      </div>
+
+      <div class="join-content">
+        <div class="join-info">
+          <h3>GratiDAO Principles</h3>
+          <p>
+            <em>GratiDAO</em>—Portuguese for Gratitude—represents our organizational philosophy:
+            Gratitude-based, Decentralized, Distributed, Autonomous, and Alive.
+          </p>
+
+          <ul class="join-features">
+            <li><strong>Two-Member Sponsorship:</strong> New members are welcomed through recommendation by two existing stewards—trust propagates through relationship.</li>
+            <li><strong>Temple Network Access:</strong> Once initiated, access land-based sanctuaries worldwide where the community gathers.</li>
+            <li><strong>Monthly Offering:</strong> Contributions ($15-50) become compute power for community AI, infrastructure, and the sacred economy.</li>
+            <li><strong>Redistribution Rights:</strong> Participate in the monthly New Moon gratitude bidding for community surplus.</li>
+          </ul>
+        </div>
+
+        <div class="join-cta">
+          <!-- IMAGE: Temple/Community -->
+          <div class="join-image">
+            <div class="img-placeholder img-placeholder--card">
+              <span class="img-placeholder-icon">🏛️</span>
+              <span class="img-placeholder-label">Temple Sanctuary</span>
+              <span class="img-placeholder-suggestion">Agua Lila or temple landscape. Mountains, natural beauty, small sustainable structures. Inviting, peaceful, real location photography.</span>
+            </div>
+          </div>
+          <h3>Become a Steward</h3>
+          <p>Reserve your place among the Original Stewards of the New Aeon. Even a small donation indicates interest and opens the door to peership.</p>
+          <a href="https://give.tithe.ly/?formId=57a0dcf9-7e25-46a1-8f4e-aa5a4f07f10f" class="cta-large" target="_blank" rel="noopener noreferrer">Reserve Your Spot</a>
+          <p class="legal-note">
+            Temples of Refuge is a <strong>508(c)(1)(a)</strong> religious nonprofit registered in Utah,
+            providing First Amendment protections for sacred gatherings.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ecosystem Section -->
+  <section id="ecosystem">
+    <div class="container">
+      <div class="section-header">
+        <h2>The Ecosystem</h2>
+        <p>Three nodes in a larger pattern</p>
+      </div>
+
+      <div class="ecosystem-grid">
+        <div class="ecosystem-card">
+          <!-- IMAGE: Temples Symbol -->
+          <div class="img-placeholder img-placeholder--card">
+            <span class="img-placeholder-icon">⛩️</span>
+            <span class="img-placeholder-label">Temples Symbol</span>
+            <span class="img-placeholder-suggestion">Sacred geometric logo or stylized temple icon. Gold tones, minimalist, conveys spiritual organization.</span>
+          </div>
+          <h3>Temples of Refuge</h3>
+          <p class="domain">templesofrefuge.earth</p>
+          <p>
+            The steward organization. A regenerative legal structure holding the vision
+            for sacred technology. Temples of Refuge ensures the code serves human flourishing,
+            not extraction.
+          </p>
+          <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Visit Temples</a>
+        </div>
+
+        <div class="ecosystem-card">
+          <!-- IMAGE: Agua Lila Landscape -->
+          <div class="img-placeholder img-placeholder--card">
+            <span class="img-placeholder-icon">🌿</span>
+            <span class="img-placeholder-label">Agua Lila</span>
+            <span class="img-placeholder-suggestion">Portuguese mountain canyon, terraced land, native forest restoration. Actual photography from the site if available.</span>
+          </div>
+          <h3>Agua Lila</h3>
+          <p class="domain">agualila.earth</p>
+          <p>
+            Where code meets soil. A physical place in nature where developers, designers, and
+            dreamers gather to build the technologies of regeneration. The land remembers what we're creating.
+          </p>
+          <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Visit Agua Lila</a>
+        </div>
+
+        <div class="ecosystem-card">
+          <!-- IMAGE: SyncEngine Interface -->
+          <div class="img-placeholder img-placeholder--card">
+            <span class="img-placeholder-icon">◈</span>
+            <span class="img-placeholder-label">App Interface</span>
+            <span class="img-placeholder-suggestion">Screenshot of SyncEngine app UI showing realms/quests. Dark theme, clean interface, terminal aesthetic.</span>
+          </div>
+          <h3>Synchronicity Engine</h3>
+          <p class="domain">syncengine.earth</p>
+          <p>
+            The technology platform. Open-source, local-first, quantum-secure collaboration software.
+            This is where intention becomes infrastructure, where sacred work finds its digital home.
+          </p>
+          <a href="#philosophy">Explore the Vision</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p class="tagline">Technology in service of human agency</p>
+
+      <nav class="links" aria-label="Sister sites">
+        <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+        <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
+        <a href="https://syncengine.earth">Synchronicity Engine</a>
+      </nav>
+
+      <!-- Glossary -->
+      <div class="footer-glossary">
+        <h4>Sacred Vocabulary</h4>
+        <div class="glossary-grid">
+          <div class="glossary-item">
+            <strong>Quest</strong> <span>— An intention to manifest change</span>
+          </div>
+          <div class="glossary-item">
+            <strong>Realm</strong> <span>— A shared space for quests</span>
+          </div>
+          <div class="glossary-item">
+            <strong>Token</strong> <span>— Gratitude earned through service</span>
+          </div>
+          <div class="glossary-item">
+            <strong>Mesh</strong> <span>— Self-organizing peer network</span>
+          </div>
+          <div class="glossary-item">
+            <strong>Field</strong> <span>— The network of connected peers</span>
+          </div>
+          <div class="glossary-item">
+            <strong>Steward</strong> <span>— One who holds tokens in trust</span>
+          </div>
+          <div class="glossary-item">
+            <strong>Gathering</strong> <span>— Community ceremony and market</span>
+          </div>
+          <div class="glossary-item">
+            <strong>Temple</strong> <span>— A sacred sanctuary in the network</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="copyright">
+        &copy; 2026 Synchronicity Engine. Open source. Sacred technology.
+      </p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    (function() {
+      'use strict';
+
+      const STORAGE_KEY = 'syncengine-theme';
+      const themeSelect = document.getElementById('themeSelect');
+
+      // Apply theme to document and update select
+      function applyTheme(themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+        themeSelect.value = themeName;
+      }
+
+      // Handle theme change
+      themeSelect.addEventListener('change', (e) => {
+        const newTheme = e.target.value;
+        localStorage.setItem(STORAGE_KEY, newTheme);
+        applyTheme(newTheme);
+      });
+
+      // Initialize theme from localStorage or default
+      const savedTheme = localStorage.getItem(STORAGE_KEY) || 'quiet-protocol';
+      applyTheme(savedTheme);
+    })();
+  </script>
+
+</body>
+</html>
