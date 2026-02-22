@@ -66,24 +66,6 @@
       color: var(--t-ac);
       text-shadow: var(--shadow-glow);
     }
-
-    /* ============================================
-       HEXAGON PATTERN (MYSTIC THEME ONLY)
-    ============================================ */
-    [data-theme="mystic"] body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.03;
-      z-index: 0;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg width='100' height='87' viewBox='0 0 100 87' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l50 29 50-29v58l-50 29-50-29z' fill='none' stroke='%23d4af37' stroke-width='1'/%3E%3C/svg%3E");
-      background-size: 100px 87px;
-    }
-
     /* ============================================
        LAYOUT UTILITIES
     ============================================ */
@@ -165,14 +147,6 @@
       text-shadow: var(--shadow-glow);
       font-weight: 700;
     }
-
-    /* Mystic theme: floating animation */
-    @media (prefers-reduced-motion: no-preference) {
-      [data-theme="mystic"] .hero h1 {
-        animation: float 6s ease-in-out infinite;
-      }
-    }
-
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
@@ -209,20 +183,7 @@
       box-shadow: var(--shadow-glow);
       transform: translateY(-2px);
     }
-
-    /* Neon theme: larger border radius */
-    [data-theme="neon"] .cta-button {
-      border-radius: 2rem;
-      padding: 1.25rem 3.5rem;
-    }
-
     /* Mystic theme: pulse animation */
-    @media (prefers-reduced-motion: no-preference) {
-      [data-theme="mystic"] .cta-button {
-        animation: pulse 3s ease-in-out infinite;
-      }
-    }
-
     @keyframes pulse {
       0%, 100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
       50% { box-shadow: 0 0 0 15px rgba(57, 255, 20, 0); }
@@ -342,19 +303,6 @@
       box-shadow: var(--shadow-glow);
       border-color: var(--t-a2);
     }
-
-    /* Mystic theme: staggered animation on load */
-    @media (prefers-reduced-motion: no-preference) {
-      [data-theme="mystic"] .principle-card {
-        animation: slideInUp 0.6s ease-out backwards;
-      }
-
-      [data-theme="mystic"] .principle-card:nth-child(1) { animation-delay: 0.1s; }
-      [data-theme="mystic"] .principle-card:nth-child(2) { animation-delay: 0.2s; }
-      [data-theme="mystic"] .principle-card:nth-child(3) { animation-delay: 0.3s; }
-      [data-theme="mystic"] .principle-card:nth-child(4) { animation-delay: 0.4s; }
-    }
-
     @keyframes slideInUp {
       from {
         opacity: 0;
@@ -414,12 +362,6 @@
       box-shadow: var(--shadow-glow);
       transition: all var(--transition-base) ease;
     }
-
-    /* Neon theme: larger border radius for everything */
-    [data-theme="neon"] .work-item-icon {
-      border-radius: 2rem;
-    }
-
     .work-item:hover .work-item-icon,
     .work-item:focus-within .work-item-icon {
       transform: scale(1.1) rotate(5deg);
@@ -452,10 +394,7 @@
       color: var(--t-ac);
     }
 
-    [data-theme="mystic"] .work-item-link {
-      text-shadow: 0 0 10px rgba(0, 212, 170, 0.3);
-    }
-
+    
     /* ============================================
        ECOSYSTEM SECTION
     ============================================ */
@@ -687,19 +626,9 @@
       }
     }
 
-    [data-theme="quiet-protocol"] .story-step-icon {
-      border-radius: 4px;
-    }
-
-    [data-theme="mystic"] .story-step-icon {
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-    }
-
-    [data-theme="neon"] .story-step-icon {
-      border-radius: 1rem;
-      border-color: var(--t-a2);
-    }
-
+    
+    
+    
     .story-card:hover .story-step-icon {
       transform: scale(1.1);
       border-color: var(--t-a2);
@@ -738,16 +667,8 @@
       flex: 1;
     }
 
-    [data-theme="neon"] .phone-screen {
-      border-radius: 1.25rem;
-      border-width: 2px;
-      box-shadow: 0 0 15px rgba(0, 255, 209, 0.15);
-    }
-
-    [data-theme="mystic"] .phone-screen {
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-    }
-
+    
+    
     /* Phone Header */
     .phone-header {
       display: flex;
@@ -820,11 +741,7 @@
       margin-top: auto;
     }
 
-    [data-theme="neon"] .mock-button {
-      border-radius: 0.75rem;
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-    }
-
+    
     /* Mock Token Card */
     .mock-token {
       background: rgba(212, 175, 55, 0.1);
@@ -840,10 +757,7 @@
       background: rgba(212, 175, 55, 0.2);
     }
 
-    [data-theme="mystic"] .mock-token.selected {
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-    }
-
+    
     .token-row {
       display: flex;
       justify-content: space-between;
@@ -1117,10 +1031,7 @@
       transition: all var(--transition-base) ease;
     }
 
-    [data-theme="neon"] .flow-step-number {
-      border-radius: 1rem;
-    }
-
+    
     .flow-step:hover .flow-step-number {
       background: var(--t-a2);
       color: var(--t-bg);
@@ -1133,10 +1044,7 @@
       margin-bottom: 0.5rem;
     }
 
-    [data-theme="mystic"] .moon-icon {
-      animation: moonGlow 4s ease-in-out infinite;
-    }
-
+    
     @keyframes moonGlow {
       0%, 100% {
         text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
@@ -1206,23 +1114,9 @@
       }
     }
 
-    [data-theme="mystic"] .oracle-teaser {
-      box-shadow: 0 0 40px rgba(196, 167, 215, 0.1);
-    }
-
-    [data-theme="mystic"] .oracle-teaser::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(196, 167, 215, 0.1) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    [data-theme="neon"] .oracle-teaser {
-      border: 2px solid var(--t-a2);
-      background: linear-gradient(135deg, var(--t-cd) 0%, rgba(0, 255, 209, 0.05) 100%);
-    }
-
+    
+    
+    
     .oracle-badge {
       display: inline-block;
       padding: 0.5rem 1rem;
@@ -1379,10 +1273,7 @@
       transform: translateY(-3px);
     }
 
-    [data-theme="neon"] .cta-large {
-      border-radius: 2rem;
-    }
-
+    
     .legal-note {
       font-size: 0.875rem;
       color: var(--t-t2);
@@ -1498,48 +1389,11 @@
       0%, 100% { opacity: 0.3; r: 28; }
       50% { opacity: 0.6; r: 32; }
     }
-
-    /* Mystic theme enhancements */
-    [data-theme="mystic"] .mesh-line {
-      opacity: 0.4;
-      filter: drop-shadow(0 0 3px var(--t-a2));
-    }
-
-    [data-theme="mystic"] .data-pulse {
-      filter: drop-shadow(0 0 6px var(--t-a2));
-    }
-
-    [data-theme="mystic"] .node-core {
-      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
-    }
-
-    [data-theme="mystic"] .mesh-node--central .node-core {
-      filter: drop-shadow(0 0 12px rgba(57, 255, 20, 0.5));
-    }
-
-    [data-theme="mystic"] .mesh-visualization {
-      background: rgba(26, 26, 26, 0.6);
-    }
-
     /* Neon theme enhancements */
-    [data-theme="neon"] .mesh-line {
-      stroke-width: 2;
-      opacity: 0.35;
-    }
-
-    [data-theme="neon"] .data-pulse {
-      r: 5;
-    }
-
-    [data-theme="neon"] .node-core {
-      stroke-width: 3;
-    }
-
-    [data-theme="neon"] .mesh-visualization {
-      border-radius: 1rem;
-      border-color: var(--t-a2);
-    }
-
+    
+    
+    
+    
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .data-pulse animateMotion {
@@ -1814,52 +1668,10 @@
       fill: var(--t-a2);
       font-weight: 600;
     }
-
-    /* Mystic theme */
-    [data-theme="mystic"] .phase-circle--active {
-      filter: url(#moonGlow);
-    }
-
-    [data-theme="mystic"] .cycle-ring {
-      opacity: 0.5;
-      stroke: var(--t-ac);
-    }
-
-    [data-theme="mystic"] .moon-cycle-diagram {
-      box-shadow: 0 0 40px rgba(212, 175, 55, 0.1);
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      [data-theme="mystic"] .phase-circle--active {
-        animation: moonPhaseGlow 4s ease-in-out infinite;
-      }
-    }
-
     @keyframes moonPhaseGlow {
       0%, 100% { filter: url(#moonGlow) drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
       50% { filter: url(#moonGlow) drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); }
     }
-
-    /* Neon theme */
-    [data-theme="neon"] .moon-cycle-diagram {
-      border: 2px solid var(--t-a2);
-      border-radius: 1rem;
-    }
-
-    [data-theme="neon"] .cycle-ring {
-      opacity: 0.5;
-      stroke-width: 3;
-    }
-
-    [data-theme="neon"] .phase-circle--active {
-      stroke: var(--t-a2);
-      stroke-width: 4;
-    }
-
-    [data-theme="neon"] .phase-label--active {
-      fill: var(--t-a2);
-    }
-
     /* Mobile */
     @media (max-width: 640px) {
       .moon-cycle-diagram {
@@ -1966,47 +1778,10 @@
       color: var(--t-t2);
       max-width: 180px;
     }
-
-    /* Mystic theme enhancements */
-    [data-theme="mystic"] .lifecycle-step-icon {
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-    }
-
-    [data-theme="mystic"] .lifecycle-step:hover .lifecycle-step-icon {
-      box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
-    }
-
-    [data-theme="mystic"] .token-lifecycle::before {
-      background: linear-gradient(90deg,
-        transparent 0%,
-        var(--t-ac) 10%,
-        var(--t-a2) 50%,
-        var(--t-ac) 90%,
-        transparent 100%);
-      opacity: 0.6;
-      height: 3px;
-      filter: blur(1px);
-    }
-
-    [data-theme="mystic"] .lifecycle-step--final .lifecycle-step-icon {
-      box-shadow: 0 0 25px rgba(57, 255, 20, 0.3);
-    }
-
     /* Neon theme enhancements */
-    [data-theme="neon"] .lifecycle-step-icon {
-      border-width: 2px;
-      background: var(--t-bg);
-    }
-
-    [data-theme="neon"] .lifecycle-step-icon::after {
-      border-left-color: var(--t-ac);
-    }
-
-    [data-theme="neon"] .token-lifecycle::before {
-      height: 3px;
-      opacity: 0.5;
-    }
-
+    
+    
+    
     /* Tablet: 3 + 2 layout */
     @media (max-width: 1024px) {
       .token-lifecycle {
