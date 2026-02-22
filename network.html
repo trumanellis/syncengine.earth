@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="quiet-protocol">
+<html lang="en" data-skin="technical">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&family=Exo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700;900&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 
   <style>
     /* ============================================
@@ -26,7 +26,7 @@
     }
 
     body {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--s-font);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -36,111 +36,35 @@
     /* ============================================
        CSS VARIABLES - BASE/SHARED
     ============================================ */
-    :root {
-      --void-black: #0a0a0a;
-      --gold: #d4af37;
-      --cyan: #00d4aa;
-      --moss: #7cb87c;
-      --moss-bright: #39ff14;
-      --lilac: #c4a7d7;
-      --deep-teal: #1a2e2e;
-      --parchment: #F7F3E9;
-      --sage: #84A98C;
-      --cyan-neon: #00FFD1;
-      --void-neon: #0a0e0f;
-
-      --bg-primary: var(--void-black);
-      --bg-secondary: #161616;
-      --text-primary: var(--parchment);
-      --text-secondary: var(--moss);
-      --accent-1: var(--gold);
-      --accent-2: var(--cyan);
-      --border-radius: 4px;
-      --glow-effect: none;
-      --heading-font: 'Cormorant Garamond', serif;
-      --body-font: 'JetBrains Mono', monospace;
-      --transition-speed: 200ms;
-    }
-
-    /* ============================================
-       THEME: QUIET PROTOCOL
-    ============================================ */
-    [data-theme="quiet-protocol"] {
-      --bg-primary: #0a0a0a;
-      --bg-secondary: #161616;
-      --bg-card: #1a1a1a;
-      --text-primary: #F7F3E9;
-      --text-secondary: #7cb87c;
-      --accent-1: #d4af37;
-      --accent-2: #00d4aa;
-      --border-radius: 4px;
-      --glow-effect: none;
-      --heading-font: 'Cormorant Garamond', serif;
-      --body-font: 'JetBrains Mono', monospace;
-    }
-
-    /* ============================================
-       THEME: MYSTIC TERMINAL
-    ============================================ */
-    [data-theme="mystic"] {
-      --bg-primary: #0a0a0a;
-      --bg-secondary: #161616;
-      --bg-card: rgba(26, 26, 26, 0.8);
-      --text-primary: #F7F3E9;
-      --text-secondary: #c4a7d7;
-      --accent-1: #d4af37;
-      --accent-2: #39ff14;
-      --border-radius: 4px;
-      --glow-effect: 0 0 20px currentColor;
-      --heading-font: 'Cormorant Garamond', serif;
-      --body-font: 'JetBrains Mono', monospace;
-    }
-
-    /* ============================================
-       THEME: NEON
-    ============================================ */
-    [data-theme="neon"] {
-      --bg-primary: #0a0e0f;
-      --bg-secondary: #1a2e2e;
-      --bg-card: #1a2e2e;
-      --text-primary: #F7F3E9;
-      --text-secondary: #84A98C;
-      --accent-1: #D4AF37;
-      --accent-2: #00FFD1;
-      --border-radius: 1rem;
-      --glow-effect: 0 0 30px rgba(0, 255, 209, 0.3);
-      --heading-font: 'Exo', sans-serif;
-      --body-font: 'Exo', sans-serif;
-    }
 
     /* ============================================
        GLOBAL STYLES
     ============================================ */
     body {
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: var(--body-font);
-      transition: background var(--transition-speed) ease,
-                  color var(--transition-speed) ease;
+      background: var(--t-bg);
+      color: var(--t-tx);
+      font-family: var(--s-font);
+      transition: background var(--transition-base) ease,
+                  color var(--transition-base) ease;
     }
 
     h1, h2, h3, h4, h5, h6 {
-      font-family: var(--heading-font);
+      font-family: var(--s-display);
       font-weight: 700;
       line-height: 1.2;
-      transition: font-family var(--transition-speed) ease;
+      transition: font-family var(--transition-base) ease;
     }
 
     a {
-      color: var(--accent-2);
+      color: var(--t-a2);
       text-decoration: none;
-      transition: color var(--transition-speed) ease,
-                  text-shadow var(--transition-speed) ease;
+      transition: color var(--transition-base) ease,
+                  text-shadow var(--transition-base) ease;
     }
 
     a:hover, a:focus {
-      color: var(--accent-1);
-      text-shadow: var(--glow-effect);
+      color: var(--t-ac);
+      text-shadow: var(--shadow-glow);
     }
 
     /* ============================================
@@ -188,63 +112,6 @@
       }
     }
 
-    /* ============================================
-       THEME TOGGLE
-    ============================================ */
-    .theme-toggle {
-      position: fixed;
-      top: 2rem;
-      right: 2rem;
-      z-index: 1000;
-    }
-
-    @media (max-width: 640px) {
-      .theme-toggle {
-        top: 1rem;
-        right: 1rem;
-      }
-    }
-
-    .theme-toggle select {
-      appearance: none;
-      -webkit-appearance: none;
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
-      font-family: var(--body-font);
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 0.625rem 2.5rem 0.625rem 1rem;
-      border-radius: var(--border-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      transition: all var(--transition-speed) ease;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237cb87c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.75rem center;
-    }
-
-    @media (max-width: 640px) {
-      .theme-toggle select {
-        font-size: 0.75rem;
-        padding: 0.5rem 2rem 0.5rem 0.75rem;
-      }
-    }
-
-    .theme-toggle select:hover,
-    .theme-toggle select:focus {
-      border-color: var(--accent-2);
-      color: var(--accent-2);
-      outline: none;
-      box-shadow: var(--glow-effect), 0 4px 20px rgba(0, 0, 0, 0.5);
-    }
-
-    .theme-toggle select option {
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      padding: 0.5rem;
-    }
 
     /* ============================================
        NAV BAR
@@ -263,10 +130,10 @@
     }
 
     .nav-logo {
-      font-family: var(--heading-font);
+      font-family: var(--s-display);
       font-size: 1.5rem;
       font-weight: 700;
-      color: var(--accent-1);
+      color: var(--t-ac);
       letter-spacing: 0.05em;
     }
 
@@ -277,7 +144,7 @@
     }
 
     .nav-links a {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       font-size: 0.9rem;
     }
 
@@ -311,17 +178,17 @@
     .hero h1 {
       font-size: 3.5rem;
       margin-bottom: 1.5rem;
-      color: var(--text-primary);
+      color: var(--t-tx);
     }
 
     .hero h1 em {
-      color: var(--accent-1);
+      color: var(--t-ac);
       font-style: normal;
     }
 
     .hero p {
       font-size: 1.25rem;
-      color: var(--text-secondary);
+      color: var(--t-t2);
       max-width: 700px;
       margin: 0 auto 2rem;
     }
@@ -330,7 +197,7 @@
       display: inline-block;
       margin-bottom: 2rem;
       font-size: 0.9rem;
-      color: var(--text-secondary);
+      color: var(--t-t2);
     }
 
     @media (max-width: 768px) {
@@ -354,11 +221,11 @@
     .section-header h2 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
-      color: var(--accent-1);
+      color: var(--t-ac);
     }
 
     .section-header p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       max-width: 600px;
       margin: 0 auto;
     }
@@ -367,7 +234,7 @@
        PHILOSOPHY SECTION
     ============================================ */
     .philosophy {
-      background: var(--bg-secondary);
+      background: var(--t-sf);
     }
 
     .philosophy-grid {
@@ -385,7 +252,7 @@
     }
 
     .philosophy-content p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       margin-bottom: 1.5rem;
       font-size: 1rem;
     }
@@ -407,14 +274,14 @@
       position: absolute;
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+      background: linear-gradient(135deg, var(--t-ac) 0%, var(--t-a2) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
       font-size: 1.25rem;
-      color: var(--void-black);
+      color: var(--t-bg);
       box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
       animation: pulse 3s infinite;
     }
@@ -456,23 +323,23 @@
     }
 
     .feature-card {
-      background: var(--bg-card);
+      background: var(--t-cd);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--border-radius);
+      border-radius: var(--s-radius);
       padding: 2rem;
-      transition: all var(--transition-speed) ease;
+      transition: all var(--transition-base) ease;
     }
 
     .feature-card:hover {
-      border-color: var(--accent-2);
+      border-color: var(--t-a2);
       transform: translateY(-4px);
-      box-shadow: var(--glow-effect);
+      box-shadow: var(--shadow-glow);
     }
 
     .feature-icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+      background: linear-gradient(135deg, var(--t-ac) 0%, var(--t-a2) 100%);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -484,11 +351,11 @@
     .feature-card h3 {
       font-size: 1.25rem;
       margin-bottom: 0.75rem;
-      color: var(--text-primary);
+      color: var(--t-tx);
     }
 
     .feature-card p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       font-size: 0.95rem;
     }
 
@@ -496,26 +363,26 @@
        ARCHITECTURE DIAGRAM
     ============================================ */
     .architecture {
-      background: var(--bg-secondary);
+      background: var(--t-sf);
     }
 
     .arch-diagram {
-      background: var(--bg-card);
+      background: var(--t-cd);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--border-radius);
+      border-radius: var(--s-radius);
       padding: 2.5rem;
     }
 
     .arch-layer {
       background: rgba(212, 175, 55, 0.05);
       border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: var(--border-radius);
+      border-radius: var(--s-radius);
       padding: 1.25rem 1.5rem;
       margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all var(--transition-speed) ease;
+      transition: all var(--transition-base) ease;
     }
 
     .arch-layer:last-child {
@@ -524,13 +391,13 @@
 
     .arch-layer:hover {
       background: rgba(212, 175, 55, 0.1);
-      border-color: var(--accent-1);
+      border-color: var(--t-ac);
     }
 
     .arch-layer h4 {
       font-size: 1rem;
-      color: var(--text-primary);
-      font-family: var(--body-font);
+      color: var(--t-tx);
+      font-family: var(--s-font);
       font-weight: 600;
     }
 
@@ -542,11 +409,11 @@
 
     .module-tag {
       background: rgba(0, 212, 170, 0.15);
-      color: var(--accent-2);
+      color: var(--t-a2);
       padding: 0.25rem 0.75rem;
       border-radius: 4px;
       font-size: 0.8rem;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: var(--s-font);
     }
 
     [data-theme="mystic"] .module-tag {
@@ -571,26 +438,26 @@
     }
 
     .tech-item {
-      background: var(--bg-card);
+      background: var(--t-cd);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--border-radius);
+      border-radius: var(--s-radius);
       padding: 1.5rem;
       text-align: center;
-      transition: all var(--transition-speed) ease;
+      transition: all var(--transition-base) ease;
     }
 
     .tech-item:hover {
-      border-color: var(--accent-1);
+      border-color: var(--t-ac);
     }
 
     .tech-item h4 {
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
-      color: var(--accent-1);
+      color: var(--t-ac);
     }
 
     .tech-item p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       font-size: 0.85rem;
     }
 
@@ -598,7 +465,7 @@
        SECURITY
     ============================================ */
     .security {
-      background: var(--bg-secondary);
+      background: var(--t-sf);
     }
 
     .security-grid {
@@ -634,7 +501,7 @@
     .check-icon {
       width: 24px;
       height: 24px;
-      background: var(--accent-2);
+      background: var(--t-a2);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -642,7 +509,7 @@
       flex-shrink: 0;
       margin-top: 2px;
       font-size: 0.8rem;
-      color: var(--void-black);
+      color: var(--t-bg);
     }
 
     .security-features strong {
@@ -651,7 +518,7 @@
     }
 
     .security-features p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       font-size: 0.9rem;
     }
 
@@ -662,9 +529,9 @@
     }
 
     .crypto-badge {
-      background: var(--bg-card);
+      background: var(--t-cd);
       border: 1px solid rgba(0, 212, 170, 0.3);
-      border-radius: var(--border-radius);
+      border-radius: var(--s-radius);
       padding: 1.5rem;
       display: flex;
       align-items: center;
@@ -674,7 +541,7 @@
     .crypto-badge .icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--accent-2) 0%, var(--moss) 100%);
+      background: linear-gradient(135deg, var(--t-a2) 0%, var(--moss) 100%);
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -685,11 +552,11 @@
     .crypto-badge h4 {
       font-size: 1rem;
       margin-bottom: 0.25rem;
-      color: var(--text-primary);
+      color: var(--t-tx);
     }
 
     .crypto-badge p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       font-size: 0.85rem;
     }
 
@@ -705,7 +572,7 @@
     .use-case {
       background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0, 212, 170, 0.05) 100%);
       border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: var(--border-radius);
+      border-radius: var(--s-radius);
       padding: 1.75rem;
     }
 
@@ -718,7 +585,7 @@
     }
 
     .use-case p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       font-size: 0.9rem;
     }
 
@@ -727,7 +594,7 @@
     ============================================ */
     .cta-section {
       text-align: center;
-      background: var(--bg-secondary);
+      background: var(--t-sf);
     }
 
     .cta-section h2 {
@@ -736,7 +603,7 @@
     }
 
     .cta-section > .container > p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       margin-bottom: 2rem;
       max-width: 500px;
       margin-left: auto;
@@ -752,34 +619,34 @@
 
     .btn {
       padding: 0.875rem 1.75rem;
-      border-radius: var(--border-radius);
+      border-radius: var(--s-radius);
       font-size: 1rem;
       font-weight: 600;
-      font-family: var(--body-font);
+      font-family: var(--s-font);
       text-decoration: none;
-      transition: all var(--transition-speed) ease;
+      transition: all var(--transition-base) ease;
       display: inline-block;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent-1) 0%, var(--gold) 100%);
-      color: var(--void-black);
+      background: linear-gradient(135deg, var(--t-ac) 0%, var(--gold) 100%);
+      color: var(--t-bg);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
-      color: var(--void-black);
+      color: var(--t-bg);
     }
 
     .btn-secondary {
       background: transparent;
-      color: var(--text-primary);
+      color: var(--t-tx);
       border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .btn-secondary:hover {
-      border-color: var(--accent-2);
+      border-color: var(--t-a2);
       background: rgba(0, 212, 170, 0.1);
     }
 
@@ -793,7 +660,7 @@
     }
 
     footer p {
-      color: var(--text-secondary);
+      color: var(--t-t2);
       font-size: 0.9rem;
     }
 
@@ -810,15 +677,6 @@
   </style>
 </head>
 <body>
-  <!-- Theme Toggle -->
-  <div class="theme-toggle">
-    <select id="themeSelect" aria-label="Select theme">
-      <option value="quiet-protocol">Quiet Protocol</option>
-      <option value="mystic">Mystic Terminal</option>
-      <option value="neon">Neon</option>
-    </select>
-  </div>
-
   <!-- Navigation -->
   <nav>
     <div class="container">
@@ -1135,31 +993,13 @@
     </div>
   </footer>
 
-  <!-- Theme Script -->
+  <script src="https://templesofrefuge.earth/shared/theme-engine.js"></script>
   <script>
-    (function() {
-      'use strict';
-
-      const STORAGE_KEY = 'syncengine-theme';
-      const themeSelect = document.getElementById('themeSelect');
-
-      // Apply theme to document and update select
-      function applyTheme(themeName) {
-        document.documentElement.setAttribute('data-theme', themeName);
-        themeSelect.value = themeName;
-      }
-
-      // Handle theme change
-      themeSelect.addEventListener('change', (e) => {
-        const newTheme = e.target.value;
-        localStorage.setItem(STORAGE_KEY, newTheme);
-        applyTheme(newTheme);
-      });
-
-      // Initialize theme from localStorage or default
-      const savedTheme = localStorage.getItem(STORAGE_KEY) || 'quiet-protocol';
-      applyTheme(savedTheme);
-    })();
+  ThemeEngine.init({
+    defaultSkin: 'technical',
+    storageKey: 'se-skin',
+    position: 'top-right'
+  });
   </script>
 </body>
 </html>
