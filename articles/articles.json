@@ -48,6 +48,14 @@
     "icon": "🛡️"
   },
   {
+    "slug": "shared-roots-different-branches",
+    "title": "Shared Roots, Different Branches",
+    "subtitle": "How Indra's Network and Anytype Diverge from Common Ground",
+    "description": "Two projects built on CRDTs and encryption reached different conclusions about what decentralization is for — a deep comparison of philosophy and architecture.",
+    "category": "Analysis",
+    "icon": "🌿"
+  },
+  {
     "slug": "two-paths-to-decentralization",
     "title": "Two Paths to Decentralization",
     "subtitle": "Why Indra's Network Chose a Different Road Than Logos",
