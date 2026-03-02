@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="technical">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Indra's Network — A series of articles exploring the philosophy, architecture, and practical design of a truly decentralized network." />
+  <title>Indra's Network Articles — Synchronicity Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700;900&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--s-font);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      background: var(--t-bg);
+      color: var(--t-tx);
+      padding-top: 48px; /* for fixed theme switcher */
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    /* Nav - matches network.html */
+    nav {
+      padding: 1.5rem 0;
+      position: relative;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo {
+      font-family: var(--s-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--t-tx);
+      text-decoration: none;
+    }
+    .nav-links { list-style: none; display: flex; gap: 2rem; }
+    .nav-links a {
+      color: var(--t-t2);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--t-ac); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+    /* Hero */
+    .hero {
+      padding: 6rem 0 4rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: var(--s-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero h1 .accent { color: var(--t-ac); }
+    .hero .subtitle {
+      color: var(--t-t2);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+    .hero .github-link {
+      color: var(--t-ac);
+      text-decoration: none;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--t-a2);
+      transition: border-color 0.3s;
+    }
+    .hero .github-link:hover { border-color: var(--t-ac); }
+
+    /* Cards grid */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      padding-bottom: 6rem;
+    }
+
+    .article-card {
+      background: var(--t-cd);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--s-radius);
+      padding: 2rem;
+      transition: all 0.3s ease, opacity 0.6s ease, transform 0.6s ease;
+      text-decoration: none;
+      display: block;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .article-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .article-card:hover {
+      border-color: var(--t-a2);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .card-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .card-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--t-ac) 0%, var(--t-a2) 100%);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .card-category {
+      font-family: var(--s-font);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--t-a2);
+      background: rgba(0,212,170,0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .article-card h3 {
+      font-family: var(--s-display);
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+      color: var(--t-tx);
+    }
+    .article-card .card-subtitle {
+      font-size: 0.9rem;
+      color: var(--t-ac);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+    .article-card .card-desc {
+      color: var(--t-t2);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+    .read-link {
+      color: var(--t-ac);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      border-top: 1px solid var(--t-bd);
+    }
+    footer p { color: var(--t-t2); font-size: 0.9rem; }
+    footer a { color: var(--t-ac); text-decoration: none; }
+    footer a:hover { opacity: 0.7; }
+
+    /* Mobile */
+    @media (max-width: 640px) {
+      .container { padding: 0 1.5rem; }
+      .nav-links { gap: 1rem; font-size: 0.8rem; }
+    }
+    @media (max-width: 768px) {
+      .hero { padding: 4rem 0 3rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <a href="../" class="nav-logo">Synchronicity Engine</a>
+      <ul class="nav-links">
+        <li><a href="../network.html">The Mesh</a></li>
+        <li><a href="./">Articles</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Indra's <span class="accent">Network</span></h1>
+      <p class="subtitle">A series of articles exploring the philosophy, architecture, and practical design of a truly decentralized network.</p>
+      <a href="https://github.com/trumanellis/IndrasNetwork" target="_blank" rel="noopener noreferrer" class="github-link">View on GitHub →</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="articles-grid" id="articles-grid"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>Synchronicity Engine — a project of the GratiDAO</p>
+    </div>
+  </footer>
+
+  <script src="https://templesofrefuge.earth/shared/theme-engine.js"></script>
+  <script>
+  ThemeEngine.init({ defaultSkin: 'technical', storageKey: 'se-skin', position: 'top-right' });
+  </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const grid = document.getElementById('articles-grid');
+    try {
+      const resp = await fetch('articles.json');
+      const articles = await resp.json();
+      articles.forEach((article, i) => {
+        const card = document.createElement('a');
+        card.href = `read.html?slug=${article.slug}`;
+        card.className = 'article-card';
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon">${article.icon}</div>
+            <span class="card-category">${article.category}</span>
+          </div>
+          <h3>${article.title}</h3>
+          <p class="card-subtitle">${article.subtitle}</p>
+          <p class="card-desc">${article.description}</p>
+          <span class="read-link">Read Article →</span>
+        `;
+        grid.appendChild(card);
+        // Staggered fade-in
+        setTimeout(() => card.classList.add('visible'), 100 + i * 80);
+      });
+    } catch (e) {
+      grid.innerHTML = '<p style="color:var(--t-t2);text-align:center">Failed to load articles.</p>';
+    }
+  });
+  </script>
+</body>
+</html>

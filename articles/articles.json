@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "indras-network-every-node-a-mirror",
+    "title": "Every Node a Mirror",
+    "subtitle": "The Vision of Indra's Network",
+    "description": "How an ancient metaphor of infinite interconnection becomes the blueprint for a new kind of digital network — one where every device reflects the whole.",
+    "category": "Vision",
+    "icon": "🪞"
+  },
+  {
+    "slug": "your-story-is-your-key",
+    "title": "Your Story Is Your Key",
+    "subtitle": "Identity Without Permission",
+    "description": "A radical rethinking of digital identity — where your cryptographic keys emerge from your own narrative, and no authority stands between you and your name.",
+    "category": "Identity",
+    "icon": "🔑"
+  },
+  {
+    "slug": "your-files-live-with-you",
+    "title": "Your Files Live With You",
+    "subtitle": "Storage That Follows You Home",
+    "description": "What happens when your data isn't trapped in someone else's cloud? Content-addressed storage that moves with you across devices and networks.",
+    "category": "Storage",
+    "icon": "📦"
+  },
+  {
+    "slug": "nobody-owns-the-conversation",
+    "title": "Nobody Owns the Conversation",
+    "subtitle": "Stewardship Over Ownership",
+    "description": "The difference between hosting a conversation and owning it. How communities can govern their own spaces without landlords or platforms.",
+    "category": "Stewardship",
+    "icon": "🤝"
+  },
+  {
+    "slug": "the-heartbeat-of-community",
+    "title": "The Heartbeat of Community",
+    "subtitle": "An Economy of Gratitude",
+    "description": "Beyond transactions: a token system where value flows from genuine contribution and gratitude, not speculation or extraction.",
+    "category": "Economy",
+    "icon": "💓"
+  },
+  {
+    "slug": "your-network-has-an-immune-system",
+    "title": "Your Network Has an Immune System",
+    "subtitle": "Moderation Without Moderators",
+    "description": "How a network can protect itself from abuse without centralized censors — using trust propagation, stake-weighted signals, and community immunity.",
+    "category": "Moderation",
+    "icon": "🛡️"
+  },
+  {
+    "slug": "two-paths-to-decentralization",
+    "title": "Two Paths to Decentralization",
+    "subtitle": "Why Indra's Network Chose a Different Road Than Logos",
+    "description": "How two projects with the same diagnosis of a broken internet reached opposite conclusions about blockchain, trust, and what it means to ship.",
+    "category": "Analysis",
+    "icon": "🔀"
+  },
+  {
+    "slug": "indras-network-developers-guide",
+    "title": "Developer's Guide",
+    "subtitle": "Building on Indra's Network",
+    "description": "Technical reference for developers: architecture overview, protocol specifications, API patterns, and integration guides for building on the mesh.",
+    "category": "Reference",
+    "icon": "⚙️"
+  }
+]

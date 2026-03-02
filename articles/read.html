@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" data-skin="technical">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <title>Reading... — Indra's Network</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700;900&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--t-bg);
+            font-family: var(--s-font);
+            font-weight: 300;
+            line-height: 1.8;
+            font-size: 17px;
+            color: var(--t-tx);
+            padding-top: 48px;
+        }
+
+        /* Nav */
+        nav {
+            padding: 1.5rem 0;
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo {
+            font-family: var(--s-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--t-tx);
+            text-decoration: none;
+        }
+        .nav-links { list-style: none; display: flex; gap: 2rem; }
+        .nav-links a { color: var(--t-t2); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--t-ac); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Back link */
+        .site-header { padding: 2rem; text-align: center; }
+        .back-link {
+            color: var(--t-ac);
+            text-decoration: none;
+            font-family: var(--s-display);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+        .back-link:hover { opacity: 0.7; }
+
+        .container-narrow { max-width: 750px; margin: 0 auto; padding: 4rem 2rem; }
+
+        /* Footer */
+        .site-footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--t-bd);
+            margin-top: 4rem;
+        }
+        .footer-site-name {
+            font-family: var(--s-display);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--t-dm);
+            margin-top: 2rem;
+        }
+
+        /* Loading & Error */
+        .loading {
+            color: var(--t-mt);
+            text-align: center;
+            padding: 4rem 0;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        #error-state { text-align: center; padding: 4rem 0; }
+        .error-title { color: var(--t-er); font-family: var(--s-display); font-size: 1.5rem; margin-bottom: 1rem; }
+        .error-text { color: var(--t-mt); margin-bottom: 2rem; }
+
+        /* === PROSE STYLES (scoped under #article-body) === */
+        #article-body h1 {
+            font-family: var(--s-display);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            background: linear-gradient(135deg, var(--t-tx), var(--t-t2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        #article-body h2 {
+            font-family: var(--s-display);
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 400;
+            color: var(--t-a2);
+            margin-top: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        #article-body h3 {
+            font-family: var(--s-display);
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-weight: 400;
+            color: var(--t-ac);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        #article-body h4 {
+            font-family: var(--s-font);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--t-t2);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            font-style: italic;
+        }
+        #article-body h5 {
+            font-family: var(--s-font);
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--t-mt);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        #article-body p {
+            color: var(--t-t2);
+            line-height: 1.85;
+            margin-bottom: 1.5rem;
+            max-width: 65ch;
+        }
+        #article-body strong { color: var(--t-tx); font-weight: 500; }
+        #article-body em { color: var(--t-tx); }
+        #article-body a {
+            color: var(--t-ac);
+            text-decoration: none;
+            border-bottom: 1px solid var(--t-a2);
+            transition: border-color 0.3s;
+        }
+        #article-body a:hover { border-color: var(--t-ac); }
+        #article-body hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--t-bd), var(--t-dm), var(--t-bd), transparent);
+            margin: 3rem 0;
+        }
+        #article-body blockquote {
+            border-left: 3px solid var(--t-dm);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--t-mt);
+        }
+        #article-body ul, #article-body ol {
+            color: var(--t-t2);
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        #article-body li { margin-bottom: 0.5rem; }
+
+        /* Code (enhanced for technical articles) */
+        #article-body code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--t-sf);
+            padding: 0.15em 0.4em;
+            border-radius: 3px;
+            font-size: 0.88em;
+            color: var(--t-a2);
+        }
+        #article-body pre {
+            background: var(--t-sf);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--t-bd);
+        }
+        #article-body pre code {
+            padding: 0;
+            background: none;
+            color: var(--t-t2);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        /* Tables (developer guide has many) */
+        #article-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            display: block;
+        }
+        #article-body thead { background: var(--t-sf); }
+        #article-body th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            color: var(--t-tx);
+            border-bottom: 2px solid var(--t-bd);
+            white-space: nowrap;
+        }
+        #article-body td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--t-bd);
+            color: var(--t-t2);
+        }
+        #article-body tr:hover { background: rgba(255,255,255,0.02); }
+
+        /* Iframe placeholder */
+        .iframe-placeholder {
+            background: var(--t-sf);
+            border: 1px dashed var(--t-bd);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .iframe-placeholder-label {
+            font-family: var(--s-display);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--t-dm);
+            margin-bottom: 0.75rem;
+        }
+        .iframe-placeholder a {
+            color: var(--t-ac);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--t-a2);
+        }
+
+        /* Asset placeholder */
+        .asset-placeholder {
+            background: var(--t-sf);
+            border: 1px solid var(--t-bd);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            color: var(--t-dm);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Fade-up animation */
+        .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .container { padding: 0 1.5rem; }
+            .nav-links { gap: 1rem; font-size: 0.8rem; }
+        }
+        @media (max-width: 768px) {
+            .container-narrow { padding: 2rem 1.25rem; }
+            #article-body p { max-width: 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="../" class="nav-logo">Synchronicity Engine</a>
+            <ul class="nav-links">
+                <li><a href="../network.html">The Mesh</a></li>
+                <li><a href="./">Articles</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="site-header">
+        <a href="./" class="back-link">← All Articles</a>
+    </header>
+
+    <main>
+        <div class="container-narrow">
+            <article id="article-body">
+                <p class="loading">Loading...</p>
+            </article>
+
+            <div id="error-state" style="display:none">
+                <p class="error-title">Article Not Found</p>
+                <p class="error-text"></p>
+                <a href="./" class="back-link">← All Articles</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <a href="./" class="back-link">← All Articles</a>
+        <p class="footer-site-name">Indra's Network</p>
+    </footer>
+
+    <script src="https://templesofrefuge.earth/shared/theme-engine.js"></script>
+    <script>
+    ThemeEngine.init({ defaultSkin: 'technical', storageKey: 'se-skin', position: 'top-right' });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@15/marked.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            const articleBody = document.getElementById('article-body');
+            const errorState = document.getElementById('error-state');
+
+            if (!slug) {
+                showError('No article specified');
+                return;
+            }
+
+            try {
+                const url = `https://raw.githubusercontent.com/trumanellis/IndrasNetwork/main/articles/${encodeURIComponent(slug)}.md`;
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    showError('Article not found');
+                    return;
+                }
+
+                let markdown = await response.text();
+
+                // Strip optional YAML frontmatter
+                markdown = markdown.replace(/^---\n[\s\S]*?\n---\n/, '');
+
+                // Configure marked
+                marked.use({ gfm: true, breaks: false });
+
+                // Parse markdown
+                const html = marked.parse(markdown);
+                articleBody.innerHTML = html;
+
+                // Post-process
+                postProcess();
+
+                // Update page title from h1
+                const h1 = articleBody.querySelector('h1');
+                if (h1) {
+                    document.title = h1.textContent + ' — Indra\'s Network';
+                }
+
+                // Update meta description
+                const firstP = articleBody.querySelector('p');
+                if (firstP) {
+                    const meta = document.querySelector('meta[name="description"]');
+                    if (meta) meta.setAttribute('content', firstP.textContent.substring(0, 200));
+                }
+
+                // Apply fade-up animations to h2s
+                articleBody.querySelectorAll('h2').forEach(el => el.classList.add('fade-up'));
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('visible');
+                    });
+                }, { threshold: 0.1 });
+
+                document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+            } catch (err) {
+                showError('Failed to load article');
+            }
+
+            function showError(message) {
+                articleBody.style.display = 'none';
+                errorState.style.display = 'block';
+                errorState.querySelector('.error-text').textContent = message;
+            }
+
+            function postProcess() {
+                // 1. Rewrite internal .md links to read.html?slug=...
+                articleBody.querySelectorAll('a[href]').forEach(a => {
+                    const href = a.getAttribute('href');
+                    // Internal .md links (relative, not starting with http)
+                    if (href && href.endsWith('.md') && !href.startsWith('http')) {
+                        const mdSlug = href.replace(/\.md$/, '').replace(/^\.\//, '');
+                        a.setAttribute('href', `read.html?slug=${mdSlug}`);
+                    }
+                    // External links: add target="_blank"
+                    else if (href && href.startsWith('http')) {
+                        a.setAttribute('target', '_blank');
+                        a.setAttribute('rel', 'noopener noreferrer');
+                    }
+                });
+
+                // 2. Replace <iframe> embeds with styled placeholders
+                articleBody.querySelectorAll('iframe').forEach(iframe => {
+                    const src = iframe.getAttribute('src') || '';
+                    const div = document.createElement('div');
+                    div.className = 'iframe-placeholder';
+                    div.innerHTML = `
+                        <p class="iframe-placeholder-label">Interactive Visualization</p>
+                        <a href="https://github.com/trumanellis/IndrasNetwork" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                    `;
+                    iframe.replaceWith(div);
+                });
+
+                // 3. Replace asset:// image paths with alt-text placeholders
+                articleBody.querySelectorAll('img').forEach(img => {
+                    const src = img.getAttribute('src') || '';
+                    if (src.startsWith('asset://') || src.startsWith('images/')) {
+                        const alt = img.getAttribute('alt') || 'Visualization';
+                        const div = document.createElement('div');
+                        div.className = 'asset-placeholder';
+                        div.textContent = `[ ${alt} ]`;
+                        img.replaceWith(div);
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
