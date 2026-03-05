@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Community — SyncEngine</title>
+  <meta name="description" content="Gatherings, oracle assistants, membership, and the ecosystem of Temples of Refuge, Agua Lila, and SyncEngine.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/core.css">
+  <style>
+    /* ── Links ── */
+    a { color: var(--moss-light); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--tx); }
+
+    /* ── Gatherings ── */
+    .gathering-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--bg2); border: 2px solid var(--bd2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin: 0 auto 16px;
+    }
+    .gathering-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .gathering-desc {
+      font-size: 15px;
+      color: var(--t2);
+      line-height: 1.85;
+    }
+
+    /* ── Oracle badge ── */
+    .oracle-badge {
+      display: inline-block;
+      padding: 6px 18px; border-radius: 100px;
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: rgba(180,142,250,0.08); border: 1px solid rgba(180,142,250,0.2);
+      color: var(--violet-light);
+      margin-bottom: 32px;
+    }
+
+    /* ── Oracle items ── */
+    .oracle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 32px;
+    }
+    .oracle-item {
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .oracle-item-icon {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .oracle-item h4 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .oracle-item p {
+      font-size: 14px;
+      color: var(--t2);
+      line-height: 1.85;
+    }
+
+    /* ── Join / Membership ── */
+    .join-features {
+      list-style: none;
+      margin: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .join-features li {
+      font-size: 15px;
+      color: var(--t2);
+      line-height: 1.75;
+      padding-left: 20px;
+      position: relative;
+    }
+    .join-features li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--moss);
+      font-family: var(--mono);
+      font-size: 13px;
+    }
+    .join-features li strong { color: var(--tx); font-weight: 500; }
+
+    .join-prose {
+      font-size: 15px;
+      color: var(--t2);
+      line-height: 1.85;
+      margin-bottom: 14px;
+    }
+    .join-prose em { color: var(--tx); font-style: italic; }
+    .join-prose strong { color: var(--tx); font-weight: 500; }
+
+    .article-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--moss-light);
+      text-decoration: none;
+      transition: color 0.2s;
+      margin-bottom: 28px;
+    }
+    .article-link:hover { color: var(--tx); }
+
+    .cta-panel {
+      text-align: center;
+    }
+    .cta-panel h3 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    .cta-panel p {
+      font-size: 15px;
+      color: var(--t2);
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+
+    .temple-icon-wrap {
+      width: 100%; height: 180px;
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+      margin-bottom: 28px;
+    }
+
+    .legal-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      line-height: 1.7;
+      margin-top: 18px;
+    }
+
+    /* ── Ecosystem ── */
+    .eco-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .eco-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--bg2); border: 2px solid var(--bd2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 16px;
+    }
+    .eco-domain {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 12px;
+    }
+    .eco-card h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .eco-card p {
+      font-size: 14px;
+      color: var(--t2);
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border: 1px solid var(--bd2);
+      border-radius: 10px;
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--t2);
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--moss);
+      color: var(--moss-light);
+      transform: translateY(-1px);
+    }
+
+    /* ── Section divider ── */
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-h {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(24px, 3.5vw, 40px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--t2);
+      line-height: 1.85;
+      margin-bottom: 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .oracle-grid { grid-template-columns: 1fr; }
+      .eco-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="site-nav-logo">Sync<em>Engine</em></a>
+  <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">☰</button>
+  <div class="site-nav-links">
+    <a href="/gift-cycle.html">Gift Cycle</a>
+    <a href="/vision.html">Vision</a>
+    <a href="/community.html" class="active">Community</a>
+    <a href="/network.html">The Mesh</a>
+    <a href="/articles/">Articles</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="sect" style="min-height:50vh; padding-bottom:40px">
+  <div class="wrap" style="text-align:center">
+    <div class="r">
+      <div class="stage-num" style="color:var(--rose)">People &amp; Places</div>
+      <h1 class="stage-h">The Community</h1>
+      <p class="stage-p" style="max-width:600px;margin:0 auto">Where the digital mesh meets physical gatherings — and abundance flows back to those who serve.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Gatherings -->
+<section class="sect-short" id="gatherings">
+  <div class="wrap">
+    <div class="r" style="margin-bottom:40px">
+      <div class="section-label" style="color:var(--rose)">Gatherings</div>
+      <h2 class="section-h">Where the Mesh Manifests Physically</h2>
+    </div>
+    <div class="two">
+      <div class="r r-d1 panel" style="text-align:center">
+        <div class="gathering-icon">🔥</div>
+        <div class="gathering-title">Gatherings of the Tribe</div>
+        <p class="gathering-desc">Community gatherings hosted at Temples around the world. Co-created ceremony, celebration, and connection—however the community decides to come together.</p>
+      </div>
+      <div class="r r-d2 panel" style="text-align:center">
+        <div class="gathering-icon">🤝</div>
+        <div class="gathering-title">The Community Bazaar</div>
+        <p class="gathering-desc">At the close of every Gathering, a marketplace emerges where Intentions are fulfilled, Tokens flow, and the gift economy becomes tangible, delicious reality.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Oracle -->
+<section class="sect-short" id="oracle">
+  <div class="wrap">
+    <div class="r panel" style="position:relative; overflow:hidden">
+      <div class="panel-accent" style="background: linear-gradient(90deg, var(--violet), var(--indigo));"></div>
+      <div style="text-align:center; padding-bottom:8px">
+        <span class="oracle-badge">The Vision — Coming Soon</span>
+        <div class="section-label" style="color:var(--violet-light)">Oracle Assistants</div>
+        <h2 class="section-h">AI companions trained on collective wisdom</h2>
+      </div>
+      <div class="oracle-grid">
+        <div class="oracle-item r r-d1">
+          <span class="oracle-item-icon">🧙‍♂️</span>
+          <h4>Community Wisdom Keepers</h4>
+          <p>AI companions trained exclusively on the collective highest wisdom of community members—not corporate data harvesting.</p>
+        </div>
+        <div class="oracle-item r r-d2">
+          <span class="oracle-item-icon">🌟</span>
+          <h4>Reflecting the Best of Us</h4>
+          <p>Members consciously contribute their highest-self knowledge. The Oracle becomes a living repository of collective excellence.</p>
+        </div>
+        <div class="oracle-item r r-d3">
+          <span class="oracle-item-icon">🔮</span>
+          <h4>Growing Intelligence</h4>
+          <p>Compute power flows where collective intention focuses. The more the community serves, the wiser the Oracle becomes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Join / Membership -->
+<section class="sect-short" id="join">
+  <div class="wrap">
+    <div class="r" style="margin-bottom:40px">
+      <div class="section-label" style="color:var(--moss)">Membership</div>
+      <h2 class="section-h">Join the Tribe</h2>
+      <p class="section-sub">Become a steward of the gift economy</p>
+    </div>
+    <div class="feature-section" style="align-items:start">
+      <!-- Left: Info -->
+      <div class="r r-d1">
+        <h3 style="font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-0.02em;margin-bottom:14px">GratiDAO Principles</h3>
+        <p class="join-prose"><em>GratiDAO</em>—Portuguese for Gratitude—represents our organizational philosophy: Gratitude-based, Decentralized, Distributed, Autonomous, and Alive.</p>
+        <a href="https://templesofrefuge.earth/articles/read.html?slug=gene-editing-collective" class="article-link" target="_blank" rel="noopener noreferrer">Read: The Organizational Philosophy →</a>
+        <ul class="join-features">
+          <li><strong>Two-Member Sponsorship:</strong> New members are welcomed through recommendation by two existing stewards—trust propagates through relationship.</li>
+          <li><strong>Temple Network Access:</strong> Once initiated, access land-based sanctuaries worldwide where the community gathers.</li>
+          <li><strong>Monthly Contribution:</strong> Contributions ($15–50) become compute power for community AI, infrastructure, and the gift economy.</li>
+          <li><strong>Redistribution Rights:</strong> Participate in the monthly New Moon gratitude bidding for community surplus.</li>
+        </ul>
+      </div>
+      <!-- Right: CTA -->
+      <div class="r r-d2 panel cta-panel">
+        <div class="panel-accent" style="background: linear-gradient(90deg, var(--moss), var(--indigo));"></div>
+        <div class="temple-icon-wrap">🏛️</div>
+        <h3>Become a Steward</h3>
+        <p>Reserve your place among the Original Stewards. Even a small donation indicates interest and opens the door to peership.</p>
+        <a href="https://give.tithe.ly/?formId=57a0dcf9-7e25-46a1-8f4e-aa5a4f07f10f" class="btn btn-final" target="_blank" rel="noopener noreferrer" style="width:100%;justify-content:center;font-size:15px;padding:16px 30px">Reserve Your Spot</a>
+        <p class="legal-note">Temples of Refuge is a <strong>508(c)(1)(a)</strong> religious nonprofit registered in Utah, providing First Amendment protections for community gatherings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ecosystem -->
+<section class="sect-short" id="ecosystem">
+  <div class="wrap">
+    <div class="r" style="margin-bottom:40px">
+      <div class="section-label" style="color:var(--indigo-light)">Ecosystem</div>
+      <h2 class="section-h">The Ecosystem</h2>
+      <p class="section-sub">Three nodes in a larger pattern</p>
+    </div>
+    <div class="eco-grid">
+      <div class="r r-d1 panel eco-card">
+        <div class="eco-icon">⛩️</div>
+        <h3>Temples of Refuge</h3>
+        <p class="eco-domain">templesofrefuge.earth</p>
+        <p>The steward organization. A regenerative legal structure holding the vision for ethical technology. Temples of Refuge ensures the code serves human flourishing, not extraction.</p>
+        <a href="https://templesofrefuge.earth" class="btn-ghost" target="_blank" rel="noopener noreferrer">Visit Temples →</a>
+      </div>
+      <div class="r r-d2 panel eco-card">
+        <div class="eco-icon">🌿</div>
+        <h3>Agua Lila</h3>
+        <p class="eco-domain">agualila.earth</p>
+        <p>Where code meets soil. A physical place in nature where developers, designers, and dreamers gather to build the technologies of regeneration.</p>
+        <a href="https://agualila.earth" class="btn-ghost" target="_blank" rel="noopener noreferrer">Visit Agua Lila →</a>
+      </div>
+      <div class="r r-d3 panel eco-card">
+        <div class="eco-icon">◈</div>
+        <h3>Synchronicity Engine</h3>
+        <p class="eco-domain">syncengine.earth</p>
+        <p>The technology platform. Open-source, local-first, quantum-secure collaboration software. This is where intention becomes infrastructure.</p>
+        <a href="/vision.html" class="btn-ghost">Explore the Vision →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer-links">
+      <a href="/">Home</a>
+      <a href="/gift-cycle.html">Gift Cycle</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/community.html">Community</a>
+      <a href="/network.html">The Mesh</a>
+      <a href="/articles/">Articles</a>
+      <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+      <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
+    </div>
+    <p class="site-footer-copy">&copy; 2026 Synchronicity Engine · Open source · Human-first technology</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(els => els.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.15 });
+document.querySelectorAll('.r').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

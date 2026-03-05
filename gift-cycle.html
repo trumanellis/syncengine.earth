@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Gift Cycle — SyncEngine</title>
+  <meta name="description" content="How the gift economy works: from cheesecake to tokens of gratitude to monthly redistribution.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/core.css">
+  <style>
+    /* ── Hero intro ── */
+    .gift-hero {
+      padding: 80px 0 48px;
+      text-align: center;
+    }
+
+    /* ── Story section ── */
+    .story-context {
+      font-size: 17px;
+      color: var(--t2);
+      line-height: 1.9;
+      max-width: 600px;
+      margin: 0 auto 56px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .story-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* Step 1 hero card */
+    .story-card--hero {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .story-card--hero .story-card-image {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--bd);
+    }
+    .story-card--hero .story-card-image img {
+      width: 100%;
+      display: block;
+      border-radius: var(--radius);
+    }
+
+    /* Steps 2–6: text + phone (stacked) */
+    .story-card {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .story-card-text {
+      padding: 8px 0;
+    }
+    .story-step-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .story-card-text h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      color: var(--tx);
+    }
+    .story-card-text p {
+      font-size: 16px;
+      color: var(--t2);
+      line-height: 1.85;
+    }
+    .story-card-caption {
+      display: block;
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      letter-spacing: 0.04em;
+    }
+
+    /* Phone mockup */
+    .story-card-mockup {
+      display: flex;
+      justify-content: center;
+    }
+    .phone-screen {
+      width: 240px;
+      background: var(--card);
+      border: 1px solid var(--bd2);
+      border-radius: 24px;
+      padding: 20px 18px 24px;
+      font-family: var(--display);
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    }
+    .phone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--bd);
+    }
+    .app-name {
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--moss-light);
+      letter-spacing: 0.04em;
+    }
+    .phone-time {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+    }
+    .back-arrow {
+      font-size: 14px;
+      color: var(--t3);
+    }
+    .screen-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--tx);
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .mock-input-group {
+      margin-bottom: 10px;
+    }
+    .mock-input-group label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .mock-input {
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--t2);
+    }
+    .mock-textarea {
+      font-size: 11px;
+      color: var(--t3);
+    }
+    .mock-button {
+      margin-top: 14px;
+      background: var(--moss);
+      color: var(--bg);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .mock-token {
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      transition: border-color 0.2s;
+    }
+    .mock-token.selected {
+      border-color: var(--moss);
+      background: rgba(138,173,110,0.06);
+    }
+    .token-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--tx);
+      margin-bottom: 3px;
+    }
+    .token-hours {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--moss-light);
+    }
+    .token-desc {
+      font-size: 10px;
+      color: var(--dim);
+    }
+    /* QR display */
+    .intention-preview {
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    .intention-preview-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--tx);
+      margin-bottom: 4px;
+    }
+    .intention-preview-token {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--t3);
+    }
+    .qr-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .qr-mock {
+      width: 80px;
+      height: 80px;
+      background: var(--bg2);
+      border: 1px solid var(--bd2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--dim);
+      position: relative;
+    }
+    .qr-corner {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--moss);
+    }
+    .qr-corner.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; border-radius: 2px 0 0 0; }
+    .qr-corner.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; border-radius: 0 2px 0 0; }
+    .qr-corner.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; border-radius: 0 0 0 2px; }
+    .qr-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 0.06em;
+    }
+    /* Upload */
+    .mock-upload {
+      margin-top: 10px;
+      background: var(--bg2);
+      border: 1px dashed var(--bd2);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--dim);
+    }
+    .upload-icon { font-size: 16px; }
+    /* Success screen */
+    .success-display {
+      text-align: center;
+      padding: 10px 0 8px;
+    }
+    .success-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(138,173,110,0.15);
+      border: 1px solid var(--moss);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--moss-light);
+      margin: 0 auto 6px;
+    }
+    .success-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--moss-light);
+    }
+    .connection-card {
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin: 10px 0 8px;
+    }
+    .connection-badge {
+      font-size: 10px;
+      color: var(--moss-light);
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .provider-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .provider-avatar {
+      font-size: 20px;
+    }
+    .provider-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .provider-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--tx);
+    }
+    .provider-role {
+      font-size: 10px;
+      color: var(--dim);
+    }
+    .hint-text {
+      font-size: 10px;
+      color: var(--t3);
+      text-align: center;
+    }
+
+    /* ── Token lifecycle ── */
+    .token-lifecycle {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      position: relative;
+    }
+    .token-lifecycle::before {
+      content: '';
+      position: absolute;
+      top: 38px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--moss), var(--indigo));
+      opacity: 0.3;
+    }
+    .lifecycle-step {
+      text-align: center;
+      padding: 24px 16px;
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+      position: relative;
+    }
+    .lifecycle-step--final {
+      border-color: var(--moss-dim);
+    }
+    .lifecycle-step-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .lifecycle-step h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      color: var(--tx);
+    }
+    .lifecycle-step p {
+      font-size: 12px;
+      color: var(--t3);
+      line-height: 1.7;
+    }
+
+    /* ── Redistribution ── */
+    .redistribution-flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .flow-step {
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+    .flow-step-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--tx);
+      background: var(--bg2);
+      border: 1px solid var(--bd2);
+      margin-bottom: 16px;
+    }
+    .moon-icon {
+      font-size: 22px;
+    }
+    .flow-step h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--tx);
+    }
+    .flow-step p {
+      font-size: 14px;
+      color: var(--t2);
+      line-height: 1.8;
+    }
+
+    .redistribution-quote {
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-left: 3px solid var(--moss);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+    }
+    .redistribution-quote p {
+      font-family: var(--body);
+      font-size: 17px;
+      color: var(--t2);
+      line-height: 1.85;
+      font-style: italic;
+    }
+    .redistribution-quote em {
+      color: var(--moss-light);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    /* Moon SVG diagram */
+    .moon-cycle-diagram {
+      display: flex;
+      justify-content: center;
+    }
+    .moon-svg {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+    }
+    /* SVG element styles */
+    .gradient-start { stop-color: var(--moss); }
+    .gradient-end   { stop-color: var(--indigo); }
+    .cycle-ring     { stroke: var(--bd2); }
+    .phase-circle   { fill: var(--bd); stroke: none; }
+    .phase-inner    { fill: var(--t3); }
+    .phase-shadow   { fill: var(--bg2); }
+    .phase-label    { font-family: 'Outfit', sans-serif; font-size: 11px; fill: var(--dim); }
+    .phase-circle--active { fill: transparent; stroke: var(--moss); stroke-width: 2; filter: url(#moonGlow); }
+    .phase-inner--new  { fill: var(--bg); stroke: var(--moss); stroke-width: 1.5; filter: url(#moonGlow); }
+    .phase-inner--full { fill: var(--t2); }
+    .phase-label--active { fill: var(--moss-light); font-weight: 600; font-size: 12px; }
+    .center-icon  { font-size: 20px; }
+    .center-label { font-family: 'Outfit', sans-serif; font-size: 10px; fill: var(--dim); letter-spacing: 0.05em; }
+    .center-arrow      { stroke: var(--bd2); }
+    .center-arrow-head { fill: var(--bd2); }
+    .cycle-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: var(--t2); letter-spacing: 0.08em; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .story-card-mockup { justify-content: flex-start; }
+
+      .token-lifecycle {
+        grid-template-columns: 1fr 1fr;
+      }
+      .token-lifecycle::before { display: none; }
+
+      .redistribution-flow {
+        grid-template-columns: 1fr;
+      }
+
+      /* Mobile nav */
+      .site-nav-toggle { display: block; }
+      .site-nav-links {
+        display: none;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: rgba(8,10,8,0.97);
+        border-bottom: 1px solid var(--bd);
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 0;
+      }
+      .site-nav-links.open { display: flex; }
+      .site-nav-links a {
+        padding: 12px 24px;
+        border-bottom: 1px solid var(--bd);
+      }
+      .site-nav-links a:last-child { border-bottom: none; }
+    }
+
+    @media (max-width: 480px) {
+      .token-lifecycle { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Site Nav -->
+<nav class="site-nav">
+  <a href="/" class="site-nav-logo">Sync<em>Engine</em></a>
+  <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="site-nav-links">
+    <a href="/gift-cycle.html" class="active">Gift Cycle</a>
+    <a href="/vision.html">Vision</a>
+    <a href="/community.html">Community</a>
+    <a href="/network.html">The Mesh</a>
+    <a href="/articles/">Articles</a>
+  </div>
+</nav>
+
+<!-- Hero intro -->
+<section class="sect-short gift-hero">
+  <div class="wrap" style="text-align:center">
+    <div class="r">
+      <div class="stage-num" style="color:var(--moss)">The Gift Economy</div>
+      <h1 class="stage-h">The Gift Cycle</h1>
+      <p class="stage-p" style="max-width:600px;margin:0 auto">How gratitude becomes currency — from a slice of cheesecake to a self-sustaining economy of care.</p>
+    </div>
+  </div>
+</section>
+
+<!-- The Maracuja Cheesecake Story -->
+<section id="story" class="sect-short">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--s3)">Step by Step</div>
+      <h2 class="stage-h">The Maracuja Cheesecake</h2>
+      <p class="stage-p">How a gift economy actually works</p>
+    </div>
+
+    <p class="story-context r r-d1">
+      Picture yourself at a <em>Gathering of the Tribe</em>—a community market where
+      gifts and gratitude flow freely. You spot a baker's stall with the most beautiful
+      cheesecake you've ever seen...
+    </p>
+
+    <div class="story-flow">
+
+      <!-- Step 1: You See It -->
+      <div class="story-card story-card--hero r">
+        <figure class="story-card-image">
+          <img
+            src="refs/A Portal into SyncEngine/MaracujaCheesecake.png"
+            alt="A baker at the Community Bazaar with maracuja cheesecake, raw brownies, and other delicious offerings"
+            loading="lazy"
+          />
+        </figure>
+        <div class="story-card-text">
+          <div class="story-step-icon">&#128064;</div>
+          <h3>1. You See It</h3>
+          <p>At the Community Bazaar, maracuja cheesecake catches your eye. The baker recommends it—you know this is what you want.</p>
+          <span class="story-card-caption">The Community Bazaar: where gifts and gratitude flow freely</span>
+        </div>
+      </div>
+
+      <!-- Step 2: Set an Intention -->
+      <div class="story-card r r-d1">
+        <div class="story-card-text">
+          <div class="story-step-icon">&#10024;</div>
+          <h3>2. Set an Intention</h3>
+          <p>Open SyncEngine on your phone and set an Intention: "Delicious cheesecake"</p>
+        </div>
+        <div class="story-card-mockup">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <span class="app-name">SyncEngine</span>
+              <span class="phone-time">3:45 PM</span>
+            </div>
+            <div class="screen-title">New Intention</div>
+            <div class="mock-input-group">
+              <label>What do you seek?</label>
+              <div class="mock-input">Delicious cheesecake</div>
+            </div>
+            <div class="mock-input-group">
+              <label>Details</label>
+              <div class="mock-input mock-textarea">That maracuja cheesecake looks amazing!</div>
+            </div>
+            <div class="mock-button">Next: Attach Tokens</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Attach Your Token -->
+      <div class="story-card r r-d1">
+        <div class="story-card-text">
+          <div class="story-step-icon">&#127807;</div>
+          <h3>3. Attach Your Token</h3>
+          <p>Drag over the Token you earned last week—8 hours helping your neighbor clear invasive eucalyptus.</p>
+        </div>
+        <div class="story-card-mockup">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <span class="back-arrow">&#8592;</span>
+              <span class="phone-time">3:45 PM</span>
+            </div>
+            <div class="screen-title">Attach Tokens</div>
+            <div class="mock-token selected">
+              <div class="token-row">
+                <span class="token-name">&#127795; Eucalyptus Token</span>
+                <span class="token-hours">8h</span>
+              </div>
+              <div class="token-desc">Helping neighbor clear invasives</div>
+            </div>
+            <div class="mock-token">
+              <div class="token-row">
+                <span class="token-name">&#127838; Sourdough Token</span>
+                <span class="token-hours">2h</span>
+              </div>
+              <div class="token-desc">Teaching starter cultivation</div>
+            </div>
+            <div class="mock-button">Create Intention Card</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Share the QR -->
+      <div class="story-card r r-d1">
+        <div class="story-card-text">
+          <div class="story-step-icon">&#128241;</div>
+          <h3>4. Share the QR</h3>
+          <p>A card appears with a QR code. Show it to the baker so they can view and fulfill your Intention.</p>
+        </div>
+        <div class="story-card-mockup">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <span class="back-arrow">&#8592;</span>
+              <span class="phone-time">3:46 PM</span>
+            </div>
+            <div class="screen-title">Your Intention</div>
+            <div class="intention-preview">
+              <div class="intention-preview-title">&#127856; Delicious cheesecake</div>
+              <div class="intention-preview-token">
+                <span>&#127795; Eucalyptus Token</span>
+                <span class="token-hours">8h</span>
+              </div>
+            </div>
+            <div class="qr-display">
+              <div class="qr-mock">
+                <div class="qr-corner tl"></div>
+                <div class="qr-corner tr"></div>
+                <div class="qr-corner bl"></div>
+                <span>QR</span>
+              </div>
+              <div class="qr-label">Show to provider</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Proof of Service -->
+      <div class="story-card r r-d1">
+        <div class="story-card-text">
+          <div class="story-step-icon">&#10003;</div>
+          <h3>5. Proof of Service</h3>
+          <p>They scan, hand you a slice of cheesecake, and post their Proof of Service.</p>
+        </div>
+        <div class="story-card-mockup">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <span class="back-arrow">&#8592;</span>
+              <span class="phone-time">3:50 PM</span>
+            </div>
+            <div class="screen-title">Post Proof</div>
+            <div class="mock-input-group">
+              <label>What did you provide?</label>
+              <div class="mock-input">Maracuja Cheesecake Slice</div>
+            </div>
+            <div class="mock-upload">
+              <span class="upload-icon">&#128248;</span>
+              <span>Add photo</span>
+            </div>
+            <div class="mock-button">Submit Proof</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6: Connection Made -->
+      <div class="story-card r r-d1">
+        <div class="story-card-text">
+          <div class="story-step-icon">&#128279;</div>
+          <h3>6. Connection Made</h3>
+          <p>Release your Token to them. Now you're connected through the mesh—ready for future exchanges.</p>
+        </div>
+        <div class="story-card-mockup">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <span class="app-name">SyncEngine</span>
+              <span class="phone-time">3:52 PM</span>
+            </div>
+            <div class="success-display">
+              <div class="success-icon">&#10003;</div>
+              <div class="success-title">Complete!</div>
+            </div>
+            <div class="connection-card">
+              <div class="connection-badge">&#129309; New Connection</div>
+              <div class="provider-row">
+                <span class="provider-avatar">&#129473;</span>
+                <div class="provider-info">
+                  <span class="provider-name">The Baker</span>
+                  <span class="provider-role">Community Chef</span>
+                </div>
+              </div>
+            </div>
+            <div class="hint-text">&#128161; Coordinate future exchanges directly!</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Tokens of Gratitude -->
+<section id="tokens" class="sect-short">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--indigo)">The Currency</div>
+      <h2 class="stage-h">Tokens of Gratitude</h2>
+      <p class="stage-p">The currency of a gift economy</p>
+    </div>
+
+    <div class="token-lifecycle r r-d1" role="list" aria-label="Token lifecycle: from service to stewardship">
+
+      <div class="lifecycle-step" role="listitem">
+        <span class="lifecycle-step-icon">&#127807;</span>
+        <h3>Act of Service</h3>
+        <p>Tokens are born through real contribution—ecological restoration, teaching skills, helping neighbors, healing work.</p>
+      </div>
+
+      <div class="lifecycle-step" role="listitem">
+        <span class="lifecycle-step-icon">&#10024;</span>
+        <h3>Token Created</h3>
+        <p>Each Token carries the weight of hours of collective attention. Higher-impact service generates higher-value Tokens.</p>
+      </div>
+
+      <div class="lifecycle-step" role="listitem">
+        <span class="lifecycle-step-icon">&#128204;</span>
+        <h3>Attached to Intention</h3>
+        <p>When you want something from the community, attach your Token to an Intention—a conscious expression of your desire.</p>
+      </div>
+
+      <div class="lifecycle-step" role="listitem">
+        <span class="lifecycle-step-icon">&#10003;</span>
+        <h3>Proof of Service</h3>
+        <p>The provider fulfills your Intention and documents it. The community validates authentic service, creating a web of trust.</p>
+      </div>
+
+      <div class="lifecycle-step lifecycle-step--final" role="listitem">
+        <span class="lifecycle-step-icon">&#129330;</span>
+        <h3>Stewardship</h3>
+        <p>Release the Token to those who serve you. They become stewards—free to use it or pass it forward through the mesh.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- New Moon Redistribution -->
+<section id="redistribution" class="sect-short">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--violet)">Monthly Cycle</div>
+      <h2 class="stage-h">Monthly New Moon Redistribution</h2>
+      <p class="stage-p">How abundance flows back to those who serve</p>
+    </div>
+
+    <div class="redistribution-flow r r-d1">
+
+      <div class="flow-step">
+        <div class="flow-step-number">
+          <span class="moon-icon">&#127761;</span>
+        </div>
+        <h3>The Call Goes Out</h3>
+        <p>Every New Moon, a notification ripples through the network: "$X is ready to flow back to the community"—excess funds beyond operating costs.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-number">2</div>
+        <h3>Gratitude Bidding</h3>
+        <p>Members bid their service-earned Tokens of Gratitude. The Tokens you've accumulated through Acts of Service become your claim on the redistribution.</p>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-number">3</div>
+        <h3>Proportional Distribution</h3>
+        <p>Your share equals your hours divided by total hours bid. Serve more, receive more. The gift economy rewards those who give.</p>
+      </div>
+
+    </div>
+
+    <div class="redistribution-quote r r-d2">
+      <p>"If you bid Tokens worth <em>333 hours</em> and I bid <em>111 hours</em>, your slice is 3x mine. Real resources flow proportionally to real service."</p>
+    </div>
+
+    <!-- Moon Cycle Diagram -->
+    <div class="moon-cycle-diagram r r-d3">
+      <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" class="moon-svg" aria-labelledby="moonTitle moonDesc" role="img">
+        <title id="moonTitle">New Moon Redistribution Cycle</title>
+        <desc id="moonDesc">Circular diagram showing the monthly redistribution tied to the lunar cycle, with New Moon as the trigger point</desc>
+
+        <defs>
+          <linearGradient id="cycleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" class="gradient-start"/>
+            <stop offset="100%" class="gradient-end"/>
+          </linearGradient>
+
+          <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge>
+              <feMergeNode in="blur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Outer cycle ring -->
+        <circle cx="250" cy="200" r="140" class="cycle-ring" fill="none" stroke-width="2"/>
+
+        <!-- Moon phases around the circle -->
+        <g class="moon-phases">
+          <!-- New Moon (top) - highlighted -->
+          <g transform="translate(250, 60)" class="moon-phase moon-phase--new">
+            <circle r="24" class="phase-circle phase-circle--active"/>
+            <circle r="20" class="phase-inner phase-inner--new"/>
+            <text y="45" text-anchor="middle" class="phase-label phase-label--active">New Moon</text>
+          </g>
+
+          <!-- Waxing Crescent -->
+          <g transform="translate(348, 102)" class="moon-phase">
+            <circle r="16" class="phase-circle"/>
+            <path d="M0,-14 A14,14 0 0,1 0,14 A8,14 0 0,0 0,-14" class="phase-inner"/>
+          </g>
+
+          <!-- First Quarter -->
+          <g transform="translate(390, 200)" class="moon-phase">
+            <circle r="16" class="phase-circle"/>
+            <path d="M0,-14 A14,14 0 0,1 0,14 L0,-14" class="phase-inner"/>
+          </g>
+
+          <!-- Waxing Gibbous -->
+          <g transform="translate(348, 298)" class="moon-phase">
+            <circle r="16" class="phase-circle"/>
+            <circle r="14" class="phase-inner"/>
+            <path d="M0,-14 A14,14 0 0,0 0,14 A6,14 0 0,1 0,-14" class="phase-shadow"/>
+          </g>
+
+          <!-- Full Moon (bottom) -->
+          <g transform="translate(250, 340)" class="moon-phase">
+            <circle r="18" class="phase-circle"/>
+            <circle r="14" class="phase-inner phase-inner--full"/>
+          </g>
+
+          <!-- Waning Gibbous -->
+          <g transform="translate(152, 298)" class="moon-phase">
+            <circle r="16" class="phase-circle"/>
+            <circle r="14" class="phase-inner"/>
+            <path d="M0,-14 A14,14 0 0,1 0,14 A6,14 0 0,0 0,-14" class="phase-shadow"/>
+          </g>
+
+          <!-- Last Quarter -->
+          <g transform="translate(110, 200)" class="moon-phase">
+            <circle r="16" class="phase-circle"/>
+            <path d="M0,-14 A14,14 0 0,0 0,14 L0,-14" class="phase-inner"/>
+          </g>
+
+          <!-- Waning Crescent -->
+          <g transform="translate(152, 102)" class="moon-phase">
+            <circle r="16" class="phase-circle"/>
+            <path d="M0,-14 A14,14 0 0,0 0,14 A8,14 0 0,1 0,-14" class="phase-inner"/>
+          </g>
+        </g>
+
+        <!-- Center content: The cycle steps -->
+        <g class="cycle-center">
+          <!-- Bid icon -->
+          <g transform="translate(200, 175)">
+            <text class="center-icon">&#127243;</text>
+            <text y="25" class="center-label">Bid Tokens</text>
+          </g>
+
+          <!-- Arrow -->
+          <path d="M235,200 L265,200" class="center-arrow" stroke-width="2" fill="none"/>
+          <polygon points="262,196 270,200 262,204" class="center-arrow-head"/>
+
+          <!-- Receive icon -->
+          <g transform="translate(300, 175)">
+            <text class="center-icon">&#10025;</text>
+            <text y="25" class="center-label">Receive</text>
+          </g>
+
+          <!-- Circular arrow indicating cycle -->
+          <path d="M220,230 Q250,260 280,230" class="center-arrow" stroke-width="2" fill="none"/>
+          <polygon points="278,234 285,228 276,226" class="center-arrow-head"/>
+        </g>
+
+        <!-- "Every Month" label -->
+        <text x="250" y="270" text-anchor="middle" class="cycle-label">Every New Moon</text>
+
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- Site Footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer-links">
+      <a href="/">Home</a>
+      <a href="/gift-cycle.html">Gift Cycle</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/community.html">Community</a>
+      <a href="/network.html">The Mesh</a>
+      <a href="/articles/">Articles</a>
+      <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+      <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
+    </div>
+    <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Open source &middot; Human-first technology</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(els => els.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.15 });
+document.querySelectorAll('.r').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

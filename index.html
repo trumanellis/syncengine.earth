@@ -528,8 +528,6 @@
 <!-- Nav dots -->
 <nav class="nav-dots" id="navDots">
   <div class="nav-dot on" data-s="hero"><span class="nav-dot-label">Home</span></div>
-  <div class="nav-dot" data-s="s0"><span class="nav-dot-label">The Problem</span></div>
-  <div class="nav-dot" data-s="s1"><span class="nav-dot-label">Your Identity</span></div>
   <div class="nav-dot" data-s="s2"><span class="nav-dot-label">Your Need</span></div>
   <div class="nav-dot" data-s="s3"><span class="nav-dot-label">Your Time</span></div>
   <div class="nav-dot" data-s="s4"><span class="nav-dot-label">Your Gift</span></div>
@@ -554,78 +552,6 @@
     <a href="/whitepaper.html" class="hero-btn-ghost">White Paper</a>
   </div>
   <div class="hero-hint">scroll to begin</div>
-</section>
-
-
-<!-- ═══════════ THE PROBLEM ═══════════ -->
-<section class="sect-short" id="s0">
-  <div class="wrap">
-    <div class="r" style="text-align:center;margin-bottom:12px">
-      <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--danger)">The Problem</span>
-    </div>
-    <h2 class="r stage-h" style="text-align:center;font-size:clamp(24px,3.5vw,38px)">Your digital identity was never designed<br>to survive what's coming</h2>
-    <p class="r" style="text-align:center;color:var(--t2);max-width:520px;margin:0 auto;font-size:15px;line-height:1.8">
-      Quantum computers will crack today's encryption. AI can impersonate anyone. Centralized platforms hold your identity hostage. These aren't hypothetical — they're arriving.
-    </p>
-
-    <div class="threat-grid r r-d1">
-      <div class="threat-card">
-        <div class="threat-icon">&#9883;&#65039;</div>
-        <h3>Quantum Threat</h3>
-        <p>Shor's algorithm will break RSA and ECC — the encryption protecting every password, every key, every wallet you own today.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">&#129302;</div>
-        <h3>AI Impersonation</h3>
-        <p>Language models generate convincing text. Deepfakes clone faces and voices. A one-time CAPTCHA can't tell human from machine anymore.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">&#127970;</div>
-        <h3>Platform Lock-in</h3>
-        <p>Your identity lives on someone else's server. They can lock you out, sell your data, or disappear — and your identity goes with them.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════ STAGE 1 · YOUR IDENTITY ═══════════ -->
-<section class="sect" id="s1">
-  <div class="wrap">
-    <div class="r">
-      <div class="stage-num" style="color:var(--indigo)">01 · Your Identity</div>
-      <h2 class="stage-h">Your Life Story Becomes<br>an <span style="color:var(--indigo)">Unbreakable Key</span></h2>
-      <p class="stage-p">Your identity isn't a password or a seed phrase. It's a <strong>pass story</strong> — 23 moments from your own life, structured as a hero's journey. The system derives a cryptographic key from your autobiography. Because the slots are non-decomposable, an attacker must guess your <strong>entire story at once</strong>.</p>
-    </div>
-
-    <div class="r r-d1">
-      <div class="tech-aside" style="border-color:var(--indigo);display:flex;flex-direction:column;justify-content:center">
-        <strong style="color:var(--indigo);font-size:12px;display:block;margin-bottom:14px">Three pillars of quantum resistance:</strong>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div>
-            <code style="color:var(--indigo);font-size:12px">Argon2id</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Memory-hard key derivation. Each guess costs 256 MB of RAM — brute force at scale becomes physically impossible.</span>
-          </div>
-          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
-          <div>
-            <code style="color:var(--indigo);font-size:12px">ML-KEM-768</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Lattice-based key encapsulation. NIST FIPS 203. Resistant to Shor's algorithm — your keys survive the quantum era.</span>
-          </div>
-          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
-          <div>
-            <code style="color:var(--indigo);font-size:12px">ML-DSA-65</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Post-quantum digital signatures. NIST FIPS 204. Every message you sign is quantum-resistant from day one.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="note r r-d2" style="margin-top:28px">
-      <div class="note-head">Your story is your key</div>
-      <p>You answer 23 prompts organized as a hero's journey — <strong>Departure</strong>, <strong>Initiation</strong>, <strong>Return</strong>. "I grew up in _____, where I was a _____." "Everything changed when _____ brought me _____." Each answer is a secret only you know. Together, they create a search space of 2<sup>230</sup> — more than the atoms in the observable universe.</p>
-      <p style="margin-top:14px">Passwords are forgotten and reused. Seed phrases are written down. Your pass story is <strong>autobiographical</strong> — you remember it because you lived it. The key never leaves your device. No server ever sees it. And the 23 slots are non-decomposable: guessing one reveals nothing about the others.</p>
-    </div>
-  </div>
 </section>
 
 
@@ -843,11 +769,6 @@
 
           <p style="font-size:14px;color:var(--t2);margin-bottom:22px;line-height:1.8">SyncEngine holds <strong style="color:var(--tx)">Proof of Life</strong> gatherings — in-person events where real humans witness each other. When you attend, you're verified as alive. That verification is your <strong style="color:var(--tx)">liveness score</strong>, and it determines whether your attention is counted at all.</p>
 
-          <div class="fg">
-            <label class="fl">Invite a friend (email)</label>
-            <input class="fi" type="email" id="fInvite" placeholder="someone@example.com" oninput="sync()">
-          </div>
-
           <button class="btn btn-indigo" onclick="done('s5')">I'll Show Up &#10022;</button>
         </div>
       </div>
@@ -857,7 +778,7 @@
           <div class="note-head">Liveness: the network's immune system</div>
           <p>Other platforms verify you're human once and hope for the best. In SyncEngine, liveness is verified through <strong>in-person events</strong> — shared meals, co-working sessions, walks in the park. Real humans witnessing each other. Without verified liveness, your attention isn't counted, your blessings carry no weight, and any tokens you mint are empty.</p>
           <p style="margin-top:12px">A bot farm can create a million accounts — none of them will ever matter. An AI can generate text. <strong>It can't show up.</strong></p>
-          <p style="margin-top:12px">Your pass story gives you an <strong>unbreakable identity</strong>. Liveness gives that identity a <strong>heartbeat</strong>. Together: you can't be impersonated (quantum-resistant keys) and you can't be automated (proof of physical presence).</p>
+          <p style="margin-top:12px">Your <a href="#identity" style="color:var(--indigo-light)">pass story</a> gives you an <strong>unbreakable identity</strong>. Liveness gives that identity a <strong>heartbeat</strong>. Together: you can't be impersonated (quantum-resistant keys) and you can't be automated (proof of physical presence).</p>
         </div>
 
         <a href="/community.html" class="btn btn-rose" style="margin-top:20px">Meet the community &#8594;</a>
@@ -921,7 +842,6 @@
             </div>
             <div class="token-footer">
               <p>This token is yours. When SyncEngine launches,<br>it will carry forward as proof you were here from the beginning.</p>
-              <div id="submitStatus" style="display:none;margin-top:14px;font-size:13px;line-height:1.6;text-align:center"></div>
             </div>
           </div>
         </div>
@@ -974,9 +894,10 @@
             <label class="fl">What intention would you tag your first token to?</label>
             <textarea class="ft" id="fTag" placeholder="What matters enough that you'd release your token to whoever makes it real?" style="min-height:80px" oninput="sync()"></textarea>
           </div>
-          <button class="btn btn-final" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
-            Mint My First Token &#8734;
+          <button class="btn btn-final" id="mintBtn" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
+            Register Interest &#8594;
           </button>
+          <div id="submitStatus" style="display:none;margin-top:16px;padding:16px 20px;border-radius:12px;text-align:center;font-size:14px;line-height:1.6"></div>
         </div>
       </div>
     </div>
@@ -987,7 +908,70 @@
 <!-- ═══════════ STAGE 7 · THE NETWORK ═══════════ -->
 <section class="sect-short" id="s7" style="padding:80px 0">
   <div class="wrap">
-    <div class="feature-section r">
+    <!-- The Problem -->
+    <div class="r" style="text-align:center;margin-bottom:12px">
+      <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--danger)">The Problem</span>
+    </div>
+    <h2 class="r stage-h" style="text-align:center;font-size:clamp(24px,3.5vw,38px)">Your digital identity was never designed<br>to survive what's coming</h2>
+    <p class="r" style="text-align:center;color:var(--t2);max-width:520px;margin:0 auto;font-size:15px;line-height:1.8">
+      Quantum computers will crack today's encryption. AI can impersonate anyone. Centralized platforms hold your identity hostage. These aren't hypothetical — they're arriving.
+    </p>
+
+    <div class="threat-grid r r-d1">
+      <div class="threat-card">
+        <div class="threat-icon">&#9883;&#65039;</div>
+        <h3>Quantum Threat</h3>
+        <p>Shor's algorithm will break RSA and ECC — the encryption protecting every password, every key, every wallet you own today.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">&#129302;</div>
+        <h3>AI Impersonation</h3>
+        <p>Language models generate convincing text. Deepfakes clone faces and voices. A one-time CAPTCHA can't tell human from machine anymore.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">&#127970;</div>
+        <h3>Platform Lock-in</h3>
+        <p>Your identity lives on someone else's server. They can lock you out, sell your data, or disappear — and your identity goes with them.</p>
+      </div>
+    </div>
+
+    <!-- Your Identity -->
+    <div class="r" id="identity" style="margin-top:64px">
+      <div class="stage-num" style="color:var(--indigo)">Your Identity</div>
+      <h2 class="stage-h">Your Life Story Becomes<br>an <span style="color:var(--indigo)">Unbreakable Key</span></h2>
+      <p class="stage-p">Your identity isn't a password or a seed phrase. It's a <strong>pass story</strong> — 23 moments from your own life, structured as a hero's journey. The system derives a cryptographic key from your autobiography. Because the slots are non-decomposable, an attacker must guess your <strong>entire story at once</strong>.</p>
+    </div>
+
+    <div class="r r-d1">
+      <div class="tech-aside" style="border-color:var(--indigo);display:flex;flex-direction:column;justify-content:center">
+        <strong style="color:var(--indigo);font-size:12px;display:block;margin-bottom:14px">Three pillars of quantum resistance:</strong>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <code style="color:var(--indigo);font-size:12px">Argon2id</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Memory-hard key derivation. Each guess costs 256 MB of RAM — brute force at scale becomes physically impossible.</span>
+          </div>
+          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
+          <div>
+            <code style="color:var(--indigo);font-size:12px">ML-KEM-768</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Lattice-based key encapsulation. NIST FIPS 203. Resistant to Shor's algorithm — your keys survive the quantum era.</span>
+          </div>
+          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
+          <div>
+            <code style="color:var(--indigo);font-size:12px">ML-DSA-65</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Post-quantum digital signatures. NIST FIPS 204. Every message you sign is quantum-resistant from day one.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note r r-d2" style="margin-top:28px">
+      <div class="note-head">Your story is your key</div>
+      <p>You answer 23 prompts organized as a hero's journey — <strong>Departure</strong>, <strong>Initiation</strong>, <strong>Return</strong>. "I grew up in _____, where I was a _____." "Everything changed when _____ brought me _____." Each answer is a secret only you know. Together, they create a search space of 2<sup>230</sup> — more than the atoms in the observable universe.</p>
+      <p style="margin-top:14px">Passwords are forgotten and reused. Seed phrases are written down. Your pass story is <strong>autobiographical</strong> — you remember it because you lived it. The key never leaves your device. No server ever sees it. And the 23 slots are non-decomposable: guessing one reveals nothing about the others.</p>
+    </div>
+
+    <!-- Peer-to-Peer Architecture -->
+    <div class="feature-section r" style="margin-top:64px">
       <div>
         <div class="feature-label" style="color:var(--violet)">Peer-to-Peer Architecture</div>
         <h2 class="feature-h">No servers necessary.<br>The participants are the infrastructure.</h2>
@@ -1126,14 +1110,14 @@
 // ═══ STATE ═══
 const S = {
   name:'', need:'', where:'', focus:[], skills:[], offer:'',
-  collab:'', invite:'', email:'', tag:'',
+  collab:'', email:'', tag:'',
   done: new Set(),
   t0: Date.now()
 };
 
 // ═══ SURREALDB ═══
 const DB = {
-  url: 'https://syncengine-onbo-06ebquf7edt011le0602tcht84.aws-euw1.surreal.cloud'
+  url: 'https://syncengine-onbo-06ebquf7edt011le0602tcht84.aws-euw1.surreal.cloud',
   ns: 'syncengine',
   db: 'main',
   ac: 'earlyaccess'
@@ -1166,7 +1150,7 @@ function sync() {
   S.name = v('fName'); S.need = v('fNeed'); S.where = v('fWhere');
   S.focus = selected('cFocus'); S.skills = selected('cSkills');
   S.offer = v('fOffer'); S.collab = v('fCollab');
-  S.invite = v('fInvite'); S.email = v('fEmail'); S.tag = v('fTag');
+  S.email = v('fEmail'); S.tag = v('fTag');
 
   document.getElementById('pAvatar').textContent = S.name ? S.name[0].toUpperCase() : '?';
   document.getElementById('pName').textContent = S.name || 'Anonymous Peer';
@@ -1210,6 +1194,9 @@ async function submitProfile() {
   if (submitted || !DB.url) return;
   submitted = true;
   const statusEl = document.getElementById('submitStatus');
+  const btn = document.getElementById('mintBtn');
+
+  if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; btn.style.opacity = '0.6'; }
 
   try {
     const res = await fetch(DB.url + '/signup', {
@@ -1224,7 +1211,6 @@ async function submitProfile() {
         skills: S.skills,
         offer: S.offer,
         collab: S.collab,
-        invite_email: S.invite,
         email: S.email,
         tag: S.tag,
         time_spent: Math.floor((Date.now() - S.t0) / 1000),
@@ -1234,18 +1220,24 @@ async function submitProfile() {
 
     if (!res.ok) throw new Error(res.status);
 
+    if (btn) { btn.textContent = '\u2713 Minted & Saved'; btn.style.opacity = '1'; }
     if (statusEl) {
-      statusEl.innerHTML = S.email
-        ? '<span style="color:var(--moss)">&#10003; You\'re on the list — we\'ll reach out when SyncEngine is ready.</span>'
-        : '<span style="color:var(--moss)">&#10003; Profile saved.</span>';
       statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(138,173,110,0.1)';
+      statusEl.style.border = '1px solid rgba(138,173,110,0.25)';
+      statusEl.innerHTML = S.email
+        ? '<strong style="color:var(--moss)">\u2713 You\'re on the list.</strong><br><span style="color:var(--t2)">We\'ll reach out to <strong>' + S.email + '</strong> when SyncEngine is ready.</span>'
+        : '<strong style="color:var(--moss)">\u2713 Profile saved.</strong><br><span style="color:var(--t2)">Add your email above to get notified when SyncEngine launches.</span>';
     }
   } catch (err) {
     console.error('Signup failed:', err);
     submitted = false;
+    if (btn) { btn.textContent = 'Mint My First Token \u221e'; btn.disabled = false; btn.style.opacity = '1'; }
     if (statusEl) {
-      statusEl.innerHTML = '<span style="color:var(--danger)">Couldn\'t save — </span><a href="#" onclick="submitProfile();return false" style="color:var(--indigo-light)">try again</a>';
       statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(239,68,68,0.08)';
+      statusEl.style.border = '1px solid rgba(239,68,68,0.2)';
+      statusEl.innerHTML = '<span style="color:var(--danger)">Couldn\'t save your profile.</span> <a href="#" onclick="submitProfile();return false" style="color:var(--indigo-light);text-decoration:underline">Try again</a>';
     }
   }
 }
@@ -1273,10 +1265,6 @@ function done(stage) {
     const card = document.getElementById('profCard');
     card.style.boxShadow = '0 0 80px rgba(138,173,110,0.15), 0 0 40px rgba(129,140,248,0.1)';
     setTimeout(() => { card.style.boxShadow = ''; }, 3000);
-    setTimeout(() => {
-      document.getElementById('tokenReveal').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 800);
-
     // Save profile to SurrealDB
     submitProfile();
   }
@@ -1297,9 +1285,9 @@ document.querySelectorAll('.nav-dot').forEach(d => {
 });
 
 // ═══ SCROLL ═══
-const sects = ['hero','s0','s1','s2','s3','s4','s5','s6','s7'];
+const sects = ['hero','s2','s3','s4','s5','s6','s7'];
 const dotColors = {
-  hero:'var(--moss)', s0:'var(--danger)', s1:'var(--indigo)', s2:'var(--s2)',
+  hero:'var(--moss)', s2:'var(--s2)',
   s3:'var(--s3)', s4:'var(--s4)', s5:'var(--s5)', s6:'var(--s6)', s7:'var(--violet)'
 };
 

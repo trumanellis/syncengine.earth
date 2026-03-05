@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-skin="technical">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,72 +9,15 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700;900&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles/core.css">
 
   <style>
     /* ============================================
-       RESET & BASE
+       LAYOUT — wide container for this page
     ============================================ */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--s-font);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
-
-    /* ============================================
-       CSS VARIABLES - BASE/SHARED
-    ============================================ */
-
-    /* ============================================
-       GLOBAL STYLES
-    ============================================ */
-    body {
-      background: var(--t-bg);
-      color: var(--t-tx);
-      font-family: var(--s-font);
-      padding-top: 56px;
-      transition: background var(--transition-base) ease,
-                  color var(--transition-base) ease;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      font-family: var(--s-display);
-      font-weight: 700;
-      line-height: 1.2;
-      transition: font-family var(--transition-base) ease;
-    }
-
-    a {
-      color: var(--t-a2);
-      text-decoration: none;
-      transition: color var(--transition-base) ease,
-                  text-shadow var(--transition-base) ease;
-    }
-
-    a:hover, a:focus {
-      color: var(--t-ac);
-      text-shadow: var(--shadow-glow);
-    }
-
-    /* ============================================
-       HEXAGON PATTERN (MYSTIC THEME ONLY)
-    ============================================ */
-    /* ============================================
-       LAYOUT
-    ============================================ */
-    .container {
+    .wide {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 2rem;
@@ -83,7 +26,7 @@
     }
 
     @media (max-width: 640px) {
-      .container {
+      .wide {
         padding: 0 1.5rem;
       }
     }
@@ -96,48 +39,6 @@
     @media (max-width: 768px) {
       section {
         padding: 4rem 0;
-      }
-    }
-
-
-    /* ============================================
-       NAV BAR
-    ============================================ */
-    nav {
-      padding: 1.5rem 0;
-      position: relative;
-      z-index: 10;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    nav .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .nav-logo {
-      font-family: var(--s-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--t-ac);
-      letter-spacing: 0.05em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--t-t2);
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
       }
     }
 
@@ -155,7 +56,7 @@
       position: absolute;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(129, 140, 248, 0.07) 0%, transparent 70%);
       top: -100px;
       left: 50%;
       transform: translateX(-50%);
@@ -163,37 +64,51 @@
     }
 
     .hero h1 {
+      font-family: var(--display);
       font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
       margin-bottom: 1.5rem;
-      color: var(--t-tx);
+      color: var(--tx);
     }
 
     .hero h1 em {
-      color: var(--t-ac);
       font-style: normal;
+      background: linear-gradient(135deg, var(--moss-light), var(--indigo-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero p {
-      font-size: 1.25rem;
-      color: var(--t-t2);
+      font-size: 1.15rem;
+      color: var(--t2);
       max-width: 700px;
       margin: 0 auto 2rem;
+      line-height: 1.8;
     }
 
     .hero .back-link {
       display: inline-block;
       margin-bottom: 2rem;
-      font-size: 0.9rem;
-      color: var(--t-t2);
+      font-size: 0.875rem;
+      font-family: var(--display);
+      color: var(--t3);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .hero .back-link:hover {
+      color: var(--tx);
     }
 
     @media (max-width: 768px) {
       .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
       }
 
       .hero p {
-        font-size: 1.1rem;
+        font-size: 1rem;
       }
     }
 
@@ -206,22 +121,26 @@
     }
 
     .section-header h2 {
-      font-size: 2.5rem;
+      font-family: var(--display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
       margin-bottom: 1rem;
-      color: var(--t-ac);
+      color: var(--moss-light);
     }
 
     .section-header p {
-      color: var(--t-t2);
+      color: var(--t2);
       max-width: 600px;
       margin: 0 auto;
+      font-size: 1rem;
     }
 
     /* ============================================
        PHILOSOPHY SECTION
     ============================================ */
     .philosophy {
-      background: var(--t-sf);
+      background: var(--bg2);
     }
 
     .philosophy-grid {
@@ -238,10 +157,20 @@
       }
     }
 
+    .philosophy-content h2 {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      color: var(--moss-light);
+    }
+
     .philosophy-content p {
-      color: var(--t-t2);
+      color: var(--t2);
       margin-bottom: 1.5rem;
       font-size: 1rem;
+      line-height: 1.85;
     }
 
     .philosophy-content p:last-child {
@@ -261,15 +190,16 @@
       position: absolute;
       width: 60px;
       height: 60px;
-      background: linear-gradient(135deg, var(--t-ac) 0%, var(--t-a2) 100%);
+      background: linear-gradient(135deg, var(--moss-light) 0%, var(--indigo) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      font-family: var(--mono);
       font-weight: bold;
-      font-size: 1.25rem;
-      color: var(--t-bg);
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+      font-size: 1.1rem;
+      color: var(--bg);
+      box-shadow: 0 0 30px rgba(129, 140, 248, 0.3);
       animation: pulse 3s infinite;
     }
 
@@ -282,8 +212,8 @@
     .net-node:nth-child(7) { top: 50%; left: 10%; animation-delay: 0.8s; }
 
     @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-      50% { box-shadow: 0 0 50px rgba(0, 212, 170, 0.6); }
+      0%, 100% { box-shadow: 0 0 30px rgba(129, 140, 248, 0.3); }
+      50% { box-shadow: 0 0 50px rgba(164, 196, 138, 0.5); }
     }
 
     @media (max-width: 900px) {
@@ -302,23 +232,23 @@
     }
 
     .feature-card {
-      background: var(--t-cd);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--s-radius);
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
       padding: 2rem;
-      transition: all var(--transition-base) ease;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
 
     .feature-card:hover {
-      border-color: var(--t-a2);
+      border-color: var(--indigo);
       transform: translateY(-4px);
-      box-shadow: var(--shadow-glow);
+      box-shadow: 0 8px 32px rgba(129, 140, 248, 0.15);
     }
 
     .feature-icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--t-ac) 0%, var(--t-a2) 100%);
+      background: linear-gradient(135deg, var(--moss-light) 0%, var(--indigo) 100%);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -328,40 +258,43 @@
     }
 
     .feature-card h3 {
-      font-size: 1.25rem;
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 700;
       margin-bottom: 0.75rem;
-      color: var(--t-tx);
+      color: var(--tx);
     }
 
     .feature-card p {
-      color: var(--t-t2);
+      color: var(--t2);
       font-size: 0.95rem;
+      line-height: 1.75;
     }
 
     /* ============================================
        ARCHITECTURE DIAGRAM
     ============================================ */
     .architecture {
-      background: var(--t-sf);
+      background: var(--bg2);
     }
 
     .arch-diagram {
-      background: var(--t-cd);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--s-radius);
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
       padding: 2.5rem;
     }
 
     .arch-layer {
-      background: rgba(212, 175, 55, 0.05);
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: var(--s-radius);
+      background: rgba(129, 140, 248, 0.04);
+      border: 1px solid rgba(129, 140, 248, 0.18);
+      border-radius: var(--radius);
       padding: 1.25rem 1.5rem;
       margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all var(--transition-base) ease;
+      transition: background 0.3s, border-color 0.3s;
     }
 
     .arch-layer:last-child {
@@ -369,15 +302,15 @@
     }
 
     .arch-layer:hover {
-      background: rgba(212, 175, 55, 0.1);
-      border-color: var(--t-ac);
+      background: rgba(129, 140, 248, 0.08);
+      border-color: var(--indigo);
     }
 
     .arch-layer h4 {
-      font-size: 1rem;
-      color: var(--t-tx);
-      font-family: var(--s-font);
+      font-family: var(--display);
+      font-size: 0.95rem;
       font-weight: 600;
+      color: var(--tx);
     }
 
     .arch-modules {
@@ -387,12 +320,12 @@
     }
 
     .module-tag {
-      background: rgba(0, 212, 170, 0.15);
-      color: var(--t-a2);
+      background: rgba(138, 173, 110, 0.12);
+      color: var(--moss-light);
       padding: 0.25rem 0.75rem;
       border-radius: 4px;
       font-size: 0.8rem;
-      font-family: var(--s-font);
+      font-family: var(--mono);
     }
 
     @media (max-width: 768px) {
@@ -413,26 +346,28 @@
     }
 
     .tech-item {
-      background: var(--t-cd);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--s-radius);
+      background: var(--card);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
       padding: 1.5rem;
       text-align: center;
-      transition: all var(--transition-base) ease;
+      transition: border-color 0.3s;
     }
 
     .tech-item:hover {
-      border-color: var(--t-ac);
+      border-color: var(--moss);
     }
 
     .tech-item h4 {
-      font-size: 1.1rem;
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
       margin-bottom: 0.5rem;
-      color: var(--t-ac);
+      color: var(--moss-light);
     }
 
     .tech-item p {
-      color: var(--t-t2);
+      color: var(--t2);
       font-size: 0.85rem;
     }
 
@@ -440,7 +375,7 @@
        SECURITY
     ============================================ */
     .security {
-      background: var(--t-sf);
+      background: var(--bg2);
     }
 
     .security-grid {
@@ -463,7 +398,7 @@
 
     .security-features li {
       padding: 1.25rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid var(--bd);
       display: flex;
       align-items: flex-start;
       gap: 1rem;
@@ -476,7 +411,7 @@
     .check-icon {
       width: 24px;
       height: 24px;
-      background: var(--t-a2);
+      background: var(--indigo);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -484,16 +419,19 @@
       flex-shrink: 0;
       margin-top: 2px;
       font-size: 0.8rem;
-      color: var(--t-bg);
+      color: var(--bg);
     }
 
     .security-features strong {
       display: block;
       margin-bottom: 0.25rem;
+      font-family: var(--display);
+      font-weight: 600;
+      color: var(--tx);
     }
 
     .security-features p {
-      color: var(--t-t2);
+      color: var(--t2);
       font-size: 0.9rem;
     }
 
@@ -504,9 +442,9 @@
     }
 
     .crypto-badge {
-      background: var(--t-cd);
-      border: 1px solid rgba(0, 212, 170, 0.3);
-      border-radius: var(--s-radius);
+      background: var(--card);
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      border-radius: var(--radius);
       padding: 1.5rem;
       display: flex;
       align-items: center;
@@ -516,22 +454,25 @@
     .crypto-badge .icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--t-a2) 0%, var(--moss) 100%);
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 100%);
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
+      flex-shrink: 0;
     }
 
     .crypto-badge h4 {
-      font-size: 1rem;
+      font-family: var(--mono);
+      font-size: 0.95rem;
+      font-weight: 500;
       margin-bottom: 0.25rem;
-      color: var(--t-tx);
+      color: var(--tx);
     }
 
     .crypto-badge p {
-      color: var(--t-t2);
+      color: var(--t2);
       font-size: 0.85rem;
     }
 
@@ -545,23 +486,32 @@
     }
 
     .use-case {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0, 212, 170, 0.05) 100%);
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: var(--s-radius);
+      background: linear-gradient(135deg, rgba(138, 173, 110, 0.05) 0%, rgba(129, 140, 248, 0.05) 100%);
+      border: 1px solid rgba(164, 196, 138, 0.18);
+      border-radius: var(--radius);
       padding: 1.75rem;
+      transition: border-color 0.3s;
+    }
+
+    .use-case:hover {
+      border-color: var(--moss);
     }
 
     .use-case h4 {
-      font-size: 1.1rem;
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
       margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      color: var(--tx);
     }
 
     .use-case p {
-      color: var(--t-t2);
+      color: var(--t2);
       font-size: 0.9rem;
+      line-height: 1.75;
     }
 
     /* ============================================
@@ -569,16 +519,20 @@
     ============================================ */
     .cta-section {
       text-align: center;
-      background: var(--t-sf);
+      background: var(--bg2);
     }
 
     .cta-section h2 {
-      font-size: 2.5rem;
+      font-family: var(--display);
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
       margin-bottom: 1rem;
+      color: var(--tx);
     }
 
-    .cta-section > .container > p {
-      color: var(--t-t2);
+    .cta-section > .wide > p {
+      color: var(--t2);
       margin-bottom: 2rem;
       max-width: 500px;
       margin-left: auto;
@@ -592,83 +546,47 @@
       flex-wrap: wrap;
     }
 
-    .btn {
-      padding: 0.875rem 1.75rem;
-      border-radius: var(--s-radius);
-      font-size: 1rem;
-      font-weight: 600;
-      font-family: var(--s-font);
-      text-decoration: none;
-      transition: all var(--transition-base) ease;
-      display: inline-block;
-    }
-
     .btn-primary {
-      background: linear-gradient(135deg, var(--t-ac) 0%, var(--gold) 100%);
-      color: var(--t-bg);
+      background: linear-gradient(135deg, var(--moss) 0%, var(--indigo) 100%);
+      color: var(--bg);
+      font-weight: 600;
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3);
-      color: var(--t-bg);
+      box-shadow: 0 10px 40px rgba(138, 173, 110, 0.3);
+      color: var(--bg);
     }
 
     .btn-secondary {
       background: transparent;
-      color: var(--t-tx);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: var(--tx);
+      border: 1px solid var(--bd2);
     }
 
     .btn-secondary:hover {
-      border-color: var(--t-a2);
-      background: rgba(0, 212, 170, 0.1);
-    }
-
-    /* ============================================
-       FOOTER
-    ============================================ */
-    footer {
-      padding: 3rem 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-
-    footer p {
-      color: var(--t-t2);
-      font-size: 0.9rem;
-    }
-
-    /* ============================================
-       REDUCED MOTION
-    ============================================ */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
+      border-color: var(--indigo);
+      background: rgba(129, 140, 248, 0.08);
+      color: var(--tx);
     }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav>
-    <div class="container">
-      <a href="index.html" class="nav-logo">Synchronicity Engine</a>
-      <ul class="nav-links">
-        <li><a href="#philosophy">Philosophy</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#security">Security</a></li>
-        <li><a href="articles/">Articles</a></li>
-      </ul>
+  <nav class="site-nav">
+    <a href="/" class="site-nav-logo">Sync<em>Engine</em></a>
+    <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
+    <div class="site-nav-links">
+      <a href="/gift-cycle.html">Gift Cycle</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/community.html">Community</a>
+      <a href="/network.html" class="active">The Mesh</a>
+      <a href="/articles/">Articles</a>
     </div>
   </nav>
 
   <!-- Hero -->
-  <section class="hero">
-    <div class="container">
+  <section class="hero r">
+    <div class="wide">
       <a href="index.html" class="back-link">&larr; Back to Synchronicity Engine</a>
       <h1>The Mesh: <em>Indra's Net</em> Made Digital</h1>
       <p>
@@ -681,9 +599,9 @@
 
   <!-- Philosophy -->
   <section id="philosophy" class="philosophy">
-    <div class="container">
+    <div class="wide">
       <div class="philosophy-grid">
-        <div class="philosophy-content">
+        <div class="philosophy-content r">
           <h2>Inspired by Indra's Net</h2>
           <p>
             In Buddhist and Hindu philosophy, <em>Indra's Net</em> describes an infinite web where
@@ -699,7 +617,7 @@
             that works even when the internet doesn't.
           </p>
         </div>
-        <div class="net-visual" aria-hidden="true">
+        <div class="net-visual r r-d2" aria-hidden="true">
           <div class="net-node">A</div>
           <div class="net-node">B</div>
           <div class="net-node">C</div>
@@ -714,38 +632,38 @@
 
   <!-- Core Features -->
   <section id="features">
-    <div class="container">
-      <div class="section-header">
+    <div class="wide">
+      <div class="section-header r">
         <h2>Core Capabilities</h2>
         <p>A complete networking stack designed for challenged environments where traditional approaches fail.</p>
       </div>
       <div class="features-grid">
-        <div class="feature-card">
+        <div class="feature-card r">
           <div class="feature-icon">&#x1F4E6;</div>
           <h3>Store-and-Forward Routing</h3>
           <p>Messages are held by intermediate nodes until the destination comes online. Automatic delivery with back-propagation confirmations ensure nothing gets lost.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card r r-d1">
           <div class="feature-icon">&#x23F1;</div>
           <h3>Delay-Tolerant Networking</h3>
           <p>Multiple routing strategies including Epidemic, Spray-and-Wait, and configurable bundle lifetimes up to 7 days. Perfect for high-latency or intermittent connections.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card r r-d2">
           <div class="feature-icon">&#x1F504;</div>
           <h3>CRDT Synchronization</h3>
           <p>Automerge-powered document sync with automatic conflict resolution. Edit offline, sync seamlessly when reconnected. No conflicts, no data loss.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card r">
           <div class="feature-icon">&#x1F512;</div>
           <h3>End-to-End Encryption</h3>
           <p>X25519 key exchange with ChaCha20-Poly1305 authenticated encryption. Messages are sealed packets that relay nodes cannot read.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card r r-d1">
           <div class="feature-icon">&#x269B;</div>
           <h3>Post-Quantum Ready</h3>
           <p>ML-KEM-768 key encapsulation and ML-DSA-65 signatures protect against future quantum computing threats. NIST-standardized algorithms.</p>
         </div>
-        <div class="feature-card">
+        <div class="feature-card r r-d2">
           <div class="feature-icon">&#x1F310;</div>
           <h3>NAT Traversal</h3>
           <p>Built on Iroh with QUIC transport. Automatic hole punching and relay fallback ensure peers can always connect, regardless of network topology.</p>
@@ -756,12 +674,12 @@
 
   <!-- Architecture -->
   <section id="architecture" class="architecture">
-    <div class="container">
-      <div class="section-header">
+    <div class="wide">
+      <div class="section-header r">
         <h2>Layered Architecture</h2>
         <p>Modular design with clear separation of concerns. Use the full stack or just the layers you need.</p>
       </div>
-      <div class="arch-diagram">
+      <div class="arch-diagram r">
         <div class="arch-layer">
           <h4>Application Layer</h4>
           <div class="arch-modules">
@@ -778,14 +696,14 @@
           </div>
         </div>
         <div class="arch-layer">
-          <h4>Sync & Gossip</h4>
+          <h4>Sync &amp; Gossip</h4>
           <div class="arch-modules">
             <span class="module-tag">gossip-sync</span>
             <span class="module-tag">iroh-gossip</span>
           </div>
         </div>
         <div class="arch-layer">
-          <h4>Routing & DTN</h4>
+          <h4>Routing &amp; DTN</h4>
           <div class="arch-modules">
             <span class="module-tag">routing</span>
             <span class="module-tag">dtn-bundle</span>
@@ -799,7 +717,7 @@
           </div>
         </div>
         <div class="arch-layer">
-          <h4>Core & Storage</h4>
+          <h4>Core &amp; Storage</h4>
           <div class="arch-modules">
             <span class="module-tag">syncengine-core</span>
             <span class="module-tag">crypto</span>
@@ -813,33 +731,33 @@
 
   <!-- Tech Stack -->
   <section>
-    <div class="container">
-      <div class="section-header">
+    <div class="wide">
+      <div class="section-header r">
         <h2>Technology Stack</h2>
         <p>Built with modern, battle-tested technologies for performance and reliability.</p>
       </div>
       <div class="tech-grid">
-        <div class="tech-item">
+        <div class="tech-item r">
           <h4>Rust</h4>
           <p>Memory-safe systems programming</p>
         </div>
-        <div class="tech-item">
+        <div class="tech-item r r-d1">
           <h4>Tokio</h4>
           <p>Async runtime for performance</p>
         </div>
-        <div class="tech-item">
+        <div class="tech-item r r-d2">
           <h4>Iroh</h4>
           <p>P2P networking foundation</p>
         </div>
-        <div class="tech-item">
+        <div class="tech-item r">
           <h4>Automerge</h4>
           <p>CRDT document sync</p>
         </div>
-        <div class="tech-item">
+        <div class="tech-item r r-d1">
           <h4>redb</h4>
           <p>Embedded key-value storage</p>
         </div>
-        <div class="tech-item">
+        <div class="tech-item r r-d2">
           <h4>Dioxus</h4>
           <p>Pure Rust UI framework</p>
         </div>
@@ -849,13 +767,13 @@
 
   <!-- Security -->
   <section id="security" class="security">
-    <div class="container">
-      <div class="section-header">
+    <div class="wide">
+      <div class="section-header r">
         <h2>Security First</h2>
         <p>Quantum-resistant cryptography protects your data against both current and future threats.</p>
       </div>
       <div class="security-grid">
-        <div>
+        <div class="r">
           <ul class="security-features">
             <li>
               <span class="check-icon">&#x2713;</span>
@@ -887,7 +805,7 @@
             </li>
           </ul>
         </div>
-        <div class="crypto-badges">
+        <div class="crypto-badges r r-d2">
           <div class="crypto-badge">
             <div class="icon">&#x1F510;</div>
             <div>
@@ -916,33 +834,33 @@
 
   <!-- Use Cases -->
   <section>
-    <div class="container">
-      <div class="section-header">
+    <div class="wide">
+      <div class="section-header r">
         <h2>Built For</h2>
         <p>Real-world applications where traditional networking falls short.</p>
       </div>
       <div class="use-cases-grid">
-        <div class="use-case">
+        <div class="use-case r">
           <h4>&#x1F4F1; Offline-First Apps</h4>
           <p>Intentions, messages, and documents that work without internet and sync seamlessly when reconnected.</p>
         </div>
-        <div class="use-case">
+        <div class="use-case r r-d1">
           <h4>&#x1F6F0; Satellite Networks</h4>
           <p>Handle long delays and intermittent connectivity inherent in space-based communication.</p>
         </div>
-        <div class="use-case">
+        <div class="use-case r r-d2">
           <h4>&#x1F3D4; Remote Communities</h4>
           <p>Community mesh networks where infrastructure is limited or non-existent.</p>
         </div>
-        <div class="use-case">
+        <div class="use-case r">
           <h4>&#x26A1; Disaster Response</h4>
           <p>Communications that work when traditional infrastructure has failed.</p>
         </div>
-        <div class="use-case">
+        <div class="use-case r r-d1">
           <h4>&#x1F30D; Community Gatherings</h4>
           <p>Temporary mesh networks at Gatherings of the Tribe — pop-up infrastructure for real-world events.</p>
         </div>
-        <div class="use-case">
+        <div class="use-case r r-d2">
           <h4>&#x1F3DD; Off-Grid Living</h4>
           <p>Connect with your community even when living outside conventional infrastructure.</p>
         </div>
@@ -952,7 +870,7 @@
 
   <!-- CTA -->
   <section class="cta-section">
-    <div class="container">
+    <div class="wide r">
       <h2>Enter the Field</h2>
       <p>The mesh is forming. Join the network of sovereign collaboration.</p>
       <div class="cta-buttons">
@@ -963,20 +881,25 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>Synchronicity Engine is built with <a href="https://www.rust-lang.org/">Rust</a> and <a href="https://iroh.computer/">Iroh</a>. A project of the GratiDAO.</p>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="site-footer-links">
+        <a href="/">Home</a>
+        <a href="/gift-cycle.html">Gift Cycle</a>
+        <a href="/vision.html">Vision</a>
+        <a href="/community.html">Community</a>
+        <a href="/network.html">The Mesh</a>
+        <a href="/articles/">Articles</a>
+        <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+        <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
+      </div>
+      <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Open source &middot; Human-first technology</p>
     </div>
   </footer>
 
-  <script src="https://templesofrefuge.earth/shared/theme-engine.js"></script>
   <script>
-  ThemeEngine.init({
-    defaultSkin: 'technical',
-    storageKey: 'se-skin',
-    position: 'top-right'
-  });
+  const obs = new IntersectionObserver(els => els.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.15 });
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
   </script>
 </body>
 </html>
