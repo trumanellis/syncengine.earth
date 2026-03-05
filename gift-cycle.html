@@ -32,28 +32,19 @@
       gap: 48px;
     }
 
-    /* Step 1 hero card */
-    .story-card--hero {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-    .story-card--hero .story-card-image {
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--bd);
-    }
-    .story-card--hero .story-card-image img {
-      width: 100%;
-      display: block;
-      border-radius: var(--radius);
-    }
-
-    /* Steps 2–6: text + phone (stacked) */
+/* Steps 2–6: text + phone side-by-side on desktop */
     .story-card {
       display: flex;
-      flex-direction: column;
-      gap: 28px;
+      flex-direction: row;
+      align-items: center;
+      gap: 40px;
+    }
+    .story-card .story-card-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .story-card .story-card-mockup {
+      flex-shrink: 0;
     }
 
     .story-card-text {
@@ -90,13 +81,16 @@
     .story-card-mockup {
       display: flex;
       justify-content: center;
+      flex: 1;
+      min-width: 0;
     }
     .phone-screen {
-      width: 240px;
+      width: 100%;
+      max-width: 480px;
       background: var(--card);
       border: 1px solid var(--bd2);
       border-radius: 24px;
-      padding: 20px 18px 24px;
+      padding: 28px 28px 32px;
       font-family: var(--display);
       position: relative;
       box-shadow: 0 8px 40px rgba(0,0,0,0.4);
@@ -105,63 +99,63 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
       border-bottom: 1px solid var(--bd);
     }
     .app-name {
       font-weight: 700;
-      font-size: 12px;
+      font-size: 14px;
       color: var(--moss-light);
       letter-spacing: 0.04em;
     }
     .phone-time {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 13px;
       color: var(--dim);
     }
     .back-arrow {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--t3);
     }
     .screen-title {
       font-weight: 700;
-      font-size: 15px;
+      font-size: 20px;
       color: var(--tx);
-      margin-bottom: 14px;
+      margin-bottom: 18px;
       letter-spacing: -0.01em;
     }
     .mock-input-group {
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
     .mock-input-group label {
       display: block;
       font-family: var(--mono);
-      font-size: 9px;
+      font-size: 11px;
       color: var(--dim);
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .mock-input {
       background: var(--bg2);
       border: 1px solid var(--bd);
       border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
       color: var(--t2);
     }
     .mock-textarea {
-      font-size: 11px;
+      font-size: 14px;
       color: var(--t3);
     }
     .mock-button {
-      margin-top: 14px;
+      margin-top: 18px;
       background: var(--moss);
       color: var(--bg);
-      border-radius: 8px;
-      padding: 9px 12px;
-      font-size: 11px;
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 14px;
       font-weight: 700;
       text-align: center;
       letter-spacing: 0.02em;
@@ -169,9 +163,9 @@
     .mock-token {
       background: var(--bg2);
       border: 1px solid var(--bd);
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
       transition: border-color 0.2s;
     }
     .mock-token.selected {
@@ -182,49 +176,49 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 11px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--tx);
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
     .token-hours {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 13px;
       color: var(--moss-light);
     }
     .token-desc {
-      font-size: 10px;
+      font-size: 13px;
       color: var(--dim);
     }
     /* QR display */
     .intention-preview {
       background: var(--bg2);
       border: 1px solid var(--bd);
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-bottom: 10px;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
     }
     .intention-preview-title {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--tx);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .intention-preview-token {
       display: flex;
       justify-content: space-between;
-      font-size: 10px;
+      font-size: 13px;
       color: var(--t3);
     }
     .qr-display {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .qr-mock {
-      width: 80px;
-      height: 80px;
+      width: 110px;
+      height: 110px;
       background: var(--bg2);
       border: 1px solid var(--bd2);
       border-radius: 8px;
@@ -247,84 +241,84 @@
     .qr-corner.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; border-radius: 0 0 0 2px; }
     .qr-label {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 13px;
       color: var(--dim);
       letter-spacing: 0.06em;
     }
     /* Upload */
     .mock-upload {
-      margin-top: 10px;
+      margin-top: 14px;
       background: var(--bg2);
       border: 1px dashed var(--bd2);
-      border-radius: 8px;
-      padding: 10px;
+      border-radius: 10px;
+      padding: 14px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 11px;
+      gap: 10px;
+      font-size: 14px;
       color: var(--dim);
     }
-    .upload-icon { font-size: 16px; }
+    .upload-icon { font-size: 20px; }
     /* Success screen */
     .success-display {
       text-align: center;
-      padding: 10px 0 8px;
+      padding: 14px 0 10px;
     }
     .success-icon {
-      width: 36px;
-      height: 36px;
+      width: 48px;
+      height: 48px;
       background: rgba(138,173,110,0.15);
       border: 1px solid var(--moss);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 22px;
       color: var(--moss-light);
-      margin: 0 auto 6px;
+      margin: 0 auto 8px;
     }
     .success-title {
       font-weight: 700;
-      font-size: 14px;
+      font-size: 18px;
       color: var(--moss-light);
     }
     .connection-card {
       background: var(--bg2);
       border: 1px solid var(--bd);
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin: 10px 0 8px;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin: 14px 0 10px;
     }
     .connection-badge {
-      font-size: 10px;
+      font-size: 13px;
       color: var(--moss-light);
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       letter-spacing: 0.02em;
     }
     .provider-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .provider-avatar {
-      font-size: 20px;
+      font-size: 28px;
     }
     .provider-info {
       display: flex;
       flex-direction: column;
     }
     .provider-name {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--tx);
     }
     .provider-role {
-      font-size: 10px;
+      font-size: 13px;
       color: var(--dim);
     }
     .hint-text {
-      font-size: 10px;
+      font-size: 13px;
       color: var(--t3);
       text-align: center;
     }
@@ -472,6 +466,10 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
+      .story-card {
+        flex-direction: column;
+        gap: 28px;
+      }
       .story-card-mockup { justify-content: flex-start; }
 
       .token-lifecycle {
@@ -552,19 +550,20 @@
     <div class="story-flow">
 
       <!-- Step 1: You See It -->
-      <div class="story-card story-card--hero r">
-        <figure class="story-card-image">
-          <img
-            src="refs/A Portal into SyncEngine/MaracujaCheesecake.png"
-            alt="A baker at the Community Bazaar with maracuja cheesecake, raw brownies, and other delicious offerings"
-            loading="lazy"
-          />
-        </figure>
+      <div class="story-card r">
         <div class="story-card-text">
           <div class="story-step-icon">&#128064;</div>
           <h3>1. You See It</h3>
           <p>At the Community Bazaar, maracuja cheesecake catches your eye. The baker recommends it—you know this is what you want.</p>
           <span class="story-card-caption">The Community Bazaar: where gifts and gratitude flow freely</span>
+        </div>
+        <div class="story-card-mockup">
+          <img
+            src="refs/A Portal into SyncEngine/MaracujaCheesecake.png"
+            alt="A baker at the Community Bazaar with maracuja cheesecake, raw brownies, and other delicious offerings"
+            loading="lazy"
+            style="width:100%;max-width:480px;border-radius:var(--radius);display:block"
+          />
         </div>
       </div>
 
