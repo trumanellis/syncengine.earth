@@ -20,4 +20,4 @@ DEFINE INDEX IF NOT EXISTS signup_email ON signup FIELDS email;
 DEFINE INDEX IF NOT EXISTS signup_created ON signup FIELDS created_at;
 
 -- Record access method for public signup (no credentials needed on client)
-DEFINE ACCESS IF NOT EXISTS earlyaccess ON DATABASE TYPE RECORD SIGNUP (CREATE signup SET name = $name, need = $need, location = $location, focus = $focus, skills = $skills, offer = $offer, collab = $collab, invite_email = $invite_email, email = $email, tag = $tag, time_spent = $time_spent, stages = $stages, created_at = time::now(), source = 'homepage') SIGNIN (SELECT * FROM signup WHERE email = $email LIMIT 1) DURATION FOR SESSION 1h;
+DEFINE ACCESS IF NOT EXISTS earlyaccess ON DATABASE TYPE RECORD SIGNUP (CREATE signup SET name = $name, need = $need, location = $location, focus = $focus, skills = $skills, offer = $offer, collab = $collab, email = $email, tag = $tag, time_spent = $time_spent, stages = $stages, created_at = time::now(), source = 'homepage') SIGNIN (SELECT * FROM signup WHERE email = $email LIMIT 1) DURATION FOR SESSION 1h;

@@ -5,10 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SyncEngine — What If Creating Value Was the Currency?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles/core.css">
 <style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #080a08; --bg2: #0f120f; --bg3: #141918; --card: #131813; --surface: #1a1f1a;
+  --tx: #eaede8; --t2: #b0b8a8; --t3: #8a9480; --dim: #5e6858;
+  --bd: #242e22; --bd2: #2e3a2c;
+  /* Bioluminescent moss — gift cycle */
+  --moss: #8aad6e; --moss-light: #a4c48a; --moss-dim: #5c7a48;
+  --glow-green: #7ef0b8; --glow-amber: #f0c87e; --glow-teal: #7edcf0;
+  /* Indigo quantum — identity/security */
+  --indigo: #818cf8; --indigo-light: #a5b4fc; --indigo-dim: #6366f1;
+  --violet: #b48efa; --violet-light: #c4b5fd;
+  /* Shared accents */
+  --rose: #f07eb8; --rose-light: #f9a8d4;
+  --pulse: #34d399; --pulse-light: #6ee7b7;
+  --danger: #ef4444;
+  /* Stage colors */
+  --s1: #818cf8; --s2: #7eb8f0; --s3: #f0c87e; --s4: #8aad6e; --s5: #b48efa; --s6: #f07eb8; --s7: #7edcf0;
+  /* Typography */
+  --display: 'Outfit', sans-serif;
+  --body: 'Source Serif 4', Georgia, serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --radius: 16px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body); font-optical-sizing: auto;
+  font-size: 17px; line-height: 1.75;
+  background: var(--bg); color: var(--tx);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
 /* ═══ Atmosphere ═══ */
 .atmosphere {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
@@ -69,6 +103,27 @@
   border-color: var(--moss); background: var(--moss);
   box-shadow: 0 0 14px rgba(138,173,110,0.5);
 }
+
+/* ═══ Layout ═══ */
+.page { position: relative; z-index: 10; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+/* ═══ Reveal ═══ */
+.r {
+  opacity: 0; transform: translateY(36px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.r.v { opacity: 1; transform: translateY(0); }
+.r-d1 { transition-delay: 0.1s; }
+.r-d2 { transition-delay: 0.22s; }
+.r-d3 { transition-delay: 0.34s; }
+
+/* ═══ Section ═══ */
+.sect {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; padding: 100px 0;
+}
+.sect-short { min-height: auto; padding: 80px 0; }
 
 /* ═══ HERO ═══ */
 .hero {
@@ -164,6 +219,288 @@
   margin-bottom: 8px; color: var(--tx);
 }
 .threat-card p { font-size: 13px; color: var(--t3); line-height: 1.7; }
+
+/* ═══ Stage label ═══ */
+.stage-num {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.stage-h {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(26px, 4vw, 46px);
+  letter-spacing: -0.03em; line-height: 1.1;
+  margin-bottom: 18px;
+}
+.stage-p {
+  font-size: 16px; color: var(--t2); max-width: 500px;
+  line-height: 1.9; font-weight: 300; margin-bottom: 40px;
+}
+.stage-p strong { color: var(--tx); font-weight: 500; }
+
+/* ═══ 2-col layout ═══ */
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+
+/* ═══ Feature layout (from new) ═══ */
+.feature-section {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+}
+.feature-section.reverse { direction: rtl; }
+.feature-section.reverse > * { direction: ltr; }
+.feature-label {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px;
+}
+.feature-h {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(24px, 3vw, 36px);
+  letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 18px;
+}
+.feature-p {
+  font-size: 15px; color: var(--t2); line-height: 1.85; margin-bottom: 14px;
+}
+.feature-p strong { color: var(--tx); font-weight: 500; }
+
+/* ═══ Form panel ═══ */
+.panel {
+  background: var(--card); border: 1px solid var(--bd);
+  border-radius: var(--radius); padding: 32px;
+  position: relative; overflow: hidden;
+}
+.panel-accent {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.fg { margin-bottom: 22px; }
+.fl {
+  display: block; font-family: var(--display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 8px;
+}
+.fi, .ft, .fs {
+  width: 100%; padding: 14px 18px;
+  background: var(--bg2); border: 1px solid var(--bd);
+  border-radius: 12px; color: var(--tx);
+  font-family: var(--body); font-size: 16px;
+  outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.fi:focus, .ft:focus, .fs:focus {
+  border-color: var(--moss);
+  box-shadow: 0 0 0 3px rgba(138,173,110,0.1);
+}
+.fi::placeholder, .ft::placeholder { color: var(--dim); }
+.ft { min-height: 110px; resize: vertical; line-height: 1.65; }
+.fs {
+  appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e6e80' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center;
+}
+.fs option { background: var(--bg); color: var(--tx); }
+
+/* ═══ Chips ═══ */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 8px 18px; border: 1px solid var(--bd); border-radius: 100px;
+  font-family: var(--display); font-size: 13px; font-weight: 500;
+  color: var(--t3); cursor: pointer; transition: all 0.25s; user-select: none;
+}
+.chip:hover { border-color: var(--bd2); color: var(--t2); }
+.chip.on { border-color: var(--moss); color: var(--moss-light); background: rgba(138,173,110,0.08); }
+
+/* ═══ Buttons ═══ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 30px; border: none; border-radius: 12px;
+  font-family: var(--display); font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: all 0.3s;
+}
+.btn-moss { background: var(--moss); color: var(--bg); }
+.btn-amber { background: var(--glow-amber); color: var(--bg); }
+.btn-green { background: var(--s4); color: var(--bg); }
+.btn-indigo { background: linear-gradient(135deg, var(--indigo), var(--violet)); color: white; box-shadow: 0 4px 24px rgba(129,140,248,0.2); }
+.btn-rose { background: linear-gradient(135deg, var(--rose), var(--violet)); color: white; box-shadow: 0 4px 24px rgba(240,126,184,0.2); }
+.btn-final { background: linear-gradient(135deg, var(--moss), var(--indigo), var(--violet)); color: white; box-shadow: 0 4px 24px rgba(138,173,110,0.2); }
+.btn:hover { transform: translateY(-2px); }
+
+/* ═══ Sidebar note ═══ */
+.note {
+  padding: 24px; background: var(--bg2);
+  border: 1px solid var(--bd); border-radius: var(--radius);
+}
+.note-head {
+  font-family: var(--display); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 10px;
+}
+.note p { font-size: 15px; color: var(--t2); line-height: 1.85; }
+.note p strong { color: var(--tx); font-weight: 500; }
+
+/* ═══ Tech aside ═══ */
+.tech-aside {
+  padding: 16px 20px;
+  background: var(--bg2); border: 1px solid var(--bd); border-left: 3px solid;
+  border-radius: var(--radius);
+  font-family: var(--mono); font-size: 11px;
+  color: var(--t3); line-height: 1.8;
+}
+.tech-aside code {
+  font-weight: 500; background: rgba(129,140,248,0.08);
+  padding: 1px 5px; border-radius: 3px;
+}
+
+/* ═══ Expandable technical panels ═══ */
+.hood {
+  margin-top: 16px; border: 1px solid var(--bd);
+  border-radius: var(--radius); overflow: hidden;
+}
+.hood summary {
+  padding: 14px 20px;
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.06em; color: var(--t3);
+  cursor: pointer; list-style: none;
+  transition: color 0.3s, background 0.3s;
+  display: flex; align-items: center; gap: 8px;
+}
+.hood summary::before { content: '▸'; transition: transform 0.3s; display: inline-block; }
+.hood[open] summary::before { transform: rotate(90deg); }
+.hood summary:hover { color: var(--t2); background: var(--bg2); }
+.hood-body {
+  padding: 20px; background: var(--bg2);
+  border-top: 1px solid var(--bd);
+  font-family: var(--mono); font-size: 12px;
+  color: var(--t2); line-height: 1.7;
+}
+
+/* ═══ Struct card ═══ */
+.hstruct {
+  background: rgba(0,0,0,0.2); border: 1px solid var(--bd);
+  border-radius: 10px; padding: 16px; margin-bottom: 14px;
+}
+.hstruct-name {
+  font-size: 13px; font-weight: 600; color: var(--moss-light);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.hstruct-name::before {
+  content: ''; width: 6px; height: 6px; border-radius: 2px;
+  background: var(--moss); display: inline-block;
+}
+.hfield {
+  display: flex; align-items: baseline;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.025);
+}
+.hfield:last-child { border-bottom: none; }
+.hfn { color: var(--tx); min-width: 110px; }
+.hft { color: var(--glow-amber); min-width: 130px; font-size: 11px; }
+.hfc { color: var(--t3); font-size: 10px; }
+
+/* ═══ Formula ═══ */
+.hformula {
+  background: rgba(138,173,110,0.06); border: 1px solid rgba(138,173,110,0.12);
+  border-radius: 10px; padding: 16px; margin: 14px 0; text-align: center;
+}
+.hformula code { font-size: 15px; font-weight: 600; color: var(--tx); }
+.hformula code em { font-style: normal; color: var(--t3); font-weight: 400; font-size: 13px; }
+.hformula .hf-sub { font-size: 10px; color: var(--t3); margin-top: 6px; letter-spacing: 0.04em; }
+
+/* ═══ Steps ═══ */
+.hsteps { display: flex; flex-direction: column; gap: 6px; margin: 14px 0; }
+.hstep { display: flex; align-items: baseline; gap: 10px; font-size: 12px; }
+.hstep-n { font-weight: 600; color: var(--moss-light); min-width: 16px; text-align: right; }
+.hstep-t { color: var(--t2); }
+.hstep-t strong { color: var(--tx); font-weight: 500; }
+
+/* ═══ Inline annotation ═══ */
+.hnote {
+  color: var(--t2); font-size: 12px; line-height: 1.8; margin-top: 12px;
+  padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.03);
+}
+.hnote strong { color: var(--tx); font-weight: 500; }
+
+/* ═══ Decay table ═══ */
+.hdecay {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px;
+  margin: 14px 0; font-size: 11px;
+}
+.hdecay-day { color: var(--t3); text-align: right; }
+.hdecay-bar { height: 6px; border-radius: 3px; align-self: center; }
+.hdecay-val { color: var(--tx); font-weight: 500; }
+
+/* ═══ Timer ═══ */
+.timer-box {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 22px; margin-bottom: 28px;
+  background: rgba(240,200,126,0.04); border: 1px solid rgba(240,200,126,0.12);
+  border-radius: 14px;
+}
+.timer-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--glow-amber); animation: beat 2s ease-in-out infinite;
+}
+@keyframes beat {
+  0%,100% { box-shadow: 0 0 0 0 rgba(240,200,126,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(240,200,126,0); }
+}
+.timer-text { font-family: var(--mono); font-size: 12px; color: var(--glow-amber); flex: 1; }
+.timer-val { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--glow-amber); }
+
+/* ═══ Shield visual ═══ */
+.shield-visual {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 20px; position: relative; z-index: 1;
+}
+.shield-ring {
+  width: 160px; height: 160px; border-radius: 50%;
+  border: 2px solid rgba(129,140,248,0.3);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  animation: shield-rotate 30s linear infinite;
+}
+@keyframes shield-rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.shield-ring::before {
+  content: ''; position: absolute; inset: -8px;
+  border-radius: 50%; border: 1px solid rgba(129,140,248,0.1);
+  border-top-color: rgba(129,140,248,0.4);
+  animation: shield-rotate 20s linear infinite reverse;
+}
+.shield-ring::after {
+  content: ''; position: absolute; inset: -18px;
+  border-radius: 50%; border: 1px dashed rgba(180,142,250,0.12);
+  animation: shield-rotate 40s linear infinite;
+}
+.shield-core {
+  font-size: 44px; animation: shield-pulse 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(129,140,248,0.3));
+}
+@keyframes shield-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.shield-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--indigo); text-align: center;
+}
+.shield-layers {
+  display: flex; flex-direction: column; gap: 8px; width: 100%;
+}
+.shield-layer {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  background: rgba(129,140,248,0.04); border: 1px solid rgba(129,140,248,0.1);
+  border-radius: 8px; font-family: var(--mono); font-size: 10px; color: var(--t3);
+}
+.shield-layer-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.shield-layer-name { flex: 1; color: var(--t2); font-weight: 500; }
+.shield-layer-status { color: var(--pulse); }
+
+/* ═══ Feature visual panel ═══ */
+.feature-visual {
+  position: relative; padding: 32px;
+  background: var(--bg2); border: 1px solid var(--bd);
+  border-radius: 16px; overflow: hidden;
+}
+.feature-visual::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(129,140,248,0.03) 1px, transparent 1px);
+  background-size: 20px 20px; pointer-events: none;
+}
 
 /* ═══ Comparison table ═══ */
 .compare-table {
@@ -373,28 +710,28 @@
 .token-footer p { font-size: 13px; color: var(--t3); line-height: 1.7; font-style: italic; }
 
 /* ═══ Topology visual ═══ */
-/* ═══ Mesh network visualization ═══ */
-.mesh-visualization {
-  padding: 32px; background: var(--bg2);
-  border: 1px solid var(--bd); border-radius: var(--radius);
-  overflow: hidden;
+.topology-visual {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
 }
-.mesh-svg { width: 100%; height: auto; display: block; }
-.mesh-line { stroke: rgba(138,173,110,0.15); stroke-width: 1.5; }
-.data-pulse { fill: var(--moss); opacity: 0.8; }
-.node-glow { fill: rgba(129,140,248,0.1); }
-.node-core { fill: var(--bg2); stroke: var(--indigo); stroke-width: 2; }
-.mesh-node--central .node-glow { fill: rgba(138,173,110,0.15); }
-.mesh-node--central .node-core { stroke: var(--moss); stroke-width: 2.5; }
-.node-label {
-  font-family: var(--display); font-size: 12px; font-weight: 700;
-  fill: var(--t2);
+.topology-ring { position: relative; width: 200px; height: 200px; }
+.topo-node {
+  position: absolute; width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; border: 2px solid; background: var(--bg2); z-index: 2;
 }
-.mesh-node--central .node-label { fill: var(--moss-light); font-size: 13px; }
-.mesh-caption {
-  font-family: var(--mono); font-size: 12px; color: var(--t3);
-  text-align: center; margin-top: 16px; letter-spacing: 0.02em;
+.topo-node:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); border-color: var(--indigo); }
+.topo-node:nth-child(2) { top: 25%; right: 0; border-color: var(--rose); }
+.topo-node:nth-child(3) { bottom: 10%; right: 10%; border-color: var(--pulse); }
+.topo-node:nth-child(4) { bottom: 10%; left: 10%; border-color: var(--glow-amber); }
+.topo-node:nth-child(5) { top: 25%; left: 0; border-color: var(--violet); }
+.topo-lines { position: absolute; inset: 0; }
+.topo-lines line { stroke: rgba(129,140,248,0.12); stroke-width: 1; stroke-dasharray: 4 4; }
+.topology-caption {
+  font-family: var(--mono); font-size: 11px; color: var(--t3);
+  text-align: center; line-height: 1.7;
 }
+.topology-caption strong { color: var(--t2); font-weight: 500; }
 
 /* ═══ Metabolism cards ═══ */
 .meta-card {
@@ -409,120 +746,21 @@
 .meta-card p { font-size: 13px; color: var(--t2); line-height: 1.75; }
 .meta-card p strong { color: var(--tx); font-weight: 500; }
 
-/* ═══ CTA cards ═══ */
-.cta-card {
-  display: block; text-decoration: none; padding: 22px; background: var(--bg2);
-  border: 1px solid var(--bd); border-radius: var(--radius); border-top: 2px solid;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.cta-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
-.cta-label { font-family: var(--display); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.cta-card p { font-size: 13px; color: var(--t2); line-height: 1.75; margin: 0; }
-
-/* ═══ Timer ═══ */
-.timer-box {
-  display: flex; align-items: center; gap: 14px;
-  padding: 18px 22px; margin-bottom: 28px;
-  background: rgba(240,200,126,0.04); border: 1px solid rgba(240,200,126,0.12);
-  border-radius: 14px;
-}
-.timer-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--glow-amber); animation: beat 2s ease-in-out infinite;
-}
-@keyframes beat {
-  0%,100% { box-shadow: 0 0 0 0 rgba(240,200,126,0.3); }
-  50% { box-shadow: 0 0 0 8px rgba(240,200,126,0); }
-}
-.timer-text { font-family: var(--mono); font-size: 12px; color: var(--glow-amber); flex: 1; }
-.timer-val { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--glow-amber); }
-
-/* ═══ Formula/struct/steps/decay ═══ */
-.hstruct {
-  background: rgba(0,0,0,0.2); border: 1px solid var(--bd);
-  border-radius: 10px; padding: 16px; margin-bottom: 14px;
-}
-.hstruct-name {
-  font-size: 13px; font-weight: 600; color: var(--moss-light);
-  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
-}
-.hstruct-name::before {
-  content: ''; width: 6px; height: 6px; border-radius: 2px;
-  background: var(--moss); display: inline-block;
-}
-.hfield {
-  display: flex; align-items: baseline;
-  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.025);
-}
-.hfield:last-child { border-bottom: none; }
-.hfn { color: var(--tx); min-width: 110px; }
-.hft { color: var(--glow-amber); min-width: 130px; font-size: 11px; }
-.hfc { color: var(--t3); font-size: 10px; }
-
-.hformula {
-  background: rgba(138,173,110,0.06); border: 1px solid rgba(138,173,110,0.12);
-  border-radius: 10px; padding: 16px; margin: 14px 0; text-align: center;
-}
-.hformula code { font-size: 15px; font-weight: 600; color: var(--tx); }
-.hformula code em { font-style: normal; color: var(--t3); font-weight: 400; font-size: 13px; }
-.hformula .hf-sub { font-size: 10px; color: var(--t3); margin-top: 6px; letter-spacing: 0.04em; }
-
-.hsteps { display: flex; flex-direction: column; gap: 6px; margin: 14px 0; }
-.hstep { display: flex; align-items: baseline; gap: 10px; font-size: 12px; }
-.hstep-n { font-weight: 600; color: var(--moss-light); min-width: 16px; text-align: right; }
-.hstep-t { color: var(--t2); }
-.hstep-t strong { color: var(--tx); font-weight: 500; }
-
-.hnote {
-  color: var(--t2); font-size: 12px; line-height: 1.8; margin-top: 12px;
-  padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.03);
-}
-.hnote strong { color: var(--tx); font-weight: 500; }
-
-.hdecay {
-  display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px;
-  margin: 14px 0; font-size: 11px;
-}
-.hdecay-day { color: var(--t3); text-align: right; }
-.hdecay-bar { height: 6px; border-radius: 3px; align-self: center; }
-.hdecay-val { color: var(--tx); font-weight: 500; }
-
-/* ═══ Feature visual panel ═══ */
-.feature-visual {
-  position: relative; padding: 32px;
-  background: var(--bg2); border: 1px solid var(--bd);
-  border-radius: 16px; overflow: hidden;
-}
-.feature-visual::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(129,140,248,0.03) 1px, transparent 1px);
-  background-size: 20px 20px; pointer-events: none;
-}
-
 /* ═══ Responsive ═══ */
 @media (max-width: 768px) {
+  .two { grid-template-columns: 1fr; }
+  .feature-section, .feature-section.reverse { grid-template-columns: 1fr; gap: 32px; direction: ltr; }
   .threat-grid { grid-template-columns: 1fr; }
   .bot-compare { grid-template-columns: 1fr; }
   .nav-dots { display: none; }
+  .sect { padding: 60px 0; min-height: auto; }
   .hero { padding: 40px 20px; }
+  .panel { padding: 24px; }
   .prof { padding: 24px; }
-  .cta-card { margin: 0; }
 }
 </style>
 </head>
 <body>
-
-<nav class="site-nav">
-  <a href="/" class="site-nav-logo">Sync<em>Engine</em></a>
-  <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
-  <div class="site-nav-links">
-    <a href="/gift-cycle.html">Gift Cycle</a>
-    <a href="/vision.html">Vision</a>
-    <a href="/community.html">Community</a>
-    <a href="/network.html">The Mesh</a>
-    <a href="/articles/">Articles</a>
-  </div>
-</nav>
 
 <!-- Atmosphere -->
 <div class="atmosphere">
@@ -539,6 +777,8 @@
 <!-- Nav dots -->
 <nav class="nav-dots" id="navDots">
   <div class="nav-dot on" data-s="hero"><span class="nav-dot-label">Home</span></div>
+  <div class="nav-dot" data-s="s0"><span class="nav-dot-label">The Problem</span></div>
+  <div class="nav-dot" data-s="s1"><span class="nav-dot-label">Your Identity</span></div>
   <div class="nav-dot" data-s="s2"><span class="nav-dot-label">Your Need</span></div>
   <div class="nav-dot" data-s="s3"><span class="nav-dot-label">Your Time</span></div>
   <div class="nav-dot" data-s="s4"><span class="nav-dot-label">Your Gift</span></div>
@@ -553,16 +793,96 @@
 <section class="hero" id="hero">
   <div class="hero-over">
     <div class="hero-over-dot"></div>
-    Post-quantum · Peer-to-peer · Serverless
+    Post-quantum · Peer-to-peer · No servers
   </div>
   <h1 class="hero-h">What If Creating Value<br>Was <em>the Currency</em>?</h1>
-  <p class="hero-p">Platforms harvest your attention and sell it. SyncEngine inverts this — your <strong>time, your work, and your presence</strong> become the only things that matter. No platform. No algorithm. Just people recognizing each other.</p>
+  <p class="hero-p">Platforms harvest your attention and sell it. SyncEngine inverts this — your <strong>time, your work, and your presence</strong> become the only things that matter. Your identity is quantum-resistant, bots can't fake being human, and no server ever holds your data.</p>
   <div class="hero-actions">
-    <a href="#s2" class="hero-btn">Enter the Gift Cycle ↓</a>
-    <a href="/vision.html" class="hero-btn-ghost">How it works</a>
-    <a href="/whitepaper.html" class="hero-btn-ghost">White Paper</a>
+    <a href="#s2" class="hero-btn" onclick="event.preventDefault(); go('s2')">Enter the Gift Cycle ↓</a>
+    <a href="#s0" class="hero-btn-ghost" onclick="event.preventDefault(); go('s0')">How it works</a>
   </div>
   <div class="hero-hint">scroll to begin</div>
+</section>
+
+
+<!-- ═══════════ THE PROBLEM ═══════════ -->
+<section class="sect-short" id="s0">
+  <div class="wrap">
+    <div class="r" style="text-align:center;margin-bottom:12px">
+      <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--danger)">The Problem</span>
+    </div>
+    <h2 class="r stage-h" style="text-align:center;font-size:clamp(24px,3.5vw,38px)">Your digital identity was never designed<br>to survive what's coming</h2>
+    <p class="r" style="text-align:center;color:var(--t2);max-width:520px;margin:0 auto;font-size:15px;line-height:1.8">
+      Quantum computers will crack today's encryption. AI can impersonate anyone. Centralized platforms hold your identity hostage. These aren't hypothetical — they're arriving.
+    </p>
+
+    <div class="threat-grid r r-d1">
+      <div class="threat-card">
+        <div class="threat-icon">⚛️</div>
+        <h3>Quantum Threat</h3>
+        <p>Shor's algorithm will break RSA and ECC — the encryption protecting every password, every key, every wallet you own today.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🤖</div>
+        <h3>AI Impersonation</h3>
+        <p>Language models generate convincing text. Deepfakes clone faces and voices. A one-time CAPTCHA can't tell human from machine anymore.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">🏢</div>
+        <h3>Platform Lock-in</h3>
+        <p>Your identity lives on someone else's server. They can lock you out, sell your data, or disappear — and your identity goes with them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ STAGE 1 · YOUR IDENTITY ═══════════ -->
+<section class="sect" id="s1">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--indigo)">01 · Your Identity</div>
+      <h2 class="stage-h">Your Life Story Becomes<br>an <span style="color:var(--indigo)">Unbreakable Key</span></h2>
+      <p class="stage-p">Your identity isn't a password or a seed phrase. It's a <strong>pass story</strong> — 23 moments from your own life, structured as a hero's journey. The system derives a cryptographic key from your autobiography. Because the slots are non-decomposable, an attacker must guess your <strong>entire story at once</strong>.</p>
+    </div>
+
+    <div class="r r-d1" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch">
+      <div style="padding:28px;background:var(--bg2);border:1px solid var(--bd);border-radius:16px;display:flex;align-items:center;justify-content:center">
+        <div class="shield-visual">
+          <div class="shield-ring">
+            <div class="shield-core">🛡️</div>
+          </div>
+          <div class="shield-label">Post-Quantum Identity Shield</div>
+        </div>
+      </div>
+
+      <div class="tech-aside" style="border-color:var(--indigo);display:flex;flex-direction:column;justify-content:center">
+        <strong style="color:var(--indigo);font-size:12px;display:block;margin-bottom:14px">Three pillars of quantum resistance:</strong>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <code style="color:var(--indigo);font-size:12px">Argon2id</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Memory-hard key derivation. Each guess costs 256 MB of RAM — brute force at scale becomes physically impossible.</span>
+          </div>
+          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
+          <div>
+            <code style="color:var(--indigo);font-size:12px">ML-KEM-768</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Lattice-based key encapsulation. NIST FIPS 203. Resistant to Shor's algorithm — your keys survive the quantum era.</span>
+          </div>
+          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
+          <div>
+            <code style="color:var(--indigo);font-size:12px">ML-DSA-65</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Post-quantum digital signatures. NIST FIPS 204. Every message you sign is quantum-resistant from day one.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note r r-d2" style="margin-top:28px">
+      <div class="note-head">Your story is your key</div>
+      <p>You answer 23 prompts organized as a hero's journey — <strong>Departure</strong>, <strong>Initiation</strong>, <strong>Return</strong>. "I grew up in _____, where I was a _____." "Everything changed when _____ brought me _____." Each answer is a secret only you know. Together, they create a search space of 2<sup>230</sup> — more than the atoms in the observable universe.</p>
+      <p style="margin-top:14px">Passwords are forgotten and reused. Seed phrases are written down. Your pass story is <strong>autobiographical</strong> — you remember it because you lived it. The key never leaves your device. No server ever sees it. And the 23 slots are non-decomposable: guessing one reveals nothing about the others.</p>
+    </div>
+  </div>
 </section>
 
 
@@ -590,7 +910,7 @@
           <label class="fl">Where are you?</label>
           <input class="fi" type="text" id="fWhere" placeholder="City, region, or 'the internet'" oninput="sync()">
         </div>
-        <button class="btn btn-moss" onclick="done('s2')">Post My Intention &#8594;</button>
+        <button class="btn btn-moss" onclick="done('s2')">Post My Intention →</button>
       </div>
 
       <div class="r r-d2">
@@ -600,13 +920,18 @@
         </div>
 
         <details class="hood">
-          <summary>How it works under the hood</summary>
+          <summary>The data structure</summary>
           <div class="hood-body">
-            <div class="hnote">When you post, your device writes to a local <strong>Automerge CRDT</strong> — a data structure that merges edits from multiple people automatically, even offline. Then <strong>Iroh</strong> (a QUIC-based P2P protocol) gossips it to peers. No central server. No API call. Your intention exists on every device that cares.</div>
+            <div class="hstruct">
+              <div class="hstruct-name">Intention</div>
+              <div class="hfield"><span class="hfn">title</span><span class="hft">String</span><span class="hfc">what you wrote above</span></div>
+              <div class="hfield"><span class="hfn">creator</span><span class="hft">PublicKey</span><span class="hfc">your device's identity</span></div>
+              <div class="hfield"><span class="hfn">heat</span><span class="hft">f64</span><span class="hfc">0.0 → 1.0, rises with attention</span></div>
+              <div class="hfield"><span class="hfn">claims</span><span class="hft">Vec&lt;Claim&gt;</span><span class="hfc">who's working on it</span></div>
+            </div>
+            <div class="hnote">When you post, your device writes to a local <strong>Automerge CRDT</strong> — a data structure that merges edits from multiple people automatically, even offline. Then <strong>Iroh</strong> (a QUIC-based P2P protocol) gossips it to peers. No server. No API call. Your intention exists on every device that cares.</div>
           </div>
         </details>
-
-        <a href="/gift-cycle.html" class="btn btn-moss" style="margin-top:20px">See the full Gift Cycle story &#8594;</a>
       </div>
     </div>
   </div>
@@ -618,7 +943,7 @@
   <div class="wrap">
     <div class="r">
       <div class="stage-num" style="color:var(--s3)">03 · Your Time</div>
-      <h2 class="stage-h">You've Been Here for <span style="color:var(--s3)" id="heroTimerInline">0:00</span>.<br>That <span style="color:var(--s3)">Means Something</span>.</h2>
+      <h2 class="stage-h">You've Been Here for<br><span style="color:var(--s3)" id="heroTimerInline">0:00</span>. That <span style="color:var(--s3)">Means Something</span>.</h2>
       <p class="stage-p">On most platforms, your attention enriches a company. Here, <strong>the time you choose to give is recognized as something real</strong> — and it belongs to you. It can only be released as a gift: when you acknowledge someone else's work.</p>
     </div>
 
@@ -630,7 +955,7 @@
           <span class="timer-text">Your time on this page</span>
           <span class="timer-val" id="timer">0:00</span>
         </div>
-        <p style="font-size:14px;color:var(--t2);margin-bottom:28px;line-height:1.8">This timer is real. In SyncEngine, you actively choose which intention to focus on and let your time flow into it. This is called <strong style="color:var(--tx)">giving attention</strong> — choosing which need to charge with your presence. It's the one gift that can't be faked, because it costs you the one thing no one can manufacture: <em>your time, freely given</em>.</p>
+        <p style="font-size:14px;color:var(--t2);margin-bottom:28px;line-height:1.8">This timer is real. In SyncEngine, you actively choose which intention to charge with your attention — setting it as your focus and letting your time flow into it. It's called <strong style="color:var(--tx)">attention</strong>, and it's the one gift that can't be faked — because it costs you the one thing no one can manufacture: <em>your time, freely given</em>.</p>
         <div class="fg">
           <label class="fl">What are you here to do?</label>
           <div class="chips" id="cFocus">
@@ -644,7 +969,7 @@
             <span class="chip" onclick="pick(this)">Explore</span>
           </div>
         </div>
-        <button class="btn btn-amber" onclick="done('s3')">I'm Paying Attention &#8594;</button>
+        <button class="btn btn-amber" onclick="done('s3')">I'm Paying Attention →</button>
       </div>
 
       <div class="r r-d2">
@@ -656,11 +981,18 @@
         <details class="hood">
           <summary>How it's measured</summary>
           <div class="hood-body">
+            <div class="hstruct">
+              <div class="hstruct-name">AttentionSwitchEvent</div>
+              <div class="hfield"><span class="hfn">member</span><span class="hft">MemberId</span><span class="hfc">you</span></div>
+              <div class="hfield"><span class="hfn">from</span><span class="hft">Option&lt;IntentionId&gt;</span><span class="hfc">what you were focused on</span></div>
+              <div class="hfield"><span class="hfn">to</span><span class="hft">IntentionId</span><span class="hfc">what you're switching to</span></div>
+              <div class="hfield"><span class="hfn">timestamp</span><span class="hft">u64</span><span class="hfc">when you switched</span></div>
+            </div>
             <div class="hsteps">
               <div class="hstep"><span class="hstep-n">1</span><span class="hstep-t">You <strong>set an intention as your focus</strong> at 10:03:12</span></div>
               <div class="hstep"><span class="hstep-n">2</span><span class="hstep-t">You <strong>switch to a different intention</strong> at 10:07:44</span></div>
               <div class="hstep"><span class="hstep-n">3</span><span class="hstep-t">4 minutes 32 seconds of attention <strong>flow into the first intention</strong></span></div>
-              <div class="hstep"><span class="hstep-n">&#8594;</span><span class="hstep-t">Your peers see it. The intention's <strong>heat rises</strong>.</span></div>
+              <div class="hstep"><span class="hstep-n">→</span><span class="hstep-t">Your peers see it. The intention's <strong>heat rises</strong>.</span></div>
             </div>
             <div class="hnote">Attention is visible and collective. As more people focus on the same intention, its heat rises from 0.0 toward 1.0 — a public signal that this need matters. No voting button. No like count. <strong>Deliberate focus is the signal.</strong></div>
           </div>
@@ -676,7 +1008,7 @@
   <div class="wrap">
     <div class="r">
       <div class="stage-num" style="color:var(--s4)">04 · Your Gift</div>
-      <h2 class="stage-h">You See a Need.<br>You <span style="color:var(--s4)">Act</span>.</h2>
+      <h2 class="stage-h">Someone Sees a Need.<br>They <span style="color:var(--s4)">Act</span>.</h2>
       <p class="stage-p">This is the heart of it. In SyncEngine, when you help someone, you show your work — screenshots, documents, code, designs. <strong>Evidence, not promises.</strong> This proof becomes a permanent, tamper-proof record of what you did.</p>
     </div>
 
@@ -713,7 +1045,7 @@
             <option value="stewardship">Long-term care (stewardship)</option>
           </select>
         </div>
-        <button class="btn btn-green" onclick="done('s4')">Offer My Gift &#8594;</button>
+        <button class="btn btn-green" onclick="done('s4')">Offer My Gift →</button>
       </div>
 
       <div class="r r-d2">
@@ -725,7 +1057,23 @@
         <details class="hood">
           <summary>How proof works</summary>
           <div class="hood-body">
-            <div class="hnote">Every file you submit gets a <strong>BLAKE3</strong> fingerprint — a cryptographic hash that proves the content existed at that moment and hasn't been altered. Your proof is encrypted so only your community can see it. The intention creator reviews all claims and decides who to bless — multiple people can answer the same need.</div>
+            <div class="hformula">
+              <code>hash = <em>BLAKE3(</em>file_bytes<em>)</em></code>
+              <div class="hf-sub">Every file becomes a unique fingerprint. Same file → same hash. Changed file → new hash.</div>
+            </div>
+            <div class="hstruct">
+              <div class="hstruct-name">Artifact</div>
+              <div class="hfield"><span class="hfn">hash</span><span class="hft">Blake3Hash</span><span class="hfc">content fingerprint</span></div>
+              <div class="hfield"><span class="hfn">encrypted</span><span class="hft">bool</span><span class="hfc">only your realm can decrypt</span></div>
+            </div>
+            <div class="hstruct">
+              <div class="hstruct-name">Claim</div>
+              <div class="hfield"><span class="hfn">claimant</span><span class="hft">MemberId</span><span class="hfc">who did the work</span></div>
+              <div class="hfield"><span class="hfn">intention</span><span class="hft">IntentionId</span><span class="hfc">which need they answered</span></div>
+              <div class="hfield"><span class="hfn">proof_folder</span><span class="hft">Vec&lt;Artifact&gt;</span><span class="hfc">the evidence</span></div>
+              <div class="hfield"><span class="hfn">status</span><span class="hft">Pending | Blessed</span><span class="hfc">awaiting review</span></div>
+            </div>
+            <div class="hnote">Multiple people can claim the same intention. The creator reviews the proof and decides who to bless. <strong>It's collaborative, not competitive.</strong></div>
           </div>
         </details>
       </div>
@@ -740,8 +1088,7 @@
     <div class="r">
       <div class="stage-num" style="color:var(--s5)">05 · Your People</div>
       <h2 class="stage-h">Bots Can't <span style="color:var(--s5)">Show Up</span>.</h2>
-      <p class="stage-p">When someone reviews your work and says <strong>"this was worth my time"</strong>, that's called a <em>blessing</em>. It releases all the attention they invested — straight to you.</p>
-      <p class="stage-p" style="margin-top:12px">But here's the key: <strong>only attention from verified humans counts</strong>. And the only way to get verified is to show up in person.</p>
+      <p class="stage-p">When someone reviews your work and says <strong>"this was worth my time"</strong>, that's called a <em>blessing</em>. It releases all the attention they invested as directed acknowledgment. But here's the key: <strong>only attention from verified humans counts</strong>. And the only way to get verified is to show up in person.</p>
     </div>
 
     <div class="two">
@@ -751,7 +1098,12 @@
 
           <p style="font-size:14px;color:var(--t2);margin-bottom:22px;line-height:1.8">SyncEngine holds <strong style="color:var(--tx)">Proof of Life</strong> gatherings — in-person events where real humans witness each other. When you attend, you're verified as alive. That verification is your <strong style="color:var(--tx)">liveness score</strong>, and it determines whether your attention is counted at all.</p>
 
-          <button class="btn btn-indigo" onclick="done('s5')">Count Me In &#10022;</button>
+          <div class="fg">
+            <label class="fl">Invite a friend (email)</label>
+            <input class="fi" type="email" id="fInvite" placeholder="someone@example.com" oninput="sync()">
+          </div>
+
+          <button class="btn btn-indigo" onclick="done('s5')">I'll Show Up ✦</button>
         </div>
       </div>
 
@@ -760,10 +1112,8 @@
           <div class="note-head">Liveness: the network's immune system</div>
           <p>Other platforms verify you're human once and hope for the best. In SyncEngine, liveness is verified through <strong>in-person events</strong> — shared meals, co-working sessions, walks in the park. Real humans witnessing each other. Without verified liveness, your attention isn't counted, your blessings carry no weight, and any tokens you mint are empty.</p>
           <p style="margin-top:12px">A bot farm can create a million accounts — none of them will ever matter. An AI can generate text. <strong>It can't show up.</strong></p>
-          <p style="margin-top:12px">Your <a href="#identity" style="color:var(--indigo-light)">identity</a> — built from your own life story — is <strong>unbreakable</strong>. Liveness gives that identity a <strong>heartbeat</strong>. Together: you can't be impersonated (quantum-resistant keys) and you can't be automated (proof of physical presence).</p>
+          <p style="margin-top:12px">Your pass story gives you an <strong>unbreakable identity</strong>. Liveness gives that identity a <strong>heartbeat</strong>. Together: you can't be impersonated (quantum-resistant keys) and you can't be automated (proof of physical presence).</p>
         </div>
-
-        <a href="/community.html" class="btn btn-rose" style="margin-top:20px">Meet the community &#8594;</a>
       </div>
     </div>
   </div>
@@ -776,7 +1126,7 @@
     <div class="r">
       <div class="stage-num" style="color:var(--s6)">06 · Your Story</div>
       <h2 class="stage-h">This Is What You've <span style="color:var(--s6)">Built</span><br>by Being Here</h2>
-      <p class="stage-p">A blessing crystallizes into a <strong>Token of Gratitude</strong> — not a coin, not a score, but a <em>letter of introduction</em>. It says: this person showed up, spent real time, and someone who witnessed their work acknowledged it. <strong>Complete the cycle and you'll receive yours</strong> — backed by the real time you've spent here.</p>
+      <p class="stage-p">A blessing crystallizes into a <strong>Token of Gratitude</strong> — not a coin, not a score, but a <em>letter of introduction</em>. It says: this person showed up, spent real time, and someone who witnessed their work acknowledged it. <strong>Complete the cycle and you'll receive yours</strong> — backed by the real attention you've given this page.</p>
     </div>
 
     <div class="two">
@@ -797,21 +1147,6 @@
             <div class="prof-row"><span class="prof-k">Liveness</span><span class="prof-v"><em>awaiting first gathering</em></span></div>
           </div>
           <div class="prof-badges" id="pBadges"></div>
-
-          <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--bd)">
-            <div class="fg">
-              <label class="fl">Your email — we'll tell you when it's ready</label>
-              <input class="fi" type="email" id="fEmail" placeholder="you@example.com" oninput="sync()">
-            </div>
-            <div class="fg">
-              <label class="fl">What intention would you tag your first token to?</label>
-              <textarea class="ft" id="fTag" placeholder="What matters enough that you'd release your token to whoever makes it real?" style="min-height:80px" oninput="sync()"></textarea>
-            </div>
-            <button class="btn btn-final" id="mintBtn" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
-              Register Interest &#8594;
-            </button>
-            <div id="submitStatus" style="display:none;margin-top:16px;padding:16px 20px;border-radius:12px;text-align:center;font-size:14px;line-height:1.6"></div>
-          </div>
         </div>
 
         <!-- TOKEN OF GRATITUDE — revealed on cycle completion -->
@@ -825,7 +1160,7 @@
             <div class="token-subtitle">Minted by completing the gift cycle on syncengine.earth</div>
             <div class="token-rows">
               <div class="token-row"><span class="token-k">Holder</span><span class="token-v" id="tokHolder">—</span></div>
-              <div class="token-row"><span class="token-k">Backed by</span><span class="token-v" id="tokTime"><span class="lit">—</span> of time</span></div>
+              <div class="token-row"><span class="token-k">Backed by</span><span class="token-v" id="tokTime"><span class="lit">—</span> of attention</span></div>
               <div class="token-row"><span class="token-k">Blesser</span><span class="token-v" style="color:var(--moss-light)">syncengine.earth</span></div>
               <div class="token-row"><span class="token-k">Intention</span><span class="token-v" id="tokIntention">—</span></div>
               <div class="token-row"><span class="token-k">Liveness</span><span class="token-v"><span class="lit">awaiting first gathering</span></span></div>
@@ -834,7 +1169,7 @@
             <div class="token-chain">
               <span class="token-chain-label">Blessed by → Holder:</span>
               <div class="token-chain-node" style="background:rgba(138,173,110,0.12);color:var(--moss-light)" title="syncengine.earth">S</div>
-              <span class="token-chain-arrow">&#8594;</span>
+              <span class="token-chain-arrow">→</span>
               <div class="token-chain-node" id="tokChainYou" style="background:rgba(129,140,248,0.12);color:var(--indigo-light)" title="You">?</div>
             </div>
             <div class="token-footer">
@@ -853,6 +1188,18 @@
         <details class="hood">
           <summary>The token lifecycle</summary>
           <div class="hood-body">
+            <div class="hstruct">
+              <div class="hstruct-name">TokenOfGratitude</div>
+              <div class="hfield"><span class="hfn">backed_by</span><span class="hft">Duration</span><span class="hfc">real attention time</span></div>
+              <div class="hfield"><span class="hfn">blesser</span><span class="hft">MemberId</span><span class="hfc">who acknowledged the work</span></div>
+              <div class="hfield"><span class="hfn">holder</span><span class="hft">MemberId</span><span class="hfc">current steward</span></div>
+              <div class="hfield"><span class="hfn">liveness</span><span class="hft">f64</span><span class="hfc">blesser's score at mint time</span></div>
+              <div class="hfield"><span class="hfn">tagged_to</span><span class="hft">Option&lt;IntentionId&gt;</span><span class="hfc">where it's committed</span></div>
+            </div>
+            <div class="hformula">
+              <code>weight <em>=</em> attention_time <em>×</em> blesser_liveness</code>
+              <div class="hf-sub">Zero liveness blesser → token is empty. Unverified humans can't mint anything real.</div>
+            </div>
             <div class="hsteps">
               <div class="hstep"><span class="hstep-n">1</span><span class="hstep-t">Someone <strong>blesses your work</strong> → token is minted, you're the holder</span></div>
               <div class="hstep"><span class="hstep-n">2</span><span class="hstep-t">You <strong>tag it to a new intention</strong> → token is locked there</span></div>
@@ -863,6 +1210,26 @@
           </div>
         </details>
 
+        <!-- Tag forward / sign-up -->
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-accent" style="background:linear-gradient(90deg, var(--s7), var(--violet), var(--rose))"></div>
+          <div style="text-align:center;margin-bottom:16px">
+            <div style="font-size:40px;opacity:0.4;margin-bottom:8px">∞</div>
+            <div style="font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:6px">The Gift <span style="background:linear-gradient(135deg,var(--moss-light),var(--indigo-light),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Tags Forward</span></div>
+            <p style="font-size:13px;color:var(--t3);line-height:1.7;max-width:300px;margin:0 auto">When you hold a token, you can tag it to a new intention — putting your earned gratitude behind someone else's need.</p>
+          </div>
+          <div class="fg">
+            <label class="fl">Your email — we'll tell you when it's ready</label>
+            <input class="fi" type="email" id="fEmail" placeholder="you@example.com" oninput="sync()">
+          </div>
+          <div class="fg">
+            <label class="fl">What intention would you tag your first token to?</label>
+            <textarea class="ft" id="fTag" placeholder="What matters enough that you'd release your token to whoever makes it real?" style="min-height:80px" oninput="sync()"></textarea>
+          </div>
+          <button class="btn btn-final" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
+            Mint My First Token ∞
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -872,157 +1239,53 @@
 <!-- ═══════════ STAGE 7 · THE NETWORK ═══════════ -->
 <section class="sect-short" id="s7" style="padding:80px 0">
   <div class="wrap">
-    <!-- Bridge -->
-    <p class="r" style="text-align:center;color:var(--t2);max-width:480px;margin:0 auto 48px;font-size:16px;line-height:1.8;font-weight:300">You've just experienced the gift cycle. Here's what makes it <strong style="color:var(--tx)">unbreakable</strong>.</p>
-
-    <!-- The Problem -->
-    <div class="r" style="text-align:center;margin-bottom:12px">
-      <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--danger)">The Problem</span>
-    </div>
-    <h2 class="r stage-h" style="text-align:center;font-size:clamp(24px,3.5vw,38px)">Your digital identity was never designed<br>to survive what's coming</h2>
-    <p class="r" style="text-align:center;color:var(--t2);max-width:520px;margin:0 auto;font-size:15px;line-height:1.8">
-      Quantum computers will crack today's encryption. AI can impersonate anyone. Centralized platforms hold your identity hostage. These aren't hypothetical — they're arriving.
-    </p>
-
-    <div class="threat-grid r r-d1">
-      <div class="threat-card">
-        <div class="threat-icon">&#9883;&#65039;</div>
-        <h3>Quantum Threat</h3>
-        <p>Shor's algorithm will break RSA and ECC — the encryption protecting every password, every key, every wallet you own today.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">&#129302;</div>
-        <h3>AI Impersonation</h3>
-        <p>Language models generate convincing text. Deepfakes clone faces and voices. A one-time CAPTCHA can't tell human from machine anymore.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">&#127970;</div>
-        <h3>Platform Lock-in</h3>
-        <p>Your identity lives on someone else's server. They can lock you out, sell your data, or disappear — and your identity goes with them.</p>
-      </div>
-    </div>
-
-    <!-- Your Identity -->
-    <div class="r" id="identity" style="margin-top:64px">
-      <div class="stage-num" style="color:var(--indigo)">Your Identity</div>
-      <h2 class="stage-h">Your Life Story Becomes<br>an <span style="color:var(--indigo)">Unbreakable Key</span></h2>
-      <p class="stage-p">Your identity isn't a password or a seed phrase. It's a <strong>pass story</strong> — 23 moments from your own life, structured as a hero's journey. The system derives a cryptographic key from your autobiography. Because the slots are non-decomposable, an attacker must guess your <strong>entire story at once</strong>.</p>
-    </div>
-
-    <div class="r r-d1">
-      <div class="tech-aside" style="border-color:var(--indigo);display:flex;flex-direction:column;justify-content:center">
-        <strong style="color:var(--indigo);font-size:12px;display:block;margin-bottom:14px">Three pillars of quantum resistance:</strong>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div>
-            <code style="color:var(--indigo);font-size:12px">Argon2id</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Memory-hard key derivation. Each guess costs 256 MB of RAM — brute force at scale becomes physically impossible.</span>
-          </div>
-          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
-          <div>
-            <code style="color:var(--indigo);font-size:12px">ML-KEM-768</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Lattice-based key encapsulation. NIST FIPS 203. Resistant to Shor's algorithm — your keys survive the quantum era.</span>
-          </div>
-          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
-          <div>
-            <code style="color:var(--indigo);font-size:12px">ML-DSA-65</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Post-quantum digital signatures. NIST FIPS 204. Every message you sign is quantum-resistant from day one.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="note r r-d2" style="margin-top:28px">
-      <div class="note-head">Your story is your key</div>
-      <p>You answer 23 prompts organized as a hero's journey — <strong>Departure</strong>, <strong>Initiation</strong>, <strong>Return</strong>. "I grew up in _____, where I was a _____." "Everything changed when _____ brought me _____." Each answer is a secret only you know. Together, they create a search space of 2<sup>230</sup> — more than the atoms in the observable universe.</p>
-      <p style="margin-top:14px">Passwords are forgotten and reused. Seed phrases are written down. Your pass story is <strong>autobiographical</strong> — you remember it because you lived it. The key never leaves your device. No server ever sees it. And the 23 slots are non-decomposable: guessing one reveals nothing about the others.</p>
-    </div>
-
-    <!-- Peer-to-Peer Architecture -->
-    <div class="feature-section r" style="margin-top:64px">
+    <div class="feature-section r">
       <div>
         <div class="feature-label" style="color:var(--violet)">Peer-to-Peer Architecture</div>
-        <h2 class="feature-h">Serverless by design.<br>The participants are the infrastructure.</h2>
+        <h2 class="feature-h">No servers. The participants<br>are the infrastructure.</h2>
         <p class="feature-p">
-          Your Home Realm — your personal space — is derived deterministically from your identity via BLAKE3. It exists on your device, not on anyone's cloud. When you connect with a peer, the connection is <strong>direct and encrypted</strong>.
+          Your Home Realm — your personal space — is derived deterministically from your identity via BLAKE3. It exists on your device, not on anyone's cloud. When you connect with a peer, the connection is <strong>direct and encrypted</strong>. No server relays it.
         </p>
         <p class="feature-p">
-          Servers may exist in the mesh as backup relays, but they <strong>only ever see encrypted packets</strong> — they can't read your data. If a peer is offline, mutual contacts hold sealed packets they cannot read and deliver them when the recipient returns. The network routes through relationships, not data centers. If the company that built this disappeared tomorrow, <strong>the network would continue to exist</strong> as long as peers kept running.
+          If a peer is offline, mutual contacts hold sealed packets they cannot read and deliver them when the recipient returns. The network routes through relationships, not data centers. If the company that built this disappeared tomorrow, <strong>the network would continue to exist</strong> as long as peers kept running.
         </p>
         <div class="tech-aside" style="border-color:var(--violet)">
           <strong style="color:var(--violet)">Built with:</strong>
           Rust · Iroh (QUIC P2P) · Automerge CRDTs · BLAKE3 · redb ·
           Dioxus UI. No JavaScript. No blockchain. No cloud dependency.
         </div>
-
-        <a href="/network.html" class="btn btn-indigo" style="margin-top:20px">Explore the technical architecture &#8594;</a>
       </div>
 
-      <div class="mesh-visualization" aria-label="Animated mesh network showing interconnected nodes">
-        <svg viewBox="0 0 800 300" class="mesh-svg" role="img">
-          <title>Mesh Network Topology</title>
-          <desc>An animated visualization of peer-to-peer nodes connected in a mesh network, with data pulses traveling between them</desc>
-          <g class="mesh-connections">
-            <line x1="400" y1="150" x2="200" y2="80" class="mesh-line"/>
-            <line x1="400" y1="150" x2="600" y2="80" class="mesh-line"/>
-            <line x1="400" y1="150" x2="150" y2="200" class="mesh-line"/>
-            <line x1="400" y1="150" x2="650" y2="200" class="mesh-line"/>
-            <line x1="400" y1="150" x2="280" y2="250" class="mesh-line"/>
-            <line x1="400" y1="150" x2="520" y2="250" class="mesh-line"/>
-            <line x1="200" y1="80" x2="600" y2="80" class="mesh-line"/>
-            <line x1="200" y1="80" x2="150" y2="200" class="mesh-line"/>
-            <line x1="600" y1="80" x2="650" y2="200" class="mesh-line"/>
-            <line x1="150" y1="200" x2="280" y2="250" class="mesh-line"/>
-            <line x1="650" y1="200" x2="520" y2="250" class="mesh-line"/>
-            <line x1="280" y1="250" x2="520" y2="250" class="mesh-line"/>
-            <line x1="200" y1="80" x2="280" y2="250" class="mesh-line"/>
-            <line x1="600" y1="80" x2="520" y2="250" class="mesh-line"/>
-          </g>
-          <g class="mesh-pulses">
-            <circle r="4" class="data-pulse"><animateMotion dur="2s" repeatCount="indefinite" path="M400,150 L200,80"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="2.5s" repeatCount="indefinite" path="M200,80 L600,80"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="1.8s" repeatCount="indefinite" path="M400,150 L650,200"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="2.2s" repeatCount="indefinite" path="M150,200 L280,250"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="3s" repeatCount="indefinite" path="M600,80 L400,150 L280,250"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="2.8s" repeatCount="indefinite" path="M520,250 L400,150 L200,80"/></circle>
-          </g>
-          <g class="mesh-nodes">
-            <g class="mesh-node mesh-node--central" transform="translate(400, 150)">
-              <circle r="28" class="node-glow"/><circle r="20" class="node-core"/>
-              <text y="5" text-anchor="middle" class="node-label">You</text>
-            </g>
-            <g class="mesh-node" transform="translate(200, 80)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">A</text>
-            </g>
-            <g class="mesh-node" transform="translate(600, 80)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">B</text>
-            </g>
-            <g class="mesh-node" transform="translate(150, 200)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">C</text>
-            </g>
-            <g class="mesh-node" transform="translate(650, 200)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">D</text>
-            </g>
-            <g class="mesh-node" transform="translate(280, 250)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">E</text>
-            </g>
-            <g class="mesh-node" transform="translate(520, 250)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">F</text>
-            </g>
-          </g>
-        </svg>
-        <p class="mesh-caption">The mesh self-organizes — no central coordinator required</p>
+      <div class="feature-visual">
+        <div class="topology-visual">
+          <div class="topology-ring">
+            <svg class="topo-lines" viewBox="0 0 200 200">
+              <line x1="100" y1="20" x2="180" y2="60" />
+              <line x1="180" y1="60" x2="165" y2="160" />
+              <line x1="165" y1="160" x2="35" y2="160" />
+              <line x1="35" y1="160" x2="20" y2="60" />
+              <line x1="20" y1="60" x2="100" y2="20" />
+              <line x1="100" y1="20" x2="165" y2="160" />
+              <line x1="100" y1="20" x2="35" y2="160" />
+              <line x1="180" y1="60" x2="35" y2="160" />
+              <line x1="20" y1="60" x2="165" y2="160" />
+            </svg>
+            <div class="topo-node">👤</div>
+            <div class="topo-node">👤</div>
+            <div class="topo-node">👤</div>
+            <div class="topo-node">👤</div>
+            <div class="topo-node">👤</div>
+          </div>
+          <div class="topology-caption">
+            Every jewel reflects all others.<br>
+            <strong>No center. No hierarchy. Just peers.</strong>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Metabolism summary -->
     <div class="r r-d1" style="margin-top:64px">
-      <div style="text-align:center;font-size:15px;color:var(--t2);font-weight:300;margin-bottom:18px">Three forces power the cycle:</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
         <div class="meta-card" style="border-top-color:var(--glow-amber)">
           <div class="meta-tag" style="color:var(--glow-amber)">FLOWS</div>
@@ -1043,30 +1306,13 @@
     </div>
 
     <!-- Closing -->
-    <div class="r" style="text-align:center;padding:48px 0 60px">
+    <div class="r" style="text-align:center;padding:80px 0 60px">
       <p style="font-size:17px;color:var(--t2);max-width:480px;margin:0 auto;line-height:1.95;font-weight:300">
         There is no separate layer for value. The way people collaborate <strong style="color:var(--tx)">is</strong> the gift cycle.
         Attention is the metabolism. Intentions are the needs. Service is the exchange.
         Blessings are the validation. Tokens are the memory.
       </p>
-      <div style="margin-top:36px;font-size:15px;color:var(--moss-light);font-style:italic">In Indra's network, every jewel reflects all others.</div>
-
-      <!-- Branching CTAs -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;max-width:820px;margin:40px auto 0;text-align:left">
-        <a href="/whitepaper.html" class="cta-card" style="border-top-color:var(--glow-amber)">
-          <div class="cta-label" style="color:var(--glow-amber)">The Physics</div>
-          <p>How a conservation law replaces blockchain consensus — attention tracked like energy, not money. No mining. No gas. No global ledger.</p>
-        </a>
-        <a href="/gift-cycle.html" class="cta-card" style="border-top-color:var(--pulse)">
-          <div class="cta-label" style="color:var(--pulse)">The Full Story</div>
-          <p>The complete gift cycle — from posting an intention to minting a token of gratitude. Every stage, explained.</p>
-        </a>
-        <a href="/network.html" class="cta-card" style="border-top-color:var(--moss)">
-          <div class="cta-label" style="color:var(--moss-light)">The Mesh</div>
-          <p>No servers. No cloud. Your device is the infrastructure — connected through encrypted, peer-to-peer links that survive even if SyncEngine disappears.</p>
-        </a>
-      </div>
-
+      <div style="margin-top:36px;font-size:15px;color:var(--moss-light);font-style:italic">Every jewel reflects all others.</div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.14em;text-transform:uppercase;margin-top:12px">SyncEngine · Built on Indra's Network · Rust · Iroh · Automerge · Post-Quantum</div>
     </div>
   </div>
@@ -1074,38 +1320,14 @@
 
 </div>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="site-footer-links">
-      <a href="/">Home</a>
-      <a href="/gift-cycle.html">Gift Cycle</a>
-      <a href="/vision.html">Vision</a>
-      <a href="/community.html">Community</a>
-      <a href="/network.html">The Mesh</a>
-      <a href="/articles/">Articles</a>
-      <a href="/whitepaper.html">White Paper</a>
-      <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
-      <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
-    </div>
-    <p class="site-footer-copy">&copy; 2026 Synchronicity Engine · Open source · Human-first technology</p>
-  </div>
-</footer>
 
 <script>
 // ═══ STATE ═══
 const S = {
   name:'', need:'', where:'', focus:[], skills:[], offer:'',
-  collab:'', email:'', tag:'',
+  collab:'', invite:'', email:'', tag:'',
   done: new Set(),
   t0: Date.now()
-};
-
-// ═══ SURREALDB ═══
-const DB = {
-  url: 'https://syncengine-onbo-06ebquf7edt011le0602tcht84.aws-euw1.surreal.cloud',
-  ns: 'syncengine',
-  db: 'main',
-  ac: 'earlyaccess'
 };
 
 // ═══ TIMER ═══
@@ -1135,7 +1357,7 @@ function sync() {
   S.name = v('fName'); S.need = v('fNeed'); S.where = v('fWhere');
   S.focus = selected('cFocus'); S.skills = selected('cSkills');
   S.offer = v('fOffer'); S.collab = v('fCollab');
-  S.email = v('fEmail'); S.tag = v('fTag');
+  S.invite = v('fInvite'); S.email = v('fEmail'); S.tag = v('fTag');
 
   document.getElementById('pAvatar').textContent = S.name ? S.name[0].toUpperCase() : '?';
   document.getElementById('pName').textContent = S.name || 'Anonymous Peer';
@@ -1172,61 +1394,6 @@ function badges() {
   });
 }
 
-// ═══ SUBMIT TO SURREALDB ═══
-let submitted = false;
-
-async function submitProfile() {
-  if (submitted || !DB.url) return;
-  submitted = true;
-  const statusEl = document.getElementById('submitStatus');
-  const btn = document.getElementById('mintBtn');
-
-  if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; btn.style.opacity = '0.6'; }
-
-  try {
-    const res = await fetch(DB.url + '/signup', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ns: DB.ns, db: DB.db, ac: DB.ac,
-        name: S.name,
-        need: S.need,
-        location: S.where,
-        focus: S.focus,
-        skills: S.skills,
-        offer: S.offer,
-        collab: S.collab,
-        email: S.email,
-        tag: S.tag,
-        time_spent: Math.floor((Date.now() - S.t0) / 1000),
-        stages: Array.from(S.done)
-      })
-    });
-
-    if (!res.ok) throw new Error(res.status);
-
-    if (btn) { btn.textContent = '\u2713 Registered'; btn.style.opacity = '1'; }
-    if (statusEl) {
-      statusEl.style.display = 'block';
-      statusEl.style.background = 'rgba(138,173,110,0.1)';
-      statusEl.style.border = '1px solid rgba(138,173,110,0.25)';
-      statusEl.innerHTML = S.email
-        ? '<strong style="color:var(--moss)">\u2713 You\'re on the list.</strong><br><span style="color:var(--t2)">We\'ll reach out to <strong>' + S.email + '</strong> when SyncEngine is ready.</span>'
-        : '<strong style="color:var(--moss)">\u2713 Profile saved.</strong><br><span style="color:var(--t2)">Add your email above to get notified when SyncEngine launches.</span>';
-    }
-  } catch (err) {
-    console.error('Signup failed:', err);
-    submitted = false;
-    if (btn) { btn.textContent = 'Register Interest \u2192'; btn.disabled = false; btn.style.opacity = '1'; }
-    if (statusEl) {
-      statusEl.style.display = 'block';
-      statusEl.style.background = 'rgba(239,68,68,0.08)';
-      statusEl.style.border = '1px solid rgba(239,68,68,0.2)';
-      statusEl.innerHTML = '<span style="color:var(--danger)">Couldn\'t save your profile.</span> <a href="#" onclick="submitProfile();return false" style="color:var(--indigo-light);text-decoration:underline">Try again</a>';
-    }
-  }
-}
-
 // ═══ STAGE COMPLETE ═══
 function done(stage) {
   S.done.add(stage);
@@ -1250,8 +1417,9 @@ function done(stage) {
     const card = document.getElementById('profCard');
     card.style.boxShadow = '0 0 80px rgba(138,173,110,0.15), 0 0 40px rgba(129,140,248,0.1)';
     setTimeout(() => { card.style.boxShadow = ''; }, 3000);
-    // Save profile to SurrealDB
-    submitProfile();
+    setTimeout(() => {
+      document.getElementById('tokenReveal').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 800);
   }
 
   // Advance
@@ -1270,9 +1438,9 @@ document.querySelectorAll('.nav-dot').forEach(d => {
 });
 
 // ═══ SCROLL ═══
-const sects = ['hero','s2','s3','s4','s5','s6','s7'];
+const sects = ['hero','s0','s1','s2','s3','s4','s5','s6','s7'];
 const dotColors = {
-  hero:'var(--moss)', s2:'var(--s2)',
+  hero:'var(--moss)', s0:'var(--danger)', s1:'var(--indigo)', s2:'var(--s2)',
   s3:'var(--s3)', s4:'var(--s4)', s5:'var(--s5)', s6:'var(--s6)', s7:'var(--violet)'
 };
 
