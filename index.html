@@ -1,3131 +1,1339 @@
 <!DOCTYPE html>
-<html lang="en" data-skin="technical">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Synchronicity Engine — Where Intentions Synchronize Across the Mesh</title>
-  <meta name="description" content="Decentralized collaboration platform for gift economy. Local-first, censorship-resistant, quantum-secure.">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&family=Playfair+Display:wght@700;900&family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-
-  <style>
-    /* ============================================
-       RESET & BASE
-    ============================================ */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: var(--s-font);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
-
-    /* ============================================
-       CSS VARIABLES - BASE/SHARED
-    ============================================ */
-
-    /* ============================================
-       GLOBAL STYLES
-    ============================================ */
-    body {
-      background: var(--t-bg);
-      color: var(--t-tx);
-      font-family: var(--s-font);
-      padding-top: 48px;
-      transition: background var(--transition-base) ease,
-                  color var(--transition-base) ease;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      font-family: var(--s-display);
-      font-weight: 700;
-      line-height: 1.2;
-      transition: font-family var(--transition-base) ease;
-    }
-
-    a {
-      color: var(--t-a2);
-      text-decoration: none;
-      transition: color var(--transition-base) ease,
-                  text-shadow var(--transition-base) ease;
-    }
-
-    a:hover, a:focus {
-      color: var(--t-ac);
-      text-shadow: var(--shadow-glow);
-    }
-    /* ============================================
-       LAYOUT UTILITIES
-    ============================================ */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        padding: 0 1.5rem;
-      }
-    }
-
-    section {
-      padding: 8rem 0;
-      position: relative;
-    }
-
-    @media (max-width: 768px) {
-      section {
-        padding: 5rem 0;
-      }
-    }
-
-
-    /* ============================================
-       HEADER
-    ============================================ */
-    header {
-      padding: 2rem 0;
-      position: relative;
-      z-index: 10;
-    }
-
-    header .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-family: var(--s-display);
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--t-ac);
-      letter-spacing: 0.05em;
-      text-shadow: var(--shadow-glow);
-      transition: all var(--transition-base) ease;
-    }
-
-    .header-nav {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-
-    .header-nav a {
-      color: var(--t-t2);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.3s;
-    }
-
-    .header-nav a:hover {
-      color: var(--t-ac);
-    }
-
-    @media (max-width: 640px) {
-      .logo {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* ============================================
-       HERO SECTION
-    ============================================ */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 10rem 0;
-      position: relative;
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        min-height: 85vh;
-        padding: 6rem 0;
-      }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 7vw, 5.5rem);
-      margin-bottom: 2rem;
-      color: var(--t-ac);
-      text-shadow: var(--shadow-glow);
-      font-weight: 700;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .hero .subhead {
-      font-size: clamp(1rem, 2.5vw, 1.5rem);
-      max-width: 700px;
-      margin: 0 auto 3rem;
-      color: var(--t-t2);
-      line-height: 1.8;
-    }
-
-    .cta-button {
-      display: inline-block;
-      padding: 1.25rem 3rem;
-      background: var(--t-a2);
-      color: var(--t-bg);
-      font-family: var(--s-font);
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: var(--s-radius);
-      border: 2px solid var(--t-a2);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: all var(--transition-base) ease;
-    }
-
-    .cta-button:hover,
-    .cta-button:focus {
-      background: transparent;
-      color: var(--t-a2);
-      box-shadow: var(--shadow-glow);
-      transform: translateY(-2px);
-    }
-    /* Mystic theme: pulse animation */
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
-      50% { box-shadow: 0 0 0 15px rgba(57, 255, 20, 0); }
-    }
-
-    /* ============================================
-       SECTION HEADERS
-    ============================================ */
-    .section-header {
-      text-align: center;
-      margin-bottom: 5rem;
-    }
-
-    .section-header h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      color: var(--t-ac);
-      margin-bottom: 1rem;
-      text-shadow: var(--shadow-glow);
-    }
-
-    .section-header p {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--t-t2);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    /* ============================================
-       PHILOSOPHY SECTION
-    ============================================ */
-    .philosophy-content {
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--t-cd);
-      padding: 4rem;
-      border-radius: var(--s-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: var(--shadow-glow);
-    }
-
-    @media (max-width: 768px) {
-      .philosophy-content {
-        padding: 2.5rem 1.5rem;
-      }
-    }
-
-    .philosophy-content h3 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      color: var(--t-a2);
-      margin-bottom: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    .philosophy-content h3:first-of-type {
-      margin-top: 0;
-    }
-
-    .philosophy-content p {
-      font-size: 1.125rem;
-      line-height: 1.9;
-      margin-bottom: 1.5rem;
-      color: var(--t-tx);
-    }
-
-    .philosophy-content em {
-      color: var(--t-ac);
-      font-style: italic;
-    }
-
-    /* ============================================
-       PRINCIPLES GRID
-    ============================================ */
-    .principles-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    @media (max-width: 768px) {
-      .principles-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .principle-card {
-      background: var(--t-cd);
-      padding: 3rem 2rem;
-      border-radius: var(--s-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all var(--transition-base) ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .principle-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--t-ac), var(--t-a2));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform var(--transition-base) ease;
-    }
-
-    .principle-card:hover::before,
-    .principle-card:focus-within::before {
-      transform: scaleX(1);
-    }
-
-    .principle-card:hover,
-    .principle-card:focus-within {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-glow);
-      border-color: var(--t-a2);
-    }
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .principle-card h3 {
-      font-size: 1.75rem;
-      color: var(--t-ac);
-      margin-bottom: 1rem;
-    }
-
-    .principle-card p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--t-t2);
-    }
-
-    /* ============================================
-       HOW IT WORKS
-    ============================================ */
-    .how-it-works-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 3rem;
-      margin-top: 3rem;
-    }
-
-    @media (max-width: 640px) {
-      .how-it-works-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-    }
-
-    .work-item {
-      text-align: center;
-    }
-
-    .work-item-icon {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 2rem;
-      background: var(--t-cd);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--t-a2);
-      font-size: 3rem;
-      color: var(--t-a2);
-      box-shadow: var(--shadow-glow);
-      transition: all var(--transition-base) ease;
-    }
-    .work-item:hover .work-item-icon,
-    .work-item:focus-within .work-item-icon {
-      transform: scale(1.1) rotate(5deg);
-      border-color: var(--t-ac);
-      color: var(--t-ac);
-    }
-
-    .work-item h3 {
-      font-size: 1.75rem;
-      color: var(--t-ac);
-      margin-bottom: 1rem;
-    }
-
-    .work-item p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--t-t2);
-    }
-
-    .work-item-link {
-      display: inline-block;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: var(--t-a2);
-      text-decoration: none;
-      transition: color var(--transition-base) ease;
-    }
-
-    .work-item-link:hover {
-      color: var(--t-ac);
-    }
-
-    
-    /* ============================================
-       ECOSYSTEM SECTION
-    ============================================ */
-    .ecosystem-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
-      margin-top: 3rem;
-    }
-
-    @media (max-width: 640px) {
-      .ecosystem-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .ecosystem-card {
-      background: var(--t-cd);
-      padding: 3rem 2.5rem;
-      border-radius: var(--s-radius);
-      border: 2px solid transparent;
-      transition: all var(--transition-base) ease;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .ecosystem-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--t-ac) 0%, var(--t-a2) 100%);
-      opacity: 0;
-      transition: opacity var(--transition-base) ease;
-      z-index: -1;
-    }
-
-    .ecosystem-card:hover::after,
-    .ecosystem-card:focus-within::after {
-      opacity: 0.1;
-    }
-
-    .ecosystem-card:hover,
-    .ecosystem-card:focus-within {
-      border-color: var(--t-ac);
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-glow);
-    }
-
-    .ecosystem-card h3 {
-      font-size: 2rem;
-      color: var(--t-ac);
-      margin-bottom: 1rem;
-    }
-
-    .ecosystem-card .domain {
-      font-size: 0.875rem;
-      color: var(--t-a2);
-      margin-bottom: 1.5rem;
-      font-family: var(--s-font);
-    }
-
-    .ecosystem-card p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--t-t2);
-    }
-
-    .ecosystem-card a {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.75rem 2rem;
-      border: 1px solid var(--t-a2);
-      border-radius: var(--s-radius);
-      color: var(--t-a2);
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: all var(--transition-base) ease;
-    }
-
-    .ecosystem-card a:hover,
-    .ecosystem-card a:focus {
-      background: var(--t-a2);
-      color: var(--t-bg);
-    }
-
-    /* ============================================
-       STORY SECTION - COMBINED FLOW
-    ============================================ */
-    .story-section {
-      background: var(--t-sf);
-    }
-
-    .story-context {
-      max-width: 800px;
-      margin: 0 auto 3rem;
-      text-align: center;
-      font-size: 1.125rem;
-      line-height: 1.9;
-      color: var(--t-tx);
-    }
-
-    .story-context em {
-      color: var(--t-ac);
-    }
-
-    .story-flow {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    .story-card {
-      display: grid;
-      grid-template-columns: 1fr 200px;
-      gap: 2rem;
-      align-items: stretch;
-      background: var(--t-cd);
-      border-radius: var(--s-radius);
-      padding: 1.5rem 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all var(--transition-base) ease;
-      min-height: 400px;
-    }
-
-    .story-card:hover {
-      border-color: var(--t-a2);
-      box-shadow: var(--shadow-glow);
-    }
-
-    /* Alternate layout for even cards */
-    .story-card:nth-child(even) {
-      grid-template-columns: 200px 1fr;
-    }
-
-    .story-card:nth-child(even) .story-card-text {
-      order: 2;
-    }
-
-    .story-card:nth-child(even) .story-card-mockup {
-      order: 1;
-    }
-
-    /* Hero card with image (first step) */
-    .story-card--hero {
-      grid-template-columns: 1fr auto;
-      gap: 2.5rem;
-      padding: 0;
-      height: 400px;
-    }
-
-    .story-card--hero .story-card-image {
-      margin: 0;
-      height: 400px;
-      order: 2;
-    }
-
-    .story-card--hero .story-card-image img {
-      height: 400px;
-      width: auto;
-      display: block;
-    }
-
-    .story-card--hero .story-card-text {
-      padding: 2.5rem;
-      justify-content: center;
-      order: 1;
-    }
-
-    .story-card-caption {
-      display: block;
-      margin-top: 1rem;
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--t-t2);
-      opacity: 0.8;
-    }
-
-    @media (max-width: 900px) {
-      .story-card--hero {
-        grid-template-columns: 1fr;
-        height: auto;
-      }
-
-      .story-card--hero .story-card-image {
-        order: 2;
-        height: auto;
-      }
-
-      .story-card--hero .story-card-image img {
-        width: 100%;
-        height: auto;
-      }
-
-      .story-card--hero .story-card-text {
-        padding: 1.5rem;
-        text-align: center;
-        order: 1;
-      }
-    }
-
-    .story-card-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      justify-content: center;
-    }
-
-    .story-step-icon {
-      width: 50px;
-      height: 50px;
-      background: var(--t-sf);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--t-ac);
-      font-size: 1.25rem;
-      transition: all var(--transition-base) ease;
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 900px) {
-      .story-card--hero .story-step-icon {
-        margin: 0 auto;
-      }
-    }
-
-    
-    
-    
-    .story-card:hover .story-step-icon {
-      transform: scale(1.1);
-      border-color: var(--t-a2);
-    }
-
-    .story-card-text h3 {
-      font-size: 1.25rem;
-      color: var(--t-ac);
-      margin: 0;
-    }
-
-    .story-card-text p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--t-t2);
-      margin: 0;
-    }
-
-    /* Phone Mockup in Story Card */
-    .story-card-mockup {
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .phone-screen {
-      background: var(--t-sf);
-      border: 2px solid var(--t-a2);
-      border-radius: var(--s-radius);
-      padding: 0.75rem;
-      min-height: 260px;
-      display: flex;
-      flex-direction: column;
-      font-size: 0.85rem;
-      flex: 1;
-    }
-
-    
-    
-    /* Phone Header */
-    .phone-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 0.4rem;
-      margin-bottom: 0.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      font-size: 0.6rem;
-      color: var(--t-t2);
-    }
-
-    .app-name {
-      color: var(--t-a2);
-      font-weight: 600;
-    }
-
-    .back-arrow {
-      color: var(--t-a2);
-      font-weight: bold;
-    }
-
-    .phone-time {
-      opacity: 0.7;
-    }
-
-    /* Screen Title */
-    .phone-screen .screen-title {
-      color: var(--t-ac);
-      font-family: var(--s-display);
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    /* Mock Input Group */
-    .mock-input-group {
-      margin-bottom: 0.5rem;
-    }
-
-    .mock-input-group label {
-      display: block;
-      color: var(--t-t2);
-      font-size: 0.55rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .mock-input {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 0.4rem;
-      padding: 0.4rem 0.6rem;
-      font-size: 0.65rem;
-      color: var(--t-tx);
-    }
-
-    .mock-textarea {
-      min-height: 35px;
-    }
-
-    /* Mock Button */
-    .mock-button {
-      background: var(--t-ac);
-      color: var(--t-bg);
-      border-radius: 0.4rem;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.6rem;
-      font-weight: 600;
-      text-align: center;
-      margin-top: auto;
-    }
-
-    
-    /* Mock Token Card */
-    .mock-token {
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 0.4rem;
-      padding: 0.4rem;
-      margin-bottom: 0.4rem;
-      transition: all var(--transition-base) ease;
-    }
-
-    .mock-token.selected {
-      border-color: var(--t-ac);
-      background: rgba(212, 175, 55, 0.2);
-    }
-
-    
-    .token-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .token-name {
-      color: var(--t-ac);
-      font-size: 0.6rem;
-      font-weight: 600;
-    }
-
-    .token-hours {
-      background: rgba(212, 175, 55, 0.3);
-      border: 1px solid var(--t-ac);
-      border-radius: 0.2rem;
-      padding: 0.1rem 0.3rem;
-      font-size: 0.55rem;
-      font-weight: 700;
-      color: var(--t-ac);
-    }
-
-    .token-desc {
-      color: var(--t-t2);
-      font-size: 0.5rem;
-      margin-top: 0.15rem;
-    }
-
-    /* Intention Preview */
-    .intention-preview {
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid var(--t-ac);
-      border-radius: 0.4rem;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .intention-preview-title {
-      color: var(--t-ac);
-      font-size: 0.7rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-
-    .intention-preview-token {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.55rem;
-      color: var(--t-t2);
-    }
-
-    /* QR Display */
-    .qr-display {
-      background: white;
-      border-radius: 0.4rem;
-      padding: 0.5rem;
-      text-align: center;
-    }
-
-    .qr-mock {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto;
-      background: #f0f0f0;
-      border: 2px solid #333;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.6rem;
-      color: #666;
-      font-weight: bold;
-    }
-
-    .qr-corner {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border: 2px solid #000;
-    }
-
-    .qr-corner.tl { top: 3px; left: 3px; border-right: none; border-bottom: none; }
-    .qr-corner.tr { top: 3px; right: 3px; border-left: none; border-bottom: none; }
-    .qr-corner.bl { bottom: 3px; left: 3px; border-right: none; border-top: none; }
-
-    .qr-label {
-      color: #666;
-      font-size: 0.5rem;
-      margin-top: 0.3rem;
-    }
-
-    /* Mock Upload */
-    .mock-upload {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px dashed rgba(255, 255, 255, 0.2);
-      border-radius: 0.4rem;
-      padding: 0.6rem;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .mock-upload .upload-icon {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .mock-upload span:last-child {
-      color: var(--t-t2);
-      font-size: 0.5rem;
-    }
-
-    /* Success Display */
-    .success-display {
-      text-align: center;
-      padding: 0.4rem 0;
-    }
-
-    .success-display .success-icon {
-      width: 35px;
-      height: 35px;
-      margin: 0 auto 0.4rem;
-      background: rgba(0, 212, 170, 0.15);
-      border: 2px solid var(--t-a2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      color: var(--t-a2);
-    }
-
-    .success-display .success-title {
-      color: var(--t-ac);
-      font-family: var(--s-display);
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    /* Connection Card */
-    .connection-card {
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid var(--t-ac);
-      border-radius: 0.4rem;
-      padding: 0.5rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .connection-badge {
-      background: rgba(0, 212, 170, 0.1);
-      border: 1px solid var(--t-a2);
-      border-radius: 0.75rem;
-      padding: 0.15rem 0.4rem;
-      font-size: 0.5rem;
-      color: var(--t-a2);
-      display: inline-block;
-      margin-bottom: 0.3rem;
-    }
-
-    .provider-row {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .provider-avatar {
-      width: 22px;
-      height: 22px;
-      background: rgba(212, 175, 55, 0.2);
-      border: 1px solid var(--t-ac);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-    }
-
-    .provider-name {
-      color: var(--t-ac);
-      font-size: 0.65rem;
-      font-weight: 600;
-    }
-
-    .provider-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .provider-role {
-      color: var(--t-t2);
-      font-size: 0.5rem;
-    }
-
-    .hint-text {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 0.4rem;
-      padding: 0.35rem;
-      font-size: 0.5rem;
-      color: var(--t-t2);
-      text-align: center;
-      line-height: 1.3;
-    }
-
-    /* Mobile responsive */
-    @media (max-width: 768px) {
-      .story-card {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem;
-        padding: 1.25rem;
-      }
-
-      .story-card:nth-child(even) .story-card-text,
-      .story-card:nth-child(even) .story-card-mockup {
-        order: unset;
-      }
-
-      .story-card-mockup {
-        max-width: 220px;
-        margin: 0 auto;
-      }
-
-      .story-card-text h3 {
-        font-size: 1.1rem;
-      }
-    }
-
-    /* ============================================
-       REDISTRIBUTION SECTION
-    ============================================ */
-    .redistribution-section {
-      background: var(--t-sf);
-    }
-
-    .redistribution-flow {
-      display: flex;
-      justify-content: space-around;
-      align-items: flex-start;
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    @media (max-width: 768px) {
-      .redistribution-flow {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
-
-    .flow-step {
-      flex: 1;
-      max-width: 320px;
-      text-align: center;
-      position: relative;
-    }
-
-    .flow-step-number {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 1.5rem;
-      background: var(--t-cd);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid var(--t-a2);
-      font-family: var(--s-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--t-a2);
-      transition: all var(--transition-base) ease;
-    }
-
-    
-    .flow-step:hover .flow-step-number {
-      background: var(--t-a2);
-      color: var(--t-bg);
-      transform: scale(1.1);
-    }
-
-    .moon-icon {
-      font-size: 2rem;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    
-    @keyframes moonGlow {
-      0%, 100% {
-        text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        transform: scale(1);
-      }
-      50% {
-        text-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
-        transform: scale(1.1);
-      }
-    }
-
-    .flow-step h3 {
-      font-size: 1.5rem;
-      color: var(--t-ac);
-      margin-bottom: 1rem;
-    }
-
-    .flow-step p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--t-t2);
-    }
-
-    .redistribution-quote {
-      max-width: 700px;
-      margin: 4rem auto 0;
-      padding: 2rem;
-      background: var(--t-cd);
-      border-radius: var(--s-radius);
-      border-left: 4px solid var(--t-ac);
-      font-style: italic;
-    }
-
-    .redistribution-quote p {
-      font-size: 1.125rem;
-      line-height: 1.8;
-      color: var(--t-tx);
-      margin: 0;
-    }
-
-    .redistribution-quote em {
-      color: var(--t-a2);
-      font-style: normal;
-    }
-
-    /* ============================================
-       AI ORACLE SECTION
-    ============================================ */
-    .oracle-section {
-      position: relative;
-    }
-
-    .oracle-teaser {
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--t-cd);
-      padding: 4rem;
-      border-radius: var(--s-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    @media (max-width: 768px) {
-      .oracle-teaser {
-        padding: 2.5rem 1.5rem;
-      }
-    }
-
-    
-    
-    
-    .oracle-badge {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid var(--t-ac);
-      border-radius: 2rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--t-ac);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 2rem;
-    }
-
-    .oracle-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .oracle-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-
-    .oracle-item {
-      text-align: center;
-    }
-
-    .oracle-item-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      display: block;
-      color: var(--t-a2);
-    }
-
-    .oracle-item h4 {
-      font-size: 1.25rem;
-      color: var(--t-ac);
-      margin-bottom: 0.75rem;
-    }
-
-    .oracle-item p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--t-t2);
-    }
-
-    /* ============================================
-       JOIN SECTION
-    ============================================ */
-    .join-section {
-      background: var(--t-sf);
-    }
-
-    .join-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    @media (max-width: 968px) {
-      .join-content {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-    }
-
-    .join-info h3 {
-      font-size: 2rem;
-      color: var(--t-ac);
-      margin-bottom: 1.5rem;
-    }
-
-    .join-info p {
-      font-size: 1.125rem;
-      line-height: 1.9;
-      color: var(--t-tx);
-      margin-bottom: 1.5rem;
-    }
-
-    .join-features {
-      list-style: none;
-      margin: 2rem 0;
-    }
-
-    .join-features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-      font-size: 1rem;
-      color: var(--t-t2);
-    }
-
-    .join-features li::before {
-      content: '◈';
-      color: var(--t-a2);
-      font-size: 1.25rem;
-      flex-shrink: 0;
-    }
-
-    .join-cta {
-      background: var(--t-cd);
-      padding: 3rem;
-      border-radius: var(--s-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      text-align: center;
-    }
-
-    @media (max-width: 768px) {
-      .join-cta {
-        padding: 2rem 1.5rem;
-      }
-    }
-
-    .join-cta h3 {
-      font-size: 1.75rem;
-      color: var(--t-ac);
-      margin-bottom: 1rem;
-    }
-
-    .join-cta p {
-      font-size: 1rem;
-      color: var(--t-t2);
-      margin-bottom: 2rem;
-    }
-
-    .cta-large {
-      display: inline-block;
-      padding: 1.5rem 4rem;
-      background: var(--t-ac);
-      color: var(--t-bg);
-      font-family: var(--s-font);
-      font-size: 1.125rem;
-      font-weight: 600;
-      border-radius: var(--s-radius);
-      border: 2px solid var(--t-ac);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: all var(--transition-base) ease;
-    }
-
-    .cta-large:hover,
-    .cta-large:focus {
-      background: transparent;
-      color: var(--t-ac);
-      box-shadow: var(--shadow-glow);
-      transform: translateY(-3px);
-    }
-
-    
-    .legal-note {
-      font-size: 0.875rem;
-      color: var(--t-t2);
-      opacity: 0.8;
-      margin-top: 1.5rem;
-    }
-
-    .legal-note a {
-      color: var(--t-a2);
-    }
-
-    /* ============================================
-       MESH NETWORK VISUALIZATION
-    ============================================ */
-    .mesh-visualization {
-      margin-bottom: 4rem;
-      padding: 2rem;
-      background: var(--t-cd);
-      border-radius: var(--s-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .mesh-svg {
-      width: 100%;
-      max-width: 800px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .mesh-caption {
-      text-align: center;
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--t-t2);
-      font-style: italic;
-    }
-
-    /* Connection lines */
-    .mesh-line {
-      stroke: var(--t-a2);
-      stroke-width: 1.5;
-      opacity: 0.3;
-      transition: all var(--transition-base) ease;
-    }
-
-    .mesh-line--outer {
-      opacity: 0.2;
-      stroke-dasharray: 4 4;
-    }
-
-    .mesh-line--cross {
-      opacity: 0.15;
-    }
-
-    /* Data pulses */
-    .data-pulse {
-      fill: var(--t-a2);
-      opacity: 0.8;
-    }
-
-    /* Node styling */
-    .node-glow {
-      fill: transparent;
-      stroke: var(--t-ac);
-      stroke-width: 2;
-      opacity: 0.3;
-      animation: nodeGlow 3s ease-in-out infinite;
-    }
-
-    .node-core {
-      fill: var(--t-sf);
-      stroke: var(--t-ac);
-      stroke-width: 2;
-      transition: all var(--transition-base) ease;
-    }
-
-    .mesh-node:hover .node-core {
-      fill: rgba(212, 175, 55, 0.2);
-      stroke-width: 3;
-    }
-
-    .node-label {
-      fill: var(--t-ac);
-      font-family: var(--s-font);
-      font-size: 11px;
-      font-weight: 600;
-    }
-
-    /* Central node special styling */
-    .mesh-node--central .node-glow {
-      stroke: var(--t-a2);
-      opacity: 0.4;
-      animation: centralGlow 2s ease-in-out infinite;
-    }
-
-    .mesh-node--central .node-core {
-      stroke: var(--t-a2);
-      stroke-width: 3;
-    }
-
-    .mesh-node--central .node-label {
-      fill: var(--t-a2);
-      font-size: 12px;
-    }
-
-    @keyframes nodeGlow {
-      0%, 100% { opacity: 0.2; r: 22; }
-      50% { opacity: 0.4; r: 25; }
-    }
-
-    @keyframes centralGlow {
-      0%, 100% { opacity: 0.3; r: 28; }
-      50% { opacity: 0.6; r: 32; }
-    }
-    /* Neon theme enhancements */
-    
-    
-    
-    
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      .data-pulse animateMotion {
-        display: none;
-      }
-
-      .node-glow,
-      .mesh-node--central .node-glow {
-        animation: none;
-        opacity: 0.3;
-      }
-    }
-
-    /* Mobile adjustments */
-    @media (max-width: 600px) {
-      .mesh-visualization {
-        padding: 1rem;
-      }
-
-      .mesh-svg {
-        min-height: 200px;
-      }
-
-      .node-label {
-        font-size: 9px;
-      }
-
-      .mesh-node--central .node-label {
-        font-size: 10px;
-      }
-    }
-
-    /* ============================================
-       ENHANCED HOW IT WORKS (Gatherings)
-    ============================================ */
-    .gatherings-highlight {
-      margin-top: 5rem;
-      padding: 3rem;
-      background: var(--t-cd);
-      border-radius: var(--s-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    @media (max-width: 768px) {
-      .gatherings-highlight {
-        padding: 2rem 1.5rem;
-        margin-top: 3rem;
-      }
-    }
-
-    .gatherings-highlight h3 {
-      font-size: 2rem;
-      color: var(--t-ac);
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .gatherings-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .gatherings-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .gatherings-item {
-      text-align: center;
-    }
-
-    .gatherings-item h4 {
-      font-size: 1.5rem;
-      color: var(--t-a2);
-      margin-bottom: 1rem;
-    }
-
-    .gatherings-item p {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--t-t2);
-    }
-
-    /* Deeper Dives Section */
-    .deeper-dives-section {
-      padding: 8rem 0;
-    }
-
-    .deeper-dives-section .section-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .deeper-dives-section .section-header h2 {
-      color: var(--t-ac);
-      text-shadow: var(--shadow-glow);
-    }
-
-    .deeper-dives-section .section-header p {
-      color: var(--t-t2);
-      margin-top: 0.5rem;
-    }
-
-    .gallery-label {
-      font-family: var(--s-display);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--t-dm);
-      margin-bottom: 1.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .gallery-label:first-of-type {
-      margin-top: 0;
-    }
-
-    .dd-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .dd-card {
-      background: var(--t-cd);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--s-radius);
-      padding: 1.5rem;
-      text-decoration: none;
-      color: var(--t-tx);
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
-    }
-
-    .dd-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--t-a2);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 0 16px rgba(255,255,255,0.05);
-    }
-
-    .dd-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .dd-card-icon {
-      font-size: 1.25rem;
-    }
-
-    .dd-card-tag {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--t-a2);
-      background: rgba(0,212,170,0.1);
-      padding: 0.15rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    .dd-card h4 {
-      font-family: var(--s-display);
-      font-size: 1.05rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin: 0;
-    }
-
-    .dd-card p {
-      font-size: 0.85rem;
-      color: var(--t-t2);
-      line-height: 1.5;
-      margin: 0;
-      flex: 1;
-    }
-
-    .dd-card-link {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--t-ac);
-      margin-top: 0.25rem;
-    }
-
-    /* Substack article cards (with cover image) */
-    .ss-card {
-      background: var(--t-cd);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--s-radius);
-      overflow: hidden;
-      text-decoration: none;
-      color: var(--t-tx);
-      display: flex;
-      flex-direction: column;
-      transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
-    }
-
-    .ss-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--t-a2);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 0 16px rgba(255,255,255,0.05);
-    }
-
-    .ss-card-image {
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .ss-card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .ss-card-badge {
-      position: absolute;
-      bottom: 0.75rem;
-      left: 0.75rem;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      color: var(--t-a2);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    .ss-card-body {
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      flex: 1;
-    }
-
-    .ss-card-body h4 {
-      font-family: var(--s-display);
-      font-size: 1.05rem;
-      font-weight: 600;
-      line-height: 1.3;
-      margin: 0;
-    }
-
-    .ss-card-body .ss-subtitle {
-      font-size: 0.85rem;
-      color: var(--t-t2);
-      line-height: 1.5;
-      margin: 0;
-      flex: 1;
-    }
-
-    .ss-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--t-bd);
-      margin-top: 0.5rem;
-    }
-
-    .ss-card-date {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--t-dm);
-    }
-
-    .ss-card-link {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--t-ac);
-    }
-
-    @media (max-width: 640px) {
-      .dd-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* ============================================
-       FOOTER (Enhanced)
-    ============================================ */
-    footer {
-      background: var(--t-sf);
-      padding: 5rem 0 2rem;
-      text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      margin-top: 0;
-    }
-
-    footer .tagline {
-      font-family: var(--s-display);
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      color: var(--t-ac);
-      margin-bottom: 2rem;
-      font-style: italic;
-    }
-
-    footer .links {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-
-    footer .links a {
-      font-size: 1rem;
-      color: var(--t-t2);
-      transition: all var(--transition-base) ease;
-    }
-
-    footer .links a:hover,
-    footer .links a:focus {
-      color: var(--t-a2);
-      text-shadow: var(--shadow-glow);
-    }
-
-    /* Glossary Terms */
-    .footer-glossary {
-      max-width: 800px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background: var(--t-cd);
-      border-radius: var(--s-radius);
-      text-align: left;
-    }
-
-    .footer-glossary h4 {
-      font-size: 1.25rem;
-      color: var(--t-ac);
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    .glossary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-
-    .glossary-item {
-      font-size: 0.875rem;
-    }
-
-    .glossary-item strong {
-      color: var(--t-a2);
-    }
-
-    .glossary-item span {
-      color: var(--t-t2);
-    }
-
-    footer .copyright {
-      font-size: 0.875rem;
-      color: var(--t-t2);
-      opacity: 0.7;
-      margin-top: 2rem;
-    }
-
-    /* ============================================
-       MOON CYCLE DIAGRAM
-    ============================================ */
-    .moon-cycle-diagram {
-      margin-top: 3rem;
-      padding: 2rem;
-      background: var(--t-cd);
-      border-radius: var(--s-radius);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .moon-svg {
-      width: 100%;
-      max-width: 500px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .cycle-ring {
-      stroke: var(--t-a2);
-      opacity: 0.3;
-    }
-
-    .gradient-start {
-      stop-color: var(--t-ac);
-    }
-
-    .gradient-end {
-      stop-color: var(--t-a2);
-    }
-
-    /* Moon phase circles */
-    .phase-circle {
-      fill: var(--t-sf);
-      stroke: var(--t-t2);
-      stroke-width: 1;
-      opacity: 0.6;
-    }
-
-    .phase-circle--active {
-      fill: var(--t-cd);
-      stroke: var(--t-ac);
-      stroke-width: 3;
-      opacity: 1;
-    }
-
-    .phase-inner {
-      fill: var(--t-t2);
-      opacity: 0.8;
-    }
-
-    .phase-inner--new {
-      fill: var(--t-bg);
-      stroke: var(--t-ac);
-      stroke-width: 1;
-    }
-
-    .phase-inner--full {
-      fill: var(--t-tx);
-      opacity: 0.9;
-    }
-
-    .phase-shadow {
-      fill: var(--t-bg);
-      opacity: 0.9;
-    }
-
-    .phase-label {
-      font-family: var(--s-font);
-      font-size: 10px;
-      fill: var(--t-t2);
-    }
-
-    .phase-label--active {
-      font-size: 12px;
-      font-weight: 600;
-      fill: var(--t-ac);
-    }
-
-    /* Center content */
-    .center-icon {
-      font-size: 24px;
-    }
-
-    .center-label {
-      font-family: var(--s-font);
-      font-size: 11px;
-      fill: var(--t-t2);
-      text-anchor: middle;
-    }
-
-    .center-arrow {
-      stroke: var(--t-a2);
-      opacity: 0.6;
-    }
-
-    .center-arrow-head {
-      fill: var(--t-a2);
-      opacity: 0.6;
-    }
-
-    .cycle-label {
-      font-family: var(--s-display);
-      font-size: 14px;
-      fill: var(--t-a2);
-      font-weight: 600;
-    }
-    @keyframes moonPhaseGlow {
-      0%, 100% { filter: url(#moonGlow) drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
-      50% { filter: url(#moonGlow) drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); }
-    }
-    /* Mobile */
-    @media (max-width: 640px) {
-      .moon-cycle-diagram {
-        padding: 1rem;
-      }
-
-      .moon-svg {
-        max-width: 100%;
-      }
-    }
-
-    /* ============================================
-       INTEGRATED TOKEN LIFECYCLE
-    ============================================ */
-    .token-lifecycle {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-top: 3rem;
-      position: relative;
-    }
-
-    /* Connecting line behind the steps */
-    .token-lifecycle::before {
-      content: '';
-      position: absolute;
-      top: 45px;
-      left: 60px;
-      right: 60px;
-      height: 2px;
-      background: linear-gradient(90deg,
-        var(--t-ac) 0%,
-        var(--t-a2) 50%,
-        var(--t-ac) 100%);
-      opacity: 0.4;
-      z-index: 0;
-    }
-
-    .lifecycle-step {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-
-    .lifecycle-step-icon {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      background: var(--t-cd);
-      border: 3px solid var(--t-ac);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      transition: all var(--transition-base) ease;
-      position: relative;
-    }
-
-    .lifecycle-step-icon::after {
-      content: '';
-      position: absolute;
-      right: -2rem;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-left: 8px solid var(--t-a2);
-      border-top: 6px solid transparent;
-      border-bottom: 6px solid transparent;
-      opacity: 0.7;
-    }
-
-    .lifecycle-step:last-child .lifecycle-step-icon::after {
-      display: none;
-    }
-
-    .lifecycle-step:hover .lifecycle-step-icon {
-      transform: scale(1.1);
-      border-color: var(--t-a2);
-      box-shadow: var(--shadow-glow);
-    }
-
-    .lifecycle-step--final .lifecycle-step-icon {
-      border-color: var(--t-a2);
-      border-width: 4px;
-    }
-
-    .lifecycle-step h3 {
-      font-size: 1.1rem;
-      color: var(--t-ac);
-      margin-bottom: 0.75rem;
-      font-family: var(--s-display);
-    }
-
-    .lifecycle-step p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: var(--t-t2);
-      max-width: 180px;
-    }
-    /* Neon theme enhancements */
-    
-    
-    
-    /* Tablet: 3 + 2 layout */
-    @media (max-width: 1024px) {
-      .token-lifecycle {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 2rem;
-      }
-
-      .token-lifecycle::before {
-        display: none;
-      }
-
-      .lifecycle-step {
-        flex: 0 0 30%;
-      }
-
-      .lifecycle-step-icon::after {
-        display: none;
-      }
-    }
-
-    /* Mobile: Single column */
-    @media (max-width: 600px) {
-      .token-lifecycle {
-        flex-direction: column;
-        align-items: center;
-        gap: 2.5rem;
-      }
-
-      .lifecycle-step {
-        flex: none;
-        width: 100%;
-        max-width: 280px;
-      }
-
-      .lifecycle-step p {
-        max-width: none;
-      }
-
-      .lifecycle-step-icon {
-        width: 80px;
-        height: 80px;
-        font-size: 2rem;
-      }
-    }
-
-    /* ============================================
-       IMAGE PLACEHOLDERS
-    ============================================ */
-    .img-placeholder {
-      background: var(--t-cd);
-      border: 2px dashed var(--t-a2);
-      border-radius: var(--s-radius);
-      padding: 2rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      min-height: 200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .img-placeholder::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(0, 212, 170, 0.05) 100%);
-      pointer-events: none;
-    }
-
-    .img-placeholder-icon {
-      font-size: 3rem;
-      opacity: 0.6;
-    }
-
-    .img-placeholder-label {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--t-ac);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .img-placeholder-suggestion {
-      font-size: 0.8rem;
-      color: var(--t-t2);
-      max-width: 300px;
-      line-height: 1.6;
-    }
-
-    .img-placeholder--hero {
-      min-height: 300px;
-      margin-top: 3rem;
-    }
-
-    .img-placeholder--wide {
-      min-height: 250px;
-      margin: 3rem 0;
-    }
-
-    .img-placeholder--card {
-      min-height: 150px;
-      margin-bottom: 1.5rem;
-    }
-
-    .img-placeholder--inline {
-      min-height: 180px;
-      width: 100%;
-    }
-
-    /* Ecosystem card images */
-    .ecosystem-card .img-placeholder--card {
-      margin: 0 0 1.5rem 0;
-      min-height: 120px;
-    }
-
-    /* Gatherings images */
-    .gatherings-item .img-placeholder--inline {
-      margin-bottom: 1.5rem;
-      min-height: 150px;
-    }
-
-    /* Oracle illustration */
-    .oracle-illustration {
-      max-width: 400px;
-      margin: 0 auto 2rem;
-    }
-
-    /* Join section image */
-    .join-image {
-      margin-bottom: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .img-placeholder {
-        min-height: 150px;
-        padding: 1.5rem;
-      }
-
-      .img-placeholder--hero {
-        min-height: 200px;
-      }
-
-      .img-placeholder--wide {
-        min-height: 180px;
-      }
-    }
-
-    /* ============================================
-       ACCESSIBILITY
-    ============================================ */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-
-    *:focus-visible {
-      outline: 2px solid var(--t-a2);
-      outline-offset: 4px;
-    }
-
-    /* ============================================
-       REDUCED MOTION
-    ============================================ */
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyncEngine — What If Creating Value Was the Currency?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/core.css">
+<style>
+/* ═══ Atmosphere ═══ */
+.atmosphere {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.atmo-grain {
+  position: absolute; inset: -50%; width: 200%; height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.atmo-orb {
+  position: absolute; border-radius: 50%; filter: blur(100px);
+  animation: drift 20s ease-in-out infinite alternate;
+}
+.atmo-orb-1 { width: 600px; height: 600px; top: -200px; left: -150px; background: rgba(138,173,110,0.07); }
+.atmo-orb-2 { width: 500px; height: 500px; bottom: -200px; right: -150px; background: rgba(129,140,248,0.06); animation-delay: -10s; }
+.atmo-orb-3 { width: 400px; height: 400px; top: 40%; left: 50%; transform: translateX(-50%); background: rgba(180,142,250,0.04); animation-delay: -5s; }
+.atmo-orb-4 { width: 450px; height: 450px; top: 60%; left: -100px; background: rgba(52,211,153,0.04); animation: drift 24s ease-in-out infinite alternate; animation-delay: -8s; }
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -20px) scale(1.1); }
+}
+
+/* ═══ Progress bar ═══ */
+.progress-track {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px; z-index: 1000; background: rgba(255,255,255,0.03);
+}
+.progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--indigo), var(--moss), var(--glow-amber), var(--violet), var(--rose));
+  background-size: 400% 100%;
+  animation: grad-shift 8s linear infinite;
+  transition: width 0.2s;
+}
+@keyframes grad-shift { 0% { background-position: 0% 0; } 100% { background-position: 400% 0; } }
+
+/* ═══ Nav dots ═══ */
+.nav-dots {
+  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 14px; z-index: 100;
+}
+.nav-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1.5px solid var(--dim); background: transparent;
+  cursor: pointer; transition: all 0.5s var(--ease);
+  position: relative;
+}
+.nav-dot-label {
+  position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+  color: var(--dim); white-space: nowrap;
+  opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.nav-dot:hover .nav-dot-label { opacity: 1; }
+.nav-dot.on {
+  transform: scale(1.6);
+  border-color: var(--moss); background: var(--moss);
+  box-shadow: 0 0 14px rgba(138,173,110,0.5);
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center;
+  padding: 60px 24px; position: relative;
+}
+.hero-over {
+  font-family: var(--mono); font-size: 11px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--moss-light); margin-bottom: 32px;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 18px; border: 1px solid rgba(138,173,110,0.2);
+  border-radius: 100px;
+  opacity: 0; animation: riseIn 1s 0.3s forwards;
+}
+.hero-over-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pulse); animation: dot-pulse 2s ease-in-out infinite;
+}
+@keyframes dot-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hero-h {
+  font-family: var(--display); font-weight: 900;
+  font-size: clamp(36px, 7vw, 78px);
+  letter-spacing: -0.04em; line-height: 1.0;
+  margin-bottom: 32px;
+  opacity: 0; animation: riseIn 1s 0.5s forwards;
+}
+.hero-h em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--moss-light), var(--indigo-light), var(--violet));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-p {
+  font-size: 18px; color: var(--t2); max-width: 520px;
+  line-height: 1.9; font-weight: 300;
+  margin-bottom: 52px;
+  opacity: 0; animation: riseIn 1s 0.7s forwards;
+}
+.hero-p strong { color: var(--tx); font-weight: 500; }
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  opacity: 0; animation: riseIn 1s 0.9s forwards;
+}
+.hero-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 16px 40px; border: none; border-radius: 100px;
+  background: linear-gradient(135deg, var(--moss), var(--indigo));
+  color: white; font-family: var(--display);
+  font-size: 16px; font-weight: 600;
+  cursor: pointer; transition: all 0.35s;
+  box-shadow: 0 6px 36px rgba(138,173,110,0.2);
+  text-decoration: none;
+}
+.hero-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 48px rgba(138,173,110,0.3); }
+.hero-btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 32px; border: 1px solid var(--bd2); border-radius: 100px;
+  background: transparent; color: var(--t2);
+  font-family: var(--display); font-size: 15px; font-weight: 500;
+  cursor: pointer; transition: all 0.3s; text-decoration: none;
+}
+.hero-btn-ghost:hover { border-color: var(--t3); color: var(--tx); }
+
+.hero-hint {
+  position: absolute; bottom: 36px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--dim); letter-spacing: 0.1em;
+  opacity: 0; animation: riseIn 1s 1.2s forwards, bob 3s 2.5s ease-in-out infinite;
+}
+@keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+/* ═══ Threat landscape ═══ */
+.threat-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+  margin-top: 48px;
+}
+.threat-card {
+  padding: 28px 24px;
+  background: var(--bg2); border: 1px solid var(--bd);
+  border-radius: var(--radius); transition: all 0.3s;
+}
+.threat-card:hover { border-color: rgba(239,68,68,0.4); background: var(--bg3); }
+.threat-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 16px;
+  background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.12);
+}
+.threat-card h3 {
+  font-family: var(--display); font-size: 14px; font-weight: 600;
+  margin-bottom: 8px; color: var(--tx);
+}
+.threat-card p { font-size: 13px; color: var(--t3); line-height: 1.7; }
+
+/* ═══ Comparison table ═══ */
+.compare-table {
+  width: 100%; border-collapse: collapse; margin-top: 40px;
+}
+.compare-table th {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--dim); padding: 12px 16px; text-align: left;
+  border-bottom: 1px solid var(--bd);
+}
+.compare-table th:last-child { color: var(--indigo); }
+.compare-table td {
+  padding: 14px 16px; font-size: 13px;
+  border-bottom: 1px solid rgba(36,46,34,0.5); color: var(--t2);
+}
+.compare-table td:last-child { color: var(--tx); font-weight: 500; }
+.compare-table tr:hover td { background: var(--bg2); }
+.check { color: var(--pulse); font-weight: 600; }
+.cross { color: var(--danger); opacity: 0.5; }
+
+/* ═══ Heartbeat / immune visual ═══ */
+.heartbeat-display {
+  text-align: center; padding: 24px;
+  border: 1px solid rgba(52,211,153,0.15);
+  border-radius: 12px; background: rgba(52,211,153,0.02);
+}
+.heartbeat-line {
+  display: flex; align-items: center; justify-content: center;
+  gap: 2px; height: 48px; margin-bottom: 12px;
+}
+.hb-bar {
+  width: 3px; border-radius: 2px; background: var(--pulse);
+  animation: hb-wave 1.5s ease-in-out infinite;
+}
+.hb-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
+.hb-bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+.hb-bar:nth-child(3) { height: 36px; animation-delay: 0.2s; }
+.hb-bar:nth-child(4) { height: 48px; animation-delay: 0.3s; }
+.hb-bar:nth-child(5) { height: 36px; animation-delay: 0.4s; }
+.hb-bar:nth-child(6) { height: 20px; animation-delay: 0.5s; }
+.hb-bar:nth-child(7) { height: 12px; animation-delay: 0.6s; }
+.hb-bar:nth-child(8) { height: 6px; animation-delay: 0.7s; }
+.hb-bar:nth-child(9) { height: 20px; animation-delay: 0.8s; }
+.hb-bar:nth-child(10) { height: 36px; animation-delay: 0.9s; }
+.hb-bar:nth-child(11) { height: 24px; animation-delay: 1.0s; }
+.hb-bar:nth-child(12) { height: 10px; animation-delay: 1.1s; }
+@keyframes hb-wave {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+.heartbeat-value {
+  font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--pulse);
+}
+.heartbeat-unit {
+  font-family: var(--mono); font-size: 11px; color: var(--t3); margin-top: 4px;
+}
+
+/* Bot compare cards */
+.bot-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.bot-card {
+  padding: 16px; border-radius: 10px; border: 1px solid;
+  font-family: var(--mono); font-size: 11px; text-align: center;
+}
+.bot-card-human { border-color: rgba(52,211,153,0.2); background: rgba(52,211,153,0.03); }
+.bot-card-bot { border-color: rgba(239,68,68,0.2); background: rgba(239,68,68,0.03); }
+.bot-card-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.bot-card-score { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+.bot-card-status { font-size: 10px; }
+
+/* ═══ Encounter code ═══ */
+.enc {
+  text-align: center; padding: 28px;
+  background: rgba(180,142,250,0.04); border: 1px solid rgba(180,142,250,0.12);
+  border-radius: 16px; margin-bottom: 24px;
+}
+.enc-code {
+  font-family: var(--mono); font-size: 36px; font-weight: 700;
+  letter-spacing: 0.18em; color: var(--violet); margin: 10px 0;
+}
+.enc-sub { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: 0.08em; }
+
+/* ═══ Profile card ═══ */
+.prof {
+  background: var(--card); border: 1px solid var(--bd);
+  border-radius: 20px; padding: 36px;
+  position: relative; overflow: hidden;
+  transition: box-shadow 0.6s;
+}
+.prof-glow {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--moss), var(--indigo), var(--violet), var(--rose));
+}
+.prof-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--moss), var(--indigo));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 32px; font-weight: 800; color: white;
+  margin-bottom: 20px; position: relative;
+}
+.prof-avatar::after {
+  content: ''; position: absolute; inset: -5px;
+  border-radius: 50%; border: 2px solid rgba(138,173,110,0.25);
+}
+.prof-name {
+  font-family: var(--display); font-size: 24px; font-weight: 700;
+  letter-spacing: -0.02em; margin-bottom: 4px;
+}
+.prof-sub {
+  font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 24px;
+}
+.prof-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.prof-row:last-child { border-bottom: none; }
+.prof-k { font-size: 14px; color: var(--dim); }
+.prof-v { font-family: var(--mono); font-size: 13px; color: var(--t2); max-width: 260px; text-align: right; }
+.prof-v em {
+  font-style: normal; font-weight: 600;
+  background: linear-gradient(135deg, var(--moss-light), var(--indigo-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.prof-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.prof-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 14px; border-radius: 100px;
+  font-family: var(--mono); font-size: 10px;
+}
+
+/* ═══ Token of Gratitude ═══ */
+.token-reveal {
+  max-height: 0; opacity: 0; overflow: hidden;
+  transition: max-height 1s var(--ease), opacity 0.8s var(--ease), margin 0.6s;
+  margin-top: 0;
+}
+.token-reveal.minted { max-height: 800px; opacity: 1; margin-top: 40px; }
+
+.token {
+  background: var(--card); border: 1px solid var(--bd2);
+  border-radius: 20px; padding: 36px;
+  position: relative; overflow: hidden;
+}
+.token::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--moss), var(--glow-amber), var(--violet), var(--rose));
+}
+.token::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(138,173,110,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.token-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
+}
+.token-id {
+  font-family: var(--mono); font-size: 11px; color: var(--moss-light); letter-spacing: 0.06em;
+}
+.token-state {
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  padding: 4px 14px; border-radius: 100px;
+  background: rgba(138,173,110,0.1); color: var(--moss-light);
+  animation: state-pulse 3s ease-in-out infinite;
+}
+@keyframes state-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(138,173,110,0.15); }
+  50% { box-shadow: 0 0 0 6px rgba(138,173,110,0); }
+}
+.token-title {
+  font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 4px;
+}
+.token-subtitle { font-size: 14px; color: var(--t3); margin-bottom: 24px; }
+.token-rows { margin-bottom: 20px; }
+.token-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 10px 0; border-bottom: 1px solid rgba(138,173,110,0.06);
+}
+.token-row:last-child { border-bottom: none; }
+.token-k { font-size: 13px; color: var(--t3); }
+.token-v {
+  font-family: var(--mono); font-size: 13px; color: var(--t2);
+  max-width: 280px; text-align: right;
+}
+.token-v .lit {
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--moss-light), var(--indigo-light));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.token-chain {
+  display: flex; align-items: center; gap: 8px;
+  padding-top: 16px; border-top: 1px solid rgba(138,173,110,0.08); flex-wrap: wrap;
+}
+.token-chain-label {
+  font-family: var(--mono); font-size: 10px; color: var(--t3);
+  letter-spacing: 0.06em; margin-right: 4px;
+}
+.token-chain-node {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 12px; font-weight: 700;
+}
+.token-chain-arrow { color: var(--dim); font-size: 12px; }
+.token-footer {
+  margin-top: 20px; padding-top: 16px;
+  border-top: 1px solid rgba(138,173,110,0.08); text-align: center;
+}
+.token-footer p { font-size: 13px; color: var(--t3); line-height: 1.7; font-style: italic; }
+
+/* ═══ Topology visual ═══ */
+/* ═══ Mesh network visualization ═══ */
+.mesh-visualization {
+  padding: 32px; background: var(--bg2);
+  border: 1px solid var(--bd); border-radius: var(--radius);
+  overflow: hidden;
+}
+.mesh-svg { width: 100%; height: auto; display: block; }
+.mesh-line { stroke: rgba(138,173,110,0.15); stroke-width: 1.5; }
+.data-pulse { fill: var(--moss); opacity: 0.8; }
+.node-glow { fill: rgba(129,140,248,0.1); }
+.node-core { fill: var(--bg2); stroke: var(--indigo); stroke-width: 2; }
+.mesh-node--central .node-glow { fill: rgba(138,173,110,0.15); }
+.mesh-node--central .node-core { stroke: var(--moss); stroke-width: 2.5; }
+.node-label {
+  font-family: var(--display); font-size: 12px; font-weight: 700;
+  fill: var(--t2);
+}
+.mesh-node--central .node-label { fill: var(--moss-light); font-size: 13px; }
+.mesh-caption {
+  font-family: var(--mono); font-size: 12px; color: var(--t3);
+  text-align: center; margin-top: 16px; letter-spacing: 0.02em;
+}
+
+/* ═══ Metabolism cards ═══ */
+.meta-card {
+  padding: 22px; background: var(--bg2);
+  border: 1px solid var(--bd); border-radius: var(--radius); border-top: 2px solid;
+}
+.meta-tag {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.12em; margin-bottom: 8px;
+}
+.meta-h { font-family: var(--display); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.meta-card p { font-size: 13px; color: var(--t2); line-height: 1.75; }
+.meta-card p strong { color: var(--tx); font-weight: 500; }
+
+/* ═══ Timer ═══ */
+.timer-box {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 22px; margin-bottom: 28px;
+  background: rgba(240,200,126,0.04); border: 1px solid rgba(240,200,126,0.12);
+  border-radius: 14px;
+}
+.timer-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--glow-amber); animation: beat 2s ease-in-out infinite;
+}
+@keyframes beat {
+  0%,100% { box-shadow: 0 0 0 0 rgba(240,200,126,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(240,200,126,0); }
+}
+.timer-text { font-family: var(--mono); font-size: 12px; color: var(--glow-amber); flex: 1; }
+.timer-val { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--glow-amber); }
+
+/* ═══ Formula/struct/steps/decay ═══ */
+.hstruct {
+  background: rgba(0,0,0,0.2); border: 1px solid var(--bd);
+  border-radius: 10px; padding: 16px; margin-bottom: 14px;
+}
+.hstruct-name {
+  font-size: 13px; font-weight: 600; color: var(--moss-light);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.hstruct-name::before {
+  content: ''; width: 6px; height: 6px; border-radius: 2px;
+  background: var(--moss); display: inline-block;
+}
+.hfield {
+  display: flex; align-items: baseline;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.025);
+}
+.hfield:last-child { border-bottom: none; }
+.hfn { color: var(--tx); min-width: 110px; }
+.hft { color: var(--glow-amber); min-width: 130px; font-size: 11px; }
+.hfc { color: var(--t3); font-size: 10px; }
+
+.hformula {
+  background: rgba(138,173,110,0.06); border: 1px solid rgba(138,173,110,0.12);
+  border-radius: 10px; padding: 16px; margin: 14px 0; text-align: center;
+}
+.hformula code { font-size: 15px; font-weight: 600; color: var(--tx); }
+.hformula code em { font-style: normal; color: var(--t3); font-weight: 400; font-size: 13px; }
+.hformula .hf-sub { font-size: 10px; color: var(--t3); margin-top: 6px; letter-spacing: 0.04em; }
+
+.hsteps { display: flex; flex-direction: column; gap: 6px; margin: 14px 0; }
+.hstep { display: flex; align-items: baseline; gap: 10px; font-size: 12px; }
+.hstep-n { font-weight: 600; color: var(--moss-light); min-width: 16px; text-align: right; }
+.hstep-t { color: var(--t2); }
+.hstep-t strong { color: var(--tx); font-weight: 500; }
+
+.hnote {
+  color: var(--t2); font-size: 12px; line-height: 1.8; margin-top: 12px;
+  padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.03);
+}
+.hnote strong { color: var(--tx); font-weight: 500; }
+
+.hdecay {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px;
+  margin: 14px 0; font-size: 11px;
+}
+.hdecay-day { color: var(--t3); text-align: right; }
+.hdecay-bar { height: 6px; border-radius: 3px; align-self: center; }
+.hdecay-val { color: var(--tx); font-weight: 500; }
+
+/* ═══ Feature visual panel ═══ */
+.feature-visual {
+  position: relative; padding: 32px;
+  background: var(--bg2); border: 1px solid var(--bd);
+  border-radius: 16px; overflow: hidden;
+}
+.feature-visual::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(129,140,248,0.03) 1px, transparent 1px);
+  background-size: 20px 20px; pointer-events: none;
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  .threat-grid { grid-template-columns: 1fr; }
+  .bot-compare { grid-template-columns: 1fr; }
+  .nav-dots { display: none; }
+  .hero { padding: 40px 20px; }
+  .prof { padding: 24px; }
+}
+</style>
 </head>
-
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="logo">Synchronicity Engine</div>
-      <ul class="header-nav">
-        <li><a href="network.html">The Mesh</a></li>
-        <li><a href="#deeper-dives">Writings</a></li>
-        <li><a href="articles/">Indra's Network</a></li>
-      </ul>
-    </div>
-  </header>
+<nav class="site-nav">
+  <a href="/" class="site-nav-logo">Sync<em>Engine</em></a>
+  <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="site-nav-links">
+    <a href="/gift-cycle.html">Gift Cycle</a>
+    <a href="/vision.html">Vision</a>
+    <a href="/community.html">Community</a>
+    <a href="/network.html">The Mesh</a>
+    <a href="/articles/">Articles</a>
+  </div>
+</nav>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <h1>Where Intentions Synchronize Across the Mesh</h1>
-      <p class="subhead">
-        A decentralized platform for gift economy. No surveillance. No central control.
-        Just humans collaborating through intentional choice, building the world we know is possible.
-      </p>
-      <a href="#story" class="cta-button">Enter the Field</a>
-    </div>
-  </section>
+<!-- Atmosphere -->
+<div class="atmosphere">
+  <div class="atmo-grain"></div>
+  <div class="atmo-orb atmo-orb-1"></div>
+  <div class="atmo-orb atmo-orb-2"></div>
+  <div class="atmo-orb atmo-orb-3"></div>
+  <div class="atmo-orb atmo-orb-4"></div>
+</div>
 
-  <!-- The Story Section -->
-  <section id="story" class="story-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>The Maracuja Cheesecake</h2>
-        <p>How a gift economy actually works</p>
+<!-- Progress -->
+<div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot on" data-s="hero"><span class="nav-dot-label">Home</span></div>
+  <div class="nav-dot" data-s="s0"><span class="nav-dot-label">The Problem</span></div>
+  <div class="nav-dot" data-s="s1"><span class="nav-dot-label">Your Identity</span></div>
+  <div class="nav-dot" data-s="s2"><span class="nav-dot-label">Your Need</span></div>
+  <div class="nav-dot" data-s="s3"><span class="nav-dot-label">Your Time</span></div>
+  <div class="nav-dot" data-s="s4"><span class="nav-dot-label">Your Gift</span></div>
+  <div class="nav-dot" data-s="s5"><span class="nav-dot-label">Your People</span></div>
+  <div class="nav-dot" data-s="s6"><span class="nav-dot-label">Your Story</span></div>
+  <div class="nav-dot" data-s="s7"><span class="nav-dot-label">The Network</span></div>
+</nav>
+
+<div class="page">
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero" id="hero">
+  <div class="hero-over">
+    <div class="hero-over-dot"></div>
+    Post-quantum · Peer-to-peer · No servers necessary
+  </div>
+  <h1 class="hero-h">What If Creating Value<br>Was <em>the Currency</em>?</h1>
+  <p class="hero-p">Platforms harvest your attention and sell it. SyncEngine inverts this — your <strong>time, your work, and your presence</strong> become the only things that matter. Your identity is quantum-resistant, bots can't fake being human, and no server ever holds your data.</p>
+  <div class="hero-actions">
+    <a href="/gift-cycle.html" class="hero-btn">Enter the Gift Cycle ↓</a>
+    <a href="/vision.html" class="hero-btn-ghost">How it works</a>
+    <a href="/whitepaper.html" class="hero-btn-ghost">White Paper</a>
+  </div>
+  <div class="hero-hint">scroll to begin</div>
+</section>
+
+
+<!-- ═══════════ THE PROBLEM ═══════════ -->
+<section class="sect-short" id="s0">
+  <div class="wrap">
+    <div class="r" style="text-align:center;margin-bottom:12px">
+      <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--danger)">The Problem</span>
+    </div>
+    <h2 class="r stage-h" style="text-align:center;font-size:clamp(24px,3.5vw,38px)">Your digital identity was never designed<br>to survive what's coming</h2>
+    <p class="r" style="text-align:center;color:var(--t2);max-width:520px;margin:0 auto;font-size:15px;line-height:1.8">
+      Quantum computers will crack today's encryption. AI can impersonate anyone. Centralized platforms hold your identity hostage. These aren't hypothetical — they're arriving.
+    </p>
+
+    <div class="threat-grid r r-d1">
+      <div class="threat-card">
+        <div class="threat-icon">&#9883;&#65039;</div>
+        <h3>Quantum Threat</h3>
+        <p>Shor's algorithm will break RSA and ECC — the encryption protecting every password, every key, every wallet you own today.</p>
       </div>
-
-      <p class="story-context">
-        Picture yourself at a <em>Gathering of the Tribe</em>—a community market where
-        gifts and gratitude flow freely. You spot a baker's stall with the most beautiful
-        cheesecake you've ever seen...
-      </p>
-
-      <!-- Combined Story Steps with App Mockups -->
-      <div class="story-flow">
-
-        <!-- Step 1: You See It (with Community Bazaar scene) -->
-        <div class="story-card story-card--hero">
-          <figure class="story-card-image">
-            <img
-              src="refs/A Portal into SyncEngine/MaracujaCheesecake.png"
-              alt="A baker at the Community Bazaar with maracuja cheesecake, raw brownies, and other delicious offerings"
-              loading="lazy"
-            />
-          </figure>
-          <div class="story-card-text">
-            <div class="story-step-icon">👀</div>
-            <h3>1. You See It</h3>
-            <p>At the Community Bazaar, maracuja cheesecake catches your eye. The baker recommends it—you know this is what you want.</p>
-            <span class="story-card-caption">The Community Bazaar: where gifts and gratitude flow freely</span>
-          </div>
-        </div>
-
-        <!-- Step 2: Set an Intention -->
-        <div class="story-card">
-          <div class="story-card-text">
-            <div class="story-step-icon">✨</div>
-            <h3>2. Set an Intention</h3>
-            <p>Open SyncEngine on your phone and set an Intention: "Delicious cheesecake"</p>
-          </div>
-          <div class="story-card-mockup">
-            <div class="phone-screen">
-              <div class="phone-header">
-                <span class="app-name">SyncEngine</span>
-                <span class="phone-time">3:45 PM</span>
-              </div>
-              <div class="screen-title">New Intention</div>
-              <div class="mock-input-group">
-                <label>What do you seek?</label>
-                <div class="mock-input">Delicious cheesecake</div>
-              </div>
-              <div class="mock-input-group">
-                <label>Details</label>
-                <div class="mock-input mock-textarea">That maracuja cheesecake looks amazing!</div>
-              </div>
-              <div class="mock-button">Next: Attach Tokens</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 3: Attach Your Token -->
-        <div class="story-card">
-          <div class="story-card-text">
-            <div class="story-step-icon">🌿</div>
-            <h3>3. Attach Your Token</h3>
-            <p>Drag over the Token you earned last week—8 hours helping your neighbor clear invasive eucalyptus.</p>
-          </div>
-          <div class="story-card-mockup">
-            <div class="phone-screen">
-              <div class="phone-header">
-                <span class="back-arrow">←</span>
-                <span class="phone-time">3:45 PM</span>
-              </div>
-              <div class="screen-title">Attach Tokens</div>
-              <div class="mock-token selected">
-                <div class="token-row">
-                  <span class="token-name">🌳 Eucalyptus Token</span>
-                  <span class="token-hours">8h</span>
-                </div>
-                <div class="token-desc">Helping neighbor clear invasives</div>
-              </div>
-              <div class="mock-token">
-                <div class="token-row">
-                  <span class="token-name">🍞 Sourdough Token</span>
-                  <span class="token-hours">2h</span>
-                </div>
-                <div class="token-desc">Teaching starter cultivation</div>
-              </div>
-              <div class="mock-button">Create Intention Card</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 4: Share the QR -->
-        <div class="story-card">
-          <div class="story-card-text">
-            <div class="story-step-icon">📱</div>
-            <h3>4. Share the QR</h3>
-            <p>A card appears with a QR code. Show it to the baker so they can view and fulfill your Intention.</p>
-          </div>
-          <div class="story-card-mockup">
-            <div class="phone-screen">
-              <div class="phone-header">
-                <span class="back-arrow">←</span>
-                <span class="phone-time">3:46 PM</span>
-              </div>
-              <div class="screen-title">Your Intention</div>
-              <div class="intention-preview">
-                <div class="intention-preview-title">🍰 Delicious cheesecake</div>
-                <div class="intention-preview-token">
-                  <span>🌳 Eucalyptus Token</span>
-                  <span class="token-hours">8h</span>
-                </div>
-              </div>
-              <div class="qr-display">
-                <div class="qr-mock">
-                  <div class="qr-corner tl"></div>
-                  <div class="qr-corner tr"></div>
-                  <div class="qr-corner bl"></div>
-                  <span>QR</span>
-                </div>
-                <div class="qr-label">Show to provider</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 5: Proof of Service -->
-        <div class="story-card">
-          <div class="story-card-text">
-            <div class="story-step-icon">✓</div>
-            <h3>5. Proof of Service</h3>
-            <p>They scan, hand you a slice of cheesecake, and post their Proof of Service.</p>
-          </div>
-          <div class="story-card-mockup">
-            <div class="phone-screen">
-              <div class="phone-header">
-                <span class="back-arrow">←</span>
-                <span class="phone-time">3:50 PM</span>
-              </div>
-              <div class="screen-title">Post Proof</div>
-              <div class="mock-input-group">
-                <label>What did you provide?</label>
-                <div class="mock-input">Maracuja Cheesecake Slice</div>
-              </div>
-              <div class="mock-upload">
-                <span class="upload-icon">📸</span>
-                <span>Add photo</span>
-              </div>
-              <div class="mock-button">Submit Proof</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Step 6: Connection Made -->
-        <div class="story-card">
-          <div class="story-card-text">
-            <div class="story-step-icon">🔗</div>
-            <h3>6. Connection Made</h3>
-            <p>Release your Token to them. Now you're connected through the mesh—ready for future exchanges.</p>
-          </div>
-          <div class="story-card-mockup">
-            <div class="phone-screen">
-              <div class="phone-header">
-                <span class="app-name">SyncEngine</span>
-                <span class="phone-time">3:52 PM</span>
-              </div>
-              <div class="success-display">
-                <div class="success-icon">✓</div>
-                <div class="success-title">Complete!</div>
-              </div>
-              <div class="connection-card">
-                <div class="connection-badge">🤝 New Connection</div>
-                <div class="provider-row">
-                  <span class="provider-avatar">🧑‍🍳</span>
-                  <div class="provider-info">
-                    <span class="provider-name">The Baker</span>
-                    <span class="provider-role">Community Chef</span>
-                  </div>
-                </div>
-              </div>
-              <div class="hint-text">💡 Coordinate future exchanges directly!</div>
-            </div>
-          </div>
-        </div>
-
+      <div class="threat-card">
+        <div class="threat-icon">&#129302;</div>
+        <h3>AI Impersonation</h3>
+        <p>Language models generate convincing text. Deepfakes clone faces and voices. A one-time CAPTCHA can't tell human from machine anymore.</p>
+      </div>
+      <div class="threat-card">
+        <div class="threat-icon">&#127970;</div>
+        <h3>Platform Lock-in</h3>
+        <p>Your identity lives on someone else's server. They can lock you out, sell your data, or disappear — and your identity goes with them.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Deeper Dives Section -->
-  <section id="deeper-dives" class="deeper-dives-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Deeper Dives</h2>
-        <p>Explorations, essays, and visions from the edge</p>
-      </div>
 
-      <h3 class="gallery-label">Indra's Network</h3>
-      <div class="dd-grid" id="indra-articles"></div>
-
-      <h3 class="gallery-label">From Substack</h3>
-      <div class="dd-grid" id="substack-articles"></div>
+<!-- ═══════════ STAGE 1 · YOUR IDENTITY ═══════════ -->
+<section class="sect" id="s1">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--indigo)">01 · Your Identity</div>
+      <h2 class="stage-h">Your Life Story Becomes<br>an <span style="color:var(--indigo)">Unbreakable Key</span></h2>
+      <p class="stage-p">Your identity isn't a password or a seed phrase. It's a <strong>pass story</strong> — 23 moments from your own life, structured as a hero's journey. The system derives a cryptographic key from your autobiography. Because the slots are non-decomposable, an attacker must guess your <strong>entire story at once</strong>.</p>
     </div>
-  </section>
 
-  <!-- Token Economy Section -->
-  <section id="tokens">
-    <div class="container">
-      <div class="section-header">
-        <h2>Tokens of Gratitude</h2>
-        <p>The currency of a gift economy</p>
-      </div>
-
-      <div class="token-lifecycle" role="list" aria-label="Token lifecycle: from service to stewardship">
-        <!-- Step 1: Act of Service -->
-        <div class="lifecycle-step" role="listitem">
-          <div class="lifecycle-step-icon">🌱</div>
-          <h3>Act of Service</h3>
-          <p>Tokens are born through real contribution—ecological restoration, teaching skills, helping neighbors, healing work.</p>
-        </div>
-
-        <!-- Step 2: Token Created -->
-        <div class="lifecycle-step" role="listitem">
-          <div class="lifecycle-step-icon">✨</div>
-          <h3>Token Created</h3>
-          <p>Each Token carries the weight of hours of collective attention. Higher-impact service generates higher-value Tokens.</p>
-        </div>
-
-        <!-- Step 3: Attached to Intention -->
-        <div class="lifecycle-step" role="listitem">
-          <div class="lifecycle-step-icon">📎</div>
-          <h3>Attached to Intention</h3>
-          <p>When you want something from the community, attach your Token to an Intention—a conscious expression of your desire.</p>
-        </div>
-
-        <!-- Step 4: Proof & Transfer -->
-        <div class="lifecycle-step" role="listitem">
-          <div class="lifecycle-step-icon">✓</div>
-          <h3>Proof of Service</h3>
-          <p>The provider fulfills your Intention and documents it. The community validates authentic service, creating a web of trust.</p>
-        </div>
-
-        <!-- Step 5: Stewardship -->
-        <div class="lifecycle-step lifecycle-step--final" role="listitem">
-          <div class="lifecycle-step-icon">🤲</div>
-          <h3>Stewardship</h3>
-          <p>Release the Token to those who serve you. They become stewards—free to use it or pass it forward through the mesh.</p>
+    <div class="r r-d1">
+      <div class="tech-aside" style="border-color:var(--indigo);display:flex;flex-direction:column;justify-content:center">
+        <strong style="color:var(--indigo);font-size:12px;display:block;margin-bottom:14px">Three pillars of quantum resistance:</strong>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <code style="color:var(--indigo);font-size:12px">Argon2id</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Memory-hard key derivation. Each guess costs 256 MB of RAM — brute force at scale becomes physically impossible.</span>
+          </div>
+          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
+          <div>
+            <code style="color:var(--indigo);font-size:12px">ML-KEM-768</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Lattice-based key encapsulation. NIST FIPS 203. Resistant to Shor's algorithm — your keys survive the quantum era.</span>
+          </div>
+          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
+          <div>
+            <code style="color:var(--indigo);font-size:12px">ML-DSA-65</code>
+            <span style="display:block;margin-top:4px;font-size:11px">Post-quantum digital signatures. NIST FIPS 204. Every message you sign is quantum-resistant from day one.</span>
+          </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Philosophy Section -->
-  <section id="philosophy">
-    <div class="container">
-      <div class="section-header">
-        <h2>The Vision</h2>
-        <p>Technology in service of human agency, not corporate extraction</p>
+    <div class="note r r-d2" style="margin-top:28px">
+      <div class="note-head">Your story is your key</div>
+      <p>You answer 23 prompts organized as a hero's journey — <strong>Departure</strong>, <strong>Initiation</strong>, <strong>Return</strong>. "I grew up in _____, where I was a _____." "Everything changed when _____ brought me _____." Each answer is a secret only you know. Together, they create a search space of 2<sup>230</sup> — more than the atoms in the observable universe.</p>
+      <p style="margin-top:14px">Passwords are forgotten and reused. Seed phrases are written down. Your pass story is <strong>autobiographical</strong> — you remember it because you lived it. The key never leaves your device. No server ever sees it. And the 23 slots are non-decomposable: guessing one reveals nothing about the others.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ STAGE 2 · YOUR NEED ═══════════ -->
+<section class="sect" id="s2">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--s2)">02 · Your Need</div>
+      <h2 class="stage-h">Everything Starts With<br>Someone <span style="color:var(--s2)">Asking for Help</span></h2>
+      <p class="stage-p">In SyncEngine, there are no tasks, no tickets, no bounties. There are <strong>intentions</strong> — honest statements of what you need. You don't assign priority to them. The community does, simply by paying attention.</p>
+    </div>
+
+    <div class="two">
+      <div class="panel r r-d1">
+        <div class="panel-accent" style="background:var(--s2)"></div>
+        <div class="fg">
+          <label class="fl">What's your name?</label>
+          <input class="fi" type="text" id="fName" placeholder="What people call you" oninput="sync()">
+        </div>
+        <div class="fg">
+          <label class="fl">What do you need?</label>
+          <textarea class="ft" id="fNeed" placeholder="Be honest. What are you looking for — help learning something? A community to build with? A skill you can't find?&#10;&#10;The best intentions are simple and real." oninput="sync()"></textarea>
+        </div>
+        <div class="fg">
+          <label class="fl">Where are you?</label>
+          <input class="fi" type="text" id="fWhere" placeholder="City, region, or 'the internet'" oninput="sync()">
+        </div>
+        <button class="btn btn-moss" onclick="done('s2')">Post My Intention &#8594;</button>
       </div>
 
-      <div class="philosophy-content">
-        <h3>Decentralized Collaboration Without Surveillance</h3>
-        <p>
-          The Synchronicity Engine is built on a radical premise: that humans can coordinate
-          meaningful work without centralized platforms harvesting their data. Your intentions, your
-          contacts, your data—they stay with you, synchronized across a gossip-based mesh network
-          that respects your sovereignty.
+      <div class="r r-d2">
+        <div class="note">
+          <div class="note-head">Why this matters</div>
+          <p>Most platforms bury your needs under algorithms. In SyncEngine, when you post an intention, everyone in your community sees it — not because an algorithm chose them, but because <strong>you're peers in the same space</strong>. No one decides what's important except the people who show up.</p>
+        </div>
+
+        <details class="hood">
+          <summary>The data structure</summary>
+          <div class="hood-body">
+            <div class="hstruct">
+              <div class="hstruct-name">Intention</div>
+              <div class="hfield"><span class="hfn">title</span><span class="hft">String</span><span class="hfc">what you wrote above</span></div>
+              <div class="hfield"><span class="hfn">creator</span><span class="hft">PublicKey</span><span class="hfc">your device's identity</span></div>
+              <div class="hfield"><span class="hfn">heat</span><span class="hft">f64</span><span class="hfc">0.0 → 1.0, rises with attention</span></div>
+              <div class="hfield"><span class="hfn">claims</span><span class="hft">Vec&lt;Claim&gt;</span><span class="hfc">who's working on it</span></div>
+            </div>
+            <div class="hnote">When you post, your device writes to a local <strong>Automerge CRDT</strong> — a data structure that merges edits from multiple people automatically, even offline. Then <strong>Iroh</strong> (a QUIC-based P2P protocol) gossips it to peers. No server. No API call. Your intention exists on every device that cares.</div>
+          </div>
+        </details>
+
+        <a href="/gift-cycle.html" class="btn btn-moss" style="margin-top:20px">See the full Gift Cycle story &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ STAGE 3 · YOUR TIME ═══════════ -->
+<section class="sect" id="s3">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--s3)">03 · Your Time</div>
+      <h2 class="stage-h">You've Been Here for <span style="color:var(--s3)" id="heroTimerInline">0:00</span>.<br>That <span style="color:var(--s3)">Means Something</span>.</h2>
+      <p class="stage-p">On most platforms, your attention enriches a company. Here, <strong>the time you choose to give is recognized as something real</strong> — and it belongs to you. It can only be released as a gift: when you acknowledge someone else's work.</p>
+    </div>
+
+    <div class="two">
+      <div class="panel r r-d1">
+        <div class="panel-accent" style="background:var(--s3)"></div>
+        <div class="timer-box">
+          <div class="timer-dot"></div>
+          <span class="timer-text">Your time on this page</span>
+          <span class="timer-val" id="timer">0:00</span>
+        </div>
+        <p style="font-size:14px;color:var(--t2);margin-bottom:28px;line-height:1.8">This timer is real. In SyncEngine, you actively choose which intention to charge with your attention — setting it as your focus and letting your time flow into it. It's called <strong style="color:var(--tx)">attention</strong>, and it's the one gift that can't be faked — because it costs you the one thing no one can manufacture: <em>your time, freely given</em>.</p>
+        <div class="fg">
+          <label class="fl">What are you here to do?</label>
+          <div class="chips" id="cFocus">
+            <span class="chip" onclick="pick(this)">Build something</span>
+            <span class="chip" onclick="pick(this)">Learn</span>
+            <span class="chip" onclick="pick(this)">Teach</span>
+            <span class="chip" onclick="pick(this)">Connect with people</span>
+            <span class="chip" onclick="pick(this)">Find community</span>
+            <span class="chip" onclick="pick(this)">Create</span>
+            <span class="chip" onclick="pick(this)">Organize</span>
+            <span class="chip" onclick="pick(this)">Explore</span>
+          </div>
+        </div>
+        <button class="btn btn-amber" onclick="done('s3')">I'm Paying Attention &#8594;</button>
+      </div>
+
+      <div class="r r-d2">
+        <div class="note">
+          <div class="note-head">How attention charges an intention</div>
+          <p>When you see an intention that matters to you, you <strong>set it as your active focus</strong> — an intentional act, not passive browsing. Your time flows into it, and your peers can see the intention building up with collective attention energy. As more people focus on the same intention, its heat rises visibly. When it's charged enough, someone decides to <strong>manifest it</strong> — turning that collective energy into action.</p>
+        </div>
+
+        <details class="hood">
+          <summary>How it's measured</summary>
+          <div class="hood-body">
+            <div class="hstruct">
+              <div class="hstruct-name">AttentionSwitchEvent</div>
+              <div class="hfield"><span class="hfn">member</span><span class="hft">MemberId</span><span class="hfc">you</span></div>
+              <div class="hfield"><span class="hfn">from</span><span class="hft">Option&lt;IntentionId&gt;</span><span class="hfc">what you were focused on</span></div>
+              <div class="hfield"><span class="hfn">to</span><span class="hft">IntentionId</span><span class="hfc">what you're switching to</span></div>
+              <div class="hfield"><span class="hfn">timestamp</span><span class="hft">u64</span><span class="hfc">when you switched</span></div>
+            </div>
+            <div class="hsteps">
+              <div class="hstep"><span class="hstep-n">1</span><span class="hstep-t">You <strong>set an intention as your focus</strong> at 10:03:12</span></div>
+              <div class="hstep"><span class="hstep-n">2</span><span class="hstep-t">You <strong>switch to a different intention</strong> at 10:07:44</span></div>
+              <div class="hstep"><span class="hstep-n">3</span><span class="hstep-t">4 minutes 32 seconds of attention <strong>flow into the first intention</strong></span></div>
+              <div class="hstep"><span class="hstep-n">&#8594;</span><span class="hstep-t">Your peers see it. The intention's <strong>heat rises</strong>.</span></div>
+            </div>
+            <div class="hnote">Attention is visible and collective. As more people focus on the same intention, its heat rises from 0.0 toward 1.0 — a public signal that this need matters. No voting button. No like count. <strong>Deliberate focus is the signal.</strong></div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ STAGE 4 · YOUR GIFT ═══════════ -->
+<section class="sect" id="s4">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--s4)">04 · Your Gift</div>
+      <h2 class="stage-h">Someone Sees a Need.<br>They <span style="color:var(--s4)">Act</span>.</h2>
+      <p class="stage-p">This is the heart of it. In SyncEngine, when you help someone, you show your work — screenshots, documents, code, designs. <strong>Evidence, not promises.</strong> This proof becomes a permanent, tamper-proof record of what you did.</p>
+    </div>
+
+    <div class="two">
+      <div class="panel r r-d1">
+        <div class="panel-accent" style="background:var(--s4)"></div>
+        <div class="fg">
+          <label class="fl">What skills do you bring?</label>
+          <div class="chips" id="cSkills">
+            <span class="chip" onclick="pick(this)">Code</span>
+            <span class="chip" onclick="pick(this)">Design</span>
+            <span class="chip" onclick="pick(this)">Writing</span>
+            <span class="chip" onclick="pick(this)">Music</span>
+            <span class="chip" onclick="pick(this)">Research</span>
+            <span class="chip" onclick="pick(this)">Facilitation</span>
+            <span class="chip" onclick="pick(this)">Farming</span>
+            <span class="chip" onclick="pick(this)">Craft</span>
+            <span class="chip" onclick="pick(this)">Care</span>
+            <span class="chip" onclick="pick(this)">Strategy</span>
+          </div>
+        </div>
+        <div class="fg">
+          <label class="fl">What can you offer?</label>
+          <textarea class="ft" id="fOffer" placeholder="What would you give to this community? Describe the kind of help you'd provide if someone posted an intention you could answer." oninput="sync()"></textarea>
+        </div>
+        <div class="fg">
+          <label class="fl">How do you prefer to work?</label>
+          <select class="fs" id="fCollab" onchange="sync()">
+            <option value="">Pick one...</option>
+            <option value="async">On my own time (async)</option>
+            <option value="pairing">Side by side (pairing)</option>
+            <option value="mentoring">Teaching or learning (mentoring)</option>
+            <option value="sprints">Short intense bursts (sprints)</option>
+            <option value="stewardship">Long-term care (stewardship)</option>
+          </select>
+        </div>
+        <button class="btn btn-green" onclick="done('s4')">Offer My Gift &#8594;</button>
+      </div>
+
+      <div class="r r-d2">
+        <div class="note">
+          <div class="note-head">Why proof matters</div>
+          <p>Anyone can say they'll help. In SyncEngine, you <strong>show</strong> what you did. Your proof is stored as immutable, encrypted artifacts that only your community can see. Multiple people can answer the same intention — it's collaborative, not competitive.</p>
+        </div>
+
+        <details class="hood">
+          <summary>How proof works</summary>
+          <div class="hood-body">
+            <div class="hformula">
+              <code>hash = <em>BLAKE3(</em>file_bytes<em>)</em></code>
+              <div class="hf-sub">Every file becomes a unique fingerprint. Same file → same hash. Changed file → new hash.</div>
+            </div>
+            <div class="hstruct">
+              <div class="hstruct-name">Artifact</div>
+              <div class="hfield"><span class="hfn">hash</span><span class="hft">Blake3Hash</span><span class="hfc">content fingerprint</span></div>
+              <div class="hfield"><span class="hfn">encrypted</span><span class="hft">bool</span><span class="hfc">only your realm can decrypt</span></div>
+            </div>
+            <div class="hstruct">
+              <div class="hstruct-name">Claim</div>
+              <div class="hfield"><span class="hfn">claimant</span><span class="hft">MemberId</span><span class="hfc">who did the work</span></div>
+              <div class="hfield"><span class="hfn">intention</span><span class="hft">IntentionId</span><span class="hfc">which need they answered</span></div>
+              <div class="hfield"><span class="hfn">proof_folder</span><span class="hft">Vec&lt;Artifact&gt;</span><span class="hfc">the evidence</span></div>
+              <div class="hfield"><span class="hfn">status</span><span class="hft">Pending | Blessed</span><span class="hfc">awaiting review</span></div>
+            </div>
+            <div class="hnote">Multiple people can claim the same intention. The creator reviews the proof and decides who to bless. <strong>It's collaborative, not competitive.</strong></div>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ STAGE 5 · YOUR PEOPLE ═══════════ -->
+<section class="sect" id="s5">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--s5)">05 · Your People</div>
+      <h2 class="stage-h">Bots Can't <span style="color:var(--s5)">Show Up</span>.</h2>
+      <p class="stage-p">When someone reviews your work and says <strong>"this was worth my time"</strong>, that's called a <em>blessing</em>. It releases all the attention they invested as directed acknowledgment. But here's the key: <strong>only attention from verified humans counts</strong>. And the only way to get verified is to show up in person.</p>
+    </div>
+
+    <div class="two">
+      <div class="r r-d1">
+        <div class="panel" style="margin-bottom:20px">
+          <div class="panel-accent" style="background:var(--s5)"></div>
+
+          <p style="font-size:14px;color:var(--t2);margin-bottom:22px;line-height:1.8">SyncEngine holds <strong style="color:var(--tx)">Proof of Life</strong> gatherings — in-person events where real humans witness each other. When you attend, you're verified as alive. That verification is your <strong style="color:var(--tx)">liveness score</strong>, and it determines whether your attention is counted at all.</p>
+
+          <div class="fg">
+            <label class="fl">Invite a friend (email)</label>
+            <input class="fi" type="email" id="fInvite" placeholder="someone@example.com" oninput="sync()">
+          </div>
+
+          <button class="btn btn-indigo" onclick="done('s5')">I'll Show Up &#10022;</button>
+        </div>
+      </div>
+
+      <div class="r r-d2">
+        <div class="note">
+          <div class="note-head">Liveness: the network's immune system</div>
+          <p>Other platforms verify you're human once and hope for the best. In SyncEngine, liveness is verified through <strong>in-person events</strong> — shared meals, co-working sessions, walks in the park. Real humans witnessing each other. Without verified liveness, your attention isn't counted, your blessings carry no weight, and any tokens you mint are empty.</p>
+          <p style="margin-top:12px">A bot farm can create a million accounts — none of them will ever matter. An AI can generate text. <strong>It can't show up.</strong></p>
+          <p style="margin-top:12px">Your pass story gives you an <strong>unbreakable identity</strong>. Liveness gives that identity a <strong>heartbeat</strong>. Together: you can't be impersonated (quantum-resistant keys) and you can't be automated (proof of physical presence).</p>
+        </div>
+
+        <a href="/community.html" class="btn btn-rose" style="margin-top:20px">Meet the community &#8594;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ STAGE 6 · YOUR STORY ═══════════ -->
+<section class="sect" id="s6">
+  <div class="wrap">
+    <div class="r">
+      <div class="stage-num" style="color:var(--s6)">06 · Your Story</div>
+      <h2 class="stage-h">This Is What You've <span style="color:var(--s6)">Built</span><br>by Being Here</h2>
+      <p class="stage-p">A blessing crystallizes into a <strong>Token of Gratitude</strong> — not a coin, not a score, but a <em>letter of introduction</em>. It says: this person showed up, spent real time, and someone who witnessed their work acknowledged it. <strong>Complete the cycle and you'll receive yours</strong> — backed by the real attention you've given this page.</p>
+    </div>
+
+    <div class="two">
+      <div class="r r-d1">
+        <div class="prof" id="profCard">
+          <div class="prof-glow"></div>
+          <div class="prof-avatar" id="pAvatar">?</div>
+          <div class="prof-name" id="pName">Anonymous Peer</div>
+          <div class="prof-sub" id="pSub">awaiting first intention...</div>
+          <div style="margin:24px 0">
+            <div class="prof-row"><span class="prof-k">Intention</span><span class="prof-v" id="pNeed">—</span></div>
+            <div class="prof-row"><span class="prof-k">Location</span><span class="prof-v" id="pWhere">—</span></div>
+            <div class="prof-row"><span class="prof-k">Here to</span><span class="prof-v" id="pFocus">—</span></div>
+            <div class="prof-row"><span class="prof-k">Gifts</span><span class="prof-v" id="pSkills">—</span></div>
+            <div class="prof-row"><span class="prof-k">Work style</span><span class="prof-v" id="pCollab">—</span></div>
+            <div class="prof-row"><span class="prof-k">Offering</span><span class="prof-v" id="pOffer">—</span></div>
+            <div class="prof-row"><span class="prof-k">Time given</span><span class="prof-v" id="pTime"><em>0:00</em></span></div>
+            <div class="prof-row"><span class="prof-k">Liveness</span><span class="prof-v"><em>awaiting first gathering</em></span></div>
+          </div>
+          <div class="prof-badges" id="pBadges"></div>
+        </div>
+
+        <!-- TOKEN OF GRATITUDE — revealed on cycle completion -->
+        <div class="token-reveal" id="tokenReveal">
+          <div class="token">
+            <div class="token-head">
+              <span class="token-id" id="tokId">tok:————</span>
+              <span class="token-state">First Token</span>
+            </div>
+            <div class="token-title">Token of Gratitude</div>
+            <div class="token-subtitle">Minted by completing the gift cycle on syncengine.earth</div>
+            <div class="token-rows">
+              <div class="token-row"><span class="token-k">Holder</span><span class="token-v" id="tokHolder">—</span></div>
+              <div class="token-row"><span class="token-k">Backed by</span><span class="token-v" id="tokTime"><span class="lit">—</span> of attention</span></div>
+              <div class="token-row"><span class="token-k">Blesser</span><span class="token-v" style="color:var(--moss-light)">syncengine.earth</span></div>
+              <div class="token-row"><span class="token-k">Intention</span><span class="token-v" id="tokIntention">—</span></div>
+              <div class="token-row"><span class="token-k">Liveness</span><span class="token-v"><span class="lit">awaiting first gathering</span></span></div>
+              <div class="token-row"><span class="token-k">State</span><span class="token-v"><span class="lit">Held</span></span></div>
+            </div>
+            <div class="token-chain">
+              <span class="token-chain-label">Blessed by → Holder:</span>
+              <div class="token-chain-node" style="background:rgba(138,173,110,0.12);color:var(--moss-light)" title="syncengine.earth">S</div>
+              <span class="token-chain-arrow">&#8594;</span>
+              <div class="token-chain-node" id="tokChainYou" style="background:rgba(129,140,248,0.12);color:var(--indigo-light)" title="You">?</div>
+            </div>
+            <div class="token-footer">
+              <p>This token is yours. When SyncEngine launches,<br>it will carry forward as proof you were here from the beginning.</p>
+              <div id="submitStatus" style="display:none;margin-top:14px;font-size:13px;line-height:1.6;text-align:center"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="r r-d2">
+        <div class="note">
+          <div class="note-head">Why this can't be gamed</div>
+          <p>A token's weight comes from two things: <strong>how much real attention backed it</strong>, and <strong>the blesser's liveness score</strong> when they created it. If the blesser never attended a Proof of Life gathering, their liveness is zero — and the token is empty. No amount of automation changes this.</p>
+        </div>
+
+        <details class="hood">
+          <summary>The token lifecycle</summary>
+          <div class="hood-body">
+            <div class="hstruct">
+              <div class="hstruct-name">TokenOfGratitude</div>
+              <div class="hfield"><span class="hfn">backed_by</span><span class="hft">Duration</span><span class="hfc">real attention time</span></div>
+              <div class="hfield"><span class="hfn">blesser</span><span class="hft">MemberId</span><span class="hfc">who acknowledged the work</span></div>
+              <div class="hfield"><span class="hfn">holder</span><span class="hft">MemberId</span><span class="hfc">current steward</span></div>
+              <div class="hfield"><span class="hfn">liveness</span><span class="hft">f64</span><span class="hfc">blesser's score at mint time</span></div>
+              <div class="hfield"><span class="hfn">tagged_to</span><span class="hft">Option&lt;IntentionId&gt;</span><span class="hfc">where it's committed</span></div>
+            </div>
+            <div class="hformula">
+              <code>weight <em>=</em> attention_time <em>×</em> blesser_liveness</code>
+              <div class="hf-sub">Zero liveness blesser → token is empty. Unverified humans can't mint anything real.</div>
+            </div>
+            <div class="hsteps">
+              <div class="hstep"><span class="hstep-n">1</span><span class="hstep-t">Someone <strong>blesses your work</strong> → token is minted, you're the holder</span></div>
+              <div class="hstep"><span class="hstep-n">2</span><span class="hstep-t">You <strong>tag it to a new intention</strong> → token is locked there</span></div>
+              <div class="hstep"><span class="hstep-n">3</span><span class="hstep-t">Someone <strong>manifests that intention</strong></span></div>
+              <div class="hstep"><span class="hstep-n">4</span><span class="hstep-t">Token <strong>flows forward to the doer</strong> — they're the new steward</span></div>
+            </div>
+            <div class="hnote"><strong>Tokens only move toward work. Never backwards.</strong></div>
+          </div>
+        </details>
+
+        <!-- Tag forward / sign-up -->
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-accent" style="background:linear-gradient(90deg, var(--s7), var(--violet), var(--rose))"></div>
+          <div style="text-align:center;margin-bottom:16px">
+            <div style="font-size:40px;opacity:0.4;margin-bottom:8px">&#8734;</div>
+            <div style="font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:6px">The Gift <span style="background:linear-gradient(135deg,var(--moss-light),var(--indigo-light),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Tags Forward</span></div>
+            <p style="font-size:13px;color:var(--t3);line-height:1.7;max-width:300px;margin:0 auto">When you hold a token, you can tag it to a new intention — putting your earned gratitude behind someone else's need.</p>
+          </div>
+          <div class="fg">
+            <label class="fl">Your email — we'll tell you when it's ready</label>
+            <input class="fi" type="email" id="fEmail" placeholder="you@example.com" oninput="sync()">
+          </div>
+          <div class="fg">
+            <label class="fl">What intention would you tag your first token to?</label>
+            <textarea class="ft" id="fTag" placeholder="What matters enough that you'd release your token to whoever makes it real?" style="min-height:80px" oninput="sync()"></textarea>
+          </div>
+          <button class="btn btn-final" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
+            Mint My First Token &#8734;
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ STAGE 7 · THE NETWORK ═══════════ -->
+<section class="sect-short" id="s7" style="padding:80px 0">
+  <div class="wrap">
+    <div class="feature-section r">
+      <div>
+        <div class="feature-label" style="color:var(--violet)">Peer-to-Peer Architecture</div>
+        <h2 class="feature-h">No servers necessary.<br>The participants are the infrastructure.</h2>
+        <p class="feature-p">
+          Your Home Realm — your personal space — is derived deterministically from your identity via BLAKE3. It exists on your device, not on anyone's cloud. When you connect with a peer, the connection is <strong>direct and encrypted</strong>.
         </p>
-
-        <h3>Language Shapes How We Work</h3>
-        <p>
-          We call them <em>intentions</em>, not tasks—because an intention is a deliberate choice to create
-          change in the world. When you <em>set an intention</em>, you're not just checking off a
-          to-do item. When the <em>field resonates</em>, your intention is propagating through the
-          mesh. Language shapes reality. Technology should serve what matters.
+        <p class="feature-p">
+          Servers may exist in the mesh as backup relays, but they <strong>only ever see encrypted packets</strong> — they can't read your data. If a peer is offline, mutual contacts hold sealed packets they cannot read and deliver them when the recipient returns. The network routes through relationships, not data centers. If the company that built this disappeared tomorrow, <strong>the network would continue to exist</strong> as long as peers kept running.
         </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Core Principles Section -->
-  <section id="principles">
-    <div class="container">
-      <div class="section-header">
-        <h2>Core Principles</h2>
-        <p>The architectural foundations of sovereign collaboration</p>
-      </div>
-
-      <div class="principles-grid">
-        <div class="principle-card">
-          <h3>Local-First</h3>
-          <p>
-            Your data lives on your device. You own it. You control it. The mesh synchronizes
-            changes peer-to-peer, with no central database mining your intentions for profit.
-          </p>
+        <div class="tech-aside" style="border-color:var(--violet)">
+          <strong style="color:var(--violet)">Built with:</strong>
+          Rust · Iroh (QUIC P2P) · Automerge CRDTs · BLAKE3 · redb ·
+          Dioxus UI. No JavaScript. No blockchain. No cloud dependency.
         </div>
 
-        <div class="principle-card">
-          <h3>Censorship-Resistant</h3>
-          <p>
-            No corporation, government, or algorithm can silence your intentions. The mesh topology
-            ensures that as long as peers connect, the field resonates. Decentralization is
-            liberation.
-          </p>
-        </div>
-
-        <div class="principle-card">
-          <h3>Quantum-Secure</h3>
-          <p>
-            Your identity is protected by ML-DSA-65 post-quantum cryptography layered with
-            Ed25519. Even as quantum computing emerges, your sovereignty remains intact.
-          </p>
-        </div>
-
-        <div class="principle-card">
-          <h3>Gossip-Based Sync</h3>
-          <p>
-            Like humans sharing stories around a fire, the mesh propagates changes through
-            organic peer connections. No central server. No single point of failure. Just
-            resilient, living networks.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Monthly Redistribution Section -->
-  <section id="redistribution" class="redistribution-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Monthly New Moon Redistribution</h2>
-        <p>How abundance flows back to those who serve</p>
+        <a href="/network.html" class="btn btn-indigo" style="margin-top:20px">Explore the technical architecture &#8594;</a>
       </div>
 
-      <div class="redistribution-flow">
-        <div class="flow-step">
-          <div class="flow-step-number">
-            <span class="moon-icon">🌑</span>
-          </div>
-          <h3>The Call Goes Out</h3>
-          <p>Every New Moon, a notification ripples through the network: "$X is ready to flow back to the community"—excess funds beyond operating costs.</p>
-        </div>
-
-        <div class="flow-step">
-          <div class="flow-step-number">2</div>
-          <h3>Gratitude Bidding</h3>
-          <p>Members bid their service-earned Tokens of Gratitude. The Tokens you've accumulated through Acts of Service become your claim on the redistribution.</p>
-        </div>
-
-        <div class="flow-step">
-          <div class="flow-step-number">3</div>
-          <h3>Proportional Distribution</h3>
-          <p>Your share equals your hours divided by total hours bid. Serve more, receive more. The gift economy rewards those who give.</p>
-        </div>
-      </div>
-
-      <div class="redistribution-quote">
-        <p>"If you bid Tokens worth <em>333 hours</em> and I bid <em>111 hours</em>, your slice is 3x mine. Real resources flow proportionally to real service."</p>
-      </div>
-
-      <!-- Moon Cycle Diagram -->
-      <div class="moon-cycle-diagram">
-        <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" class="moon-svg" aria-labelledby="moonTitle moonDesc" role="img">
-          <title id="moonTitle">New Moon Redistribution Cycle</title>
-          <desc id="moonDesc">Circular diagram showing the monthly redistribution tied to the lunar cycle, with New Moon as the trigger point</desc>
-
-          <defs>
-            <!-- Gradient for the cycle ring -->
-            <linearGradient id="cycleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" class="gradient-start"/>
-              <stop offset="100%" class="gradient-end"/>
-            </linearGradient>
-
-            <!-- Glow filter -->
-            <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="4" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-          </defs>
-
-          <!-- Outer cycle ring -->
-          <circle cx="250" cy="200" r="140" class="cycle-ring" fill="none" stroke-width="2"/>
-
-          <!-- Moon phases around the circle -->
-          <g class="moon-phases">
-            <!-- New Moon (top) - highlighted -->
-            <g transform="translate(250, 60)" class="moon-phase moon-phase--new">
-              <circle r="24" class="phase-circle phase-circle--active"/>
-              <circle r="20" class="phase-inner phase-inner--new"/>
-              <text y="45" text-anchor="middle" class="phase-label phase-label--active">New Moon</text>
-            </g>
-
-            <!-- Waxing Crescent -->
-            <g transform="translate(348, 102)" class="moon-phase">
-              <circle r="16" class="phase-circle"/>
-              <path d="M0,-14 A14,14 0 0,1 0,14 A8,14 0 0,0 0,-14" class="phase-inner"/>
-            </g>
-
-            <!-- First Quarter -->
-            <g transform="translate(390, 200)" class="moon-phase">
-              <circle r="16" class="phase-circle"/>
-              <path d="M0,-14 A14,14 0 0,1 0,14 L0,-14" class="phase-inner"/>
-            </g>
-
-            <!-- Waxing Gibbous -->
-            <g transform="translate(348, 298)" class="moon-phase">
-              <circle r="16" class="phase-circle"/>
-              <circle r="14" class="phase-inner"/>
-              <path d="M0,-14 A14,14 0 0,0 0,14 A6,14 0 0,1 0,-14" class="phase-shadow"/>
-            </g>
-
-            <!-- Full Moon (bottom) -->
-            <g transform="translate(250, 340)" class="moon-phase">
-              <circle r="18" class="phase-circle"/>
-              <circle r="14" class="phase-inner phase-inner--full"/>
-            </g>
-
-            <!-- Waning Gibbous -->
-            <g transform="translate(152, 298)" class="moon-phase">
-              <circle r="16" class="phase-circle"/>
-              <circle r="14" class="phase-inner"/>
-              <path d="M0,-14 A14,14 0 0,1 0,14 A6,14 0 0,0 0,-14" class="phase-shadow"/>
-            </g>
-
-            <!-- Last Quarter -->
-            <g transform="translate(110, 200)" class="moon-phase">
-              <circle r="16" class="phase-circle"/>
-              <path d="M0,-14 A14,14 0 0,0 0,14 L0,-14" class="phase-inner"/>
-            </g>
-
-            <!-- Waning Crescent -->
-            <g transform="translate(152, 102)" class="moon-phase">
-              <circle r="16" class="phase-circle"/>
-              <path d="M0,-14 A14,14 0 0,0 0,14 A8,14 0 0,1 0,-14" class="phase-inner"/>
-            </g>
-          </g>
-
-          <!-- Center content: The cycle steps -->
-          <g class="cycle-center">
-            <!-- Bid icon -->
-            <g transform="translate(200, 175)">
-              <text class="center-icon">🎫</text>
-              <text y="25" class="center-label">Bid Tokens</text>
-            </g>
-
-            <!-- Arrow -->
-            <path d="M235,200 L265,200" class="center-arrow" stroke-width="2" fill="none"/>
-            <polygon points="262,196 270,200 262,204" class="center-arrow-head"/>
-
-            <!-- Receive icon -->
-            <g transform="translate(300, 175)">
-              <text class="center-icon">💫</text>
-              <text y="25" class="center-label">Receive</text>
-            </g>
-
-            <!-- Circular arrow indicating cycle -->
-            <path d="M220,230 Q250,260 280,230" class="center-arrow" stroke-width="2" fill="none"/>
-            <polygon points="278,234 285,228 276,226" class="center-arrow-head"/>
-          </g>
-
-          <!-- "Every Month" label -->
-          <text x="250" y="270" text-anchor="middle" class="cycle-label">Every New Moon</text>
-
-        </svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works Section -->
-  <section id="how-it-works">
-    <div class="container">
-      <div class="section-header">
-        <h2>How It Works</h2>
-        <p>Simple concepts, profound implications</p>
-      </div>
-
-      <!-- Animated Mesh Network Visualization -->
       <div class="mesh-visualization" aria-label="Animated mesh network showing interconnected nodes">
         <svg viewBox="0 0 800 300" class="mesh-svg" role="img">
           <title>Mesh Network Topology</title>
           <desc>An animated visualization of peer-to-peer nodes connected in a mesh network, with data pulses traveling between them</desc>
-
-          <!-- Connection lines (behind nodes) -->
           <g class="mesh-connections">
-            <!-- Central hub connections -->
             <line x1="400" y1="150" x2="200" y2="80" class="mesh-line"/>
             <line x1="400" y1="150" x2="600" y2="80" class="mesh-line"/>
             <line x1="400" y1="150" x2="150" y2="200" class="mesh-line"/>
             <line x1="400" y1="150" x2="650" y2="200" class="mesh-line"/>
             <line x1="400" y1="150" x2="280" y2="250" class="mesh-line"/>
             <line x1="400" y1="150" x2="520" y2="250" class="mesh-line"/>
-
-            <!-- Outer connections -->
-            <line x1="200" y1="80" x2="600" y2="80" class="mesh-line mesh-line--outer"/>
+            <line x1="200" y1="80" x2="600" y2="80" class="mesh-line"/>
             <line x1="200" y1="80" x2="150" y2="200" class="mesh-line"/>
             <line x1="600" y1="80" x2="650" y2="200" class="mesh-line"/>
             <line x1="150" y1="200" x2="280" y2="250" class="mesh-line"/>
             <line x1="650" y1="200" x2="520" y2="250" class="mesh-line"/>
-            <line x1="280" y1="250" x2="520" y2="250" class="mesh-line mesh-line--outer"/>
-
-            <!-- Cross connections -->
-            <line x1="200" y1="80" x2="280" y2="250" class="mesh-line mesh-line--cross"/>
-            <line x1="600" y1="80" x2="520" y2="250" class="mesh-line mesh-line--cross"/>
+            <line x1="280" y1="250" x2="520" y2="250" class="mesh-line"/>
+            <line x1="200" y1="80" x2="280" y2="250" class="mesh-line"/>
+            <line x1="600" y1="80" x2="520" y2="250" class="mesh-line"/>
           </g>
-
-          <!-- Data pulses traveling along connections -->
           <g class="mesh-pulses">
-            <circle r="4" class="data-pulse">
-              <animateMotion dur="2s" repeatCount="indefinite" path="M400,150 L200,80"/>
-            </circle>
-            <circle r="4" class="data-pulse">
-              <animateMotion dur="2.5s" repeatCount="indefinite" path="M200,80 L600,80"/>
-            </circle>
-            <circle r="4" class="data-pulse">
-              <animateMotion dur="1.8s" repeatCount="indefinite" path="M400,150 L650,200"/>
-            </circle>
-            <circle r="4" class="data-pulse">
-              <animateMotion dur="2.2s" repeatCount="indefinite" path="M150,200 L280,250"/>
-            </circle>
-            <circle r="4" class="data-pulse">
-              <animateMotion dur="3s" repeatCount="indefinite" path="M600,80 L400,150 L280,250"/>
-            </circle>
-            <circle r="4" class="data-pulse">
-              <animateMotion dur="2.8s" repeatCount="indefinite" path="M520,250 L400,150 L200,80"/>
-            </circle>
+            <circle r="4" class="data-pulse"><animateMotion dur="2s" repeatCount="indefinite" path="M400,150 L200,80"/></circle>
+            <circle r="4" class="data-pulse"><animateMotion dur="2.5s" repeatCount="indefinite" path="M200,80 L600,80"/></circle>
+            <circle r="4" class="data-pulse"><animateMotion dur="1.8s" repeatCount="indefinite" path="M400,150 L650,200"/></circle>
+            <circle r="4" class="data-pulse"><animateMotion dur="2.2s" repeatCount="indefinite" path="M150,200 L280,250"/></circle>
+            <circle r="4" class="data-pulse"><animateMotion dur="3s" repeatCount="indefinite" path="M600,80 L400,150 L280,250"/></circle>
+            <circle r="4" class="data-pulse"><animateMotion dur="2.8s" repeatCount="indefinite" path="M520,250 L400,150 L200,80"/></circle>
           </g>
-
-          <!-- Network nodes -->
           <g class="mesh-nodes">
-            <!-- Central node (You) -->
             <g class="mesh-node mesh-node--central" transform="translate(400, 150)">
-              <circle r="28" class="node-glow"/>
-              <circle r="20" class="node-core"/>
+              <circle r="28" class="node-glow"/><circle r="20" class="node-core"/>
               <text y="5" text-anchor="middle" class="node-label">You</text>
             </g>
-
-            <!-- Peer nodes -->
             <g class="mesh-node" transform="translate(200, 80)">
-              <circle r="22" class="node-glow"/>
-              <circle r="15" class="node-core"/>
+              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
               <text y="4" text-anchor="middle" class="node-label">A</text>
             </g>
-
             <g class="mesh-node" transform="translate(600, 80)">
-              <circle r="22" class="node-glow"/>
-              <circle r="15" class="node-core"/>
+              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
               <text y="4" text-anchor="middle" class="node-label">B</text>
             </g>
-
             <g class="mesh-node" transform="translate(150, 200)">
-              <circle r="22" class="node-glow"/>
-              <circle r="15" class="node-core"/>
+              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
               <text y="4" text-anchor="middle" class="node-label">C</text>
             </g>
-
             <g class="mesh-node" transform="translate(650, 200)">
-              <circle r="22" class="node-glow"/>
-              <circle r="15" class="node-core"/>
+              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
               <text y="4" text-anchor="middle" class="node-label">D</text>
             </g>
-
             <g class="mesh-node" transform="translate(280, 250)">
-              <circle r="22" class="node-glow"/>
-              <circle r="15" class="node-core"/>
+              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
               <text y="4" text-anchor="middle" class="node-label">E</text>
             </g>
-
             <g class="mesh-node" transform="translate(520, 250)">
-              <circle r="22" class="node-glow"/>
-              <circle r="15" class="node-core"/>
+              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
               <text y="4" text-anchor="middle" class="node-label">F</text>
             </g>
           </g>
         </svg>
-        <p class="mesh-caption">The mesh self-organizes—no central coordinator required</p>
+        <p class="mesh-caption">The mesh self-organizes — no central coordinator required</p>
       </div>
+    </div>
 
-      <div class="how-it-works-content">
-        <div class="work-item">
-          <div class="work-item-icon">◈</div>
-          <h3>Realms</h3>
-          <p>
-            Shared spaces where intentions converge. Each realm is a container for collaborative
-            intention—a project, a community, a movement. Join realms that resonate with your purpose.
-          </p>
+    <!-- Metabolism summary -->
+    <div class="r r-d1" style="margin-top:64px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+        <div class="meta-card" style="border-top-color:var(--glow-amber)">
+          <div class="meta-tag" style="color:var(--glow-amber)">FLOWS</div>
+          <div class="meta-h">Attention</div>
+          <p>Emerges naturally as you participate. <strong>Cannot be hoarded</strong> — only has meaning when given away as a blessing. The raw material of every token.</p>
         </div>
-
-        <div class="work-item">
-          <div class="work-item-icon">◬</div>
-          <h3>The Mesh</h3>
-          <p>
-            Like <em>Indra's Net</em> in Buddhist philosophy—an infinite web where each jewel reflects
-            all others—the mesh is a peer-to-peer network where every node strengthens the whole.
-            No intermediaries. No gatekeepers. Changes propagate through the web of trust you cultivate.
-          </p>
-          <a href="network.html" class="work-item-link">Explore the technical architecture →</a>
-          <a href="https://templesofrefuge.earth/articles/read.html?slug=gene-editing-collective" class="work-item-link" target="_blank" rel="noopener noreferrer">Read: Gene Editing a Collective Consciousness →</a>
+        <div class="meta-card" style="border-top-color:var(--pulse)">
+          <div class="meta-tag" style="color:var(--pulse)">VERIFIED</div>
+          <div class="meta-h">Liveness</div>
+          <p>Confirmed through in-person gatherings. <strong>Gates everything</strong> — without it, attention isn't counted, blessings carry no weight, tokens are empty.</p>
         </div>
-
-        <div class="work-item">
-          <div class="work-item-icon">◉</div>
-          <h3>Contacts & Trust</h3>
-          <p>
-            Your contact list is your network. Share realms and intentions with people you trust.
-            The mesh extends as far as your relationships do, creating organic boundaries of collaboration.
-          </p>
-        </div>
-      </div>
-
-      <!-- Gatherings Highlight -->
-      <div class="gatherings-highlight">
-        <h3>Where the Mesh Manifests Physically</h3>
-        <div class="gatherings-grid">
-          <div class="gatherings-item">
-            <!-- IMAGE: Gathering Ceremony -->
-            <div class="img-placeholder img-placeholder--inline">
-              <span class="img-placeholder-icon">🔥</span>
-              <span class="img-placeholder-label">Gathering Ceremony</span>
-              <span class="img-placeholder-suggestion">Circle of people around a fire or in a natural setting. Diverse community, dusk lighting. Feeling of connection and warmth.</span>
-            </div>
-            <h4>Gatherings of the Tribe</h4>
-            <p>Community gatherings hosted at Temples around the world. Co-created ceremony, celebration, and connection—however the community decides to come together.</p>
-          </div>
-          <div class="gatherings-item">
-            <!-- IMAGE: Market Exchange -->
-            <div class="img-placeholder img-placeholder--inline">
-              <span class="img-placeholder-icon">🤝</span>
-              <span class="img-placeholder-label">Token Exchange</span>
-              <span class="img-placeholder-suggestion">Close-up of hands exchanging goods, phone showing QR code, artisan products. Warm colors, human connection emphasized.</span>
-            </div>
-            <h4>The Community Bazaar</h4>
-            <p>At the close of every Gathering, a marketplace emerges where Intentions are fulfilled, Tokens flow, and the gift economy becomes tangible, delicious reality.</p>
-          </div>
+        <div class="meta-card" style="border-top-color:var(--moss)">
+          <div class="meta-tag" style="color:var(--moss-light)">FLOWS FORWARD</div>
+          <div class="meta-h">Tokens</div>
+          <p>Created when someone blesses your work. <strong>Can be tagged to new intentions</strong>, where they stay until someone manifests it. Gratitude only moves toward work.</p>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- AI Oracle Section -->
-  <section id="oracle" class="oracle-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Oracle Assistants</h2>
-        <p>AI companions trained on collective wisdom</p>
-      </div>
-
-      <div class="oracle-teaser">
-        <span class="oracle-badge">The Vision — Coming Soon</span>
-
-        <!-- IMAGE: Oracle Illustration -->
-        <div class="oracle-illustration">
-          <div class="img-placeholder">
-            <span class="img-placeholder-icon">🔮</span>
-            <span class="img-placeholder-label">Oracle Assistant</span>
-            <span class="img-placeholder-suggestion">AI figure emerging from collective light/wisdom. Not robotic—more like a luminous guide. Soft glows, geometric patterns, blend of digital and organic.</span>
-          </div>
-        </div>
-
-        <div class="oracle-content">
-          <div class="oracle-item">
-            <span class="oracle-item-icon">🧙‍♂️</span>
-            <h4>Community Wisdom Keepers</h4>
-            <p>AI companions trained exclusively on the collective highest wisdom of community members—not corporate data harvesting.</p>
-          </div>
-
-          <div class="oracle-item">
-            <span class="oracle-item-icon">🌟</span>
-            <h4>Reflecting the Best of Us</h4>
-            <p>Members consciously contribute their highest-self knowledge. The Oracle becomes a living repository of collective excellence.</p>
-          </div>
-
-          <div class="oracle-item">
-            <span class="oracle-item-icon">🔮</span>
-            <h4>Growing Intelligence</h4>
-            <p>Compute power flows where collective intention focuses. The more the community serves, the wiser the Oracle becomes.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Join the Tribe Section -->
-  <section id="join" class="join-section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Join the Tribe</h2>
-        <p>Become a steward of the gift economy</p>
-      </div>
-
-      <div class="join-content">
-        <div class="join-info">
-          <h3>GratiDAO Principles</h3>
-          <p>
-            <em>GratiDAO</em>—Portuguese for Gratitude—represents our organizational philosophy:
-            Gratitude-based, Decentralized, Distributed, Autonomous, and Alive.
-          </p>
-          <a href="https://templesofrefuge.earth/articles/read.html?slug=gene-editing-collective" class="work-item-link" target="_blank" rel="noopener noreferrer">Read: The Organizational Philosophy →</a>
-
-          <ul class="join-features">
-            <li><strong>Two-Member Sponsorship:</strong> New members are welcomed through recommendation by two existing stewards—trust propagates through relationship.</li>
-            <li><strong>Temple Network Access:</strong> Once initiated, access land-based sanctuaries worldwide where the community gathers.</li>
-            <li><strong>Monthly Contribution:</strong> Contributions ($15-50) become compute power for community AI, infrastructure, and the gift economy.</li>
-            <li><strong>Redistribution Rights:</strong> Participate in the monthly New Moon gratitude bidding for community surplus.</li>
-          </ul>
-        </div>
-
-        <div class="join-cta">
-          <!-- IMAGE: Temple/Community -->
-          <div class="join-image">
-            <div class="img-placeholder img-placeholder--card">
-              <span class="img-placeholder-icon">🏛️</span>
-              <span class="img-placeholder-label">Temple Sanctuary</span>
-              <span class="img-placeholder-suggestion">Agua Lila or temple landscape. Mountains, natural beauty, small sustainable structures. Inviting, peaceful, real location photography.</span>
-            </div>
-          </div>
-          <h3>Become a Steward</h3>
-          <p>Reserve your place among the Original Stewards. Even a small donation indicates interest and opens the door to peership.</p>
-          <a href="https://give.tithe.ly/?formId=57a0dcf9-7e25-46a1-8f4e-aa5a4f07f10f" class="cta-large" target="_blank" rel="noopener noreferrer">Reserve Your Spot</a>
-          <p class="legal-note">
-            Temples of Refuge is a <strong>508(c)(1)(a)</strong> religious nonprofit registered in Utah,
-            providing First Amendment protections for community gatherings.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Ecosystem Section -->
-  <section id="ecosystem">
-    <div class="container">
-      <div class="section-header">
-        <h2>The Ecosystem</h2>
-        <p>Three nodes in a larger pattern</p>
-      </div>
-
-      <div class="ecosystem-grid">
-        <div class="ecosystem-card">
-          <!-- IMAGE: Temples Symbol -->
-          <div class="img-placeholder img-placeholder--card">
-            <span class="img-placeholder-icon">⛩️</span>
-            <span class="img-placeholder-label">Temples Symbol</span>
-            <span class="img-placeholder-suggestion">Geometric logo or stylized temple icon. Gold tones, minimalist, conveys regenerative organization.</span>
-          </div>
-          <h3>Temples of Refuge</h3>
-          <p class="domain">templesofrefuge.earth</p>
-          <p>
-            The steward organization. A regenerative legal structure holding the vision
-            for ethical technology. Temples of Refuge ensures the code serves human flourishing,
-            not extraction.
-          </p>
-          <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Visit Temples</a>
-        </div>
-
-        <div class="ecosystem-card">
-          <!-- IMAGE: Agua Lila Landscape -->
-          <div class="img-placeholder img-placeholder--card">
-            <span class="img-placeholder-icon">🌿</span>
-            <span class="img-placeholder-label">Agua Lila</span>
-            <span class="img-placeholder-suggestion">Portuguese mountain canyon, terraced land, native forest restoration. Actual photography from the site if available.</span>
-          </div>
-          <h3>Agua Lila</h3>
-          <p class="domain">agualila.earth</p>
-          <p>
-            Where code meets soil. A physical place in nature where developers, designers, and
-            dreamers gather to build the technologies of regeneration.
-          </p>
-          <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Visit Agua Lila</a>
-        </div>
-
-        <div class="ecosystem-card">
-          <!-- IMAGE: SyncEngine Interface -->
-          <div class="img-placeholder img-placeholder--card">
-            <span class="img-placeholder-icon">◈</span>
-            <span class="img-placeholder-label">App Interface</span>
-            <span class="img-placeholder-suggestion">Screenshot of SyncEngine app UI showing realms/intentions. Dark theme, clean interface, terminal aesthetic.</span>
-          </div>
-          <h3>Synchronicity Engine</h3>
-          <p class="domain">syncengine.earth</p>
-          <p>
-            The technology platform. Open-source, local-first, quantum-secure collaboration software.
-            This is where intention becomes infrastructure.
-          </p>
-          <a href="#philosophy">Explore the Vision</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p class="tagline">Technology in service of human agency</p>
-
-      <nav class="links" aria-label="Sister sites">
-        <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
-        <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
-        <a href="https://syncengine.earth">Synchronicity Engine</a>
-        <a href="https://github.com/trumanellis/IndrasNetwork" target="_blank" rel="noopener noreferrer">Indra's Network</a>
-      </nav>
-
-      <!-- Glossary -->
-      <div class="footer-glossary">
-        <h4>Glossary</h4>
-        <div class="glossary-grid">
-          <div class="glossary-item">
-            <strong>Intention</strong> <span>— A deliberate choice to create change</span>
-          </div>
-          <div class="glossary-item">
-            <strong>Realm</strong> <span>— A shared space for intentions</span>
-          </div>
-          <div class="glossary-item">
-            <strong>Token</strong> <span>— Gratitude earned through service</span>
-          </div>
-          <div class="glossary-item">
-            <strong>Mesh</strong> <span>— Self-organizing peer network</span>
-          </div>
-          <div class="glossary-item">
-            <strong>Field</strong> <span>— The network of connected peers</span>
-          </div>
-          <div class="glossary-item">
-            <strong>Steward</strong> <span>— One who holds tokens in trust</span>
-          </div>
-          <div class="glossary-item">
-            <strong>Gathering</strong> <span>— Community event and market</span>
-          </div>
-          <div class="glossary-item">
-            <strong>Temple</strong> <span>— A physical hub in the network</span>
-          </div>
-        </div>
-      </div>
-
-      <p class="copyright">
-        &copy; 2026 Synchronicity Engine. Open source. Human-first technology.
+    <!-- Closing -->
+    <div class="r" style="text-align:center;padding:80px 0 60px">
+      <p style="font-size:17px;color:var(--t2);max-width:480px;margin:0 auto;line-height:1.95;font-weight:300">
+        There is no separate layer for value. The way people collaborate <strong style="color:var(--tx)">is</strong> the gift cycle.
+        Attention is the metabolism. Intentions are the needs. Service is the exchange.
+        Blessings are the validation. Tokens are the memory.
       </p>
+      <div style="margin-top:36px;font-size:15px;color:var(--moss-light);font-style:italic">Every jewel reflects all others.</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.14em;text-transform:uppercase;margin-top:12px">SyncEngine · Built on Indra's Network · Rust · Iroh · Automerge · Post-Quantum</div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="https://templesofrefuge.earth/shared/theme-engine.js"></script>
-  <script>
-  ThemeEngine.init({
-    defaultSkin: 'technical',
-    storageKey: 'se-skin',
-    position: 'top-right'
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer-links">
+      <a href="/">Home</a>
+      <a href="/gift-cycle.html">Gift Cycle</a>
+      <a href="/vision.html">Vision</a>
+      <a href="/community.html">Community</a>
+      <a href="/network.html">The Mesh</a>
+      <a href="/articles/">Articles</a>
+      <a href="/whitepaper.html">White Paper</a>
+      <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+      <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
+    </div>
+    <p class="site-footer-copy">&copy; 2026 Synchronicity Engine · Open source · Human-first technology</p>
+  </div>
+</footer>
+
+<script>
+// ═══ STATE ═══
+const S = {
+  name:'', need:'', where:'', focus:[], skills:[], offer:'',
+  collab:'', invite:'', email:'', tag:'',
+  done: new Set(),
+  t0: Date.now()
+};
+
+// ═══ SURREALDB ═══
+const DB = {
+  url: 'https://syncengine-onbo-06ebquf7edt011le0602tcht84.aws-euw1.surreal.cloud'
+  ns: 'syncengine',
+  db: 'main',
+  ac: 'earlyaccess'
+};
+
+// ═══ TIMER ═══
+function tick() {
+  const sec = Math.floor((Date.now() - S.t0) / 1000);
+  const m = Math.floor(sec / 60), s = sec % 60;
+  const str = m + ':' + String(s).padStart(2, '0');
+  const el1 = document.getElementById('timer');
+  const el2 = document.getElementById('heroTimerInline');
+  const el3 = document.getElementById('pTime');
+  if (el1) el1.textContent = str;
+  if (el2) el2.textContent = str;
+  if (el3) el3.innerHTML = '<em>' + str + '</em>';
+  requestAnimationFrame(() => setTimeout(tick, 500));
+}
+tick();
+
+// ═══ CHIPS ═══
+function pick(el) { el.classList.toggle('on'); sync(); }
+
+function selected(id) {
+  return Array.from(document.querySelectorAll('#' + id + ' .chip.on')).map(c => c.textContent);
+}
+
+// ═══ SYNC PROFILE ═══
+function sync() {
+  S.name = v('fName'); S.need = v('fNeed'); S.where = v('fWhere');
+  S.focus = selected('cFocus'); S.skills = selected('cSkills');
+  S.offer = v('fOffer'); S.collab = v('fCollab');
+  S.invite = v('fInvite'); S.email = v('fEmail'); S.tag = v('fTag');
+
+  document.getElementById('pAvatar').textContent = S.name ? S.name[0].toUpperCase() : '?';
+  document.getElementById('pName').textContent = S.name || 'Anonymous Peer';
+  document.getElementById('pSub').textContent = S.need ? cut(S.need, 55) : 'awaiting first intention...';
+  set('pNeed', S.need); set('pWhere', S.where);
+  set('pFocus', S.focus.join(', ')); set('pSkills', S.skills.join(', '));
+  set('pCollab', S.collab ? document.getElementById('fCollab').selectedOptions[0].text : '');
+  set('pOffer', S.offer);
+  badges();
+}
+
+function v(id) { return document.getElementById(id).value.trim(); }
+function cut(s, n) { return s.length > n ? s.substring(0, n) + '…' : s; }
+function set(id, val) { document.getElementById(id).textContent = val ? cut(val, 42) : '—'; }
+
+function badges() {
+  const el = document.getElementById('pBadges');
+  el.innerHTML = '';
+  const list = [
+    ['s2', '💡 Need voiced', '--s2'],
+    ['s3', '👁 Attention given', '--s3'],
+    ['s4', '🤲 Gift offered', '--s4'],
+    ['s5', '✦ Liveness pledged', '--s5'],
+    ['s6', '🪙 Token minted', '--s6'],
+  ];
+  list.forEach(([k, t, c]) => {
+    if (!S.done.has(k)) return;
+    const b = document.createElement('span');
+    b.className = 'prof-badge';
+    const color = getComputedStyle(document.documentElement).getPropertyValue(c).trim();
+    b.style.cssText = 'background:' + color + '12;border:1px solid ' + color + '30;color:' + color;
+    b.textContent = t;
+    el.appendChild(b);
+  });
+}
+
+// ═══ SUBMIT TO SURREALDB ═══
+let submitted = false;
+
+async function submitProfile() {
+  if (submitted || !DB.url) return;
+  submitted = true;
+  const statusEl = document.getElementById('submitStatus');
+
+  try {
+    const res = await fetch(DB.url + '/signup', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ns: DB.ns, db: DB.db, ac: DB.ac,
+        name: S.name,
+        need: S.need,
+        location: S.where,
+        focus: S.focus,
+        skills: S.skills,
+        offer: S.offer,
+        collab: S.collab,
+        invite_email: S.invite,
+        email: S.email,
+        tag: S.tag,
+        time_spent: Math.floor((Date.now() - S.t0) / 1000),
+        stages: Array.from(S.done)
+      })
+    });
+
+    if (!res.ok) throw new Error(res.status);
+
+    if (statusEl) {
+      statusEl.innerHTML = S.email
+        ? '<span style="color:var(--moss)">&#10003; You\'re on the list — we\'ll reach out when SyncEngine is ready.</span>'
+        : '<span style="color:var(--moss)">&#10003; Profile saved.</span>';
+      statusEl.style.display = 'block';
+    }
+  } catch (err) {
+    console.error('Signup failed:', err);
+    submitted = false;
+    if (statusEl) {
+      statusEl.innerHTML = '<span style="color:var(--danger)">Couldn\'t save — </span><a href="#" onclick="submitProfile();return false" style="color:var(--indigo-light)">try again</a>';
+      statusEl.style.display = 'block';
+    }
+  }
+}
+
+// ═══ STAGE COMPLETE ═══
+function done(stage) {
+  S.done.add(stage);
+  sync();
+
+  if (stage === 's6') {
+    const sec = Math.floor((Date.now() - S.t0) / 1000);
+    const m = Math.floor(sec / 60), s = sec % 60;
+    const timeStr = m + ':' + String(s).padStart(2, '0');
+    const millis = sec * 1000;
+    const hex = Date.now().toString(16).slice(-8);
+    document.getElementById('tokId').textContent = 'tok:' + hex.slice(0,4) + '·' + hex.slice(4);
+    document.getElementById('tokHolder').textContent = S.name || 'Anonymous Peer';
+    document.getElementById('tokTime').innerHTML = '<span class="lit">' + timeStr + '</span> of attention (' + millis.toLocaleString() + 'ms)';
+    document.getElementById('tokIntention').textContent = S.need ? cut(S.need, 38) : 'Completing the gift cycle';
+    document.getElementById('tokChainYou').textContent = S.name ? S.name[0].toUpperCase() : '?';
+    document.getElementById('tokChainYou').title = S.name || 'You';
+    setTimeout(() => {
+      document.getElementById('tokenReveal').classList.add('minted');
+    }, 300);
+    const card = document.getElementById('profCard');
+    card.style.boxShadow = '0 0 80px rgba(138,173,110,0.15), 0 0 40px rgba(129,140,248,0.1)';
+    setTimeout(() => { card.style.boxShadow = ''; }, 3000);
+    setTimeout(() => {
+      document.getElementById('tokenReveal').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 800);
+
+    // Save profile to SurrealDB
+    submitProfile();
+  }
+
+  // Advance
+  const order = ['s2','s3','s4','s5','s6'];
+  const i = order.indexOf(stage);
+  if (i < order.length - 1) {
+    setTimeout(() => go(order[i + 1]), 500);
+  }
+}
+
+// ═══ NAV ═══
+function go(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+document.querySelectorAll('.nav-dot').forEach(d => {
+  d.addEventListener('click', () => go(d.dataset.s));
+});
+
+// ═══ SCROLL ═══
+const sects = ['hero','s0','s1','s2','s3','s4','s5','s6','s7'];
+const dotColors = {
+  hero:'var(--moss)', s0:'var(--danger)', s1:'var(--indigo)', s2:'var(--s2)',
+  s3:'var(--s3)', s4:'var(--s4)', s5:'var(--s5)', s6:'var(--s6)', s7:'var(--violet)'
+};
+
+function onScroll() {
+  const top = window.scrollY;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('prog').style.width = (max > 0 ? top / max * 100 : 0) + '%';
+
+  let cur = 'hero';
+  sects.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < window.innerHeight * 0.45) cur = id;
   });
 
-  // Load Indra's Network article cards
-  fetch('articles/articles.json')
-    .then(r => r.json())
-    .then(articles => {
-      const grid = document.getElementById('indra-articles');
-      articles.forEach(a => {
-        const card = document.createElement('a');
-        card.href = `articles/read.html?slug=${a.slug}`;
-        card.className = 'dd-card';
-        card.innerHTML = `
-          <div class="dd-card-header">
-            <span class="dd-card-icon">${a.icon}</span>
-            <span class="dd-card-tag">${a.category}</span>
-          </div>
-          <h4>${a.title}</h4>
-          <p>${a.description}</p>
-          <span class="dd-card-link">Read Article →</span>
-        `;
-        grid.appendChild(card);
-      });
-    })
-    .catch(() => {});
+  document.querySelectorAll('.nav-dot').forEach(d => {
+    const on = d.dataset.s === cur;
+    d.classList.toggle('on', on);
+    if (on) {
+      const c = dotColors[cur] || 'var(--moss)';
+      d.style.borderColor = c; d.style.background = c;
+      d.style.boxShadow = '0 0 14px ' + c;
+    } else {
+      d.style.borderColor = ''; d.style.background = ''; d.style.boxShadow = '';
+    }
+  });
 
-  // Load Substack article cards
-  fetch('articles/substack.json')
-    .then(r => r.json())
-    .then(posts => {
-      const grid = document.getElementById('substack-articles');
-      const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-      posts.forEach(p => {
-        const d = new Date(p.date);
-        const dateStr = months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
-        const card = document.createElement('a');
-        card.href = p.url;
-        card.target = '_blank';
-        card.rel = 'noopener noreferrer';
-        card.className = 'ss-card';
-        card.innerHTML = `
-          ${p.cover_image ? `<div class="ss-card-image">
-            <img src="${p.cover_image}" alt="" loading="lazy">
-            <span class="ss-card-badge">#SyncEngine</span>
-          </div>` : ''}
-          <div class="ss-card-body">
-            <h4>${p.title}</h4>
-            <p class="ss-subtitle">${p.subtitle}</p>
-            <div class="ss-card-footer">
-              <span class="ss-card-date">${dateStr}</span>
-              <span class="ss-card-link">Read on Substack →</span>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    })
-    .catch(() => {});
-  </script>
+  document.querySelectorAll('.r').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add('v');
+  });
+}
 
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
+</script>
 </body>
 </html>
