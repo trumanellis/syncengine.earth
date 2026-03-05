@@ -815,6 +815,21 @@
             <div class="prof-row"><span class="prof-k">Liveness</span><span class="prof-v"><em>awaiting first gathering</em></span></div>
           </div>
           <div class="prof-badges" id="pBadges"></div>
+
+          <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--bd)">
+            <div class="fg">
+              <label class="fl">Your email — we'll tell you when it's ready</label>
+              <input class="fi" type="email" id="fEmail" placeholder="you@example.com" oninput="sync()">
+            </div>
+            <div class="fg">
+              <label class="fl">What intention would you tag your first token to?</label>
+              <textarea class="ft" id="fTag" placeholder="What matters enough that you'd release your token to whoever makes it real?" style="min-height:80px" oninput="sync()"></textarea>
+            </div>
+            <button class="btn btn-final" id="mintBtn" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
+              Register Interest &#8594;
+            </button>
+            <div id="submitStatus" style="display:none;margin-top:16px;padding:16px 20px;border-radius:12px;text-align:center;font-size:14px;line-height:1.6"></div>
+          </div>
         </div>
 
         <!-- TOKEN OF GRATITUDE — revealed on cycle completion -->
@@ -878,27 +893,6 @@
           </div>
         </details>
 
-        <!-- Tag forward / sign-up -->
-        <div class="panel" style="margin-top:16px">
-          <div class="panel-accent" style="background:linear-gradient(90deg, var(--s7), var(--violet), var(--rose))"></div>
-          <div style="text-align:center;margin-bottom:16px">
-            <div style="font-size:40px;opacity:0.4;margin-bottom:8px">&#8734;</div>
-            <div style="font-family:var(--display);font-weight:700;font-size:18px;margin-bottom:6px">The Gift <span style="background:linear-gradient(135deg,var(--moss-light),var(--indigo-light),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Tags Forward</span></div>
-            <p style="font-size:13px;color:var(--t3);line-height:1.7;max-width:300px;margin:0 auto">When you hold a token, you can tag it to a new intention — putting your earned gratitude behind someone else's need.</p>
-          </div>
-          <div class="fg">
-            <label class="fl">Your email — we'll tell you when it's ready</label>
-            <input class="fi" type="email" id="fEmail" placeholder="you@example.com" oninput="sync()">
-          </div>
-          <div class="fg">
-            <label class="fl">What intention would you tag your first token to?</label>
-            <textarea class="ft" id="fTag" placeholder="What matters enough that you'd release your token to whoever makes it real?" style="min-height:80px" oninput="sync()"></textarea>
-          </div>
-          <button class="btn btn-final" id="mintBtn" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
-            Register Interest &#8594;
-          </button>
-          <div id="submitStatus" style="display:none;margin-top:16px;padding:16px 20px;border-radius:12px;text-align:center;font-size:14px;line-height:1.6"></div>
-        </div>
       </div>
     </div>
   </div>
