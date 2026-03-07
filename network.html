@@ -180,40 +180,15 @@
     /* Net Visualization */
     .net-visual {
       position: relative;
-      height: 350px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .net-node {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, var(--moss-light) 0%, var(--indigo) 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--mono);
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: var(--bg);
-      box-shadow: 0 0 30px rgba(129, 140, 248, 0.3);
-      animation: pulse 3s infinite;
-    }
-
-    .net-node:nth-child(1) { top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 0s; }
-    .net-node:nth-child(2) { top: 10%; left: 30%; animation-delay: 0.5s; }
-    .net-node:nth-child(3) { top: 10%; right: 30%; animation-delay: 1s; }
-    .net-node:nth-child(4) { top: 50%; right: 10%; animation-delay: 1.5s; }
-    .net-node:nth-child(5) { bottom: 10%; right: 30%; animation-delay: 2s; }
-    .net-node:nth-child(6) { bottom: 10%; left: 30%; animation-delay: 2.5s; }
-    .net-node:nth-child(7) { top: 50%; left: 10%; animation-delay: 0.8s; }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 30px rgba(129, 140, 248, 0.3); }
-      50% { box-shadow: 0 0 50px rgba(164, 196, 138, 0.5); }
+    .net-visual svg {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
     }
 
     @media (max-width: 900px) {
@@ -616,13 +591,126 @@
           </p>
         </div>
         <div class="net-visual r r-d2" aria-hidden="true">
-          <div class="net-node">A</div>
-          <div class="net-node">B</div>
-          <div class="net-node">C</div>
-          <div class="net-node">D</div>
-          <div class="net-node">E</div>
-          <div class="net-node">F</div>
-          <div class="net-node">G</div>
+          <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Jewel gradient — moss to indigo -->
+              <radialGradient id="jewel" cx="35%" cy="35%">
+                <stop offset="0%" stop-color="#c8e6a0"/>
+                <stop offset="50%" stop-color="#a4c48a"/>
+                <stop offset="100%" stop-color="#818cf8"/>
+              </radialGradient>
+              <!-- Inner reflection highlight -->
+              <radialGradient id="jewel-shine" cx="30%" cy="30%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.6)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+              <!-- Glow filter for nodes -->
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="4" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <!-- Subtle line glow -->
+              <filter id="line-glow">
+                <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Node positions:
+                 Center: 200,200
+                 Ring:   200,60  320,110  340,250  260,350  140,350  60,250  80,110
+            -->
+
+            <!-- Connection lines — every node to every other (Indra's web) -->
+            <g filter="url(#line-glow)" opacity="0.35">
+              <style>
+                .net-line { stroke: url(#jewel); stroke-width: 1; fill: none; }
+                .net-line-bright { stroke: #818cf8; stroke-width: 1.2; fill: none; opacity: 0; }
+                @keyframes travel {
+                  0%   { stroke-dashoffset: 400; opacity: 0.7; }
+                  100% { stroke-dashoffset: 0; opacity: 0; }
+                }
+                .net-line-bright { stroke-dasharray: 12 388; animation: travel 4s linear infinite; }
+              </style>
+              <!-- Center to ring -->
+              <line class="net-line" x1="200" y1="200" x2="200" y2="60"/>
+              <line class="net-line" x1="200" y1="200" x2="320" y2="110"/>
+              <line class="net-line" x1="200" y1="200" x2="340" y2="250"/>
+              <line class="net-line" x1="200" y1="200" x2="260" y2="350"/>
+              <line class="net-line" x1="200" y1="200" x2="140" y2="350"/>
+              <line class="net-line" x1="200" y1="200" x2="60" y2="250"/>
+              <line class="net-line" x1="200" y1="200" x2="80" y2="110"/>
+              <!-- Ring interconnections -->
+              <line class="net-line" x1="200" y1="60" x2="320" y2="110"/>
+              <line class="net-line" x1="320" y1="110" x2="340" y2="250"/>
+              <line class="net-line" x1="340" y1="250" x2="260" y2="350"/>
+              <line class="net-line" x1="260" y1="350" x2="140" y2="350"/>
+              <line class="net-line" x1="140" y1="350" x2="60" y2="250"/>
+              <line class="net-line" x1="60" y1="250" x2="80" y2="110"/>
+              <line class="net-line" x1="80" y1="110" x2="200" y2="60"/>
+              <!-- Cross connections (the "net" quality) -->
+              <line class="net-line" x1="200" y1="60" x2="340" y2="250"/>
+              <line class="net-line" x1="200" y1="60" x2="260" y2="350"/>
+              <line class="net-line" x1="200" y1="60" x2="140" y2="350"/>
+              <line class="net-line" x1="200" y1="60" x2="60" y2="250"/>
+              <line class="net-line" x1="320" y1="110" x2="260" y2="350"/>
+              <line class="net-line" x1="320" y1="110" x2="140" y2="350"/>
+              <line class="net-line" x1="320" y1="110" x2="60" y2="250"/>
+              <line class="net-line" x1="340" y1="250" x2="140" y2="350"/>
+              <line class="net-line" x1="340" y1="250" x2="80" y2="110"/>
+              <line class="net-line" x1="260" y1="350" x2="80" y2="110"/>
+              <line class="net-line" x1="140" y1="350" x2="320" y2="110"/>
+              <line class="net-line" x1="60" y1="250" x2="320" y2="110"/>
+              <line class="net-line" x1="60" y1="250" x2="260" y2="350"/>
+              <line class="net-line" x1="80" y1="110" x2="260" y2="350"/>
+              <line class="net-line" x1="80" y1="110" x2="340" y2="250"/>
+              <line class="net-line" x1="140" y1="350" x2="200" y2="60"/>
+            </g>
+
+            <!-- Animated "data traveling" pulses along select paths -->
+            <g>
+              <line class="net-line-bright" x1="200" y1="200" x2="200" y2="60" style="animation-delay:0s"/>
+              <line class="net-line-bright" x1="200" y1="200" x2="340" y2="250" style="animation-delay:0.8s"/>
+              <line class="net-line-bright" x1="80" y1="110" x2="260" y2="350" style="animation-delay:1.6s"/>
+              <line class="net-line-bright" x1="200" y1="200" x2="60" y2="250" style="animation-delay:2.4s"/>
+              <line class="net-line-bright" x1="320" y1="110" x2="140" y2="350" style="animation-delay:3.2s"/>
+            </g>
+
+            <!-- Jewel nodes -->
+            <g filter="url(#glow)">
+              <style>
+                @keyframes jewel-breathe {
+                  0%, 100% { r: 18; opacity: 1; }
+                  50% { r: 20; opacity: 0.9; }
+                }
+                .jewel-node { animation: jewel-breathe 4s ease-in-out infinite; }
+              </style>
+              <!-- Center node (larger) -->
+              <circle cx="200" cy="200" r="22" fill="url(#jewel)" class="jewel-node" style="animation-delay:0s"/>
+              <circle cx="200" cy="200" r="10" fill="url(#jewel-shine)" opacity="0.8"/>
+              <!-- Ring nodes -->
+              <circle cx="200" cy="60"  r="18" fill="url(#jewel)" class="jewel-node" style="animation-delay:0.5s"/>
+              <circle cx="200" cy="60"  r="8"  fill="url(#jewel-shine)" opacity="0.7"/>
+              <circle cx="320" cy="110" r="18" fill="url(#jewel)" class="jewel-node" style="animation-delay:1.0s"/>
+              <circle cx="320" cy="110" r="8"  fill="url(#jewel-shine)" opacity="0.7"/>
+              <circle cx="340" cy="250" r="18" fill="url(#jewel)" class="jewel-node" style="animation-delay:1.5s"/>
+              <circle cx="340" cy="250" r="8"  fill="url(#jewel-shine)" opacity="0.7"/>
+              <circle cx="260" cy="350" r="18" fill="url(#jewel)" class="jewel-node" style="animation-delay:2.0s"/>
+              <circle cx="260" cy="350" r="8"  fill="url(#jewel-shine)" opacity="0.7"/>
+              <circle cx="140" cy="350" r="18" fill="url(#jewel)" class="jewel-node" style="animation-delay:2.5s"/>
+              <circle cx="140" cy="350" r="8"  fill="url(#jewel-shine)" opacity="0.7"/>
+              <circle cx="60"  cy="250" r="18" fill="url(#jewel)" class="jewel-node" style="animation-delay:3.0s"/>
+              <circle cx="60"  cy="250" r="8"  fill="url(#jewel-shine)" opacity="0.7"/>
+              <circle cx="80"  cy="110" r="18" fill="url(#jewel)" class="jewel-node" style="animation-delay:3.5s"/>
+              <circle cx="80"  cy="110" r="8"  fill="url(#jewel-shine)" opacity="0.7"/>
+            </g>
+          </svg>
         </div>
       </div>
     </div>
