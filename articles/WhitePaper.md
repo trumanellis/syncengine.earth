@@ -2,23 +2,25 @@
 
 *A peer-to-peer protocol that tracks collective focus the way physics tracks energy — no blockchain, no global consensus*
 
+**Abstract.** Human attention is a conserved quantity — you can only focus on one thing at a time, and no act of software can change that. This paper presents a peer-to-peer protocol that tracks collective attention using a conservation law rather than global consensus: every switch of focus is a signed `(-1, +1)` pair that preserves the total, enforced locally by hash-chained event logs and BFT quorum certificates scoped to small witness sets. The result is a distributed ledger that scales naturally, resists Sybil attacks through in-person liveness attestation, and converts verified attention into tokens of gratitude — an attention-backed economy with no mining, no staking, and no blockchain.
+
 ## The Problem
 
-Every distributed ledger built so far tracks the same thing: money. Bitcoin, Ethereum, and their descendants all solve the same puzzle: how do you get thousands of computers around the world to agree on who owns what? Their answer is *global consensus* — every computer processes every transaction, and they all vote on a single shared history. That works, but it's slow and expensive, because every machine must do all the work.
+Attention is scarce. You can only focus on one thing at a time. Right now, you're reading this paper — which means you're *not* reading anything else. Unlike money, attention cannot be counterfeited, stockpiled, or inflated. It moves — from one thing to another — and the total never changes. That conservation is not a design choice. It is a physical constraint of human cognition.
 
-But money is not the only scarce resource worth tracking.
-
-Attention is scarce. You can only focus on one thing at a time. Right now, you're reading this article — which means you're *not* reading anything else. Unlike money, attention cannot be counterfeited, stockpiled, or inflated. It moves — from one thing to another — and the total never changes. That conservation is not a design choice. It is a physical constraint of human cognition.
+Yet every distributed ledger built so far tracks the same thing: money. Bitcoin, Ethereum, and their descendants all solve the same puzzle: how do you get thousands of computers to agree on who owns what? Their answer is *global consensus* — every computer processes every transaction, and they all vote on a single shared history. That works for money, but it's slow, expensive, and solving the wrong problem — because attention was never money to begin with.
 
 The attention ledger tracks this resource. Not with a blockchain. Not with global consensus. With a conservation law — a mathematical rule that says the total can never change, like how energy is conserved in physics.
 
 ## The Core Idea
 
-Imagine a room of 100 people. Each person has a laser — their attention — and each laser shines a unique color. At any moment, each person is pointing their laser at one project on a shared board. Each project accumulates a cluster of colored beams, and the colors tell you exactly who is investing their focus there. A project lit up by thirty distinct colors is drawing broad community energy. A project with three beams — all from the same corner of the room — tells a different story.
+Imagine a room of 100 people. Each person has a laser — their attention — and each laser shines a unique color. At any moment, each person is pointing their laser at one project on a shared board.
 
 The key rule: **the total number of lasers in the room is always 100.** Nobody can create a laser out of thin air. Nobody can destroy one. You can only redirect yours from one project to another. And because each laser has a unique color, you can always trace whose attention went where.
 
-The critical property: while your laser is pointed at a project, it charges an *attention battery* for that project. The longer you focus, the more energy accumulates. When the work is done, that stored energy can be released to the person who manifested the project — in the form of *gratitude*. The battery is proof that real human focus backed real work. This is how attention becomes currency without ever being money.
+Now notice what happens at each project. The light from every laser pointed at it doesn't just illuminate — it charges a battery. The longer you shine, the more energy accumulates. The unique colors stored in the battery record exactly whose light powered it — provenance is built in. A project lit by thirty distinct colors holds a different charge than one lit by three beams from the same corner of the room.
+
+When the work is complete, the stored charge is released to the person who did the work — as *gratitude*. The battery is proof that real human focus backed real effort. This is how attention becomes currency without ever being money: light hits the project, charges the battery, and the battery pays the worker.
 
 When you switch your focus, you create a signed record — like writing in a diary that everyone can read:
 
@@ -79,7 +81,7 @@ The proof is a telescoping sum: each switch event's contribution sums to zero, e
 
 ![Quorum intersection: two quorums must share at least f+1 witnesses](quorum_intersection.svg)
 
-**Formally:** The implementation uses the standard BFT (Byzantine Fault Tolerance) threshold. Given a witness set of size `n`, the maximum tolerable faults is `f = floor((n-1)/3)`, and the quorum size is `k = n - f`. This guarantees that any two quorums overlap by at least `f + 1` nodes. With at most `f` *Byzantine* witnesses (in distributed systems, "Byzantine" means malicious or faulty — the term comes from a thought experiment about generals who might be traitors), at least one node in the overlap is honest — so both conflicting events cannot be certified. For example: with 7 witnesses, `f = 2` and `k = 5`, so two quorums overlap by 3, and even if 2 are Byzantine, 1 honest witness blocks the double-certification.
+**Formally:** The implementation uses the standard BFT (Byzantine Fault Tolerance) threshold. Given a witness set of size `n`, the maximum tolerable faults is `f = floor((n-1)/3)`, and the quorum size is `k = n - f`. This guarantees that any two quorums overlap by at least `f + 1` nodes. With at most `f` *Byzantine* (malicious or faulty, from a thought experiment about traitorous generals) witnesses, at least one node in the overlap is honest — so both conflicting events cannot be certified. For example: with 7 witnesses, `f = 2` and `k = 5`, so two quorums overlap by 3, and even if 2 are Byzantine, 1 honest witness blocks the double-certification.
 
 ### Fraud Proofs
 
@@ -92,6 +94,74 @@ When equivocation is detected — two diary entries with the same author and sam
 **In plain language:** An event becomes permanent when enough witnesses sign it — not when it gets added to some global list.
 
 There is no "block" that everyone waits for. There is no mining. An event is *final* when certified by its intention's witness quorum, independently verifiable by any peer. Two events in unrelated projects can become final at the same time without knowing about each other.
+
+## Threat Model
+
+The conservation law and BFT certificates provide strong guarantees under their stated assumptions. This section examines what happens when those assumptions are stressed — and where open problems remain.
+
+### A. Network Partitions
+
+**Attack:** The network splits; partitions maintain independent attention counts.
+
+**Safety:** Conservation holds within each partition. Each switch is still `(-1, +1)`. CRDT merge guarantees convergence on reconnection — `AttentionDocument` appends missing events, `AttentionTipDocument` takes the max, `CertificateDocument` merges signatures, and so on.
+
+**Liveness degrades:** Events whose witness roster spans the partition boundary can't reach quorum `k` and stay `Observed`. This is correct behavior — better to withhold finality than grant it with incomplete witness coverage.
+
+**Open problem:** No partition detection mechanism. Applications acting on attention counts have no signal that counts may be incomplete.
+
+### B. Witness Selection Attacks
+
+**Attack:** An attacker influences which peers are selected as witnesses, stacking the roster with colluding nodes to bypass the `f` threshold.
+
+**Mitigation:** Witness rosters are drawn from realm members via `mutual_peers()` and `select_witnesses()` — the event author does not choose their own witnesses. Selection is deterministic and externally verifiable from roster state at event creation time.
+
+**Additional defense:** Realm membership acts as a social-layer bound. An attacker must get colluding identities admitted to the realm first.
+
+**Open problem:** Whether liveness attestation should be a prerequisite for witness eligibility — this would eliminate Sybil witnesses but worsen geographic bias.
+
+### C. Liveness Attacks (Witness Withholding)
+
+**Attack:** A malicious witness receives a valid event but refuses to sign — no equivocation, just silence. Enough withholders prevent finality.
+
+**Mitigation:** The protocol tolerates `f` Byzantine faults including withholding. Requires `f+1` colluding withholders to block finality. `Observed` events remain valid and hash-chained regardless.
+
+**Open problem:** No witness liveness tracking, no roster rotation for permanently offline witnesses, no timeout-based fallback to alternative witness sets.
+
+### D. Stale Liveness / Geographic Bias
+
+**Attack:** Regions without regular in-person gatherings see all liveness scores decay toward zero. Gratitude tokens minted by stale blessers carry near-zero value. The system becomes economically inert in those regions.
+
+**Mitigation:** Soft degradation, not hard cutoff. Raw (unweighted) attention counts remain available. Events and chains are still valid. Applications can display unweighted counts when no members have fresh liveness.
+
+**Open problem:** No per-realm configurable decay parameters, no alternative liveness mechanisms for remote communities, no guidance on when weighted vs. unweighted rankings are appropriate. This is the protocol's primary centralization risk — decentralized in architecture but potentially centralized in influence around areas with active gathering cultures.
+
+## Related Work
+
+Five systems share architectural DNA with the attention ledger. For each: what it does, what it shares with this protocol, and why the attention ledger is distinct.
+
+### Hashgraph (Hedera)
+
+DAG-based consensus using gossip-about-gossip and virtual voting. Shares hash-chained events and gossip dissemination with the attention ledger. Key difference: Hashgraph achieves global consensus — all nodes converge on a single ordered history. The attention ledger enforces conservation locally without network-wide ordering.
+
+### Holochain
+
+Agent-centric architecture with personal hash chains and DHT-based validation. Architecturally the closest relative: both are agent-centric, both reject global consensus, both use signed append-only chains. Key difference: Holochain enforces application-defined validation rules; the attention ledger enforces a conservation law — a quantitative invariant stronger than a rule set. Holochain proves "this action is valid"; the attention ledger proves "attention was neither created nor destroyed."
+
+### Secure Scuttlebutt
+
+Per-identity append-only signed feeds, replicated via gossip. Shares the per-agent hash chain structure and gossip sync. Key difference: SSB is content-addressed communication with no conserved quantity and no finality mechanism. The attention ledger adds a domain-specific invariant with BFT-certified finality.
+
+### PBFT / Tendermint
+
+Classical BFT consensus with three-phase commit. The attention ledger borrows the BFT quorum certificate directly from this tradition. Key difference: PBFT reaches global agreement on a totally ordered shared log; the attention ledger uses BFT certificates as a *local* finality primitive scoped to session peer sets, not a global state machine.
+
+### CRDTs and Local-First Software
+
+Convergence frameworks for conflict-free replicas (Shapiro et al., Ink & Switch). The attention ledger uses CRDTs as its sync layer. Key difference: CRDTs ensure that replicas converge; the attention ledger additionally ensures that what they converge *to* is conservative. These are independent properties maintained simultaneously.
+
+### Positioning
+
+The attention ledger combines (a) a conservation law as its primary invariant, (b) local enforcement without global consensus, and (c) BFT quorum certificates scoped to session peer sets. No single prior system combines all three.
 
 ## Architecture
 
@@ -247,7 +317,7 @@ pub enum EventFinality {
 
 `classify_event_finality()` in `attention_sync.rs` checks whether a certificate exists with enough signatures. Finality is per-event, not per-block — because there are no blocks.
 
-**Equivocation slashing.** *Slashing* means penalizing a cheater by ignoring their uncertified work — the term comes from blockchain systems where validators lose staked funds. Here, slashing is reputational rather than financial: if fraud evidence exists against an author, `is_slashed()` returns true and `filter_slashed_events()` rejects all their uncertified events. But certified events survive — the quorum certificate proves that a majority of honest witnesses verified the event *before* the cheating was discovered. The honest version is preserved; the fraudulent version is discarded.
+**Equivocation slashing.** *Slashing* (penalizing a cheater by discarding their uncertified work, borrowed from blockchain systems where validators lose staked funds) is reputational rather than financial here: if fraud evidence exists against an author, `is_slashed()` returns true and `filter_slashed_events()` rejects all their uncertified events. But certified events survive — the quorum certificate proves that a majority of honest witnesses verified the event *before* the cheating was discovered. The honest version is preserved; the fraudulent version is discarded.
 
 ## CRDT Sync Protocol
 
@@ -265,7 +335,7 @@ Five CRDT documents handle the distributed state:
 
 All five use the existing `Document<T>` CRDT sync infrastructure. The merge functions have three mathematical properties that make this work: they are *commutative* (it doesn't matter who syncs with whom — A merge B gives the same result as B merge A), *associative* (it doesn't matter what order three or more copies merge — the end result is always the same), and *idempotent* (merging the same data twice changes nothing — like how sorting an already-sorted list leaves it sorted). These properties guarantee that all peers converge to the same state regardless of network timing.
 
-**Chain sync protocol** (`attention_sync.rs`) adds an *anti-entropy* layer — a mechanism to actively find and fill gaps, rather than waiting passively. It works in five steps:
+**Chain sync protocol** (`attention_sync.rs`) adds an *anti-entropy* (actively finding and filling gaps rather than waiting passively) layer. It works in five steps:
 
 1. **Tip comparison** — Compare our latest sequence numbers against the `AttentionTipDocument` to see which authors have events we haven't seen yet.
 2. **Gap detection** — `detect_gaps()` figures out exactly which events we're missing: "Lyra has events up to #7, but I only have up to #4 — I need #5, #6, and #7."
@@ -315,7 +385,7 @@ This means tokens minted by Sybil accounts (fake identities) carry zero weight �
 
 ## Anti-Sybil: Humanness-Weighted Attention
 
-A *Sybil attack* is when one person creates many fake identities to gain outsized influence — named after a book about a person with multiple identities. The conservation law holds regardless of identity: one person running ten fake accounts gets ten units of attention. But those ten units are not created equal.
+A *Sybil attack* (one person creating many fake identities to gain outsized influence) exploits identity rather than protocol. The conservation law holds regardless of identity: one person running ten fake accounts gets ten units of attention. But those ten units are not created equal.
 
 `quests_by_weighted_attention()` ranks intentions by *liveness-weighted* attention. Each member's contribution is multiplied by their liveness freshness score — a value between 0.0 and 1.0 that measures how recently they attended an in-person event. Freshness decays exponentially after a 7-day grace period.
 
@@ -376,26 +446,6 @@ Two tests deserve special mention. `live_equivocation_slashing` exercises the fu
 
 **Broader context:** The attention ledger is a module within IndrasNetwork, a 23-crate Rust workspace (~116,000 lines of Rust) with a simulation engine (~13,500 lines of Rust) and ~45,700 lines of Lua test scenarios. The attention ledger represents roughly 3% of the codebase — a focused subsystem within a larger peer-to-peer platform that includes quests, blessings, messaging, humanness attestation, and a token-of-gratitude economy.
 
-## Future Work
-
-- **Dedicated gossip broadcast.** Events and fraud proofs currently spread through the CRDT sync mechanism — when two peers connect, they exchange whatever the other is missing. This works correctly but is passive. A dedicated gossip layer that actively pushes new events to peers would reduce convergence time at scale.
-- **Out-of-order event queuing.** Events currently arrive in order thanks to CRDT sync. A production system with unreliable connections may need a buffer to hold events that arrive out of sequence until the missing ones show up.
-
-## From Theory to Code: A Mapping
-
-Every formal guarantee has a concrete implementation:
-
-| Formal Model | Implementation |
-|---|---|
-| **Lemma 1** (Local Conservation) — each switch preserves total attention mass | The `from`/`to` structure of `AttentionSwitchEvent`. No "amount" field exists. Switch events are `(-1, +1)`. Genesis is `(0, +1)` and farewell is `(-1, 0)` — these change the total to match the membership change. |
-| **Theorem 1** (Global Conservation) — total attention equals number of active participants | `validate_chain()` enforces sequence continuity, hash linking, and attention continuity. Genesis adds `+1`, farewell subtracts `-1`, switches are zero-sum. With valid chains and converged event sets (via CRDT sync), `Σ A_I(t) = |V(t)|` holds. |
-| **Theorem 2** (Safety Under Quorum Intersection) — conflicting events cannot both be certified | `validate_certificate()` enforces `k = n - f` where `f = floor((n-1)/3)` (BFT threshold). Two quorums overlap by at least `f+1` nodes. With at most `f` Byzantine witnesses, conflicting events cannot both be certified. The `live_equivocation_slashing` test demonstrates this end-to-end. |
-| **Fraud Proofs** — equivocation is detectable and provable | `EquivocationProof` captures conflicting events. `check_equivocation()` detects them. `FraudEvidenceDocument` propagates proofs via CRDT. `filter_slashed_events()` enforces consequences. |
-| **Finality Without Global Order** — events become permanent without a total ordering | `classify_event_finality()` returns `Observed` or `Final`. Finality is per-event and per-intention. No global clock, no block production, no leader election. |
-| **Event Convergence** — honest peers converge to the same event set | Five CRDT documents with commutative, associative, idempotent merge functions, plus anti-entropy gap detection. The `live_late_joiner_sync` test verifies this for late-joining nodes. |
-| **Attention→Gratitude** — conserved attention backs a token economy | `compute_attention_millis()` calculates cumulative focus duration from event indices, weighted by liveness freshness from in-person event attendance. Sybil-minted tokens carry zero weight because fake accounts can't show up in person. |
-| **Anti-Sybil** — fake identities have zero influence on rankings | `quests_by_weighted_attention()` multiplies each member's attention by their liveness freshness (0.0–1.0). Accounts without recent in-person attendance contribute zero weighted attention. |
-
 ## The Larger Picture
 
 The attention ledger is not a financial system. It tracks where human cognitive energy is directed — and enforces a conservation law that makes that tracking meaningful. Gratitude tokens are a downstream consequence, not the primary data structure. The ledger itself tracks focus, not money.
@@ -404,12 +454,11 @@ Blockchain's insight was that global consensus enables trustless finance. The at
 
 Think of it this way: if you're tracking something that can be *copied* (like digital money), you need everyone to agree on a single history to prevent counterfeiting. But if you're tracking something that *physically can't be in two places at once* (like a person's focus), you just need local witnesses to confirm that it moved, and math to confirm that the total didn't change.
 
-What this enables:
+What becomes possible when attention is a conserved, verifiable quantity:
 
-- **Verifiable collective focus.** Any peer can compute how much conserved attention flows toward any intention, without trusting a central authority.
-- **Intention-scoped coordination.** Two unrelated projects never need to coordinate. The system shards naturally along intention lines.
-- **Fraud accountability.** Equivocation is provable and punishable. You cannot claim to be focused on two things at once.
-- **An attention-backed economy.** Conserved attention charges a battery that backs tokens of gratitude — verifiable proof that real human focus supported real work. The gratitude bridge turns attention into currency without ever making it money.
-- **Sybil resilience.** Fake identities get valid chains but zero influence. Liveness-weighted rankings — based on in-person event attendance — make unattested accounts invisible to community rankings without banning them.
-- **Quantum resistance.** All signatures use NIST-standardized post-quantum cryptography (ML-DSA-65). The system is hardened against quantum computer attacks from day one.
-- **No mining, no staking, no gas.** Conservation is algebraic. There is nothing to mine and no fee to pay. The scarce resource is attention itself — and you already have exactly one unit of it.
+- **Governance without polling.** A community can see where its collective focus actually is — not where people *say* it is — and allocate resources accordingly. Attention becomes a continuous, unforgeable vote.
+- **Credentialing through demonstrated focus.** A contributor's track record is not a résumé or a reputation score — it is a hash-chained, witness-certified log of sustained cognitive investment. Verified attention history could serve as a new kind of credential.
+- **Economics grounded in physical reality.** The gratitude bridge converts verified focus into tokens backed by something that cannot be manufactured: human time and attention. This is currency that inherits its scarcity from cognition, not from protocol rules.
+- **Coordination without platforms.** Two unrelated projects never need a shared server, a shared token, or a shared governance structure. The system shards naturally along intention lines — each project is its own self-contained ledger.
+
+The scarce resource is attention itself — and you already have exactly one unit of it.
