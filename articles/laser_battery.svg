@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 260" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arr-gray" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 3 L 0 6 z" fill="#5f6368"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 3 L 0 6 z" fill="#34a853"/>
+    </marker>
+    <linearGradient id="g-board" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8f9fa"/>
+      <stop offset="100%" stop-color="#eef0f2"/>
+    </linearGradient>
+    <linearGradient id="g-token" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff3e0"/>
+      <stop offset="100%" stop-color="#ffe0b2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Section labels -->
+  <text x="40" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#9aa0a6">PEOPLE</text>
+  <text x="225" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#9aa0a6">PROJECTS</text>
+  <text x="396" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#9aa0a6">BATTERIES</text>
+  <text x="570" y="18" text-anchor="middle" font-size="11" font-weight="bold" fill="#9aa0a6">GRATITUDE</text>
+
+  <!-- People (colored circles = unique lasers, vertical column) -->
+  <circle cx="40" cy="50" r="13" fill="#4285f4" opacity="0.9"/>
+  <text x="40" y="54" text-anchor="middle" font-size="9" font-weight="bold" fill="white">N</text>
+  <circle cx="40" cy="82" r="13" fill="#d93025" opacity="0.9"/>
+  <text x="40" y="86" text-anchor="middle" font-size="9" font-weight="bold" fill="white">B</text>
+  <circle cx="40" cy="114" r="13" fill="#34a853" opacity="0.9"/>
+  <text x="40" y="118" text-anchor="middle" font-size="9" font-weight="bold" fill="white">L</text>
+  <circle cx="40" cy="146" r="13" fill="#f9ab00" opacity="0.9"/>
+  <text x="40" y="150" text-anchor="middle" font-size="9" font-weight="bold" fill="white">S</text>
+  <circle cx="40" cy="178" r="13" fill="#7b1fa2" opacity="0.9"/>
+  <text x="40" y="182" text-anchor="middle" font-size="9" font-weight="bold" fill="white">K</text>
+
+  <!-- Project Garden (top, 4 beams) -->
+  <rect x="170" y="35" width="110" height="40" rx="6" fill="url(#g-board)" stroke="#dadce0" stroke-width="1.5"/>
+  <text x="225" y="55" text-anchor="middle" font-size="11" font-weight="bold" fill="#202124">Garden</text>
+  <text x="225" y="68" text-anchor="middle" font-size="9" fill="#9aa0a6">4 beams</text>
+
+  <!-- Project Website (bottom, 1 beam) -->
+  <rect x="170" y="100" width="110" height="40" rx="6" fill="url(#g-board)" stroke="#dadce0" stroke-width="1.5"/>
+  <text x="225" y="120" text-anchor="middle" font-size="11" font-weight="bold" fill="#202124">Website</text>
+  <text x="225" y="133" text-anchor="middle" font-size="9" fill="#9aa0a6">1 beam</text>
+
+  <!-- Laser beams to Garden (top, 4 beams) -->
+  <line x1="53" y1="50" x2="170" y2="48" stroke="#4285f4" stroke-width="2" opacity="0.5" stroke-dasharray="4,3"/>
+  <line x1="53" y1="82" x2="170" y2="53" stroke="#d93025" stroke-width="2" opacity="0.5" stroke-dasharray="4,3"/>
+  <line x1="53" y1="114" x2="170" y2="58" stroke="#34a853" stroke-width="2" opacity="0.5" stroke-dasharray="4,3"/>
+  <line x1="53" y1="146" x2="170" y2="63" stroke="#f9ab00" stroke-width="2" opacity="0.5" stroke-dasharray="4,3"/>
+
+  <!-- Laser beam to Website (bottom, 1 beam: K→Website) -->
+  <line x1="53" y1="178" x2="170" y2="120" stroke="#7b1fa2" stroke-width="2" opacity="0.5" stroke-dasharray="4,3"/>
+
+  <!-- Garden row: Arrow → Battery (full) → Gratitude -->
+  <line x1="280" y1="55" x2="348" y2="55" stroke="#5f6368" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+  <text x="314" y="48" text-anchor="middle" font-size="8" fill="#9aa0a6">charges</text>
+
+  <!-- Garden battery (full, 4 layers) -->
+  <rect x="356" y="28" width="80" height="56" rx="6" fill="#f8f9fa" stroke="#9aa0a6" stroke-width="1.5"/>
+  <rect x="436" y="40" width="8" height="32" rx="2" fill="#9aa0a6" opacity="0.4"/>
+  <rect x="362" y="64" width="68" height="12" rx="2" fill="#4285f4" opacity="0.8"/>
+  <rect x="362" y="50" width="68" height="12" rx="2" fill="#d93025" opacity="0.8"/>
+  <rect x="362" y="36" width="68" height="12" rx="2" fill="#34a853" opacity="0.8"/>
+  <rect x="362" y="28" width="68" height="8" rx="2" fill="#f9ab00" opacity="0.8"/>
+
+  <line x1="450" y1="55" x2="502" y2="55" stroke="#34a853" stroke-width="1.5" marker-end="url(#arr-green)"/>
+  <text x="476" y="48" text-anchor="middle" font-size="8" fill="#34a853">release</text>
+
+  <!-- Gratitude token box -->
+  <rect x="510" y="28" width="120" height="56" rx="8" fill="url(#g-token)" stroke="#f9ab00" stroke-width="1.5"/>
+  <text x="570" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#e65100">Gratitude</text>
+  <text x="570" y="66" text-anchor="middle" font-size="10" fill="#5f6368">→ to the worker</text>
+  <text x="570" y="80" text-anchor="middle" font-size="9" fill="#9aa0a6">TokenOfGratitude</text>
+
+  <!-- Worker receiving -->
+  <circle cx="570" cy="116" r="12" fill="#34a853" opacity="0.9"/>
+  <text x="570" y="120" text-anchor="middle" font-size="8" font-weight="bold" fill="white">L</text>
+  <line x1="570" y1="84" x2="570" y2="100" stroke="#5f6368" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+  <text x="585" y="100" font-size="8" fill="#9aa0a6">pays</text>
+
+  <!-- Website row: Arrow → Battery (low charge, 1 layer) -->
+  <line x1="280" y1="120" x2="348" y2="120" stroke="#5f6368" stroke-width="1.2" marker-end="url(#arr-gray)"/>
+  <text x="314" y="113" text-anchor="middle" font-size="8" fill="#9aa0a6">charges</text>
+
+  <!-- Website battery (low, 1 layer) -->
+  <rect x="356" y="98" width="80" height="46" rx="6" fill="#f8f9fa" stroke="#9aa0a6" stroke-width="1.5"/>
+  <rect x="436" y="108" width="8" height="26" rx="2" fill="#9aa0a6" opacity="0.4"/>
+  <rect x="362" y="124" width="68" height="12" rx="2" fill="#7b1fa2" opacity="0.8"/>
+  <!-- Empty space indicates low charge -->
+  <text x="396" y="115" text-anchor="middle" font-size="8" fill="#9aa0a6">low</text>
+
+  <!-- Bottom annotation -->
+  <text x="20" y="222" font-size="10" fill="#9aa0a6">Each laser has a <tspan font-weight="bold" fill="#b0b5ba">unique color</tspan> (provenance). The battery records <tspan font-weight="bold" fill="#b0b5ba">whose light</tspan> powered it.</text>
+  <text x="20" y="237" font-size="10" fill="#9aa0a6">Total lasers in the room = total people. <tspan font-weight="bold" fill="#b0b5ba">Conservation is structural.</tspan></text>
+</svg>

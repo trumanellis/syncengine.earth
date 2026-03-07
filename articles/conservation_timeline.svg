@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 280" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="ct-arr" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 3 L 0 6 z" fill="#5f6368"/>
+    </marker>
+    <linearGradient id="ct-green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8f5e9"/>
+      <stop offset="100%" stop-color="#c8e6c9"/>
+    </linearGradient>
+    <linearGradient id="ct-blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8f0fe"/>
+      <stop offset="100%" stop-color="#d2e3fc"/>
+    </linearGradient>
+    <linearGradient id="ct-red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fce8e6"/>
+      <stop offset="100%" stop-color="#f8d7da"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="325" y="20" text-anchor="middle" font-size="13" font-weight="bold" fill="#9aa0a6">Why the Total Never Changes (Except at Join/Leave)</text>
+
+  <!-- === SWITCH EVENT (center, largest) === -->
+  <rect x="15" y="36" width="300" height="110" rx="8" fill="url(#ct-blue)" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="165" y="56" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a73e8">Switch Event</text>
+
+  <!-- Before -->
+  <text x="85" y="74" text-anchor="middle" font-size="9" fill="#5f6368">before</text>
+  <rect x="35" y="80" width="45" height="22" rx="4" fill="white" stroke="#4285f4" stroke-width="1"/>
+  <text x="57" y="95" text-anchor="middle" font-size="9" fill="#1a73e8">Garden</text>
+  <text x="57" y="78" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">3</text>
+  <rect x="90" y="80" width="45" height="22" rx="4" fill="white" stroke="#4285f4" stroke-width="1"/>
+  <text x="112" y="95" text-anchor="middle" font-size="9" fill="#1a73e8">Website</text>
+  <text x="112" y="78" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">2</text>
+
+  <!-- Arrow -->
+  <line x1="148" y1="90" x2="172" y2="90" stroke="#5f6368" stroke-width="1.2" marker-end="url(#ct-arr)"/>
+
+  <!-- After -->
+  <text x="245" y="74" text-anchor="middle" font-size="9" fill="#5f6368">after</text>
+  <rect x="195" y="80" width="45" height="22" rx="4" fill="white" stroke="#4285f4" stroke-width="1"/>
+  <text x="217" y="95" text-anchor="middle" font-size="9" fill="#1a73e8">Garden</text>
+  <text x="217" y="78" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">2</text>
+  <rect x="250" y="80" width="45" height="22" rx="4" fill="white" stroke="#4285f4" stroke-width="1"/>
+  <text x="272" y="95" text-anchor="middle" font-size="9" fill="#1a73e8">Website</text>
+  <text x="272" y="78" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">3</text>
+
+  <!-- Totals -->
+  <text x="85" y="120" text-anchor="middle" font-size="10" fill="#5f6368">total: <tspan font-weight="bold" fill="#1a73e8">5</tspan></text>
+  <text x="245" y="120" text-anchor="middle" font-size="10" fill="#5f6368">total: <tspan font-weight="bold" fill="#1a73e8">5</tspan></text>
+  <text x="165" y="140" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">(−1) + (+1) = 0 change</text>
+
+  <!-- === GENESIS EVENT === -->
+  <rect x="335" y="36" width="148" height="110" rx="8" fill="url(#ct-green)" stroke="#34a853" stroke-width="1.5"/>
+  <text x="409" y="56" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e8e3e">Genesis</text>
+
+  <!-- Before -->
+  <text x="375" y="74" text-anchor="middle" font-size="9" fill="#5f6368">before</text>
+  <text x="375" y="90" text-anchor="middle" font-size="10" fill="#5f6368">4 people</text>
+  <text x="375" y="104" text-anchor="middle" font-size="10" fill="#5f6368">total: <tspan font-weight="bold" fill="#1e8e3e">4</tspan></text>
+
+  <!-- Arrow down -->
+  <text x="409" y="90" text-anchor="middle" font-size="14" fill="#5f6368">→</text>
+
+  <!-- After -->
+  <text x="445" y="74" text-anchor="middle" font-size="9" fill="#5f6368">after</text>
+  <text x="445" y="90" text-anchor="middle" font-size="10" fill="#5f6368">5 people</text>
+  <text x="445" y="104" text-anchor="middle" font-size="10" fill="#5f6368">total: <tspan font-weight="bold" fill="#1e8e3e">5</tspan></text>
+
+  <text x="409" y="140" text-anchor="middle" font-size="10" font-weight="bold" fill="#1e8e3e">+1 person, +1 attention</text>
+
+  <!-- === FAREWELL EVENT === -->
+  <rect x="503" y="36" width="138" height="110" rx="8" fill="url(#ct-red)" stroke="#d93025" stroke-width="1.5"/>
+  <text x="572" y="56" text-anchor="middle" font-size="12" font-weight="bold" fill="#c5221f">Farewell</text>
+
+  <!-- Before -->
+  <text x="540" y="74" text-anchor="middle" font-size="9" fill="#5f6368">before</text>
+  <text x="540" y="90" text-anchor="middle" font-size="10" fill="#5f6368">5 people</text>
+  <text x="540" y="104" text-anchor="middle" font-size="10" fill="#5f6368">total: <tspan font-weight="bold" fill="#c5221f">5</tspan></text>
+
+  <text x="572" y="90" text-anchor="middle" font-size="14" fill="#5f6368">→</text>
+
+  <!-- After -->
+  <text x="605" y="74" text-anchor="middle" font-size="9" fill="#5f6368">after</text>
+  <text x="605" y="90" text-anchor="middle" font-size="10" fill="#5f6368">4 people</text>
+  <text x="605" y="104" text-anchor="middle" font-size="10" fill="#5f6368">total: <tspan font-weight="bold" fill="#c5221f">4</tspan></text>
+
+  <text x="572" y="140" text-anchor="middle" font-size="10" font-weight="bold" fill="#c5221f">−1 person, −1 attention</text>
+
+  <!-- === BOTTOM: THE INVARIANT === -->
+  <rect x="15" y="168" width="620" height="56" rx="8" fill="#f8f9fa" stroke="#dadce0" stroke-width="1.5"/>
+
+  <!-- Equation -->
+  <text x="325" y="190" text-anchor="middle" font-size="14" font-weight="bold" fill="#202124">Σ attention  =  active participants</text>
+  <text x="325" y="210" text-anchor="middle" font-size="10" fill="#5f6368">Switches move attention but can't create or destroy it. Joins and leaves change the total by exactly ±1.</text>
+
+  <!-- Legend -->
+  <rect x="110" y="240" width="12" height="12" rx="2" fill="url(#ct-blue)" stroke="#4285f4" stroke-width="1"/>
+  <text x="128" y="250" font-size="10" fill="#9aa0a6">switch: redistributes (net 0)</text>
+
+  <rect x="295" y="240" width="12" height="12" rx="2" fill="url(#ct-green)" stroke="#34a853" stroke-width="1"/>
+  <text x="313" y="250" font-size="10" fill="#9aa0a6">genesis: +1 both</text>
+
+  <rect x="435" y="240" width="12" height="12" rx="2" fill="url(#ct-red)" stroke="#d93025" stroke-width="1"/>
+  <text x="453" y="250" font-size="10" fill="#9aa0a6">farewell: −1 both</text>
+
+  <!-- Bottom annotation -->
+  <text x="325" y="272" text-anchor="middle" font-size="10" fill="#9aa0a6">This holds regardless of <tspan font-weight="bold" fill="#b0b5ba">how many switches happen</tspan> or <tspan font-weight="bold" fill="#b0b5ba">in what order</tspan>.</text>
+</svg>

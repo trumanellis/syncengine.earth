@@ -22,9 +22,11 @@ Now notice what happens at each project. The light from every laser pointed at i
 
 When the work is complete, the stored charge is released to the person who did the work — as *gratitude*. The battery is proof that real human focus backed real effort. This is how attention becomes currency without ever being money: light hits the project, charges the battery, and the battery pays the worker.
 
+![Laser analogy: colored beams charge a project battery, which releases gratitude](laser_battery.svg)
+
 When you switch your focus, you create a signed record — like writing in a diary that everyone can read:
 
-> "I, Nova, am moving my attention from Project Aurora to Project Cypress. This is entry number 5 in my chain. Here's my signature proving it's really me."
+> "I, Nova, am moving my attention from Project Garden to Project Website. This is entry number 5 in my chain. Here's my signature proving it's really me."
 
 In code, that record looks like this:
 
@@ -34,8 +36,8 @@ In code, that record looks like this:
 
 - **author**: who switched (Nova)
 - **seq**: entry number in their chain (5)
-- **from**: what they stopped focusing on (Project Aurora)
-- **to**: what they started focusing on (Project Cypress)
+- **from**: what they stopped focusing on (Project Garden)
+- **to**: what they started focusing on (Project Website)
 - **prev_hash**: a fingerprint of their previous diary entry (to prove the diary hasn't been tampered with)
 - **signature**: a cryptographic proof that the author really wrote this
 
@@ -51,7 +53,7 @@ How it compares to blockchain:
 | **Agreement scope** | Everyone agrees on everything | Local groups verify local events |
 | **Scaling** | Globally constrained throughput | Shards naturally along intention lines |
 
-Two unrelated projects never need to coordinate. If Nova switches her focus between Project Aurora and Project Cypress, that has nothing to do with Bodhi switching between Project Eden and Project Sage. The system scales because verification happens only where attention actually moves.
+Two unrelated projects never need to coordinate. If Nova switches her focus between Project Garden and Project Website, that has nothing to do with Bodhi switching between Project Eden and Project Sage. The system scales because verification happens only where attention actually moves.
 
 ## Formal Guarantees
 
@@ -71,11 +73,13 @@ The system provides four formal guarantees. These are not aspirational — they 
 
 The proof is a telescoping sum: each switch event's contribution sums to zero, each genesis adds one, and each farewell subtracts one — matching exactly the change in `|V(t)|`.
 
+![Conservation timeline: total attention equals active participants through all events](conservation_timeline.svg)
+
 ### Theorem 2: Safety Under Quorum Intersection
 
 **In plain language:** A cheater cannot claim to be in two places at once and get away with it — as long as enough honest witnesses are watching.
 
-**The attack:** Imagine Nova tells one group "I'm focused on Project Aurora" and tells another group "I'm focused on Project Cypress" — both at the same time, both as her 5th diary entry. This is called *equivocation* (literally: speaking with two voices). It's the attention-ledger version of double-spending in cryptocurrency.
+**The attack:** Imagine Nova tells one group "I'm focused on Project Garden" and tells another group "I'm focused on Project Website" — both at the same time, both as her 5th diary entry. This is called *equivocation* (literally: speaking with two voices). It's the attention-ledger version of double-spending in cryptocurrency.
 
 **The defense:** For each project, a group of *witnesses* is assigned to verify events. Think of them as notaries. Before an event counts as official, a quorum of the witnesses for that project must co-sign it. The mathematical insight: if you need a quorum from the same group to approve *both* conflicting claims, those two quorums must overlap — at least one person is in both groups. And an honest witness will only sign one version. So both versions can never both get enough signatures.
 
@@ -108,6 +112,8 @@ The conservation law and BFT certificates provide strong guarantees under their 
 **Liveness degrades:** Events whose witness roster spans the partition boundary can't reach quorum `k` and stay `Observed`. This is correct behavior — better to withhold finality than grant it with incomplete witness coverage.
 
 **Open problem:** No partition detection mechanism. Applications acting on attention counts have no signal that counts may be incomplete.
+
+![Network partition: conservation holds locally, CRDTs converge on reconnection](network_partition.svg)
 
 ### B. Witness Selection Attacks
 
@@ -162,6 +168,8 @@ Convergence frameworks for conflict-free replicas (Shapiro et al., Ink & Switch)
 ### Positioning
 
 The attention ledger combines (a) a conservation law as its primary invariant, (b) local enforcement without global consensus, and (c) BFT quorum certificates scoped to session peer sets. No single prior system combines all three.
+
+![Positioning: the attention ledger uniquely combines conservation, local enforcement, and BFT certificates](related_work_positioning.svg)
 
 ## Architecture
 
@@ -240,7 +248,9 @@ Each author's chain of events is like a diary with rules. Chain validation (`att
 1. **Signature validity** — The PQ signature verifies against the author's public key. (Proves the author really wrote this entry, not an impersonator.)
 2. **Sequence continuity** — `seq` equals the previous `seq + 1`. No gaps, no skipping, no going backwards. (Proves no entries were deleted or inserted.)
 3. **Hash linking** — `prev` equals the hash of the previous event. (Proves the chain hasn't been tampered with.)
-4. **Attention continuity** — `from` matches the previous event's `to`. If your last event said you moved your focus *to* Project Cypress, your next event must say you're moving *from* Project Cypress. (Proves attention didn't teleport — it can only leave where it currently is.)
+4. **Attention continuity** — `from` matches the previous event's `to`. If your last event said you moved your focus *to* Project Website, your next event must say you're moving *from* Project Website. (Proves attention didn't teleport — it can only leave where it currently is.)
+
+![Chain validation: four sequential rules that together guarantee conservation](validation_rules.svg)
 
 `validate_chain(events, public_key)` walks the full chain from the first event (genesis) to the last and checks every rule at every step. If anything is wrong, it returns a specific error explaining exactly what failed:
 
@@ -370,7 +380,7 @@ The API surface is deliberately small. Chain validation, equivocation detection,
 
 Remember the attention battery from the laser analogy? This is how it works. The attention ledger feeds into a *token of gratitude* economy that closes the incentive loop: point your laser at a project → the battery charges → when the work is done, that stored energy is released to the manifester as a token of gratitude, backed by verifiable attention.
 
-When someone's contribution to a project is blessed (acknowledged), the system mints a `TokenOfGratitude`. Each token records `event_indices` — pointers into the `AttentionDocument` identifying which focus sessions back it. `compute_attention_millis()` calculates the raw duration of those sessions. This is the objective component: "Nova spent 45 minutes focused on Project Aurora, and here are the hash-chained events proving it."
+When someone's contribution to a project is blessed (acknowledged), the system mints a `TokenOfGratitude`. Each token records `event_indices` — pointers into the `AttentionDocument` identifying which focus sessions back it. `compute_attention_millis()` calculates the raw duration of those sessions. This is the objective component: "Nova spent 45 minutes focused on Project Garden, and here are the hash-chained events proving it."
 
 A token's value is the cumulative attention weighted by the blesser's liveness:
 

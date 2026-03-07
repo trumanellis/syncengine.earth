@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 200" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="vr-arr" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 3 L 0 6 z" fill="#5f6368"/>
+    </marker>
+    <marker id="vr-arr-green" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 3 L 0 6 z" fill="#34a853"/>
+    </marker>
+    <marker id="vr-arr-red" viewBox="0 0 10 6" refX="10" refY="3" markerWidth="8" markerHeight="5" orient="auto">
+      <path d="M 0 0 L 10 3 L 0 6 z" fill="#d93025"/>
+    </marker>
+    <linearGradient id="vr-box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8f0fe"/>
+      <stop offset="100%" stop-color="#d2e3fc"/>
+    </linearGradient>
+    <linearGradient id="vr-pass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8f5e9"/>
+      <stop offset="100%" stop-color="#c8e6c9"/>
+    </linearGradient>
+    <linearGradient id="vr-fail" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fce8e6"/>
+      <stop offset="100%" stop-color="#f8d7da"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="325" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#9aa0a6">Chain Validation: Four Sequential Rules</text>
+
+  <!-- Rule 1: Signature Valid -->
+  <rect x="15" y="35" width="120" height="60" rx="8" fill="url(#vr-box)" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="75" y="55" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">1. Signature</text>
+  <text x="75" y="68" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">Valid?</text>
+  <text x="75" y="83" text-anchor="middle" font-size="14" fill="#1a73e8">🔑</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="135" y1="65" x2="160" y2="65" stroke="#5f6368" stroke-width="1.5" marker-end="url(#vr-arr)"/>
+
+  <!-- Rule 2: Sequence Continuous -->
+  <rect x="168" y="35" width="120" height="60" rx="8" fill="url(#vr-box)" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="228" y="55" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">2. Sequence</text>
+  <text x="228" y="68" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">Continuous?</text>
+  <text x="228" y="86" text-anchor="middle" font-size="11" fill="#1a73e8" font-weight="bold">n, n+1</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="288" y1="65" x2="313" y2="65" stroke="#5f6368" stroke-width="1.5" marker-end="url(#vr-arr)"/>
+
+  <!-- Rule 3: Hash Linked -->
+  <rect x="321" y="35" width="120" height="60" rx="8" fill="url(#vr-box)" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="381" y="55" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">3. Hash</text>
+  <text x="381" y="68" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">Linked?</text>
+  <text x="381" y="86" text-anchor="middle" font-size="11" fill="#1a73e8" font-weight="bold">🔗</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="441" y1="65" x2="466" y2="65" stroke="#5f6368" stroke-width="1.5" marker-end="url(#vr-arr)"/>
+
+  <!-- Rule 4: Attention Continuous -->
+  <rect x="474" y="35" width="120" height="60" rx="8" fill="url(#vr-box)" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="534" y="55" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">4. Attention</text>
+  <text x="534" y="68" text-anchor="middle" font-size="10" font-weight="bold" fill="#1a73e8">Continuous?</text>
+  <text x="534" y="86" text-anchor="middle" font-size="11" fill="#1a73e8" font-weight="bold">→</text>
+
+  <!-- Arrow to Valid Chain -->
+  <line x1="594" y1="65" x2="619" y2="65" stroke="#34a853" stroke-width="1.5" marker-end="url(#vr-arr-green)"/>
+
+  <!-- Valid Chain result -->
+  <text x="635" y="60" text-anchor="middle" font-size="16" fill="#34a853">✓</text>
+  <text x="635" y="78" text-anchor="middle" font-size="9" font-weight="bold" fill="#1e8e3e">Valid</text>
+
+  <!-- "Proves" labels below each box -->
+  <text x="75" y="112" text-anchor="middle" font-size="8" fill="#9aa0a6">proves</text>
+  <text x="75" y="123" text-anchor="middle" font-size="8" fill="#b0b5ba">authorship</text>
+
+  <text x="228" y="112" text-anchor="middle" font-size="8" fill="#9aa0a6">proves</text>
+  <text x="228" y="123" text-anchor="middle" font-size="8" fill="#b0b5ba">no deletions</text>
+
+  <text x="381" y="112" text-anchor="middle" font-size="8" fill="#9aa0a6">proves</text>
+  <text x="381" y="123" text-anchor="middle" font-size="8" fill="#b0b5ba">no tampering</text>
+
+  <text x="534" y="112" text-anchor="middle" font-size="8" fill="#9aa0a6">proves</text>
+  <text x="534" y="123" text-anchor="middle" font-size="8" fill="#b0b5ba">no teleportation</text>
+
+  <!-- Rejection arrows from each box -->
+  <line x1="75" y1="95" x2="75" y2="140" stroke="#d93025" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#vr-arr-red)"/>
+  <line x1="228" y1="95" x2="228" y2="140" stroke="#d93025" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#vr-arr-red)"/>
+  <line x1="381" y1="95" x2="381" y2="140" stroke="#d93025" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#vr-arr-red)"/>
+  <line x1="534" y1="95" x2="534" y2="140" stroke="#d93025" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#vr-arr-red)"/>
+
+  <!-- Rejected labels -->
+  <text x="75" y="155" text-anchor="middle" font-size="10" fill="#c5221f">✗</text>
+  <text x="228" y="155" text-anchor="middle" font-size="10" fill="#c5221f">✗</text>
+  <text x="381" y="155" text-anchor="middle" font-size="10" fill="#c5221f">✗</text>
+  <text x="534" y="155" text-anchor="middle" font-size="10" fill="#c5221f">✗</text>
+
+  <!-- Bottom annotation -->
+  <text x="325" y="185" text-anchor="middle" font-size="10" fill="#9aa0a6">Any rule failure → <tspan font-weight="bold" fill="#ea4335">Rejected</tspan>. All four pass → <tspan font-weight="bold" fill="#34a853">conservation is guaranteed</tspan>.</text>
+</svg>
