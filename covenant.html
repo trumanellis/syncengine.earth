@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Covenant — SyncEngine</title>
+  <meta name="description" content="The Indra's Network Membership Covenant — the agreement between Temples of Refuge and those who steward the Synchronicity Engine. The non-extraction commitment, the gift economy, and the right to fork.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SyncEngine">
+  <meta property="og:title" content="The Covenant — SyncEngine">
+  <meta property="og:description" content="The non-extraction commitment behind the Synchronicity Engine.">
+  <meta property="og:url" content="https://syncengine.earth/covenant.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/core.css">
+
+  <style>
+    /* ── Hero ── */
+    .doc-hero {
+      padding: 96px 0 56px;
+      text-align: center;
+      position: relative;
+    }
+    .doc-hero::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 1px;
+      margin: 56px auto 0;
+      background: linear-gradient(90deg, transparent, var(--moss-dim), transparent);
+    }
+    .doc-eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--moss-light);
+      margin-bottom: 22px;
+    }
+    .doc-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(36px, 6vw, 60px);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin: 0 auto 22px;
+      max-width: 18ch;
+      background: linear-gradient(180deg, var(--tx) 0%, var(--t2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .doc-subtitle {
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--t2);
+      font-size: clamp(15px, 1.8vw, 18px);
+      max-width: 48ch;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Sources strip — show where this comes from ── */
+    .doc-meta {
+      max-width: 750px;
+      margin: 0 auto 56px;
+      padding: 0 32px;
+    }
+    .doc-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 28px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dim);
+      justify-content: center;
+      padding: 18px 24px;
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+    }
+    .doc-meta-row a {
+      color: var(--moss-light);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .doc-meta-row a:hover { border-color: var(--moss); }
+
+    /* ── Prose container ── */
+    .container-narrow { max-width: 750px; margin: 0 auto; padding: 0 32px 80px; }
+
+    /* ── Loading & Error ── */
+    .loading {
+      color: var(--t2);
+      text-align: center;
+      padding: 4rem 0;
+      animation: docpulse 2s infinite;
+      font-family: var(--display);
+    }
+    @keyframes docpulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    #error-state { text-align: center; padding: 4rem 0; }
+    .error-title { color: var(--danger); font-family: var(--display); font-size: 1.5rem; margin-bottom: 1rem; }
+    .error-text { color: var(--t2); margin-bottom: 2rem; }
+
+    /* ── Prose styles scoped under #document-body ── */
+    #document-body {
+      font-family: var(--body);
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--tx);
+    }
+
+    /* Suppress the markdown <h1> — we have .doc-title above */
+    #document-body h1 { display: none; }
+
+    /* Suppress the markdown subtitle line — it's redundant with .doc-subtitle */
+    #document-body > h3:first-of-type {
+      display: none;
+    }
+
+    #document-body h2 {
+      font-family: var(--display);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--tx);
+      margin-top: 4.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+    /* Ornament under each h2 */
+    #document-body h2::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 2px;
+      margin-top: 14px;
+      background: linear-gradient(90deg, var(--moss), var(--moss-dim));
+      border-radius: 2px;
+    }
+    #document-body h3 {
+      font-family: var(--display);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 600;
+      color: var(--moss-light);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+    #document-body h4 {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--t2);
+      margin-top: 1.75rem;
+      margin-bottom: 0.65rem;
+      font-style: italic;
+    }
+    #document-body p {
+      color: var(--tx);
+      line-height: 1.9;
+      margin-bottom: 1.4rem;
+    }
+    #document-body strong { color: var(--tx); font-weight: 600; }
+    #document-body em { color: var(--t2); font-style: italic; }
+    #document-body a {
+      color: var(--moss-light);
+      text-decoration: none;
+      border-bottom: 1px solid var(--moss-dim);
+      transition: color 0.3s, border-color 0.3s;
+    }
+    #document-body a:hover {
+      color: var(--moss);
+      border-color: var(--moss);
+    }
+    #document-body hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--bd), var(--bd2), var(--bd), transparent);
+      margin: 3rem 0;
+    }
+    #document-body blockquote {
+      border-left: 3px solid var(--moss);
+      background: var(--bg2);
+      padding: 18px 26px;
+      margin: 2rem 0;
+      font-style: italic;
+      color: var(--t2);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    #document-body ul, #document-body ol {
+      color: var(--tx);
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+    #document-body li { margin-bottom: 0.55rem; line-height: 1.85; }
+    #document-body code {
+      font-family: var(--mono);
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      padding: 0.15em 0.4em;
+      border-radius: 3px;
+      font-size: 0.88em;
+      color: var(--moss-light);
+    }
+
+    /* Closing italic stanza — last few paragraphs of italics, give them
+       a little more presence. */
+    #document-body > p:last-child,
+    #document-body > p:nth-last-child(-n+5) em {
+      color: var(--t2);
+    }
+
+    /* ── Section: relationship to the bylaws ── */
+    .related-doc {
+      max-width: 750px;
+      margin: 24px auto 100px;
+      padding: 32px;
+      background: var(--bg2);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+    }
+    .related-doc::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--moss), var(--indigo), var(--violet));
+    }
+    .related-doc-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--moss-light);
+      margin-bottom: 14px;
+    }
+    .related-doc-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.015em;
+      margin-bottom: 12px;
+      color: var(--tx);
+    }
+    .related-doc p {
+      font-size: 15px;
+      color: var(--t2);
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+    .related-doc a.related-doc-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--moss-light);
+      text-decoration: none;
+      transition: color 0.3s, gap 0.3s;
+    }
+    .related-doc a.related-doc-cta:hover {
+      color: var(--moss);
+      gap: 14px;
+    }
+
+    /* ── Reveal animation (matches the rest of the site) ── */
+    .r-doc { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .r-doc.v { opacity: 1; transform: translateY(0); }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .container-narrow { padding: 0 20px 64px; }
+      .doc-meta { padding: 0 20px; }
+      .related-doc { margin-left: 20px; margin-right: 20px; padding: 24px; }
+      #document-body h2 { margin-top: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site nav (matches whitepaper.html / network.html / gift-cycle.html) -->
+  <nav class="site-nav">
+    <a href="/" class="site-nav-logo">Sync<em>Engine</em></a>
+    <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
+    <div class="site-nav-links">
+      <a href="/gift-cycle.html">Gift Cycle</a>
+      <a href="/network.html">Indra's Network</a>
+      <a href="/articles/">Articles</a>
+      <a href="/covenant.html" class="active">Covenant</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <header class="doc-hero">
+      <p class="doc-eyebrow">Stewardship · The Covenant</p>
+      <h1 class="doc-title">The Indra's Network Membership Covenant</h1>
+      <p class="doc-subtitle">A living agreement between Temples of Refuge — the association of churches that stewards the Synchronicity Engine — and those who join it.</p>
+    </header>
+
+    <!-- Source/canonical metadata -->
+    <div class="doc-meta">
+      <div class="doc-meta-row">
+        <span>Canonical source: <a href="https://templesofrefuge.earth/covenant.html" target="_blank" rel="noopener noreferrer">templesofrefuge.earth</a></span>
+        <span>Stewarded by Temples of Refuge</span>
+      </div>
+    </div>
+
+    <!-- The document itself -->
+    <div class="container-narrow">
+      <article id="document-body">
+        <p class="loading">Loading the Covenant…</p>
+      </article>
+
+      <div id="error-state" style="display:none">
+        <p class="error-title">Document Not Available</p>
+        <p class="error-text"></p>
+        <a href="https://templesofrefuge.earth/covenant.html" target="_blank" rel="noopener noreferrer">View on templesofrefuge.earth →</a>
+      </div>
+    </div>
+
+    <!-- Related: Bylaws -->
+    <aside class="related-doc r-doc">
+      <p class="related-doc-label">The Architecture</p>
+      <h3 class="related-doc-title">The Bylaws of Temples of Refuge</h3>
+      <p>The Covenant is the spirit of the Association; the <strong>Bylaws</strong> are its legal and structural form — an association of churches under U.S. and Utah law. Article III names the Synchronicity Engine as the medium through which the Association decides. Article VI names the Engine Stewardship. Articles IX and XI define the forking rights for this codebase.</p>
+      <a class="related-doc-cta" href="https://templesofrefuge.earth/bylaws.html" target="_blank" rel="noopener noreferrer">
+        Read the full Bylaws on templesofrefuge.earth →
+      </a>
+    </aside>
+  </main>
+
+  <!-- Site footer (matches whitepaper.html / network.html / gift-cycle.html) -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="site-footer-links">
+        <a href="/">Home</a>
+        <a href="/gift-cycle.html">Gift Cycle</a>
+        <a href="/network.html">Indra's Network</a>
+        <a href="/articles/">Articles</a>
+        <a href="/whitepaper.html">White Paper</a>
+        <a href="/covenant.html">Covenant</a>
+        <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+        <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
+      </div>
+      <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Stewarded by Temples of Refuge &middot; Open source &middot; Non-extraction</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@15/marked.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const body = document.getElementById('document-body');
+      const errorState = document.getElementById('error-state');
+
+      // Canonical source lives in the templesofrefuge.earth repo.
+      // This site keeps a vendored copy at /COVENANT.md for fast loads
+      // and offline / network-restricted environments.
+      // Re-sync with `scripts/sync-covenant.sh` whenever the canonical
+      // source changes upstream.
+      const SOURCES = [
+        '/COVENANT.md', // vendored local copy (preferred — fast, always available)
+        'https://raw.githubusercontent.com/trumanellis/templesofrefuge.earth/main/COVENANT.md',
+      ];
+
+      function showError(message) {
+        body.style.display = 'none';
+        errorState.style.display = 'block';
+        errorState.querySelector('.error-text').textContent = message;
+      }
+
+      async function fetchFirstAvailable(urls) {
+        for (const url of urls) {
+          try {
+            const resp = await fetch(url, { cache: 'no-cache' });
+            if (resp.ok) {
+              const text = await resp.text();
+              // Reject HTML responses (e.g. if Jekyll rendered the .md)
+              const trimmed = text.trimStart();
+              if (trimmed.startsWith('<!DOCTYPE') || trimmed.startsWith('<html')) continue;
+              return text;
+            }
+          } catch (e) { /* try next */ }
+        }
+        return null;
+      }
+
+      try {
+        let markdown = await fetchFirstAvailable(SOURCES);
+        if (markdown == null) {
+          showError('Could not load the Covenant. Please try the canonical source.');
+          return;
+        }
+
+        // Strip optional YAML frontmatter
+        markdown = markdown.replace(/^---\n[\s\S]*?\n---\n/, '');
+
+        marked.use({ gfm: true, breaks: false });
+        body.innerHTML = marked.parse(markdown);
+
+        // Reveal animation observer for h2/h3/blockquote/related-doc
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('v');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+
+        body.querySelectorAll('h2, h3, blockquote').forEach(el => {
+          el.classList.add('r-doc');
+          observer.observe(el);
+        });
+        document.querySelectorAll('.r-doc').forEach(el => observer.observe(el));
+
+      } catch (err) {
+        showError('Failed to load the Covenant.');
+      }
+    });
+  </script>
+
+</body>
+</html>
