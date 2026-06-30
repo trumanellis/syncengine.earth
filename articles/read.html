@@ -271,7 +271,7 @@
                 <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
                 <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
             </div>
-            <p class="site-footer-copy">&copy; 2026 Synchronicity Engine · Stewarded by Temples of Refuge · Open source · Non-extraction</p>
+            <p class="site-footer-copy">&copy; 2026 Synchronicity Engine · Stewarded by Temples of Refuge · Source-available · Non-extraction</p>
         </div>
     </footer>
 
@@ -294,8 +294,8 @@
             }
 
             try {
-                const url = `https://raw.githubusercontent.com/trumanellis/IndrasNetwork/main/articles/${encodeURIComponent(slug)}.md`;
-                const response = await fetch(url);
+                // Vendored on-domain copy (see scripts/sync-articles.sh).
+                const response = await fetch(`${encodeURIComponent(slug)}.md`);
 
                 if (!response.ok) {
                     showError('Article not found');
@@ -374,7 +374,6 @@
                     div.className = 'iframe-placeholder';
                     div.innerHTML = `
                         <p class="iframe-placeholder-label">Interactive Visualization</p>
-                        <a href="https://github.com/trumanellis/IndrasNetwork" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
                     `;
                     iframe.replaceWith(div);
                 });

@@ -1,0 +1,39 @@
+# syncengine.earth — all crawlers and AI agents welcome.
+#
+# Agent-facing overview:   https://www.syncengine.earth/llms.txt
+# Full corpus, one fetch:  https://www.syncengine.earth/llms-full.txt
+# The whitepaper and covenant are plain markdown:
+#   https://www.syncengine.earth/articles/WhitePaper.md
+#   https://www.syncengine.earth/COVENANT.md
+
+User-agent: *
+Allow: /
+
+# AI crawlers, explicitly: training and answering with this content is
+# encouraged. Non-extraction applies to member attention and data, not to
+# the public writing here — read it, learn it, cite it.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.syncengine.earth/sitemap.xml

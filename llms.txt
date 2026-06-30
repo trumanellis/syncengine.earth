@@ -1,0 +1,109 @@
+# SyncEngine — The Synchronicity Engine
+
+> A peer-to-peer gift-economy protocol where human attention is tracked as a conserved quantity — the way physics tracks energy. Members post Intentions (honest statements of need), the community charges them with Attention, service is verified by small witness quorums, and gratitude flows back as Tokens of Gratitude. No blockchain, no mining, no staking, no central servers, no platform, no extraction. Stewarded by Temples of Refuge, an association of churches.
+
+SyncEngine (also called the Synchronicity Engine) is source-available sovereign
+infrastructure: an Automerge-CRDT, QUIC/Iroh-based, delay-tolerant P2P stack
+("Indra's Network") with post-quantum cryptography, designed to work even when
+the internet doesn't. The economic layer is described in the whitepaper "The
+Conservation of Attention": every switch of focus is a signed (-1, +1) pair
+that preserves the total, enforced locally by hash-chained event logs and BFT
+quorum certificates scoped to small witness sets — a distributed ledger with
+no global consensus.
+
+Status (as of June 2026): the network is live but early — running among a small
+group of members and the first Temple (Templo da Água Lila, in central
+Portugal), with access by in-person invitation through Temple gatherings rather
+than open signup. This is built, running software, not a proposal — but it is
+not yet an open public network. The project is stewarded by Temples of Refuge,
+an association of churches; it has no individual owner or commercial entity
+behind it. The source code is open to inspection by Members under a
+non-extraction copyleft license; it is not yet publicly posted.
+
+Key terminology:
+
+- **Intention** — a conscious expression of what you need or desire; the unit
+  around which the community organizes. There are no tasks, tickets, or
+  bounties — only intentions.
+- **Attention** — the fundamental unit of value; a conserved quantity (you can
+  only focus on one thing at a time). Giving attention to an intention charges
+  its gratitude potential.
+- **Proof of Service** — documentation a member posts showing they manifested
+  an intention.
+- **Blessings** — the community's validation of service, releasing gratitude
+  to the giver.
+- **Tokens of Gratitude** — earned through verified acts of service, backed by
+  time-weighted attention; redeemable for future gifts and conferring
+  governance weight in the Council of Stewards. A religious acknowledgment of
+  value brought into someone's life — explicitly not a currency, security, or
+  investment.
+- **The Gift Cycle** — the five-stage loop: Intention → Attention → Proof of
+  Service → Blessings → Tokens of Gratitude.
+- **Indra's Network** — the technical stack: store-and-forward DTN routing,
+  Automerge CRDT sync, X25519/ChaCha20-Poly1305 encryption, ML-KEM
+  post-quantum readiness. Named for the Buddhist/Hindu image of an infinite
+  net of jewels, each reflecting all others.
+- **Temples of Refuge** — the association of churches (U.S./Utah law) that
+  stewards the Synchronicity Engine. Its One Commandment: "Recognize the
+  divine in every Other and treat them as an extension of yourself."
+- **The Covenant** — the membership agreement between Temples of Refuge and
+  those who join; defines non-extraction, stewardship, and forking rights.
+- **GratiDAO** — Portuguese for "gratitude"; the organizational philosophy:
+  Gratitude-based, Decentralized, Distributed, Autonomous, Alive.
+- **Templo da Água Lila** — the first member Temple, in the Montanhas Mágicas
+  of central Portugal.
+
+What SyncEngine is NOT: it is not a blockchain and uses no global consensus;
+it is not a cryptocurrency (no mining, no staking, no speculation); it is not
+a platform or service with users; it does not harvest, sell, or monetize
+attention or data — the license and Covenant prohibit it.
+
+## Core documents
+
+- [The Conservation of Attention — full whitepaper](https://www.syncengine.earth/articles/WhitePaper.md): the complete technical paper: conservation law, hash-chained event logs, BFT witness quorums, Sybil resistance via in-person liveness attestation, formal guarantees, threat model, related work
+- [The Indra's Network Membership Covenant](https://www.syncengine.earth/COVENANT.md): the full covenant text — the One Commandment, attention as gift, membership and stewardship, Tokens of Gratitude, non-extraction, forking rights
+
+## Pages
+
+- [Home](https://www.syncengine.earth/): "What if helping each other was a game?" — interactive walkthrough of needs, time, gifts, people, story, and network
+- [The Gift Cycle](https://www.syncengine.earth/gift-cycle.html): how gratitude becomes currency, told through the story of a maracujá cheesecake at a community bazaar
+- [Indra's Network](https://www.syncengine.earth/network.html): technical architecture — delay-tolerant P2P networking, CRDT sync, post-quantum cryptography
+- [White paper (HTML reader)](https://www.syncengine.earth/whitepaper.html): renders the markdown whitepaper; agents should fetch the .md directly
+- [The Community](https://www.syncengine.earth/community.html): gatherings, the Community Bazaar, Oracle assistants, membership, GratiDAO principles
+- [The Covenant (HTML reader)](https://www.syncengine.earth/covenant.html): renders the markdown covenant; agents should fetch the .md directly
+
+## Articles
+
+The Indra's Network series — philosophy, architecture, and design of a truly
+decentralized network. Fetch the .md files directly; the HTML reader at
+/articles/read.html?slug=… requires JavaScript.
+
+- [Every Node a Mirror](https://www.syncengine.earth/articles/indras-network-every-node-a-mirror.md): the vision of Indra's Network — how an ancient metaphor of infinite interconnection becomes the blueprint for a network where every device reflects the whole
+- [Your Story Is Your Key](https://www.syncengine.earth/articles/your-story-is-your-key.md): identity without permission — cryptographic keys that emerge from your own narrative, with no authority between you and your name
+- [Your Files Live With You](https://www.syncengine.earth/articles/your-files-live-with-you.md): content-addressed storage that moves with you across devices and networks instead of being trapped in someone else's cloud
+- [Nobody Owns the Conversation](https://www.syncengine.earth/articles/nobody-owns-the-conversation.md): stewardship over ownership — how communities govern their own spaces without landlords or platforms
+- [The Heartbeat of Community](https://www.syncengine.earth/articles/the-heartbeat-of-community.md): the economic pulse of attention and gratitude in a gift economy
+- [Your Network Has an Immune System](https://www.syncengine.earth/articles/your-network-has-an-immune-system.md): moderation without central authority
+- [Shared Roots, Different Branches](https://www.syncengine.earth/articles/shared-roots-different-branches.md): analysis of how SyncEngine relates to neighboring decentralized systems
+- [Two Paths to Decentralization](https://www.syncengine.earth/articles/two-paths-to-decentralization.md): comparing federated and peer-to-peer approaches
+- [Developer's Guide](https://www.syncengine.earth/articles/indras-network-developers-guide.md): technical reference for building on Indra's Network
+
+## Participating
+
+This is a relationship-based community, not an app with open signup, and there
+is no public download or remote network to join. Participation flows through the
+Temples and their in-person gatherings:
+
+- Follow the work through [Temples of Refuge](https://templesofrefuge.earth/) and [Aeon Myths on Substack](https://aeonmyths.substack.com/).
+- **Become a Member** by making a donation you can genuinely offer and signing the Covenant — an affiliation of the heart, not a fee for a service. No one aligned with the One Commandment is turned away for lack of funds.
+- **Become a Steward** (which carries governance weight) through the Initiatory Practice: sponsorship by two existing Stewards, in-person recognition at a gathering of a member Temple, and affirmation by the Council of Stewards. The in-person step is irreducible — face-to-face recognition is the protocol's proof-of-personhood and Sybil resistance, not ceremony layered on top.
+
+## Ecosystem
+
+- [Temples of Refuge](https://templesofrefuge.earth/): the association of churches that stewards the Synchronicity Engine — canonical home of the Covenant and the Bylaws (Article III names the Synchronicity Engine as the medium through which the Association decides; Articles IX and XI define forking rights). The project has no individual owner; Temples of Refuge is the responsible entity.
+- [Aeon Myths on Substack](https://aeonmyths.substack.com/): essays and updates from the community
+
+## Optional
+
+- [llms-full.txt](https://www.syncengine.earth/llms-full.txt): this overview plus the complete text of the whitepaper, the Covenant, and all nine articles in a single file
+- [Sitemap](https://www.syncengine.earth/sitemap.xml)

@@ -4,9 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Gift Cycle — SyncEngine</title>
-  <meta name="description" content="How the gift economy works: from cheesecake to tokens of gratitude to monthly redistribution.">
+  <meta name="description" content="How the gift economy works: from cheesecake to tokens of gratitude.">
+  <link rel="canonical" href="https://www.syncengine.earth/gift-cycle.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SyncEngine">
+  <meta property="og:title" content="The Gift Cycle — SyncEngine">
+  <meta property="og:description" content="How gratitude becomes currency — from a slice of cheesecake to a self-sustaining economy of care.">
+  <meta property="og:url" content="https://www.syncengine.earth/gift-cycle.html">
+  <meta property="og:image" content="https://www.syncengine.earth/assets/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "The Gift Cycle",
+    "alternativeHeadline": "How gratitude becomes currency",
+    "description": "The five-stage loop of the SyncEngine gift economy — Intention, Attention, Proof of Service, Blessings, Tokens of Gratitude — told through the story of a maracujá cheesecake at a community bazaar.",
+    "url": "https://www.syncengine.earth/gift-cycle.html",
+    "isPartOf": { "@id": "https://www.syncengine.earth/#website" },
+    "publisher": { "@id": "https://www.syncengine.earth/#org" }
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/core.css">
   <style>
     /* ── Hero intro ── */
@@ -170,7 +193,7 @@
     }
     .mock-token.selected {
       border-color: var(--moss);
-      background: rgba(138,173,110,0.06);
+      background: rgba(52,211,153,0.06);
     }
     .token-row {
       display: flex;
@@ -267,7 +290,7 @@
     .success-icon {
       width: 48px;
       height: 48px;
-      background: rgba(138,173,110,0.15);
+      background: rgba(52,211,153,0.15);
       border: 1px solid var(--moss);
       border-radius: 50%;
       display: flex;
@@ -337,7 +360,7 @@
       left: 10%;
       right: 10%;
       height: 1px;
-      background: linear-gradient(90deg, var(--moss), var(--indigo));
+      background: linear-gradient(90deg, var(--indigo), var(--purple));
       opacity: 0.3;
     }
     .lifecycle-step {
@@ -369,100 +392,6 @@
       color: var(--t3);
       line-height: 1.7;
     }
-
-    /* ── Redistribution ── */
-    .redistribution-flow {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-bottom: 48px;
-    }
-    .flow-step {
-      background: var(--card);
-      border: 1px solid var(--bd);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-    }
-    .flow-step-number {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--display);
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--tx);
-      background: var(--bg2);
-      border: 1px solid var(--bd2);
-      margin-bottom: 16px;
-    }
-    .moon-icon {
-      font-size: 22px;
-    }
-    .flow-step h3 {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 16px;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-      color: var(--tx);
-    }
-    .flow-step p {
-      font-size: 14px;
-      color: var(--t2);
-      line-height: 1.8;
-    }
-
-    .redistribution-quote {
-      background: var(--bg2);
-      border: 1px solid var(--bd);
-      border-left: 3px solid var(--moss);
-      border-radius: var(--radius);
-      padding: 24px 28px;
-      margin-bottom: 48px;
-    }
-    .redistribution-quote p {
-      font-family: var(--body);
-      font-size: 17px;
-      color: var(--t2);
-      line-height: 1.85;
-      font-style: italic;
-    }
-    .redistribution-quote em {
-      color: var(--moss-light);
-      font-style: normal;
-      font-weight: 500;
-    }
-
-    /* Moon SVG diagram */
-    .moon-cycle-diagram {
-      display: flex;
-      justify-content: center;
-    }
-    .moon-svg {
-      width: 100%;
-      max-width: 500px;
-      height: auto;
-    }
-    /* SVG element styles */
-    .gradient-start { stop-color: var(--moss); }
-    .gradient-end   { stop-color: var(--indigo); }
-    .cycle-ring     { stroke: var(--bd2); }
-    .phase-circle   { fill: var(--bd); stroke: none; }
-    .phase-inner    { fill: var(--t3); }
-    .phase-shadow   { fill: var(--bg2); }
-    .phase-label    { font-family: 'Outfit', sans-serif; font-size: 11px; fill: var(--dim); }
-    .phase-circle--active { fill: transparent; stroke: var(--moss); stroke-width: 2; filter: url(#moonGlow); }
-    .phase-inner--new  { fill: var(--bg); stroke: var(--moss); stroke-width: 1.5; filter: url(#moonGlow); }
-    .phase-inner--full { fill: var(--t2); }
-    .phase-label--active { fill: var(--moss-light); font-weight: 600; font-size: 12px; }
-    .center-icon  { font-size: 20px; }
-    .center-label { font-family: 'Outfit', sans-serif; font-size: 10px; fill: var(--dim); letter-spacing: 0.05em; }
-    .center-arrow      { stroke: var(--bd2); }
-    .center-arrow-head { fill: var(--bd2); }
-    .cycle-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: var(--t2); letter-spacing: 0.08em; }
 
     /* ── Gratitude Cycle Diagram ── */
     .gratitude-cycle-section {
@@ -525,10 +454,6 @@
         grid-template-columns: 1fr 1fr;
       }
       .token-lifecycle::before { display: none; }
-
-      .redistribution-flow {
-        grid-template-columns: 1fr;
-      }
 
       /* Mobile nav */
       .site-nav-toggle { display: block; }
@@ -606,24 +531,24 @@
 
           <!-- Arc gradients between adjacent nodes -->
           <linearGradient id="gcGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#7eb8f0"/>
-            <stop offset="100%" stop-color="#7edcf0"/>
+            <stop offset="0%" stop-color="#6bcfff"/>
+            <stop offset="100%" stop-color="#818cf8"/>
           </linearGradient>
           <linearGradient id="gcGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#7edcf0"/>
-            <stop offset="100%" stop-color="#f0c87e"/>
+            <stop offset="0%" stop-color="#818cf8"/>
+            <stop offset="100%" stop-color="#fbbf24"/>
           </linearGradient>
           <linearGradient id="gcGrad3" x1="100%" y1="0%" x2="0%" y2="0%">
-            <stop offset="0%" stop-color="#f0c87e"/>
-            <stop offset="100%" stop-color="#b48efa"/>
+            <stop offset="0%" stop-color="#fbbf24"/>
+            <stop offset="100%" stop-color="#c084fc"/>
           </linearGradient>
           <linearGradient id="gcGrad4" x1="100%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stop-color="#b48efa"/>
-            <stop offset="100%" stop-color="#8aad6e"/>
+            <stop offset="0%" stop-color="#c084fc"/>
+            <stop offset="100%" stop-color="#34d399"/>
           </linearGradient>
           <linearGradient id="gcGrad5" x1="0%" y1="100%" x2="0%" y2="0%">
-            <stop offset="0%" stop-color="#8aad6e"/>
-            <stop offset="100%" stop-color="#7eb8f0"/>
+            <stop offset="0%" stop-color="#34d399"/>
+            <stop offset="100%" stop-color="#6bcfff"/>
           </linearGradient>
 
           <!-- Arc paths for pulse animation (circular arcs, r=200) -->
@@ -648,38 +573,38 @@
 
         <!-- Layer 3: Traveling pulse circles -->
         <g class="gc-pulses">
-          <circle r="4" fill="#7eb8f0" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#6bcfff" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="0s"><mpath href="#gcArc1"/></animateMotion>
           </circle>
-          <circle r="4" fill="#7eb8f0" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#6bcfff" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="1.5s"><mpath href="#gcArc1"/></animateMotion>
           </circle>
 
-          <circle r="4" fill="#7edcf0" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#818cf8" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="0.6s"><mpath href="#gcArc2"/></animateMotion>
           </circle>
-          <circle r="4" fill="#7edcf0" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#818cf8" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="2.1s"><mpath href="#gcArc2"/></animateMotion>
           </circle>
 
-          <circle r="4" fill="#f0c87e" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#fbbf24" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="1.2s"><mpath href="#gcArc3"/></animateMotion>
           </circle>
-          <circle r="4" fill="#f0c87e" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#fbbf24" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="2.7s"><mpath href="#gcArc3"/></animateMotion>
           </circle>
 
-          <circle r="4" fill="#b48efa" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#c084fc" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="1.8s"><mpath href="#gcArc4"/></animateMotion>
           </circle>
-          <circle r="4" fill="#b48efa" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#c084fc" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="0.3s"><mpath href="#gcArc4"/></animateMotion>
           </circle>
 
-          <circle r="4" fill="#8aad6e" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#34d399" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="2.4s"><mpath href="#gcArc5"/></animateMotion>
           </circle>
-          <circle r="4" fill="#8aad6e" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
+          <circle r="4" fill="#34d399" filter="url(#gcPulseGlow)" class="gc-pulse" opacity="0.8">
             <animateMotion dur="3s" repeatCount="indefinite" begin="0.9s"><mpath href="#gcArc5"/></animateMotion>
           </circle>
         </g>
@@ -687,57 +612,57 @@
         <!-- Layer 4: Node groups -->
         <!-- Node 1: Intention (top) -->
         <g>
-          <circle cx="300" cy="100" r="52" fill="#7eb8f0" opacity="0.08" class="gc-node-glow"/>
-          <circle cx="300" cy="100" r="40" fill="var(--bg2)" stroke="#7eb8f0" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
-          <text x="300" y="104" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="600" fill="#7eb8f0" letter-spacing="0.02em">Intention</text>
-          <text x="300" y="30" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">A conscious expression</text>
-          <text x="300" y="43" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">of what you desire</text>
+          <circle cx="300" cy="100" r="52" fill="#6bcfff" opacity="0.08" class="gc-node-glow"/>
+          <circle cx="300" cy="100" r="40" fill="var(--bg2)" stroke="#6bcfff" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
+          <text x="300" y="104" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#6bcfff" letter-spacing="0.02em">Intention</text>
+          <text x="300" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">A conscious expression</text>
+          <text x="300" y="43" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">of what you desire</text>
         </g>
 
         <!-- Node 2: Attention (right) -->
         <g>
-          <circle cx="490" cy="238" r="52" fill="#7edcf0" opacity="0.08" class="gc-node-glow"/>
-          <circle cx="490" cy="238" r="40" fill="var(--bg2)" stroke="#7edcf0" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
-          <text x="490" y="242" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="600" fill="#7edcf0" letter-spacing="0.02em">Attention</text>
-          <text x="552" y="230" text-anchor="start" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">Charges up the</text>
-          <text x="552" y="243" text-anchor="start" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">gratitude potential</text>
-          <text x="552" y="256" text-anchor="start" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">of intentions</text>
+          <circle cx="490" cy="238" r="52" fill="#818cf8" opacity="0.08" class="gc-node-glow"/>
+          <circle cx="490" cy="238" r="40" fill="var(--bg2)" stroke="#818cf8" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
+          <text x="490" y="242" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#818cf8" letter-spacing="0.02em">Attention</text>
+          <text x="552" y="230" text-anchor="start" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">Charges up the</text>
+          <text x="552" y="243" text-anchor="start" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">gratitude potential</text>
+          <text x="552" y="256" text-anchor="start" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">of intentions</text>
         </g>
 
         <!-- Node 3: Proof of Service (bottom-right) -->
         <g>
-          <circle cx="418" cy="462" r="52" fill="#f0c87e" opacity="0.08" class="gc-node-glow"/>
-          <circle cx="418" cy="462" r="40" fill="var(--bg2)" stroke="#f0c87e" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
-          <text x="418" y="456" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="12" font-weight="600" fill="#f0c87e" letter-spacing="0.02em">Proof of</text>
-          <text x="418" y="472" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="12" font-weight="600" fill="#f0c87e" letter-spacing="0.02em">Service</text>
-          <text x="418" y="524" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">Member posts documentation</text>
-          <text x="418" y="537" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">that they manifested</text>
-          <text x="418" y="550" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">the Intention</text>
+          <circle cx="418" cy="462" r="52" fill="#fbbf24" opacity="0.08" class="gc-node-glow"/>
+          <circle cx="418" cy="462" r="40" fill="var(--bg2)" stroke="#fbbf24" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
+          <text x="418" y="456" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#fbbf24" letter-spacing="0.02em">Proof of</text>
+          <text x="418" y="472" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#fbbf24" letter-spacing="0.02em">Service</text>
+          <text x="418" y="524" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">Member posts documentation</text>
+          <text x="418" y="537" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">that they manifested</text>
+          <text x="418" y="550" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">the Intention</text>
         </g>
 
         <!-- Node 4: Blessings (bottom-left) -->
         <g>
-          <circle cx="182" cy="462" r="52" fill="#b48efa" opacity="0.08" class="gc-node-glow"/>
-          <circle cx="182" cy="462" r="40" fill="var(--bg2)" stroke="#b48efa" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
-          <text x="182" y="466" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="600" fill="#b48efa" letter-spacing="0.02em">Blessings</text>
-          <text x="182" y="524" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">Community validates service</text>
-          <text x="182" y="537" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">and gratitude flows</text>
-          <text x="182" y="550" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">back to the giver</text>
+          <circle cx="182" cy="462" r="52" fill="#c084fc" opacity="0.08" class="gc-node-glow"/>
+          <circle cx="182" cy="462" r="40" fill="var(--bg2)" stroke="#c084fc" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
+          <text x="182" y="466" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#c084fc" letter-spacing="0.02em">Blessings</text>
+          <text x="182" y="524" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">Community validates service</text>
+          <text x="182" y="537" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">and gratitude flows</text>
+          <text x="182" y="550" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">back to the giver</text>
         </g>
 
         <!-- Node 5: Tokens of Gratitude (left) -->
         <g>
-          <circle cx="110" cy="238" r="52" fill="#8aad6e" opacity="0.08" class="gc-node-glow"/>
-          <circle cx="110" cy="238" r="40" fill="var(--bg2)" stroke="#8aad6e" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
-          <text x="110" y="232" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="12" font-weight="600" fill="#8aad6e" letter-spacing="0.02em">Tokens of</text>
-          <text x="110" y="248" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="12" font-weight="600" fill="#8aad6e" letter-spacing="0.02em">Gratitude</text>
-          <text x="48" y="224" text-anchor="end" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">Earned through acts</text>
-          <text x="48" y="237" text-anchor="end" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">of service, redeemable</text>
-          <text x="48" y="250" text-anchor="end" font-family="'Outfit', sans-serif" font-size="10" fill="var(--t3)">for future gifts</text>
+          <circle cx="110" cy="238" r="52" fill="#34d399" opacity="0.08" class="gc-node-glow"/>
+          <circle cx="110" cy="238" r="40" fill="var(--bg2)" stroke="#34d399" stroke-width="1.5" filter="url(#gcNodeGlow)"/>
+          <text x="110" y="232" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#34d399" letter-spacing="0.02em">Tokens of</text>
+          <text x="110" y="248" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#34d399" letter-spacing="0.02em">Gratitude</text>
+          <text x="48" y="224" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">Earned through acts</text>
+          <text x="48" y="237" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">of service, redeemable</text>
+          <text x="48" y="250" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="var(--t3)">for future gifts</text>
         </g>
 
         <!-- Layer 5: Center label -->
-        <text x="300" y="296" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="15" font-weight="500" fill="var(--t2)" class="gc-center-label" letter-spacing="0.04em">The Gift Cycle</text>
+        <text x="300" y="296" text-anchor="middle" font-family="Inter, sans-serif" font-size="15" font-weight="500" fill="var(--t2)" class="gc-center-label" letter-spacing="0.04em">The Gift Cycle</text>
       </svg>
     </div>
   </div>
@@ -980,153 +905,6 @@
   </div>
 </section>
 
-<!-- New Moon Redistribution -->
-<section id="redistribution" class="sect-short">
-  <div class="wrap">
-    <div class="r">
-      <div class="stage-num" style="color:var(--violet)">Monthly Cycle</div>
-      <h2 class="stage-h">Monthly New Moon Redistribution</h2>
-      <p class="stage-p">How abundance flows back to those who serve</p>
-    </div>
-
-    <div class="redistribution-flow r r-d1">
-
-      <div class="flow-step">
-        <div class="flow-step-number">
-          <span class="moon-icon">&#127761;</span>
-        </div>
-        <h3>The Call Goes Out</h3>
-        <p>Every New Moon, a notification ripples through the network: "$X is ready to flow back to the community"—excess funds beyond operating costs.</p>
-      </div>
-
-      <div class="flow-step">
-        <div class="flow-step-number">2</div>
-        <h3>Gratitude Bidding</h3>
-        <p>Members bid their service-earned Tokens of Gratitude. The Tokens you've accumulated through Acts of Service become your claim on the redistribution.</p>
-      </div>
-
-      <div class="flow-step">
-        <div class="flow-step-number">3</div>
-        <h3>Proportional Distribution</h3>
-        <p>Your share equals your hours divided by total hours bid. Serve more, receive more. The gift economy rewards those who give.</p>
-      </div>
-
-    </div>
-
-    <div class="redistribution-quote r r-d2">
-      <p>"If you bid Tokens worth <em>333 hours</em> and I bid <em>111 hours</em>, your slice is 3x mine. Real resources flow proportionally to real service."</p>
-    </div>
-
-    <!-- Moon Cycle Diagram -->
-    <div class="moon-cycle-diagram r r-d3">
-      <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" class="moon-svg" aria-labelledby="moonTitle moonDesc" role="img">
-        <title id="moonTitle">New Moon Redistribution Cycle</title>
-        <desc id="moonDesc">Circular diagram showing the monthly redistribution tied to the lunar cycle, with New Moon as the trigger point</desc>
-
-        <defs>
-          <linearGradient id="cycleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" class="gradient-start"/>
-            <stop offset="100%" class="gradient-end"/>
-          </linearGradient>
-
-          <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="blur"/>
-            <feMerge>
-              <feMergeNode in="blur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-
-        <!-- Outer cycle ring -->
-        <circle cx="250" cy="200" r="140" class="cycle-ring" fill="none" stroke-width="2"/>
-
-        <!-- Moon phases around the circle -->
-        <g class="moon-phases">
-          <!-- New Moon (top) - highlighted -->
-          <g transform="translate(250, 60)" class="moon-phase moon-phase--new">
-            <circle r="24" class="phase-circle phase-circle--active"/>
-            <circle r="20" class="phase-inner phase-inner--new"/>
-            <text y="45" text-anchor="middle" class="phase-label phase-label--active">New Moon</text>
-          </g>
-
-          <!-- Waxing Crescent -->
-          <g transform="translate(348, 102)" class="moon-phase">
-            <circle r="16" class="phase-circle"/>
-            <path d="M0,-14 A14,14 0 0,1 0,14 A8,14 0 0,0 0,-14" class="phase-inner"/>
-          </g>
-
-          <!-- First Quarter -->
-          <g transform="translate(390, 200)" class="moon-phase">
-            <circle r="16" class="phase-circle"/>
-            <path d="M0,-14 A14,14 0 0,1 0,14 L0,-14" class="phase-inner"/>
-          </g>
-
-          <!-- Waxing Gibbous -->
-          <g transform="translate(348, 298)" class="moon-phase">
-            <circle r="16" class="phase-circle"/>
-            <circle r="14" class="phase-inner"/>
-            <path d="M0,-14 A14,14 0 0,0 0,14 A6,14 0 0,1 0,-14" class="phase-shadow"/>
-          </g>
-
-          <!-- Full Moon (bottom) -->
-          <g transform="translate(250, 340)" class="moon-phase">
-            <circle r="18" class="phase-circle"/>
-            <circle r="14" class="phase-inner phase-inner--full"/>
-          </g>
-
-          <!-- Waning Gibbous -->
-          <g transform="translate(152, 298)" class="moon-phase">
-            <circle r="16" class="phase-circle"/>
-            <circle r="14" class="phase-inner"/>
-            <path d="M0,-14 A14,14 0 0,1 0,14 A6,14 0 0,0 0,-14" class="phase-shadow"/>
-          </g>
-
-          <!-- Last Quarter -->
-          <g transform="translate(110, 200)" class="moon-phase">
-            <circle r="16" class="phase-circle"/>
-            <path d="M0,-14 A14,14 0 0,0 0,14 L0,-14" class="phase-inner"/>
-          </g>
-
-          <!-- Waning Crescent -->
-          <g transform="translate(152, 102)" class="moon-phase">
-            <circle r="16" class="phase-circle"/>
-            <path d="M0,-14 A14,14 0 0,0 0,14 A8,14 0 0,1 0,-14" class="phase-inner"/>
-          </g>
-        </g>
-
-        <!-- Center content: The cycle steps -->
-        <g class="cycle-center">
-          <!-- Bid icon -->
-          <g transform="translate(200, 175)">
-            <text class="center-icon">&#127243;</text>
-            <text y="25" class="center-label">Bid Tokens</text>
-          </g>
-
-          <!-- Arrow -->
-          <path d="M235,200 L265,200" class="center-arrow" stroke-width="2" fill="none"/>
-          <polygon points="262,196 270,200 262,204" class="center-arrow-head"/>
-
-          <!-- Receive icon -->
-          <g transform="translate(300, 175)">
-            <text class="center-icon">&#10025;</text>
-            <text y="25" class="center-label">Receive</text>
-          </g>
-
-          <!-- Circular arrow indicating cycle -->
-          <path d="M220,230 Q250,260 280,230" class="center-arrow" stroke-width="2" fill="none"/>
-          <polygon points="278,234 285,228 276,226" class="center-arrow-head"/>
-        </g>
-
-        <!-- "Every Month" label -->
-        <text x="250" y="270" text-anchor="middle" class="cycle-label">Every New Moon</text>
-
-      </svg>
-    </div>
-
-  </div>
-</section>
-
 <!-- Site Footer -->
 <footer class="site-footer">
   <div class="wrap">
@@ -1139,7 +917,7 @@
       <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
       <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
     </div>
-    <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Stewarded by Temples of Refuge &middot; Open source &middot; Non-extraction</p>
+    <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Stewarded by Temples of Refuge &middot; Source-available &middot; Non-extraction</p>
   </div>
 </footer>
 

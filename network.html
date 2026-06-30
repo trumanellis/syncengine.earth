@@ -5,11 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Indra's Network — Technical Architecture | Synchronicity Engine</title>
   <meta name="description" content="Deep dive into the delay-tolerant P2P mesh networking that powers the Synchronicity Engine. Indra's Net made digital.">
+  <link rel="canonical" href="https://www.syncengine.earth/network.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SyncEngine">
+  <meta property="og:title" content="Indra's Network — Technical Architecture">
+  <meta property="og:description" content="A delay-tolerant P2P networking stack with store-and-forward routing, CRDT synchronization, and post-quantum cryptography.">
+  <meta property="og:url" content="https://www.syncengine.earth/network.html">
+  <meta property="og:image" content="https://www.syncengine.earth/assets/og-image.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Indra's Network: The Net Made Digital",
+    "description": "The technical architecture of the Synchronicity Engine: store-and-forward DTN routing with Epidemic and Spray-and-Wait strategies, Automerge CRDT synchronization, X25519/ChaCha20-Poly1305 end-to-end encryption, and ML-KEM post-quantum readiness. Built for networks where connectivity is intermittent.",
+    "url": "https://www.syncengine.earth/network.html",
+    "isPartOf": { "@id": "https://www.syncengine.earth/#website" },
+    "publisher": { "@id": "https://www.syncengine.earth/#org" }
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles/core.css">
 
@@ -74,7 +94,7 @@
 
     .hero h1 em {
       font-style: normal;
-      background: linear-gradient(135deg, var(--moss-light), var(--indigo-light));
+      background: linear-gradient(135deg, var(--indigo-light), var(--purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -223,7 +243,7 @@
     .feature-icon {
       width: 48px;
       height: 48px;
-      background: linear-gradient(135deg, var(--moss-light) 0%, var(--indigo) 100%);
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--purple) 100%);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -528,7 +548,7 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--moss) 0%, var(--indigo) 100%);
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--purple) 100%);
       color: var(--bg);
       font-weight: 600;
     }
@@ -600,10 +620,10 @@
         <div class="net-visual r r-d2" aria-hidden="true">
           <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <!-- Jewel gradient — moss to indigo -->
+              <!-- Jewel gradient — indigo → purple prism -->
               <radialGradient id="jewel" cx="35%" cy="35%">
-                <stop offset="0%" stop-color="#c8e6a0"/>
-                <stop offset="50%" stop-color="#a4c48a"/>
+                <stop offset="0%" stop-color="#a5b4fc"/>
+                <stop offset="50%" stop-color="#c084fc"/>
                 <stop offset="100%" stop-color="#818cf8"/>
               </radialGradient>
               <!-- Inner reflection highlight -->
@@ -969,7 +989,6 @@
       <div class="cta-buttons">
         <a href="index.html" class="btn btn-primary">Back to Synchronicity Engine</a>
         <a href="articles/" class="btn btn-secondary">Read the Articles</a>
-        <a href="https://github.com/trumanellis/IndrasNetwork" class="btn btn-secondary">View on GitHub</a>
       </div>
     </div>
   </section>
@@ -985,7 +1004,7 @@
         <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
         <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
       </div>
-      <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Stewarded by Temples of Refuge &middot; Open source &middot; Non-extraction</p>
+      <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Stewarded by Temples of Refuge &middot; Source-available &middot; Non-extraction</p>
     </div>
   </footer>
 
