@@ -409,15 +409,29 @@ h1, h2, h3, h4, h5, h6 {
   display: flex; align-items: center; justify-content: space-between;
   height: 56px;
 }
+/* App-exact wordmark — values lifted verbatim from the app's .brand-wordmark.
+   App topbar renders at 11px; scaled up here for the site nav, keeping
+   letter-spacing in em so it stays proportional. */
 .site-nav-logo {
-  font-family: var(--display); font-weight: 800;
-  font-size: 18px; color: var(--tx);
-  text-decoration: none; letter-spacing: -0.02em;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: none;   /* keep natural "Synchronicity Engine" casing */
+  white-space: nowrap;
+  text-decoration: none;
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;     /* non-WebKit fallback for the clip */
 }
-.site-nav-logo em {
-  font-style: normal;
-  background: var(--gradient);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+.se-wordmark__short { display: none; }
+
+/* Responsive swap — identical breakpoint + behavior to the app. */
+@media (max-width: 720px) {
+  .se-wordmark__full  { display: none; }
+  .se-wordmark__short { display: inline; }
 }
 .site-nav-links {
   display: flex; gap: 28px; align-items: center;
