@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SyncEngine — What If Helping Each Other Was a Game?</title>
-<meta name="description" content="A game where helping each other is how you win — no platform, no extraction. Open protocol, sovereign infrastructure, regenerative by design.">
+<meta name="description" content="Imagine a big wish list you share with your friends. Everyone votes with attention; someone steps in to manifest; gratitude worth that attention releases to the doer, signed by both — and flows onward. A game that turns intentions into manifestations, on a sovereign peer-to-peer network.">
 
 <!-- Open Graph / social previews -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SyncEngine">
 <meta property="og:title" content="SyncEngine — What If Helping Each Other Was a Game?">
-<meta property="og:description" content="A game where helping each other is how you win — no platform, no extraction. Open protocol, sovereign infrastructure, regenerative by design.">
+<meta property="og:description" content="A big wish list you share with your friends. Everyone votes with attention; someone manifests it; gratitude worth that attention releases to the doer — and flows onward.">
 <meta property="og:url" content="https://www.syncengine.earth/">
 <meta property="og:image" content="https://www.syncengine.earth/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SyncEngine — What If Helping Each Other Was a Game?">
-<meta name="twitter:description" content="A game where helping each other is how you win.">
+<meta name="twitter:description" content="A game that turns intentions into manifestations through collective attention — on a sovereign peer-to-peer network.">
 <meta name="twitter:image" content="https://www.syncengine.earth/assets/og-image.png">
 <link rel="canonical" href="https://www.syncengine.earth/">
 
@@ -28,7 +28,7 @@
       "@id": "https://www.syncengine.earth/#website",
       "url": "https://www.syncengine.earth/",
       "name": "SyncEngine — The Synchronicity Engine",
-      "description": "A peer-to-peer gift-economy protocol where human attention is tracked as a conserved quantity. No blockchain, no platform, no extraction.",
+      "description": "A game that turns intentions into manifestations through collective attention: a shared wish list among friends, votes of attention, manifestation with proof of service, and gratitude worth the accumulated attention released to the doer — signed by both, then tagged onward to the next wish. Built on Indra's Network, a sovereign peer-to-peer stack: no servers, every device holds a full encrypted copy, and to anyone not explicitly allowed your content is post-quantum encrypted noise. Membership by covenant, via donation to Temples of Refuge.",
       "publisher": { "@id": "https://www.syncengine.earth/#org" }
     },
     {
@@ -37,7 +37,7 @@
       "name": "Synchronicity Engine",
       "alternateName": "SyncEngine",
       "url": "https://www.syncengine.earth/",
-      "description": "Open-source sovereign infrastructure for a gift economy: a delay-tolerant P2P stack (Indra's Network) and an attention-conservation ledger, stewarded by Temples of Refuge, an association of churches.",
+      "description": "Open-source sovereign infrastructure: the Synchronicity Engine app — a shared wish list of intentions, an attention ledger, manifestations with proof of service, gratitude signed by both, and collaborative AI agents that manifest intentions on your behalf — built on Indra's Network, a peer-to-peer substrate with post-quantum encryption. Stewarded by Temples of Refuge, an association of churches.",
       "parentOrganization": {
         "@type": "Organization",
         "name": "Temples of Refuge",
@@ -58,7 +58,7 @@
 <link rel="stylesheet" href="styles/core.css">
 <style>
 /* ═══ Atmosphere — single hero glow (DESIGN.md §6); page texture is the
-   core.css dot-grid. No orbs, no grain. ═══ */
+   core.css dot-grid. ═══ */
 .atmosphere {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
   overflow: hidden;
@@ -88,66 +88,31 @@
 }
 @keyframes grad-shift { 0% { background-position: 0% 0; } 100% { background-position: 400% 0; } }
 
-/* ═══ Nav dots ═══ */
-.nav-dots {
-  position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 14px; z-index: 100;
-}
-.nav-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  border: 1.5px solid var(--dim); background: transparent;
-  cursor: pointer; transition: all 0.5s var(--ease);
-  position: relative;
-}
-.nav-dot-label {
-  position: absolute; right: 22px; top: 50%; transform: translateY(-50%);
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
-  color: var(--dim); white-space: nowrap;
-  opacity: 0; transition: opacity 0.3s; pointer-events: none;
-}
-.nav-dot:hover .nav-dot-label { opacity: 1; }
-.nav-dot.on {
-  transform: scale(1.6);
-  border-color: var(--moss); background: var(--moss);
-  box-shadow: 0 0 14px rgba(129,140,248,0.5);
-}
-
 /* ═══ HERO ═══ */
 .hero {
+  /* Pull up under the transparent fixed nav so the artwork fills the top
+     edge; body has padding-top:56px to clear the nav on content pages. */
+  margin-top: -56px;
   min-height: 100vh; display: flex; flex-direction: column;
   align-items: center; justify-content: center; text-align: center;
-  padding: 60px 24px; position: relative;
+  padding: 116px 24px 60px; position: relative;
   background:
     radial-gradient(ellipse 68% 52% at 50% 46%,
-      rgba(9,9,11,0.55), transparent 72%),   /* darken behind the copy */
+      rgba(9,9,11,0.55), transparent 72%),
     linear-gradient(180deg,
-      rgba(9,9,11,0.55) 0%,     /* darken top, behind the fixed nav */
-      rgba(9,9,11,0.25) 38%,    /* let the artwork glow through mid */
+      rgba(9,9,11,0.10) 0%,
+      rgba(9,9,11,0.25) 38%,
       rgba(9,9,11,0.80) 82%,
-      var(--void) 100%),        /* fade fully into the page below */
+      var(--void) 100%),
     url('assets/digital-garden.webp') center / cover no-repeat;
-  background-attachment: scroll; /* avoid mobile jank from fixed */
+  background-attachment: scroll;
 }
-.hero-over {
-  font-family: var(--mono); font-size: 11px;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--moss-light); margin-bottom: 32px;
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 6px 18px; border: 1px solid rgba(129,140,248,0.2);
-  border-radius: 100px;
-  opacity: 0; animation: riseIn 1s 0.3s forwards;
-}
-.hero-over-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--pulse); animation: dot-pulse 2s ease-in-out infinite;
-}
-@keyframes dot-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 .hero-h {
   font-family: var(--display); font-weight: 900;
   font-size: clamp(36px, 7vw, 78px);
   letter-spacing: -0.04em; line-height: 1.0;
   margin-bottom: 32px;
-  opacity: 0; animation: riseIn 1s 0.5s forwards;
+  opacity: 0; animation: riseIn 1s 0.3s forwards;
 }
 .hero-h em {
   font-style: normal;
@@ -158,12 +123,12 @@
   font-size: 18px; color: var(--t2); max-width: 520px;
   line-height: 1.9; font-weight: 300;
   margin-bottom: 52px;
-  opacity: 0; animation: riseIn 1s 0.7s forwards;
+  opacity: 0; animation: riseIn 1s 0.5s forwards;
 }
 .hero-p strong { color: var(--tx); font-weight: 500; }
 .hero-actions {
   display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-  opacity: 0; animation: riseIn 1s 0.9s forwards;
+  opacity: 0; animation: riseIn 1s 0.7s forwards;
 }
 .hero-btn {
   display: inline-flex; align-items: center; gap: 10px;
@@ -184,7 +149,6 @@
   cursor: pointer; transition: all 0.3s; text-decoration: none;
 }
 .hero-btn-ghost:hover { border-color: var(--t3); color: var(--tx); }
-
 .hero-hint {
   position: absolute; bottom: 36px;
   font-family: var(--mono); font-size: 10px;
@@ -194,242 +158,200 @@
 @keyframes riseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
-/* ═══ Threat landscape ═══ */
-.threat-grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;
-  margin-top: 48px;
+/* ═══ SCROLLYTELLING — the wish-list loop ═══
+   Left column: pinned wish-list card whose state is driven purely by CSS
+   keyed off [data-stage="1..5"] on .scrolly. Default markup stage is 5, so
+   without JS the visual renders complete. Hidden elements keep their layout
+   space (opacity/transform only) so the sticky card never changes height. */
+.scrolly {
+  display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: 64px; align-items: start;
 }
-.threat-card {
-  padding: 28px 24px;
-  background: var(--bg2); border: 1px solid var(--bd);
-  border-radius: var(--radius); transition: all 0.3s;
+.loop-sticky {
+  position: sticky; top: 56px;
+  height: calc(100vh - 56px);
+  display: flex; align-items: center;
 }
-.threat-card:hover { border-color: rgba(239,68,68,0.4); background: var(--bg3); }
-.threat-icon {
-  width: 40px; height: 40px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; margin-bottom: 16px;
-  background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.12);
-}
-.threat-card h3 {
-  font-family: var(--display); font-size: 14px; font-weight: 600;
-  margin-bottom: 8px; color: var(--tx);
-}
-.threat-card p { font-size: 13px; color: var(--t3); line-height: 1.7; }
-
-/* ═══ Comparison table ═══ */
-.compare-table {
-  width: 100%; border-collapse: collapse; margin-top: 40px;
-}
-.compare-table th {
-  font-family: var(--mono); font-size: 10px;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--dim); padding: 12px 16px; text-align: left;
-  border-bottom: 1px solid var(--bd);
-}
-.compare-table th:last-child { color: var(--indigo); }
-.compare-table td {
-  padding: 14px 16px; font-size: 13px;
-  border-bottom: 1px solid rgba(36,46,34,0.5); color: var(--t2);
-}
-.compare-table td:last-child { color: var(--tx); font-weight: 500; }
-.compare-table tr:hover td { background: var(--bg2); }
-.check { color: var(--pulse); font-weight: 600; }
-.cross { color: var(--danger); opacity: 0.5; }
-
-/* ═══ Heartbeat / immune visual ═══ */
-.heartbeat-display {
-  text-align: center; padding: 24px;
-  border: 1px solid rgba(52,211,153,0.15);
-  border-radius: 12px; background: rgba(52,211,153,0.02);
-}
-.heartbeat-line {
-  display: flex; align-items: center; justify-content: center;
-  gap: 2px; height: 48px; margin-bottom: 12px;
-}
-.hb-bar {
-  width: 3px; border-radius: 2px; background: var(--pulse);
-  animation: hb-wave 1.5s ease-in-out infinite;
-}
-.hb-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
-.hb-bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
-.hb-bar:nth-child(3) { height: 36px; animation-delay: 0.2s; }
-.hb-bar:nth-child(4) { height: 48px; animation-delay: 0.3s; }
-.hb-bar:nth-child(5) { height: 36px; animation-delay: 0.4s; }
-.hb-bar:nth-child(6) { height: 20px; animation-delay: 0.5s; }
-.hb-bar:nth-child(7) { height: 12px; animation-delay: 0.6s; }
-.hb-bar:nth-child(8) { height: 6px; animation-delay: 0.7s; }
-.hb-bar:nth-child(9) { height: 20px; animation-delay: 0.8s; }
-.hb-bar:nth-child(10) { height: 36px; animation-delay: 0.9s; }
-.hb-bar:nth-child(11) { height: 24px; animation-delay: 1.0s; }
-.hb-bar:nth-child(12) { height: 10px; animation-delay: 1.1s; }
-@keyframes hb-wave {
-  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-  50% { opacity: 1; transform: scaleY(1); }
-}
-.heartbeat-value {
-  font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--pulse);
-}
-.heartbeat-unit {
-  font-family: var(--mono); font-size: 11px; color: var(--t3); margin-top: 4px;
-}
-
-/* Bot compare cards */
-.bot-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.bot-card {
-  padding: 16px; border-radius: 10px; border: 1px solid;
-  font-family: var(--mono); font-size: 11px; text-align: center;
-}
-.bot-card-human { border-color: rgba(52,211,153,0.2); background: rgba(52,211,153,0.03); }
-.bot-card-bot { border-color: rgba(239,68,68,0.2); background: rgba(239,68,68,0.03); }
-.bot-card-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-.bot-card-score { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
-.bot-card-status { font-size: 10px; }
-
-/* ═══ Encounter code ═══ */
-.enc {
-  text-align: center; padding: 28px;
-  background: rgba(192,132,252,0.04); border: 1px solid rgba(192,132,252,0.12);
-  border-radius: 14px; margin-bottom: 24px;
-}
-.enc-code {
-  font-family: var(--mono); font-size: 36px; font-weight: 700;
-  letter-spacing: 0.18em; color: var(--violet); margin: 10px 0;
-}
-.enc-sub { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: 0.08em; }
-
-/* ═══ Profile card ═══ */
-.prof {
+.wish-card {
+  width: 100%;
   background: var(--card); border: 1px solid var(--bd);
-  border-radius: 16px; padding: 36px;
+  border-radius: var(--r-special); padding: 28px;
   position: relative; overflow: hidden;
-  transition: box-shadow 0.6s;
 }
-.prof-glow {
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--indigo), var(--purple), var(--pink));
-}
-.prof-avatar {
-  width: 80px; height: 80px; border-radius: 50%;
+.wish-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: var(--gradient);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--display); font-size: 32px; font-weight: 800; color: white;
-  margin-bottom: 20px; position: relative;
 }
-.prof-avatar::after {
-  content: ''; position: absolute; inset: -5px;
-  border-radius: 50%; border: 2px solid rgba(129,140,248,0.25);
+.wish-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 18px;
 }
-.prof-name {
-  font-family: var(--display); font-size: 24px; font-weight: 700;
-  letter-spacing: -0.02em; margin-bottom: 4px;
+.wish-title { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--tx); }
+.wish-sub { font-family: var(--mono); font-size: 10px; color: var(--t3); letter-spacing: 0.06em; }
+.wish {
+  padding: 13px 2px; border-bottom: 1px solid var(--bd2);
+  transition: all 0.6s var(--ease);
 }
-.prof-sub {
-  font-family: var(--mono); font-size: 12px; color: var(--dim); margin-bottom: 24px;
+.wish:last-of-type { border-bottom: none; }
+.wish-main { display: flex; align-items: baseline; gap: 10px; }
+.wish-tag { color: var(--indigo); font-size: 13px; flex-shrink: 0; }
+.wish-name { font-size: 14px; color: var(--tx); font-weight: 500; flex: 1; min-width: 0; }
+.wish-time {
+  font-family: var(--mono); font-size: 12px; color: var(--glow-amber);
+  transition: opacity 0.6s var(--ease);
 }
-.prof-row {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+.wish-bar {
+  height: 3px; border-radius: 2px; background: rgba(255,255,255,0.04);
+  margin-top: 9px; overflow: hidden;
 }
-.prof-row:last-child { border-bottom: none; }
-.prof-k { font-size: 14px; color: var(--dim); }
-.prof-v { font-family: var(--mono); font-size: 13px; color: var(--t2); max-width: 260px; text-align: right; }
-.prof-v em {
-  font-style: normal; font-weight: 600;
-  background: linear-gradient(135deg, var(--indigo-light), var(--purple));
+.wish-bar i {
+  display: block; height: 100%; width: var(--w, 0%);
+  border-radius: 2px; background: var(--glow-amber); opacity: 0.75;
+  transform-origin: left center;
+  transition: transform 0.9s var(--ease), opacity 0.6s var(--ease);
+}
+/* Hidden card elements collapse (max-height 0) so early stages show no
+   blank gaps; they expand + fade as their stage arrives. */
+.wish-status {
+  font-family: var(--mono); font-size: 10.5px; color: var(--violet);
+  letter-spacing: 0.05em;
+  max-height: 0; margin-top: 0; overflow: hidden; opacity: 0;
+  transition: all 0.6s var(--ease);
+}
+.wish-proof {
+  display: flex; align-items: baseline; gap: 8px;
+  font-size: 12.5px; color: var(--s4);
+  max-height: 0; margin-top: 0; overflow: hidden;
+  opacity: 0; transform: translateY(6px);
+  transition: all 0.6s var(--ease);
+}
+.wish-proof span { color: var(--t2); }
+.wish-stamp {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em;
+  color: var(--moss-light);
+  max-height: 0; margin-top: 0; overflow: hidden;
+  opacity: 0; transform: translateY(6px);
+  transition: all 0.6s var(--ease) 0.15s;
+}
+.wish--new {
+  max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden;
+  opacity: 0; transform: translateY(8px);
+  transition: all 0.7s var(--ease);
+}
+.wish-onward {
+  font-family: var(--mono); font-size: 10.5px; color: var(--glow-amber);
+  letter-spacing: 0.05em; margin-top: 6px;
+}
+.wish-loopline {
+  text-align: center; font-family: var(--mono); font-size: 10.5px;
+  color: var(--t3); letter-spacing: 0.06em;
+  border-top: 1px solid var(--bd2);
+  max-height: 0; padding-top: 0; margin-top: 0; overflow: hidden;
+  opacity: 0; transition: all 0.7s var(--ease) 0.2s;
+}
+
+/* Stage subtraction — default (stage 5 / no-JS) shows the finished loop. */
+.scrolly[data-stage="1"] .wish-time { opacity: 0; }
+.scrolly[data-stage="1"] .wish-bar i { transform: scaleX(0); opacity: 0; }
+.scrolly[data-stage="3"] .wish-status { opacity: 1; max-height: 24px; margin-top: 9px; }
+.scrolly[data-stage="4"] .wish-proof,
+.scrolly[data-stage="5"] .wish-proof { opacity: 1; transform: translateY(0); max-height: 44px; margin-top: 9px; }
+.scrolly[data-stage="4"] .wish-stamp,
+.scrolly[data-stage="5"] .wish-stamp { opacity: 1; transform: translateY(0); max-height: 22px; margin-top: 7px; }
+.scrolly[data-stage="5"] .wish--new { opacity: 1; transform: translateY(0); max-height: 120px; padding-top: 13px; padding-bottom: 13px; }
+.scrolly[data-stage="5"] .wish-loopline { opacity: 1; max-height: 40px; padding-top: 16px; margin-top: 4px; }
+
+/* Stage 5, beat two: the tagged gratitude accumulates on the mural… */
+.wish--new .wish-time { opacity: 0; transition: opacity 0.5s var(--ease); }
+.wish--new .wish-bar i { transform: scaleX(0); opacity: 0; }
+.scrolly[data-stage="5"] .wish--new .wish-time { opacity: 1; transition-delay: 0.55s; }
+.scrolly[data-stage="5"] .wish--new .wish-bar i {
+  transform: scaleX(1); opacity: 0.75;
+  transition: transform 0.9s var(--ease) 0.55s, opacity 0.4s var(--ease) 0.55s;
+}
+/* …then the list reorders (JS FLIP): the mural becomes the leading
+   intention and the completed greenhouse settles to the bottom. */
+.wish-card.reordered .wish[data-row="1"] {
+  background: none; padding-left: 2px; padding-right: 2px;
+  margin-left: 0; margin-right: 0; opacity: 0.55;
+}
+.wish-card.reordered .wish--new {
+  background: linear-gradient(90deg, rgba(129,140,248,0.06), transparent 80%);
+  border-radius: 8px; padding-left: 10px; padding-right: 10px;
+  margin-left: -8px; margin-right: -8px;
+}
+.scrolly[data-stage="3"] .wish[data-row="1"],
+.scrolly[data-stage="4"] .wish[data-row="1"],
+.scrolly[data-stage="5"] .wish[data-row="1"] {
+  background: linear-gradient(90deg, rgba(129,140,248,0.06), transparent 80%);
+  border-radius: 8px; padding-left: 10px; padding-right: 10px;
+  margin-left: -8px; margin-right: -8px;
+}
+.scrolly[data-stage="4"] .wish[data-row="1"] .wish-time,
+.scrolly[data-stage="5"] .wish[data-row="1"] .wish-time { opacity: 0.3; }
+.scrolly[data-stage="4"] .wish[data-row="1"] .wish-bar i,
+.scrolly[data-stage="5"] .wish[data-row="1"] .wish-bar i { opacity: 0.25; }
+
+/* Prose steps */
+.loop-steps { padding: 10vh 0 6vh; }
+.loop-step {
+  min-height: 88vh; display: flex; flex-direction: column; justify-content: center;
+  opacity: 0.3; transition: opacity 0.5s var(--ease);
+}
+.loop-step.on { opacity: 1; }
+.loop-step .stage-num { margin-bottom: 10px; }
+.loop-step h3 {
+  font-family: var(--display); font-size: clamp(24px, 3vw, 34px);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+  margin-bottom: 16px; color: var(--tx);
+}
+.loop-step p { font-size: 16px; color: var(--t2); line-height: 1.9; font-weight: 300; max-width: 420px; }
+.loop-step p strong { color: var(--tx); font-weight: 500; }
+
+/* ═══ Thesis — the "breath" between showpieces ═══ */
+#thesis { position: relative; overflow: hidden; }
+#thesis::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(52% 60% at 50% 44%,
+    rgba(192,132,252,0.10), rgba(129,140,248,0.05) 45%, transparent 72%);
+}
+#thesis .wrap { position: relative; z-index: 1; }
+.thesis-line {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(24px, 3.6vw, 40px);
+  letter-spacing: -0.03em; line-height: 1.3;
+  max-width: 760px; margin: 0 auto 28px;
+}
+.thesis-line em { font-style: normal; color: var(--tx); }
+/* The two key words resolve out of a blur and underline-sweep as the line
+   scrolls in — "intentions" first, then "manifestations" a beat later, so the
+   sentence performs its own transformation. */
+.thesis-line .m {
+  position: relative; white-space: nowrap;
+  background: var(--gradient);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  opacity: 0; filter: blur(12px);
+  transition: opacity 0.8s var(--ease), filter 0.8s var(--ease);
 }
-.prof-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.prof-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 5px 14px; border-radius: 100px;
-  font-family: var(--mono); font-size: 10px;
+.thesis-line .m::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -0.14em; height: 2px;
+  border-radius: 2px; background: var(--gradient);
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform 0.9s var(--ease);
 }
+.thesis-line.v .m { opacity: 1; filter: blur(0); }
+.thesis-line.v .m::after { transform: scaleX(1); }
+.thesis-line .m-from { transition-delay: 0.10s; }
+.thesis-line .m-from::after { transition-delay: 0.28s; }
+.thesis-line .m-to { transition-delay: 0.62s; }
+.thesis-line .m-to::after { transition-delay: 0.80s; }
 
-/* ═══ Token of Gratitude ═══ */
-.token-reveal {
-  max-height: 0; opacity: 0; overflow: hidden;
-  transition: max-height 1s var(--ease), opacity 0.8s var(--ease), margin 0.6s;
-  margin-top: 0;
-}
-.token-reveal.minted { max-height: 800px; opacity: 1; margin-top: 40px; }
-
-.token {
-  background: var(--card); border: 1px solid var(--bd2);
-  border-radius: 14px; padding: 36px;
-  position: relative; overflow: hidden;
-}
-.token::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--indigo), var(--purple), var(--pink));
-}
-.token::after {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 20%, rgba(129,140,248,0.04) 0%, transparent 60%);
-  pointer-events: none;
-}
-.token-head {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;
-}
-.token-id {
-  font-family: var(--mono); font-size: 11px; color: var(--moss-light); letter-spacing: 0.06em;
-}
-.token-state {
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
-  padding: 4px 14px; border-radius: 100px;
-  background: rgba(129,140,248,0.1); color: var(--moss-light);
-  animation: state-pulse 3s ease-in-out infinite;
-}
-@keyframes state-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(129,140,248,0.15); }
-  50% { box-shadow: 0 0 0 6px rgba(129,140,248,0); }
-}
-.token-title {
-  font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 4px;
-}
-.token-subtitle { font-size: 14px; color: var(--t3); margin-bottom: 24px; }
-.token-rows { margin-bottom: 20px; }
-.token-row {
-  display: flex; justify-content: space-between; align-items: baseline;
-  padding: 10px 0; border-bottom: 1px solid rgba(129,140,248,0.06);
-}
-.token-row:last-child { border-bottom: none; }
-.token-k { font-size: 13px; color: var(--t3); }
-.token-v {
-  font-family: var(--mono); font-size: 13px; color: var(--t2);
-  max-width: 280px; text-align: right;
-}
-.token-v .lit {
-  font-weight: 600;
-  background: linear-gradient(135deg, var(--indigo-light), var(--pink));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.token-chain {
-  display: flex; align-items: center; gap: 8px;
-  padding-top: 16px; border-top: 1px solid rgba(129,140,248,0.08); flex-wrap: wrap;
-}
-.token-chain-label {
-  font-family: var(--mono); font-size: 10px; color: var(--t3);
-  letter-spacing: 0.06em; margin-right: 4px;
-}
-.token-chain-node {
-  width: 32px; height: 32px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--display); font-size: 12px; font-weight: 700;
-}
-.token-chain-arrow { color: var(--dim); font-size: 12px; }
-.token-footer {
-  margin-top: 20px; padding-top: 16px;
-  border-top: 1px solid rgba(129,140,248,0.08); text-align: center;
-}
-.token-footer p { font-size: 13px; color: var(--t3); line-height: 1.7; font-style: italic; }
-
-/* ═══ Topology visual ═══ */
-/* ═══ Mesh network visualization ═══ */
+/* ═══ Mesh network visualization (Indra's Network) ═══ */
 .mesh-visualization {
   padding: 32px; background: var(--bg2);
   border: 1px solid var(--bd); border-radius: var(--radius);
   overflow: hidden;
+  position: relative; z-index: 1;
 }
 .mesh-svg { width: 100%; height: auto; display: block; }
 .mesh-line { stroke: rgba(129,140,248,0.15); stroke-width: 1.5; }
@@ -447,120 +369,178 @@
   font-family: var(--mono); font-size: 12px; color: var(--t3);
   text-align: center; margin-top: 16px; letter-spacing: 0.02em;
 }
+.net-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin-top: 48px; }
+/* Violet aura behind the mesh card — the network section's atmosphere,
+   matching the agents card treatment (blurred, screen-blended backdrop). */
+.net-visual { position: relative; }
+.network-aura {
+  position: absolute; inset: -16% -12%; z-index: 0; border-radius: 30px;
+  filter: blur(36px);
+  background:
+    radial-gradient(56% 56% at 28% 30%, rgba(192,132,252,0.22), transparent 70%),
+    radial-gradient(56% 56% at 76% 82%, rgba(129,140,248,0.16), transparent 70%),
+    url('/assets/network-aura.webp');
+  background-size: cover; background-position: center;
+  opacity: 0.55; mix-blend-mode: screen;
+}
 
-/* ═══ Metabolism cards ═══ */
-.meta-card {
-  padding: 22px; background: var(--bg2);
-  border: 1px solid var(--bd); border-radius: var(--radius); border-top: 2px solid;
+/* ═══ Covenant — a veiled "gate" backdrop over the whole section ═══ */
+#covenant { position: relative; overflow: hidden; }
+#covenant .wrap { position: relative; z-index: 1; }
+.covenant-aura {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  filter: blur(22px);
+  background:
+    radial-gradient(46% 62% at 50% 42%, rgba(244,114,182,0.16), transparent 72%),
+    url('/assets/covenant-aura.webp');
+  background-size: cover; background-position: center;
+  opacity: 0.5; mix-blend-mode: screen;
 }
-.meta-tag {
-  font-family: var(--mono); font-size: 9px;
-  letter-spacing: 0.12em; margin-bottom: 8px;
-}
-.meta-h { font-family: var(--display); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.meta-card p { font-size: 13px; color: var(--t2); line-height: 1.75; }
-.meta-card p strong { color: var(--tx); font-weight: 500; }
 
-/* ═══ CTA cards ═══ */
-.cta-card {
-  display: block; text-decoration: none; padding: 22px; background: var(--bg2);
-  border: 1px solid var(--bd); border-radius: var(--radius); border-top: 2px solid;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* ═══ Agents — a live "dispatch" card mirroring the loop's wish-card ═══ */
+#agents { position: relative; overflow: hidden; }
+.agent-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  align-items: center; margin-top: 44px; text-align: left;
 }
-.cta-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
-.cta-label { font-family: var(--display); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.cta-card p { font-size: 13px; color: var(--t2); line-height: 1.75; margin: 0; }
-
-/* ═══ Timer ═══ */
-.timer-box {
-  display: flex; align-items: center; gap: 14px;
-  padding: 18px 22px; margin-bottom: 28px;
-  background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.12);
-  border-radius: 14px;
+.agent-copy .gate-p { margin: 0 0 30px; max-width: 460px; }
+.agent-visual { position: relative; }
+/* Soft aura behind the card. Drop a generated illustration in via the
+   background-image line below to enrich the backdrop — it stays blurred and
+   masked so it reads as atmosphere, never competing with the crisp card. */
+.agent-aura {
+  position: absolute; inset: -14% -10%; z-index: 0; border-radius: 28px;
+  background:
+    radial-gradient(58% 58% at 72% 28%, rgba(244,114,182,0.20), transparent 70%),
+    radial-gradient(58% 58% at 26% 82%, rgba(129,140,248,0.18), transparent 70%);
+  filter: blur(34px);
+  background-image:
+    radial-gradient(58% 58% at 72% 28%, rgba(244,114,182,0.20), transparent 70%),
+    radial-gradient(58% 58% at 26% 82%, rgba(129,140,248,0.18), transparent 70%),
+    url('/assets/agents-aura.webp');
+  background-size: cover; background-position: center;
+  opacity: 0.55; mix-blend-mode: screen;
 }
-.timer-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--glow-amber); animation: beat 2s ease-in-out infinite;
-}
-@keyframes beat {
-  0%,100% { box-shadow: 0 0 0 0 rgba(251,191,36,0.3); }
-  50% { box-shadow: 0 0 0 8px rgba(251,191,36,0); }
-}
-.timer-text { font-family: var(--mono); font-size: 12px; color: var(--glow-amber); flex: 1; }
-.timer-val { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--glow-amber); }
-
-/* ═══ Formula/struct/steps/decay ═══ */
-.hstruct {
-  background: rgba(0,0,0,0.2); border: 1px solid var(--bd);
-  border-radius: 10px; padding: 16px; margin-bottom: 14px;
-}
-.hstruct-name {
-  font-size: 13px; font-weight: 600; color: var(--moss-light);
-  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
-}
-.hstruct-name::before {
-  content: ''; width: 6px; height: 6px; border-radius: 2px;
-  background: var(--moss); display: inline-block;
-}
-.hfield {
-  display: flex; align-items: baseline;
-  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.025);
-}
-.hfield:last-child { border-bottom: none; }
-.hfn { color: var(--tx); min-width: 110px; }
-.hft { color: var(--glow-amber); min-width: 130px; font-size: 11px; }
-.hfc { color: var(--t3); font-size: 10px; }
-
-.hformula {
-  background: rgba(129,140,248,0.06); border: 1px solid rgba(129,140,248,0.12);
-  border-radius: 10px; padding: 16px; margin: 14px 0; text-align: center;
-}
-.hformula code { font-size: 15px; font-weight: 600; color: var(--tx); }
-.hformula code em { font-style: normal; color: var(--t3); font-weight: 400; font-size: 13px; }
-.hformula .hf-sub { font-size: 10px; color: var(--t3); margin-top: 6px; letter-spacing: 0.04em; }
-
-.hsteps { display: flex; flex-direction: column; gap: 6px; margin: 14px 0; }
-.hstep { display: flex; align-items: baseline; gap: 10px; font-size: 12px; }
-.hstep-n { font-weight: 600; color: var(--moss-light); min-width: 16px; text-align: right; }
-.hstep-t { color: var(--t2); }
-.hstep-t strong { color: var(--tx); font-weight: 500; }
-
-.hnote {
-  color: var(--t2); font-size: 12px; line-height: 1.8; margin-top: 12px;
-  padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.03);
-}
-.hnote strong { color: var(--tx); font-weight: 500; }
-
-.hdecay {
-  display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px;
-  margin: 14px 0; font-size: 11px;
-}
-.hdecay-day { color: var(--t3); text-align: right; }
-.hdecay-bar { height: 6px; border-radius: 3px; align-self: center; }
-.hdecay-val { color: var(--tx); font-weight: 500; }
-
-/* ═══ Feature visual panel ═══ */
-.feature-visual {
-  position: relative; padding: 32px;
+.agent-card {
+  position: relative; z-index: 1;
   background: var(--card); border: 1px solid var(--bd);
-  border-radius: 12px; overflow: hidden;
+  border-radius: var(--r-special); padding: 24px 24px 22px; overflow: hidden;
 }
-/* Illuminated panel top edge (DESIGN.md "Gradient Top Edge"); the dot-grid
-   is page-level only and must not be repeated on nested containers. */
-.feature-visual::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(129,140,248,0.2), transparent);
-  pointer-events: none;
+.agent-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gradient);
 }
+.agent-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 15px;
+}
+.agent-who {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--t2);
+}
+.agent-who b { color: var(--rose); font-weight: 600; }
+.agent-live {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--s4);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.agent-live::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--s4); box-shadow: 0 0 8px var(--s4);
+  animation: agentBlink 1.6s var(--ease) infinite;
+}
+.agent-wish {
+  display: flex; align-items: baseline; gap: 9px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--bd2);
+}
+.agent-wish .wish-tag { color: var(--indigo); font-size: 13px; flex-shrink: 0; }
+.agent-wish .name { font-size: 14px; color: var(--tx); font-weight: 500; flex: 1; min-width: 0; }
+.agent-dispatch {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+  color: var(--rose); margin: 10px 0 2px;
+}
+.agent-log { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.agent-step {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em;
+  color: var(--t3); opacity: 0.4;
+  animation: agentStep 6s var(--ease) infinite;
+}
+.agent-step .tick { color: var(--rose); }
+.agent-step:nth-child(1) { animation-delay: 0s; }
+.agent-step:nth-child(2) { animation-delay: 0.8s; }
+.agent-step:nth-child(3) { animation-delay: 1.6s; }
+.agent-result { margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--bd2); }
+.agent-proof {
+  display: flex; align-items: baseline; gap: 8px; font-size: 12.5px; color: var(--s4);
+  opacity: 0.15; animation: agentReveal 6s var(--ease) infinite;
+}
+.agent-proof span { color: var(--t2); }
+.agent-grat {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+  color: var(--moss-light); margin-top: 7px;
+  opacity: 0.15; animation: agentReveal 6s var(--ease) 0.3s infinite;
+}
+@keyframes agentBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@keyframes agentStep {
+  0%, 6%    { opacity: 0.4; color: var(--t3); }
+  14%, 32%  { opacity: 1;   color: var(--tx); }
+  44%, 100% { opacity: 0.5; color: var(--t2); }
+}
+@keyframes agentReveal {
+  0%, 55%  { opacity: 0.15; }
+  70%, 96% { opacity: 1; }
+  100%     { opacity: 0.15; }
+}
+
+/* ═══ Quiet centered sections (covenant / join) ═══ */
+.gate-p {
+  font-size: 17px; color: var(--t2); line-height: 1.95; font-weight: 300;
+  max-width: 560px; margin: 0 auto 36px;
+}
+.gate-p strong { color: var(--tx); font-weight: 500; }
+.join-fine {
+  font-family: var(--mono); font-size: 11px; color: var(--dim);
+  letter-spacing: 0.04em; margin-top: 18px;
+}
+.closing-line { margin-top: 64px; font-size: 15px; color: var(--moss-light); font-style: italic; }
 
 /* ═══ Responsive ═══ */
 @media (max-width: 768px) {
-  .threat-grid { grid-template-columns: 1fr; }
-  .bot-compare { grid-template-columns: 1fr; }
-  .nav-dots { display: none; }
-  .hero { padding: 40px 20px; }
-  .prof { padding: 24px; }
-  .cta-card { margin: 0; }
+  .hero { padding: 100px 20px 60px; }
+  .scrolly { display: block; }
+  .loop-sticky {
+    top: 56px; height: auto; z-index: 5;
+    padding: 10px 0 14px;
+    background: var(--void);
+    box-shadow: 0 22px 26px -18px rgba(0,0,0,0.9);
+  }
+  .wish-card { padding: 18px; }
+  .wish { padding: 9px 2px; }
+  .wish-name { font-size: 13px; }
+  .loop-steps { padding: 4vh 0; }
+  .loop-step { min-height: 74vh; }
+  .net-cols { grid-template-columns: 1fr; gap: 32px; }
+  .agent-cols { grid-template-columns: 1fr; gap: 30px; margin-top: 32px; }
+  .agent-copy .gate-p { max-width: none; margin-bottom: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Stages still switch, but snap instead of animate. */
+  .scrolly *, .progress-fill, .data-pulse, .r,
+  .agent-step, .agent-proof, .agent-grat, .agent-live::before {
+    transition: none !important; animation: none !important;
+  }
+  /* The agent card's story is told by motion — land it on its finished state. */
+  .agent-step { opacity: 1 !important; color: var(--t2) !important; }
+  .agent-proof, .agent-grat { opacity: 1 !important; }
+  /* The thesis morph words resolve via transition; force them legible. */
+  .thesis-line .m { opacity: 1 !important; filter: none !important; }
+  .thesis-line .m::after { transform: scaleX(1) !important; }
+  /* Hero entrances are animation-driven; force them visible. */
+  .hero-h, .hero-p, .hero-actions, .hero-hint {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+  .r { opacity: 1 !important; transform: none !important; }
 }
 </style>
 </head>
@@ -572,8 +552,10 @@
   <div class="site-nav-links">
     <a href="/gift-cycle.html">Gift Cycle</a>
     <a href="/network.html">Indra's Network</a>
+    <a href="/agents.html">AI Agents</a>
     <a href="/articles/">Articles</a>
     <a href="/covenant.html">Covenant</a>
+    <a href="/join.html" class="site-nav-cta">Join</a>
   </div>
 </nav>
 
@@ -585,515 +567,269 @@
 <!-- Progress -->
 <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
 
-<!-- Nav dots -->
-<nav class="nav-dots" id="navDots">
-  <div class="nav-dot on" data-s="hero"><span class="nav-dot-label">Home</span></div>
-  <div class="nav-dot" data-s="s2"><span class="nav-dot-label">Your Need</span></div>
-  <div class="nav-dot" data-s="s3"><span class="nav-dot-label">Your Time</span></div>
-  <div class="nav-dot" data-s="s4"><span class="nav-dot-label">Your Gift</span></div>
-  <div class="nav-dot" data-s="s5"><span class="nav-dot-label">Your People</span></div>
-  <div class="nav-dot" data-s="s6"><span class="nav-dot-label">Your Story</span></div>
-  <div class="nav-dot" data-s="s7"><span class="nav-dot-label">The Network</span></div>
-</nav>
-
 <div class="page">
 
 <!-- ═══════════ HERO ═══════════ -->
 <section class="hero" id="hero">
-  <div class="hero-over">
-    <div class="hero-over-dot"></div>
-    Post-quantum · Peer-to-peer · Serverless
-  </div>
   <h1 class="hero-h">What If Helping Each Other<br>Was <em>a Game</em>?</h1>
-  <p class="hero-p">Most games reward you for grinding, spending, or beating someone else. SyncEngine flips the rules — you win by showing up for each other. Your <strong>time, your work, and your presence</strong> are the only points that count. No platform. No algorithm. Just people recognizing each other.</p>
+  <p class="hero-p">Imagine a big wish list you share with all your friends — <strong>the things you want to bring into reality</strong>. This is the story of how it becomes a game.</p>
   <div class="hero-actions">
-    <a href="#s2" class="hero-btn">Enter the Gift Cycle ↓</a>
-    <a href="/whitepaper.html" class="hero-btn-ghost">White Paper</a>
+    <a href="#loop" class="hero-btn">See how it's played ↓</a>
   </div>
   <div class="hero-hint">scroll to begin</div>
 </section>
 
 
-<!-- ═══════════ STAGE 2 · YOUR NEED ═══════════ -->
-<section class="sect" id="s2">
+<!-- ═══════════ THE LOOP · SCROLLYTELLING ═══════════ -->
+<section class="sect-short" id="loop-sect">
   <div class="wrap">
-    <div class="r">
-      <div class="stage-num" style="color:var(--s2)">Your Need</div>
-      <h2 class="stage-h">Everything Starts With<br>Someone <span style="color:var(--s2)">Asking for Help</span></h2>
-      <p class="stage-p">In SyncEngine, there are no tasks, no tickets, no bounties. There are <strong>intentions</strong> — honest statements of what you need. You don't assign priority to them. The community does, simply by paying attention.</p>
-    </div>
+    <div class="scrolly" id="loop" data-stage="5">
 
-    <div class="two">
-      <div class="panel r r-d1">
-        <div class="panel-accent" style="background:var(--s2)"></div>
-        <div class="fg">
-          <label class="fl">What's your name?</label>
-          <input class="fi" type="text" id="fName" placeholder="What people call you" oninput="sync()">
-        </div>
-        <div class="fg">
-          <label class="fl">What do you need?</label>
-          <textarea class="ft" id="fNeed" placeholder="Be honest. What are you looking for — help learning something? A community to build with? A skill you can't find?&#10;&#10;The best intentions are simple and real." oninput="sync()"></textarea>
-        </div>
-        <div class="fg">
-          <label class="fl">Where are you?</label>
-          <input class="fi" type="text" id="fWhere" placeholder="City, region, or 'the internet'" oninput="sync()">
-        </div>
-        <button class="btn btn-moss" onclick="done('s2')">Post My Intention &#8594;</button>
-      </div>
-
-      <div class="r r-d2">
-        <div class="note">
-          <div class="note-head">Why this matters</div>
-          <p>Most platforms bury your needs under algorithms. In SyncEngine, when you post an intention, everyone in your community sees it — not because an algorithm chose them, but because <strong>you're peers in the same space</strong>. No one decides what's important except the people who show up.</p>
-        </div>
-
-        <details class="hood">
-          <summary>How it works under the hood</summary>
-          <div class="hood-body">
-            <div class="hnote">When you post, your device writes to a local <strong>Automerge CRDT</strong> — a data structure that merges edits from multiple people automatically, even offline. Then <strong>Iroh</strong> (a QUIC-based P2P protocol) gossips it to peers. No central server. No API call. Your intention exists on every device that cares.</div>
+      <div class="loop-sticky">
+        <div class="wish-card" role="img" aria-label="A shared wish list: intentions gather attention, one is manifested with proof, and gratitude releases to the doer and flows onward">
+          <div class="wish-head">
+            <span class="wish-title">Our Wish List</span>
+            <span class="wish-sub">shared with 11 friends</span>
           </div>
-        </details>
-
-        <a href="/gift-cycle.html" class="btn btn-moss" style="margin-top:20px">See the full Gift Cycle story &#8594;</a>
+          <div class="wish" data-row="1">
+            <div class="wish-main">
+              <span class="wish-tag">✦</span>
+              <span class="wish-name">Repair the greenhouse</span>
+              <span class="wish-time">4h 40m</span>
+            </div>
+            <div class="wish-bar"><i style="--w:86%"></i></div>
+            <div class="wish-status">Grace stepped in · manifesting…</div>
+            <div class="wish-proof">✓ <span>Manifests · photos of the finished greenhouse</span></div>
+            <div class="wish-stamp">gratitude released · 4h 40m · signed by both</div>
+          </div>
+          <div class="wish" data-row="2">
+            <div class="wish-main">
+              <span class="wish-tag">✦</span>
+              <span class="wish-name">Teach the kids to bake</span>
+              <span class="wish-time">1h 05m</span>
+            </div>
+            <div class="wish-bar"><i style="--w:38%"></i></div>
+          </div>
+          <div class="wish" data-row="3">
+            <div class="wish-main">
+              <span class="wish-tag">✦</span>
+              <span class="wish-name">A well for the north field</span>
+              <span class="wish-time">42m</span>
+            </div>
+            <div class="wish-bar"><i style="--w:24%"></i></div>
+          </div>
+          <div class="wish wish--new" data-row="4">
+            <div class="wish-main">
+              <span class="wish-tag">✦</span>
+              <span class="wish-name">A mural for the market wall</span>
+              <span class="wish-time">4h 40m</span>
+            </div>
+            <div class="wish-bar"><i style="--w:86%"></i></div>
+            <div class="wish-onward">↳ Grace tagged her gratitude here · 4h 40m</div>
+          </div>
+          <div class="wish-loopline">attention → manifestation → gratitude → attention</div>
+        </div>
       </div>
+
+      <div class="loop-steps">
+        <div class="loop-step" data-stage="1">
+          <div class="stage-num" style="color:var(--indigo)">01 · The Wish List</div>
+          <h3>A wish list you share</h3>
+          <p>It begins as a big wish list, shared with the people you trust. Each wish is an <strong>intention</strong> — something you want to bring into reality, named out loud so it's real and visible instead of a vague someday.</p>
+        </div>
+        <div class="loop-step" data-stage="2">
+          <div class="stage-num" style="color:var(--s3)">02 · The Vote</div>
+          <h3>Everyone votes with attention</h3>
+          <p>There's nothing to buy and nothing to game. The only vote is <strong>attention</strong> — the time each person freely gives to the wishes that matter most to them. Watch where it gathers, and you can see what your circle truly cares about.</p>
+        </div>
+        <div class="loop-step" data-stage="3">
+          <div class="stage-num" style="color:var(--violet)">03 · The Incentive</div>
+          <h3>Attention becomes incentive</h3>
+          <p>As an intention accumulates <strong>collective attention</strong>, it begins to glow. Sooner or later the pull becomes irresistible — someone steps in to <strong>manifest</strong> it, and make the thing real.</p>
+        </div>
+        <div class="loop-step" data-stage="4">
+          <div class="stage-num" style="color:var(--s4)">04 · Proof &amp; Gratitude</div>
+          <h3>Proof, then gratitude</h3>
+          <p>The manifester shares <strong>proof of their service</strong>, and everyone is notified. Gratitude worth the intention's accumulated attention <strong>releases to the doer</strong> — recorded, and signed by both.</p>
+        </div>
+        <div class="loop-step" data-stage="5">
+          <div class="stage-num" style="color:var(--rose)">05 · The Cycle</div>
+          <h3>The cycle continues</h3>
+          <p>The doer tags that gratitude onto <strong>whatever they want to see done next</strong>. Attention becomes manifestation becomes gratitude becomes attention — and with every turn of the loop, the world gets a little more beautiful.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 
-<!-- ═══════════ STAGE 3 · YOUR TIME ═══════════ -->
-<section class="sect" id="s3">
+<!-- ═══════════ THESIS ═══════════ -->
+<section class="sect-short" id="thesis" style="text-align:center">
   <div class="wrap">
-    <div class="r">
-      <div class="stage-num" style="color:var(--s3)">Your Time</div>
-      <h2 class="stage-h">You've Been Here for <span style="color:var(--s3)" id="heroTimerInline">0:00</span>.<br>That <span style="color:var(--s3)">Means Something</span>.</h2>
-      <p class="stage-p">On most platforms, your attention enriches a company. Here, <strong>the time you choose to give is recognized as something real</strong> — and it belongs to you. It can only be released as a gift: when you acknowledge someone else's work.</p>
-    </div>
-
-    <div class="two">
-      <div class="panel r r-d1">
-        <div class="panel-accent" style="background:var(--s3)"></div>
-        <div class="timer-box">
-          <div class="timer-dot"></div>
-          <span class="timer-text">Your time on this page</span>
-          <span class="timer-val" id="timer">0:00</span>
-        </div>
-        <p style="font-size:14px;color:var(--t2);margin-bottom:28px;line-height:1.8">This timer is real. In SyncEngine, you actively choose which intention to focus on and let your time flow into it. This is called <strong style="color:var(--tx)">giving attention</strong> — choosing which need to charge with your presence. It's the one gift that can't be faked, because it costs you the one thing no one can manufacture: <em>your time, freely given</em>.</p>
-        <div class="fg">
-          <label class="fl">What are you here to do?</label>
-          <div class="chips" id="cFocus">
-            <span class="chip" onclick="pick(this)">Build something</span>
-            <span class="chip" onclick="pick(this)">Learn</span>
-            <span class="chip" onclick="pick(this)">Teach</span>
-            <span class="chip" onclick="pick(this)">Connect with people</span>
-            <span class="chip" onclick="pick(this)">Find community</span>
-            <span class="chip" onclick="pick(this)">Create</span>
-            <span class="chip" onclick="pick(this)">Organize</span>
-            <span class="chip" onclick="pick(this)">Explore</span>
-          </div>
-        </div>
-        <button class="btn btn-amber" onclick="done('s3')">I'm Paying Attention &#8594;</button>
-      </div>
-
-      <div class="r r-d2">
-        <div class="note">
-          <div class="note-head">How attention charges an intention</div>
-          <p>When you see an intention that matters to you, you <strong>set it as your active focus</strong> — an intentional act, not passive browsing. Your time flows into it, and your peers can see the intention building up with collective attention energy. As more people focus on the same intention, its heat rises visibly. When it's charged enough, someone decides to <strong>manifest it</strong> — turning that collective energy into action.</p>
-        </div>
-
-        <details class="hood">
-          <summary>How it's measured</summary>
-          <div class="hood-body">
-            <div class="hsteps">
-              <div class="hstep"><span class="hstep-n">1</span><span class="hstep-t">You <strong>set an intention as your focus</strong> at 10:03:12</span></div>
-              <div class="hstep"><span class="hstep-n">2</span><span class="hstep-t">You <strong>switch to a different intention</strong> at 10:07:44</span></div>
-              <div class="hstep"><span class="hstep-n">3</span><span class="hstep-t">4 minutes 32 seconds of attention <strong>flow into the first intention</strong></span></div>
-              <div class="hstep"><span class="hstep-n">&#8594;</span><span class="hstep-t">Your peers see it. The intention's <strong>heat rises</strong>.</span></div>
-            </div>
-            <div class="hnote">Attention is visible and collective. As more people focus on the same intention, its heat rises from 0.0 toward 1.0 — a public signal that this need matters. No voting button. No like count. <strong>Deliberate focus is the signal.</strong></div>
-          </div>
-        </details>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════ STAGE 4 · YOUR GIFT ═══════════ -->
-<section class="sect" id="s4">
-  <div class="wrap">
-    <div class="r">
-      <div class="stage-num" style="color:var(--s4)">Your Gift</div>
-      <h2 class="stage-h">You See a Need.<br>You <span style="color:var(--s4)">Act</span>.</h2>
-      <p class="stage-p">This is the heart of it. In SyncEngine, when you help someone, you show your work — screenshots, documents, code, designs. <strong>Evidence, not promises.</strong> This proof becomes a permanent, tamper-proof record of what you did.</p>
-    </div>
-
-    <div class="two">
-      <div class="panel r r-d1">
-        <div class="panel-accent" style="background:var(--s4)"></div>
-        <div class="fg">
-          <label class="fl">What skills do you bring?</label>
-          <div class="chips" id="cSkills">
-            <span class="chip" onclick="pick(this)">Code</span>
-            <span class="chip" onclick="pick(this)">Design</span>
-            <span class="chip" onclick="pick(this)">Writing</span>
-            <span class="chip" onclick="pick(this)">Music</span>
-            <span class="chip" onclick="pick(this)">Research</span>
-            <span class="chip" onclick="pick(this)">Facilitation</span>
-            <span class="chip" onclick="pick(this)">Farming</span>
-            <span class="chip" onclick="pick(this)">Craft</span>
-            <span class="chip" onclick="pick(this)">Care</span>
-            <span class="chip" onclick="pick(this)">Strategy</span>
-          </div>
-        </div>
-        <div class="fg">
-          <label class="fl">What can you offer?</label>
-          <textarea class="ft" id="fOffer" placeholder="What would you give to this community? Describe the kind of help you'd provide if someone posted an intention you could answer." oninput="sync()"></textarea>
-        </div>
-        <div class="fg">
-          <label class="fl">How do you prefer to work?</label>
-          <select class="fs" id="fCollab" onchange="sync()">
-            <option value="">Pick one...</option>
-            <option value="async">On my own time (async)</option>
-            <option value="pairing">Side by side (pairing)</option>
-            <option value="mentoring">Teaching or learning (mentoring)</option>
-            <option value="sprints">Short intense bursts (sprints)</option>
-            <option value="stewardship">Long-term care (stewardship)</option>
-          </select>
-        </div>
-        <button class="btn btn-green" onclick="done('s4')">Offer My Gift &#8594;</button>
-      </div>
-
-      <div class="r r-d2">
-        <div class="note">
-          <div class="note-head">Why proof matters</div>
-          <p>Anyone can say they'll help. In SyncEngine, you <strong>show</strong> what you did. Your proof is stored as immutable, encrypted artifacts that only your community can see. Multiple people can answer the same intention — it's collaborative, not competitive.</p>
-        </div>
-
-        <details class="hood">
-          <summary>How proof works</summary>
-          <div class="hood-body">
-            <div class="hnote">Every file you submit gets a <strong>BLAKE3</strong> fingerprint — a cryptographic hash that proves the content existed at that moment and hasn't been altered. Your proof is encrypted so only your community can see it. The intention creator reviews all claims and decides who to bless — multiple people can answer the same need.</div>
-          </div>
-        </details>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════ STAGE 5 · YOUR PEOPLE ═══════════ -->
-<section class="sect" id="s5">
-  <div class="wrap">
-    <div class="r">
-      <div class="stage-num" style="color:var(--s5)">Your People</div>
-      <h2 class="stage-h">Bots Can't <span style="color:var(--s5)">Show Up</span>.</h2>
-      <p class="stage-p">When someone reviews your work and says <strong>"this was worth my time"</strong>, that's called a <em>blessing</em>. It releases all the attention they invested — straight to you.</p>
-      <p class="stage-p" style="margin-top:12px">But here's the key: <strong>only attention from verified humans counts</strong>. And the only way to get verified is to show up in person.</p>
-    </div>
-
-    <div class="two">
-      <div class="r r-d1">
-        <div class="panel" style="margin-bottom:20px">
-          <div class="panel-accent" style="background:var(--s5)"></div>
-
-          <p style="font-size:14px;color:var(--t2);margin-bottom:22px;line-height:1.8">SyncEngine holds <strong style="color:var(--tx)">Proof of Life</strong> gatherings — in-person events where real humans witness each other. When you attend, you're verified as alive. That verification is your <strong style="color:var(--tx)">liveness score</strong>, and it determines whether your attention is counted at all.</p>
-
-          <button class="btn btn-indigo" onclick="done('s5')">Count Me In &#10022;</button>
-        </div>
-      </div>
-
-      <div class="r r-d2">
-        <div class="note">
-          <div class="note-head">Liveness: the network's immune system</div>
-          <p>Other platforms verify you're human once and hope for the best. In SyncEngine, liveness is verified through <strong>in-person events</strong> — shared meals, co-working sessions, walks in the park. Real humans witnessing each other. Without verified liveness, your attention isn't counted, your blessings carry no weight, and any tokens you mint are empty.</p>
-          <p style="margin-top:12px">A bot farm can create a million accounts — none of them will ever matter. An AI can generate text. <strong>It can't show up.</strong></p>
-          <p style="margin-top:12px">Your <a href="#identity" style="color:var(--indigo-light)">identity</a> — built from your own life story — is <strong>unbreakable</strong>. Liveness gives that identity a <strong>heartbeat</strong>. Together: you can't be impersonated (quantum-resistant keys) and you can't be automated (proof of physical presence).</p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════ STAGE 6 · YOUR STORY ═══════════ -->
-<section class="sect" id="s6">
-  <div class="wrap">
-    <div class="r">
-      <div class="stage-num" style="color:var(--s6)">Your Story</div>
-      <h2 class="stage-h">This Is What You've <span style="color:var(--s6)">Built</span><br>by Being Here</h2>
-      <p class="stage-p">A blessing crystallizes into a <strong>Token of Gratitude</strong> — not a coin, not a score, but a <em>letter of introduction</em>. It says: this person showed up, spent real time, and someone who witnessed their work acknowledged it. <strong>Complete the cycle and you'll receive yours</strong> — backed by the real time you've spent here.</p>
-    </div>
-
-    <div class="two">
-      <div class="r r-d1">
-        <div class="prof" id="profCard">
-          <div class="prof-glow"></div>
-          <div class="prof-avatar" id="pAvatar">?</div>
-          <div class="prof-name" id="pName">Anonymous Peer</div>
-          <div class="prof-sub" id="pSub">awaiting first intention...</div>
-          <div style="margin:24px 0">
-            <div class="prof-row"><span class="prof-k">Intention</span><span class="prof-v" id="pNeed">—</span></div>
-            <div class="prof-row"><span class="prof-k">Location</span><span class="prof-v" id="pWhere">—</span></div>
-            <div class="prof-row"><span class="prof-k">Here to</span><span class="prof-v" id="pFocus">—</span></div>
-            <div class="prof-row"><span class="prof-k">Gifts</span><span class="prof-v" id="pSkills">—</span></div>
-            <div class="prof-row"><span class="prof-k">Work style</span><span class="prof-v" id="pCollab">—</span></div>
-            <div class="prof-row"><span class="prof-k">Offering</span><span class="prof-v" id="pOffer">—</span></div>
-            <div class="prof-row"><span class="prof-k">Time given</span><span class="prof-v" id="pTime"><em>0:00</em></span></div>
-            <div class="prof-row"><span class="prof-k">Liveness</span><span class="prof-v"><em>awaiting first gathering</em></span></div>
-          </div>
-          <div class="prof-badges" id="pBadges"></div>
-
-          <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--bd)">
-            <div class="fg">
-              <label class="fl">Your email — we'll tell you when it's ready</label>
-              <input class="fi" type="email" id="fEmail" placeholder="you@example.com" oninput="sync()">
-            </div>
-            <div class="fg">
-              <label class="fl">What intention would you tag your first token to?</label>
-              <textarea class="ft" id="fTag" placeholder="What matters enough that you'd release your token to whoever makes it real?" style="min-height:80px" oninput="sync()"></textarea>
-            </div>
-            <button class="btn btn-final" id="mintBtn" style="width:100%;justify-content:center;padding:16px" onclick="done('s6')">
-              Register Interest &#8594;
-            </button>
-            <div id="submitStatus" style="display:none;margin-top:16px;padding:16px 20px;border-radius:12px;text-align:center;font-size:14px;line-height:1.6"></div>
-          </div>
-        </div>
-
-        <!-- TOKEN OF GRATITUDE — revealed on cycle completion -->
-        <div class="token-reveal" id="tokenReveal">
-          <div class="token">
-            <div class="token-head">
-              <span class="token-id" id="tokId">tok:————</span>
-              <span class="token-state">First Token</span>
-            </div>
-            <div class="token-title">Token of Gratitude</div>
-            <div class="token-subtitle">Minted by completing the gift cycle on syncengine.earth</div>
-            <div class="token-rows">
-              <div class="token-row"><span class="token-k">Holder</span><span class="token-v" id="tokHolder">—</span></div>
-              <div class="token-row"><span class="token-k">Backed by</span><span class="token-v" id="tokTime"><span class="lit">—</span> of time</span></div>
-              <div class="token-row"><span class="token-k">Blesser</span><span class="token-v" style="color:var(--moss-light)">syncengine.earth</span></div>
-              <div class="token-row"><span class="token-k">Intention</span><span class="token-v" id="tokIntention">—</span></div>
-              <div class="token-row"><span class="token-k">Liveness</span><span class="token-v"><span class="lit">awaiting first gathering</span></span></div>
-              <div class="token-row"><span class="token-k">State</span><span class="token-v"><span class="lit">Held</span></span></div>
-            </div>
-            <div class="token-chain">
-              <span class="token-chain-label">Blessed by → Holder:</span>
-              <div class="token-chain-node" style="background:rgba(129,140,248,0.12);color:var(--moss-light)" title="syncengine.earth">S</div>
-              <span class="token-chain-arrow">&#8594;</span>
-              <div class="token-chain-node" id="tokChainYou" style="background:rgba(129,140,248,0.12);color:var(--indigo-light)" title="You">?</div>
-            </div>
-            <div class="token-footer">
-              <p>This token is yours. When SyncEngine launches,<br>it will carry forward as proof you were here from the beginning.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="r r-d2">
-        <div class="note">
-          <div class="note-head">Why this can't be gamed</div>
-          <p>A token's weight comes from two things: <strong>how much real attention backed it</strong>, and <strong>the blesser's liveness score</strong> when they created it. If the blesser never attended a Proof of Life gathering, their liveness is zero — and the token is empty. No amount of automation changes this.</p>
-        </div>
-
-        <details class="hood">
-          <summary>The token lifecycle</summary>
-          <div class="hood-body">
-            <div class="hsteps">
-              <div class="hstep"><span class="hstep-n">1</span><span class="hstep-t">Someone <strong>blesses your work</strong> → token is minted, you're the holder</span></div>
-              <div class="hstep"><span class="hstep-n">2</span><span class="hstep-t">You <strong>tag it to a new intention</strong> → token is locked there</span></div>
-              <div class="hstep"><span class="hstep-n">3</span><span class="hstep-t">Someone <strong>manifests that intention</strong></span></div>
-              <div class="hstep"><span class="hstep-n">4</span><span class="hstep-t">Token <strong>flows forward to the doer</strong> — they're the new steward</span></div>
-            </div>
-            <div class="hnote"><strong>Tokens only move toward work. Never backwards.</strong></div>
-          </div>
-        </details>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════ STAGE 7 · THE NETWORK ═══════════ -->
-<section class="sect-short" id="s7" style="padding:80px 0">
-  <div class="wrap">
-    <!-- Bridge -->
-    <p class="r" style="text-align:center;color:var(--t2);max-width:480px;margin:0 auto 48px;font-size:16px;line-height:1.8;font-weight:300">You've just experienced the gift cycle. Here's what makes it <strong style="color:var(--tx)">unbreakable</strong>.</p>
-
-    <!-- The Problem -->
-    <div class="r" style="text-align:center;margin-bottom:12px">
-      <span style="font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--danger)">The Problem</span>
-    </div>
-    <h2 class="r stage-h" style="text-align:center;font-size:clamp(24px,3.5vw,38px)">Your digital identity was never designed<br>to survive what's coming</h2>
-    <p class="r" style="text-align:center;color:var(--t2);max-width:520px;margin:0 auto;font-size:15px;line-height:1.8">
-      Quantum computers will crack today's encryption. AI can impersonate anyone. Centralized platforms hold your identity hostage. These aren't hypothetical — they're arriving.
-    </p>
-
-    <div class="threat-grid r r-d1">
-      <div class="threat-card">
-        <div class="threat-icon">&#9883;&#65039;</div>
-        <h3>Quantum Threat</h3>
-        <p>Shor's algorithm will break RSA and ECC — the encryption protecting every password, every key, every wallet you own today.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">&#129302;</div>
-        <h3>AI Impersonation</h3>
-        <p>Language models generate convincing text. Deepfakes clone faces and voices. A one-time CAPTCHA can't tell human from machine anymore.</p>
-      </div>
-      <div class="threat-card">
-        <div class="threat-icon">&#127970;</div>
-        <h3>Platform Lock-in</h3>
-        <p>Your identity lives on someone else's server. They can lock you out, sell your data, or disappear — and your identity goes with them.</p>
-      </div>
-    </div>
-
-    <!-- Your Identity -->
-    <div class="r" id="identity" style="margin-top:64px">
-      <div class="stage-num" style="color:var(--indigo)">Your Identity</div>
-      <h2 class="stage-h">Your Life Story Becomes<br>an <span style="color:var(--indigo)">Unbreakable Key</span></h2>
-      <p class="stage-p">Your identity isn't a password or a seed phrase. It's a <strong>pass story</strong> — 23 moments from your own life, structured as a hero's journey. The system derives a cryptographic key from your autobiography. Because the slots are non-decomposable, an attacker must guess your <strong>entire story at once</strong>.</p>
-    </div>
-
+    <p class="thesis-line r"><span class="m m-from">Intentions</span> become <span class="m m-to">manifestations</span> — through <em>collective attention</em>.</p>
     <div class="r r-d1">
-      <div class="tech-aside" style="border-color:var(--indigo);display:flex;flex-direction:column;justify-content:center">
-        <strong style="color:var(--indigo);font-size:12px;display:block;margin-bottom:14px">Three pillars of quantum resistance:</strong>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div>
-            <code style="color:var(--indigo);font-size:12px">Argon2id</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Memory-hard key derivation. Each guess costs 256 MB of RAM — brute force at scale becomes physically impossible.</span>
+      <a href="/gift-cycle.html" class="btn btn-moss">Watch one full playthrough &#8594;</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ AGENTS ═══════════ -->
+<section class="sect-short" id="agents">
+  <div class="wrap">
+    <div class="r" style="text-align:center">
+      <div class="stage-num" style="color:var(--rose)">Agents</div>
+      <h2 class="stage-h" style="font-size:clamp(26px,4vw,44px)">You Can Send <span style="color:var(--rose)">an Agent</span></h2>
+    </div>
+
+    <div class="agent-cols">
+      <div class="agent-copy r r-d1">
+        <p class="gate-p">Some wishes need more hands. Create <strong>collaborative AI agents that manifest intentions on your behalf</strong> — they work inside the project, on your own machine, with the full context of what your circle is building. Their work lands like any player's, and the gratitude belongs to the player they serve.</p>
+        <a href="/agents.html" class="btn btn-indigo">The full AI-agents story &#8594;</a>
+      </div>
+
+      <div class="agent-visual r r-d2">
+        <div class="agent-aura" aria-hidden="true"></div>
+        <div class="agent-card" role="img" aria-label="An AI agent dispatched to manifest one of your wishes: it reads your circle's context, works on your own machine, and attaches proof — the manifestation lands like any player's, and the gratitude returns to you, signed by both.">
+          <div class="agent-head">
+            <span class="agent-who">Agent · manifesting for <b>You</b></span>
+            <span class="agent-live">live</span>
           </div>
-          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
-          <div>
-            <code style="color:var(--indigo);font-size:12px">ML-KEM-768</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Lattice-based key encapsulation. NIST FIPS 203. Resistant to Shor's algorithm — your keys survive the quantum era.</span>
+          <div class="agent-wish">
+            <span class="wish-tag">&#10022;</span>
+            <span class="name">Repair the greenhouse</span>
           </div>
-          <div style="height:1px;background:var(--bd);margin:2px 0"></div>
-          <div>
-            <code style="color:var(--indigo);font-size:12px">ML-DSA-65</code>
-            <span style="display:block;margin-top:4px;font-size:11px">Post-quantum digital signatures. NIST FIPS 204. Every message you sign is quantum-resistant from day one.</span>
+          <div class="agent-dispatch">&#8627; dispatched to Grove-agent</div>
+          <ul class="agent-log">
+            <li class="agent-step"><span class="tick">&#9656;</span> reading your circle's context</li>
+            <li class="agent-step"><span class="tick">&#9656;</span> working on your own machine</li>
+            <li class="agent-step"><span class="tick">&#9656;</span> attaching proof of service</li>
+          </ul>
+          <div class="agent-result">
+            <div class="agent-proof">&#10003; <span>Manifests · lands like any player's</span></div>
+            <div class="agent-grat">gratitude &#8594; You · signed by both</div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="note r r-d2" style="margin-top:28px">
-      <div class="note-head">Your story is your key</div>
-      <p>You answer 23 prompts organized as a hero's journey — <strong>Departure</strong>, <strong>Initiation</strong>, <strong>Return</strong>. "I grew up in _____, where I was a _____." "Everything changed when _____ brought me _____." Each answer is a secret only you know. Together, they create a search space of 2<sup>230</sup> — more than the atoms in the observable universe.</p>
-      <p style="margin-top:14px">Passwords are forgotten and reused. Seed phrases are written down. Your pass story is <strong>autobiographical</strong> — you remember it because you lived it. The key never leaves your device. No server ever sees it. And the 23 slots are non-decomposable: guessing one reveals nothing about the others.</p>
+
+<!-- ═══════════ INDRA'S NETWORK ═══════════ -->
+<section class="sect-short" id="network">
+  <div class="wrap">
+    <div class="r" style="text-align:center">
+      <div class="stage-num" style="color:var(--violet)">The Substrate</div>
+      <h2 class="stage-h" style="font-size:clamp(26px,4vw,44px)">Built on <span style="color:var(--violet)">Indra's Network</span></h2>
+      <p class="gate-p">A sovereign peer-to-peer stack. There are no servers: every player's device holds a full encrypted copy, and peers connect directly to each other. <strong>Your content is shared only with those you explicitly allow. To everyone else, it is post-quantum encrypted noise.</strong></p>
     </div>
 
-    <!-- Peer-to-Peer Architecture -->
-    <div class="feature-section r" style="margin-top:64px">
-      <div>
-        <div class="feature-label" style="color:var(--violet)">Peer-to-Peer Architecture</div>
-        <h2 class="feature-h">Serverless by design.<br>The participants are the infrastructure.</h2>
-        <p class="feature-p">
-          Your Home Realm — your personal space — is derived deterministically from your identity via BLAKE3. It exists on your device, not on anyone's cloud. When you connect with a peer, the connection is <strong>direct and encrypted</strong>.
-        </p>
-        <p class="feature-p">
-          Servers may exist in the mesh as backup relays, but they <strong>only ever see encrypted packets</strong> — they can't read your data. If a peer is offline, mutual contacts hold sealed packets they cannot read and deliver them when the recipient returns. The network routes through relationships, not data centers. If the company that built this disappeared tomorrow, <strong>the network would continue to exist</strong> as long as peers kept running.
-        </p>
+    <div class="net-cols">
+      <div class="r r-d1 net-visual">
+        <div class="network-aura" aria-hidden="true"></div>
+        <div class="mesh-visualization" aria-label="Animated mesh network showing interconnected nodes">
+          <svg viewBox="0 0 800 300" class="mesh-svg" role="img">
+            <title>Mesh Network Topology</title>
+            <desc>An animated visualization of peer-to-peer nodes connected in a mesh network, with data pulses traveling between them</desc>
+            <g class="mesh-connections">
+              <line x1="400" y1="150" x2="200" y2="80" class="mesh-line"/>
+              <line x1="400" y1="150" x2="600" y2="80" class="mesh-line"/>
+              <line x1="400" y1="150" x2="150" y2="200" class="mesh-line"/>
+              <line x1="400" y1="150" x2="650" y2="200" class="mesh-line"/>
+              <line x1="400" y1="150" x2="280" y2="250" class="mesh-line"/>
+              <line x1="400" y1="150" x2="520" y2="250" class="mesh-line"/>
+              <line x1="200" y1="80" x2="600" y2="80" class="mesh-line"/>
+              <line x1="200" y1="80" x2="150" y2="200" class="mesh-line"/>
+              <line x1="600" y1="80" x2="650" y2="200" class="mesh-line"/>
+              <line x1="150" y1="200" x2="280" y2="250" class="mesh-line"/>
+              <line x1="650" y1="200" x2="520" y2="250" class="mesh-line"/>
+              <line x1="280" y1="250" x2="520" y2="250" class="mesh-line"/>
+              <line x1="200" y1="80" x2="280" y2="250" class="mesh-line"/>
+              <line x1="600" y1="80" x2="520" y2="250" class="mesh-line"/>
+            </g>
+            <g class="mesh-pulses">
+              <circle r="4" class="data-pulse"><animateMotion dur="2s" repeatCount="indefinite" path="M400,150 L200,80"/></circle>
+              <circle r="4" class="data-pulse"><animateMotion dur="2.5s" repeatCount="indefinite" path="M200,80 L600,80"/></circle>
+              <circle r="4" class="data-pulse"><animateMotion dur="1.8s" repeatCount="indefinite" path="M400,150 L650,200"/></circle>
+              <circle r="4" class="data-pulse"><animateMotion dur="2.2s" repeatCount="indefinite" path="M150,200 L280,250"/></circle>
+              <circle r="4" class="data-pulse"><animateMotion dur="3s" repeatCount="indefinite" path="M600,80 L400,150 L280,250"/></circle>
+              <circle r="4" class="data-pulse"><animateMotion dur="2.8s" repeatCount="indefinite" path="M520,250 L400,150 L200,80"/></circle>
+            </g>
+            <g class="mesh-nodes">
+              <g class="mesh-node mesh-node--central" transform="translate(400, 150)">
+                <circle r="28" class="node-glow"/><circle r="20" class="node-core"/>
+                <text y="5" text-anchor="middle" class="node-label">You</text>
+              </g>
+              <g class="mesh-node" transform="translate(200, 80)">
+                <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
+                <text y="4" text-anchor="middle" class="node-label">A</text>
+              </g>
+              <g class="mesh-node" transform="translate(600, 80)">
+                <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
+                <text y="4" text-anchor="middle" class="node-label">B</text>
+              </g>
+              <g class="mesh-node" transform="translate(150, 200)">
+                <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
+                <text y="4" text-anchor="middle" class="node-label">C</text>
+              </g>
+              <g class="mesh-node" transform="translate(650, 200)">
+                <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
+                <text y="4" text-anchor="middle" class="node-label">D</text>
+              </g>
+              <g class="mesh-node" transform="translate(280, 250)">
+                <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
+                <text y="4" text-anchor="middle" class="node-label">E</text>
+              </g>
+              <g class="mesh-node" transform="translate(520, 250)">
+                <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
+                <text y="4" text-anchor="middle" class="node-label">F</text>
+              </g>
+            </g>
+          </svg>
+          <p class="mesh-caption">The mesh self-organizes — no central coordinator required</p>
+        </div>
+      </div>
+
+      <div class="r r-d2">
+        <p style="font-size:15px;color:var(--t2);line-height:1.9;margin-bottom:20px">If one of you is offline, mutual contacts carry sealed packets they cannot read and deliver them on reconnect. The network routes through relationships, not data centers — if the company that built it disappeared tomorrow, the network would continue to exist as long as peers kept running.</p>
         <div class="tech-aside" style="border-color:var(--violet)">
           <strong style="color:var(--violet)">Built with:</strong>
-          Rust · Iroh (QUIC P2P) · Automerge CRDTs · BLAKE3 · redb ·
-          Dioxus UI. No JavaScript. No blockchain. No cloud dependency.
+          Rust · Iroh (QUIC P2P) · Automerge CRDTs · BLAKE3 · Post-quantum encryption. No blockchain. No cloud.
         </div>
-
-        <a href="/network.html" class="btn btn-indigo" style="margin-top:20px">Explore the technical architecture &#8594;</a>
-      </div>
-
-      <div class="mesh-visualization" aria-label="Animated mesh network showing interconnected nodes">
-        <svg viewBox="0 0 800 300" class="mesh-svg" role="img">
-          <title>Mesh Network Topology</title>
-          <desc>An animated visualization of peer-to-peer nodes connected in a mesh network, with data pulses traveling between them</desc>
-          <g class="mesh-connections">
-            <line x1="400" y1="150" x2="200" y2="80" class="mesh-line"/>
-            <line x1="400" y1="150" x2="600" y2="80" class="mesh-line"/>
-            <line x1="400" y1="150" x2="150" y2="200" class="mesh-line"/>
-            <line x1="400" y1="150" x2="650" y2="200" class="mesh-line"/>
-            <line x1="400" y1="150" x2="280" y2="250" class="mesh-line"/>
-            <line x1="400" y1="150" x2="520" y2="250" class="mesh-line"/>
-            <line x1="200" y1="80" x2="600" y2="80" class="mesh-line"/>
-            <line x1="200" y1="80" x2="150" y2="200" class="mesh-line"/>
-            <line x1="600" y1="80" x2="650" y2="200" class="mesh-line"/>
-            <line x1="150" y1="200" x2="280" y2="250" class="mesh-line"/>
-            <line x1="650" y1="200" x2="520" y2="250" class="mesh-line"/>
-            <line x1="280" y1="250" x2="520" y2="250" class="mesh-line"/>
-            <line x1="200" y1="80" x2="280" y2="250" class="mesh-line"/>
-            <line x1="600" y1="80" x2="520" y2="250" class="mesh-line"/>
-          </g>
-          <g class="mesh-pulses">
-            <circle r="4" class="data-pulse"><animateMotion dur="2s" repeatCount="indefinite" path="M400,150 L200,80"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="2.5s" repeatCount="indefinite" path="M200,80 L600,80"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="1.8s" repeatCount="indefinite" path="M400,150 L650,200"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="2.2s" repeatCount="indefinite" path="M150,200 L280,250"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="3s" repeatCount="indefinite" path="M600,80 L400,150 L280,250"/></circle>
-            <circle r="4" class="data-pulse"><animateMotion dur="2.8s" repeatCount="indefinite" path="M520,250 L400,150 L200,80"/></circle>
-          </g>
-          <g class="mesh-nodes">
-            <g class="mesh-node mesh-node--central" transform="translate(400, 150)">
-              <circle r="28" class="node-glow"/><circle r="20" class="node-core"/>
-              <text y="5" text-anchor="middle" class="node-label">You</text>
-            </g>
-            <g class="mesh-node" transform="translate(200, 80)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">A</text>
-            </g>
-            <g class="mesh-node" transform="translate(600, 80)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">B</text>
-            </g>
-            <g class="mesh-node" transform="translate(150, 200)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">C</text>
-            </g>
-            <g class="mesh-node" transform="translate(650, 200)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">D</text>
-            </g>
-            <g class="mesh-node" transform="translate(280, 250)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">E</text>
-            </g>
-            <g class="mesh-node" transform="translate(520, 250)">
-              <circle r="22" class="node-glow"/><circle r="15" class="node-core"/>
-              <text y="4" text-anchor="middle" class="node-label">F</text>
-            </g>
-          </g>
-        </svg>
-        <p class="mesh-caption">The mesh self-organizes — no central coordinator required</p>
+        <a href="/network.html" class="btn btn-indigo" style="margin-top:24px">Explore the technical architecture &#8594;</a>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Closing -->
-    <div class="r" style="text-align:center;padding:48px 0 60px">
-      <p style="font-size:17px;color:var(--t2);max-width:480px;margin:0 auto;line-height:1.95;font-weight:300">
-        There is no separate layer for value. The way people collaborate <strong style="color:var(--tx)">is</strong> the gift cycle.
-        Attention is the metabolism. Intentions are the needs. Service is the exchange.
-        Blessings are the validation. Tokens are the memory.
-      </p>
-      <div style="margin-top:36px;font-size:15px;color:var(--moss-light);font-style:italic">In Indra's network, every jewel reflects all others.</div>
 
-      <!-- Branching CTAs -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;max-width:820px;margin:40px auto 0;text-align:left">
-        <a href="/whitepaper.html" class="cta-card" style="border-top-color:var(--glow-amber)">
-          <div class="cta-label" style="color:var(--glow-amber)">The Physics</div>
-          <p>How a conservation law replaces blockchain consensus — attention tracked like energy, not money. No mining. No gas. No global ledger.</p>
-        </a>
-        <a href="/gift-cycle.html" class="cta-card" style="border-top-color:var(--pulse)">
-          <div class="cta-label" style="color:var(--pulse)">The Full Story</div>
-          <p>The complete gift cycle — from posting an intention to minting a token of gratitude. Every stage, explained.</p>
-        </a>
-        <a href="/network.html" class="cta-card" style="border-top-color:var(--moss)">
-          <div class="cta-label" style="color:var(--moss-light)">Indra's Network</div>
-          <p>No servers. No cloud. Your device is the infrastructure — connected through encrypted, peer-to-peer links that survive even if SyncEngine disappears.</p>
-        </a>
-      </div>
-
-      <div style="font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:0.14em;text-transform:uppercase;margin-top:12px">SyncEngine · Built on Indra's Network · Rust · Iroh · Automerge · Post-Quantum</div>
+<!-- ═══════════ THE COVENANT GATE ═══════════ -->
+<section class="sect-short" id="covenant" style="text-align:center">
+  <div class="covenant-aura" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="r stage-num" style="color:var(--s6)">The Gate</div>
+    <h2 class="r stage-h" style="font-size:clamp(26px,4vw,44px)">This Technology Is<br><span style="color:var(--s6)">Not for Everyone</span></h2>
+    <p class="r r-d1 gate-p">The Engine is only available to <strong>values-aligned individuals</strong>. The Covenant names those values, plainly. Read it — and find out whether you qualify.</p>
+    <div class="r r-d2">
+      <a href="/covenant.html" class="btn btn-moss">Read the Covenant &#8594;</a>
     </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ JOIN ═══════════ -->
+<section class="sect-short" id="join" style="text-align:center">
+  <div class="wrap">
+    <div class="r stage-num" style="color:var(--indigo)">The Invitation</div>
+    <h2 class="r stage-h" style="font-size:clamp(26px,4vw,44px)">If It Resonates, <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Join</span></h2>
+    <p class="r r-d1 gate-p">If you are in resonance with the values expressed, join the association through a donation to <strong>Temples of Refuge</strong> — the nonprofit that stewards the technology and the land network. You'll receive an invitation to the private community, and the download link. No one aligned is turned away for lack of funds.</p>
+    <div class="r r-d2">
+      <a href="/join.html" class="btn btn-final" style="padding:16px 44px">Join the Community &#8594;</a>
+      <p class="join-fine">Temples of Refuge · 508(c)(1)(a) · Membership for life</p>
+    </div>
+    <p class="r r-d3 closing-line">In Indra's network, every jewel reflects all others.</p>
   </div>
 </section>
 
@@ -1105,6 +841,7 @@
       <a href="/">Home</a>
       <a href="/gift-cycle.html">Gift Cycle</a>
       <a href="/network.html">Indra's Network</a>
+      <a href="/agents.html">AI Agents</a>
       <a href="/articles/">Articles</a>
       <a href="/whitepaper.html">White Paper</a>
       <a href="/covenant.html">Covenant</a>
@@ -1116,218 +853,80 @@
 </footer>
 
 <script>
-// ═══ STATE ═══
-const S = {
-  name:'', need:'', where:'', focus:[], skills:[], offer:'',
-  collab:'', email:'', tag:'',
-  done: new Set(),
-  t0: Date.now()
-};
+// ═══ SCROLLYTELLING — stage driver ═══
+const loop = document.getElementById('loop');
+const steps = document.querySelectorAll('.loop-step');
 
-// ═══ SURREALDB ═══
-const DB = {
-  url: 'https://syncengine-onbo-06ebquf7edt011le0602tcht84.aws-euw1.surreal.cloud',
-  ns: 'syncengine',
-  db: 'main',
-  ac: 'earlyaccess'
-};
+// Stage 5, beat two: after the gratitude accumulates on the mural, the list
+// reorders — mural rises to the top, the completed greenhouse drops to the
+// bottom. FLIP so height differences between rows don't matter.
+const card = document.querySelector('.wish-card');
+const rowG = card.querySelector('[data-row="1"]');
+const rowMural = card.querySelector('.wish--new');
+const row2 = card.querySelector('[data-row="2"]');
+const loopline = card.querySelector('.wish-loopline');
+let reorderTimer = null, reordered = false;
 
-// ═══ TIMER ═══
-function tick() {
-  const sec = Math.floor((Date.now() - S.t0) / 1000);
-  const m = Math.floor(sec / 60), s = sec % 60;
-  const str = m + ':' + String(s).padStart(2, '0');
-  const el1 = document.getElementById('timer');
-  const el2 = document.getElementById('heroTimerInline');
-  const el3 = document.getElementById('pTime');
-  if (el1) el1.textContent = str;
-  if (el2) el2.textContent = str;
-  if (el3) el3.innerHTML = '<em>' + str + '</em>';
-  requestAnimationFrame(() => setTimeout(tick, 500));
+function flip(mutate) {
+  const rows = [...card.querySelectorAll('.wish')];
+  const before = new Map(rows.map(el => [el, el.getBoundingClientRect().top]));
+  mutate();
+  rows.forEach(el => {
+    const d = before.get(el) - el.getBoundingClientRect().top;
+    if (!d) return;
+    el.style.transition = 'none';
+    el.style.transform = 'translateY(' + d + 'px)';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.transition = 'transform 0.8s var(--ease)';
+      el.style.transform = '';
+    }));
+    setTimeout(() => { el.style.transition = ''; el.style.transform = ''; }, 900);
+  });
 }
-tick();
-
-// ═══ CHIPS ═══
-function pick(el) { el.classList.toggle('on'); sync(); }
-
-function selected(id) {
-  return Array.from(document.querySelectorAll('#' + id + ' .chip.on')).map(c => c.textContent);
-}
-
-// ═══ SYNC PROFILE ═══
-function sync() {
-  S.name = v('fName'); S.need = v('fNeed'); S.where = v('fWhere');
-  S.focus = selected('cFocus'); S.skills = selected('cSkills');
-  S.offer = v('fOffer'); S.collab = v('fCollab');
-  S.email = v('fEmail'); S.tag = v('fTag');
-
-  document.getElementById('pAvatar').textContent = S.name ? S.name[0].toUpperCase() : '?';
-  document.getElementById('pName').textContent = S.name || 'Anonymous Peer';
-  document.getElementById('pSub').textContent = S.need ? cut(S.need, 55) : 'awaiting first intention...';
-  set('pNeed', S.need); set('pWhere', S.where);
-  set('pFocus', S.focus.join(', ')); set('pSkills', S.skills.join(', '));
-  set('pCollab', S.collab ? document.getElementById('fCollab').selectedOptions[0].text : '');
-  set('pOffer', S.offer);
-  badges();
-}
-
-function v(id) { return document.getElementById(id).value.trim(); }
-function cut(s, n) { return s.length > n ? s.substring(0, n) + '…' : s; }
-function set(id, val) { document.getElementById(id).textContent = val ? cut(val, 42) : '—'; }
-
-function badges() {
-  const el = document.getElementById('pBadges');
-  el.innerHTML = '';
-  const list = [
-    ['s2', '💡 Need voiced', '--s2'],
-    ['s3', '👁 Attention given', '--s3'],
-    ['s4', '🤲 Gift offered', '--s4'],
-    ['s5', '✦ Liveness pledged', '--s5'],
-    ['s6', '🪙 Token minted', '--s6'],
-  ];
-  list.forEach(([k, t, c]) => {
-    if (!S.done.has(k)) return;
-    const b = document.createElement('span');
-    b.className = 'prof-badge';
-    const color = getComputedStyle(document.documentElement).getPropertyValue(c).trim();
-    b.style.cssText = 'background:' + color + '12;border:1px solid ' + color + '30;color:' + color;
-    b.textContent = t;
-    el.appendChild(b);
+function setReordered(on) {
+  if (on === reordered) return;
+  reordered = on;
+  flip(() => {
+    if (on) {
+      card.insertBefore(rowMural, rowG);   // mural to the top
+      card.insertBefore(rowG, loopline);   // greenhouse to the bottom
+    } else {
+      card.insertBefore(rowG, row2);       // restore original order
+      card.insertBefore(rowMural, loopline);
+    }
+    card.classList.toggle('reordered', on);
   });
 }
 
-// ═══ SUBMIT TO SURREALDB ═══
-let submitted = false;
-
-async function submitProfile() {
-  if (submitted || !DB.url) return;
-  submitted = true;
-  const statusEl = document.getElementById('submitStatus');
-  const btn = document.getElementById('mintBtn');
-
-  if (btn) { btn.textContent = 'Saving...'; btn.disabled = true; btn.style.opacity = '0.6'; }
-
-  try {
-    const res = await fetch(DB.url + '/signup', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ns: DB.ns, db: DB.db, ac: DB.ac,
-        name: S.name,
-        need: S.need,
-        location: S.where,
-        focus: S.focus,
-        skills: S.skills,
-        offer: S.offer,
-        collab: S.collab,
-        email: S.email,
-        tag: S.tag,
-        time_spent: Math.floor((Date.now() - S.t0) / 1000),
-        stages: Array.from(S.done)
-      })
-    });
-
-    if (!res.ok) throw new Error(res.status);
-
-    if (btn) { btn.textContent = '\u2713 Registered'; btn.style.opacity = '1'; }
-    if (statusEl) {
-      statusEl.style.display = 'block';
-      statusEl.style.background = 'rgba(129,140,248,0.1)';
-      statusEl.style.border = '1px solid rgba(129,140,248,0.25)';
-      statusEl.innerHTML = S.email
-        ? '<strong style="color:var(--moss)">\u2713 You\'re on the list.</strong><br><span style="color:var(--t2)">We\'ll reach out to <strong>' + S.email + '</strong> when SyncEngine is ready.</span>'
-        : '<strong style="color:var(--moss)">\u2713 Profile saved.</strong><br><span style="color:var(--t2)">Add your email above to get notified when SyncEngine launches.</span>';
+if (loop && 'IntersectionObserver' in window) {
+  loop.dataset.stage = '1'; // JS available: start the story at stage 1
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) {
+      loop.dataset.stage = e.target.dataset.stage;
+      steps.forEach(s => s.classList.toggle('on', s === e.target));
+      clearTimeout(reorderTimer);
+      if (e.target.dataset.stage === '5') {
+        reorderTimer = setTimeout(() => setReordered(true), 1700);
+      } else {
+        setReordered(false);
+      }
     }
-  } catch (err) {
-    console.error('Signup failed:', err);
-    submitted = false;
-    if (btn) { btn.textContent = 'Register Interest \u2192'; btn.disabled = false; btn.style.opacity = '1'; }
-    if (statusEl) {
-      statusEl.style.display = 'block';
-      statusEl.style.background = 'rgba(239,68,68,0.08)';
-      statusEl.style.border = '1px solid rgba(239,68,68,0.2)';
-      statusEl.innerHTML = '<span style="color:var(--danger)">Couldn\'t save your profile.</span> <a href="#" onclick="submitProfile();return false" style="color:var(--indigo-light);text-decoration:underline">Try again</a>';
-    }
-  }
+  }), { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach(s => io.observe(s));
+} else {
+  steps.forEach(s => s.classList.add('on'));
+  setReordered(true); // no-JS default markup is stage 5; land on the final state
 }
 
-// ═══ STAGE COMPLETE ═══
-function done(stage) {
-  S.done.add(stage);
-  sync();
-
-  if (stage === 's6') {
-    const sec = Math.floor((Date.now() - S.t0) / 1000);
-    const m = Math.floor(sec / 60), s = sec % 60;
-    const timeStr = m + ':' + String(s).padStart(2, '0');
-    const millis = sec * 1000;
-    const hex = Date.now().toString(16).slice(-8);
-    document.getElementById('tokId').textContent = 'tok:' + hex.slice(0,4) + '·' + hex.slice(4);
-    document.getElementById('tokHolder').textContent = S.name || 'Anonymous Peer';
-    document.getElementById('tokTime').innerHTML = '<span class="lit">' + timeStr + '</span> of attention (' + millis.toLocaleString() + 'ms)';
-    document.getElementById('tokIntention').textContent = S.need ? cut(S.need, 38) : 'Completing the gift cycle';
-    document.getElementById('tokChainYou').textContent = S.name ? S.name[0].toUpperCase() : '?';
-    document.getElementById('tokChainYou').title = S.name || 'You';
-    setTimeout(() => {
-      document.getElementById('tokenReveal').classList.add('minted');
-    }, 300);
-    const card = document.getElementById('profCard');
-    card.style.boxShadow = '0 0 80px rgba(129,140,248,0.15), 0 0 40px rgba(129,140,248,0.1)';
-    setTimeout(() => { card.style.boxShadow = ''; }, 3000);
-    // Save profile to SurrealDB
-    submitProfile();
-  }
-
-  // Advance
-  const order = ['s2','s3','s4','s5','s6'];
-  const i = order.indexOf(stage);
-  if (i < order.length - 1) {
-    setTimeout(() => go(order[i + 1]), 500);
-  }
-}
-
-// ═══ NAV ═══
-function go(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-
-document.querySelectorAll('.nav-dot').forEach(d => {
-  d.addEventListener('click', () => go(d.dataset.s));
-});
-
-// ═══ SCROLL ═══
-const sects = ['hero','s2','s3','s4','s5','s6','s7'];
-const dotColors = {
-  hero:'var(--moss)', s2:'var(--s2)',
-  s3:'var(--s3)', s4:'var(--s4)', s5:'var(--s5)', s6:'var(--s6)', s7:'var(--violet)'
-};
-
+// ═══ SCROLL — progress bar + reveal ═══
 function onScroll() {
   const top = window.scrollY;
   const max = document.documentElement.scrollHeight - window.innerHeight;
   document.getElementById('prog').style.width = (max > 0 ? top / max * 100 : 0) + '%';
-
-  let cur = 'hero';
-  sects.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && el.getBoundingClientRect().top < window.innerHeight * 0.45) cur = id;
-  });
-
-  document.querySelectorAll('.nav-dot').forEach(d => {
-    const on = d.dataset.s === cur;
-    d.classList.toggle('on', on);
-    if (on) {
-      const c = dotColors[cur] || 'var(--moss)';
-      d.style.borderColor = c; d.style.background = c;
-      d.style.boxShadow = '0 0 14px ' + c;
-    } else {
-      d.style.borderColor = ''; d.style.background = ''; d.style.boxShadow = '';
-    }
-  });
-
   document.querySelectorAll('.r').forEach(el => {
     if (el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add('v');
   });
 }
-
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', onScroll);
 onScroll();
