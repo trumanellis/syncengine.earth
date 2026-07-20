@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Join the Community — SyncEngine</title>
-  <meta name="description" content="SyncEngine is a private, on-device tool. Around it is a community that gathers, keeps the Temple network, and stewards the work together. Becoming a Steward is how you join that community — affirm the One Commandment, sign the Covenant, and offer what you can. No one aligned with the Commandment is turned away for lack of funds.">
+  <meta name="description" content="SyncEngine is a private, on-device tool. Around it is a community that gathers, keeps the Temple network, and stewards the work together. Becoming a Member is how you join that community — affirm the One Commandment, sign the Covenant, and offer what you can. No one aligned with the Commandment is turned away for lack of funds.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="SyncEngine">
   <meta property="og:title" content="Join the Community — SyncEngine">
-  <meta property="og:description" content="Becoming a Steward is how you join the community around SyncEngine — the people who gather, keep the Temple network, and steward the work.">
+  <meta property="og:description" content="Becoming a Member is how you join the community around SyncEngine — the people who gather, keep the Temple network, and steward the work.">
   <meta property="og:url" content="https://www.syncengine.earth/join.html">
   <meta property="og:image" content="https://www.syncengine.earth/assets/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -32,34 +32,34 @@
     .join-wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
 
     /* ── Hero ── */
-    .join-hero { text-align: center; padding: 72px 0 24px; }
+    .join-hero { text-align: center; padding: clamp(12px, 2vh, 28px) 0 clamp(8px, 1.5vh, 16px); }
     .join-eyebrow {
       font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--indigo-light); margin-bottom: 18px;
+      text-transform: uppercase; color: var(--indigo-light); margin-bottom: 12px;
     }
     .join-title {
       font-family: var(--display); font-weight: 800;
-      font-size: clamp(32px, 6vw, 56px); letter-spacing: -0.03em; line-height: 1.05;
-      color: var(--tx); margin-bottom: 18px;
+      font-size: clamp(30px, 5vw, 42px); letter-spacing: -0.03em; line-height: 1.05;
+      color: var(--tx); margin-bottom: 10px;
     }
     .join-title em { font-style: normal; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .join-subtitle { font-size: 17px; color: var(--t2); line-height: 1.8; font-weight: 300; max-width: 30ch; margin: 0 auto; }
+    .join-subtitle { font-size: 16px; color: var(--t2); line-height: 1.5; font-weight: 300; max-width: 42ch; margin: 0 auto; }
 
     /* ── One Commandment card ── */
     .commandment {
-      max-width: 640px; margin: 44px auto 48px; text-align: center;
+      max-width: 640px; margin: clamp(12px, 2vh, 24px) auto clamp(14px, 2vh, 26px); text-align: center;
       border: 1px solid var(--bd); border-radius: var(--radius); background: var(--card);
-      padding: 40px 28px; position: relative; overflow: hidden;
+      padding: clamp(16px, 2.5vh, 26px) 28px; position: relative; overflow: hidden;
     }
     .commandment::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient); }
-    .commandment-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--indigo-light); margin-bottom: 18px; }
-    .commandment-words { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 3vw, 26px); line-height: 1.5; letter-spacing: -0.01em; color: var(--tx); }
+    .commandment-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--indigo-light); margin-bottom: 12px; }
+    .commandment-words { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 3vw, 23px); line-height: 1.4; letter-spacing: -0.01em; color: var(--tx); }
 
     /* ── Offering hero ── */
-    .offering-hero { max-width: 640px; margin: 0 auto 48px; text-align: center; }
+    .offering-hero { max-width: 640px; margin: 0 auto clamp(14px, 2.5vh, 28px); text-align: center; }
     .offering-lead {
-      font-family: var(--display); font-weight: 400; font-size: clamp(18px, 2.6vw, 23px);
-      line-height: 1.6; color: var(--tx); max-width: 34ch; margin: 0 auto 32px;
+      font-family: var(--display); font-weight: 400; font-size: clamp(17px, 2.4vw, 20px);
+      line-height: 1.45; color: var(--tx); max-width: 50ch; margin: 0 auto clamp(14px, 2vh, 22px);
     }
 
     /* Amount grid */
@@ -70,7 +70,7 @@
       display: flex; flex-direction: column; align-items: center; gap: 4px;
       font-family: var(--display); line-height: 1.1; color: var(--tx);
       background: var(--card); border: 1px solid var(--bd); border-radius: var(--r-sm);
-      padding: 14px 6px; cursor: pointer; transition: border-color .2s, background .2s, transform .2s;
+      padding: 11px 6px; cursor: pointer; transition: border-color .2s, background .2s, transform .2s;
     }
     .amount-chip:hover { border-color: var(--indigo); transform: translateY(-1px); }
     .amount-chip[aria-pressed="true"] { border-color: var(--indigo); background: rgba(129,140,248,0.10); }
@@ -79,9 +79,9 @@
     .amount-chip:hover .chip-mean, .amount-chip[aria-pressed="true"] .chip-mean { color: var(--indigo-light); }
 
     .amount-custom {
-      display: flex; align-items: center; gap: 8px; max-width: 560px; margin: 0 auto 22px;
+      display: flex; align-items: center; gap: 8px; max-width: 560px; margin: 0 auto 14px;
       border: 1px solid var(--bd); border-radius: var(--r-sm); background: var(--card);
-      padding: 4px 16px; transition: border-color .2s, box-shadow .2s;
+      padding: 2px 16px; transition: border-color .2s, box-shadow .2s;
     }
     .amount-custom:focus-within { border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(129,140,248,0.15); }
     .amount-custom span { font-family: var(--display); font-size: 18px; color: var(--dim); }
@@ -93,21 +93,22 @@
       display: block; width: 100%; box-sizing: border-box; border: none;
       font-family: var(--display); font-size: 16px; font-weight: 600; letter-spacing: 0.01em;
       color: #fff; background: var(--gradient); border-radius: var(--r-sm);
-      padding: 18px 24px; text-decoration: none; cursor: pointer;
+      padding: 15px 24px; text-decoration: none; cursor: pointer;
       box-shadow: 0 0 24px rgba(129,140,248,0.25); transition: transform .25s, box-shadow .25s, opacity .25s;
     }
     .offering-btn:hover { transform: translateY(-2px); box-shadow: 0 0 34px rgba(129,140,248,0.4); }
 
-    .offer-error { color: var(--danger); font-size: 14px; margin: 12px auto 0; max-width: 440px; min-height: 1.2em; text-align: center; }
+    .offer-error { color: var(--danger); font-size: 14px; margin: 10px auto 0; max-width: 440px; min-height: 1.2em; text-align: center; }
     #checkout { max-width: 560px; margin: 24px auto 0; }
+    #checkout:empty { margin: 0; }
 
-    .offering-fineprint { color: var(--t3); font-size: 14px; line-height: 1.7; max-width: 46ch; margin: 24px auto 0; }
+    .offering-fineprint { color: var(--t3); font-size: 13px; line-height: 1.55; max-width: 50ch; margin: 12px auto 0; }
     .offering-fineprint strong { color: var(--t2); font-weight: 500; }
 
     /* Covenant disclosure */
-    .covenant-reveal { max-width: 560px; margin: 0 auto 32px; border: 1px solid var(--bd); border-radius: var(--radius); background: var(--bg2); overflow: hidden; }
+    .covenant-reveal { max-width: 560px; margin: clamp(10px, 1.5vh, 16px) auto 10px; border: 1px solid var(--bd); border-radius: var(--radius); background: var(--bg2); overflow: hidden; }
     .covenant-reveal summary {
-      cursor: pointer; padding: 16px 20px; list-style: none; display: flex; align-items: center; gap: 8px;
+      cursor: pointer; padding: 13px 20px; list-style: none; display: flex; align-items: center; gap: 8px;
       font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--t3); transition: color .3s, background .3s;
     }
     .covenant-reveal summary::-webkit-details-marker { display: none; }
@@ -118,7 +119,7 @@
     .covenant-body a { color: var(--indigo-light); }
 
     /* Skip-to-serve note */
-    .offering-skip { display: block; max-width: 48ch; margin: 0 auto 64px; font-size: 13px; color: var(--t3); line-height: 1.7; text-align: center; }
+    .offering-skip { display: block; max-width: 54ch; margin: 0 auto clamp(12px, 2vh, 24px); font-size: 12.5px; color: var(--t3); line-height: 1.55; text-align: center; }
     .offering-skip a { color: var(--indigo-light); }
 
     /* Member welcome */
@@ -182,15 +183,13 @@
       <p class="join-subtitle">SyncEngine runs on your own device. This is how you join the people who gather around it.</p>
     </section>
 
-    <p class="offering-fineprint" style="max-width: 52ch; text-align: center; margin: 0 auto 8px; color: var(--t2);">The app is yours to use, privately, without joining anything. The community is separate: the people who gather, keep the Temple network, and steward the work together. Becoming a Steward is how you step into that circle.</p>
-
     <section class="commandment" aria-label="The One Commandment">
       <p class="commandment-eyebrow">The One Commandment</p>
       <p class="commandment-words">Recognize the divine in every Other and treat them as an extension of yourself.</p>
     </section>
 
     <section class="offering-hero" id="offering-hero" aria-label="Sign the Covenant">
-      <p class="offering-lead">To become a Steward is to affirm this Commandment and seal it with an offering — your signature on the Covenant.</p>
+      <p class="offering-lead">To become a Member is to affirm this Commandment and seal it with an offering — your signature on the Covenant.</p>
 
       <div id="amount-step">
         <div class="amount-grid" id="amount-grid" role="group" aria-label="Choose your offering">
@@ -217,7 +216,7 @@
 
       <div id="checkout"><!-- Stripe Embedded Checkout mounts here --></div>
 
-      <p class="offering-fineprint">Your name and email travel with the offering — that is your signature, recorded. <strong>No one aligned with the Commandment is turned away for lack of funds.</strong> Membership is for life.</p>
+      <p class="offering-fineprint">Your name and email travel with the offering — that is your signature, recorded. <strong>No one aligned with the Commandment is turned away for lack of funds.</strong></p>
     </section>
 
     <details class="covenant-reveal">
@@ -229,14 +228,14 @@
     </details>
 
     <span class="offering-skip">
-      Offering time or skill instead of funds? That's enough — no one aligned with the Commandment is turned away. Tell us how you'd like to serve at
+      Offering time or skill instead of funds? Membership is for life — tell us how you'd like to serve at
       <a href="mailto:ola@templesofrefuge.earth?subject=My%20offering%20of%20time%20or%20skill">ola@templesofrefuge.earth</a>.
     </span>
 
     <section class="member-welcome" id="member-welcome" hidden>
       <div class="ok-mark">✦</div>
-      <h2>Welcome, Steward</h2>
-      <p id="member-welcome-text">Your offering is your signature. You are a Steward for life — an affiliation of the heart.</p>
+      <h2>Welcome, Member</h2>
+      <p id="member-welcome-text">Your offering is your signature. You are a Member for life — an affiliation of the heart.</p>
       <div class="member-code" id="member-code" hidden>
         <p class="member-code-label">Your founding-gift code</p>
         <div class="member-code-row">
@@ -346,7 +345,7 @@ function isConfigured(v) { return typeof v === 'string' && v.length > 0 && !REPL
             if (s.customer_name) {
               welcomeText.textContent =
                 'Your offering is your signature, ' + s.customer_name +
-                '. You are a Steward for life — an affiliation of the heart.';
+                '. You are a Member for life — an affiliation of the heart.';
             }
             document.querySelector('.covenant-reveal').hidden = true;
             document.querySelector('.offering-skip').hidden = true;
