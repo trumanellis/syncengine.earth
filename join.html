@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Community — SyncEngine</title>
+  <meta name="description" content="SyncEngine is a private, on-device tool. Around it is a community that gathers, keeps the Temple network, and stewards the work together. Becoming a Steward is how you join that community — affirm the One Commandment, sign the Covenant, and offer what you can. No one aligned with the Commandment is turned away for lack of funds.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SyncEngine">
+  <meta property="og:title" content="Join the Community — SyncEngine">
+  <meta property="og:description" content="Becoming a Steward is how you join the community around SyncEngine — the people who gather, keep the Temple network, and steward the work.">
+  <meta property="og:url" content="https://www.syncengine.earth/join.html">
+  <meta property="og:image" content="https://www.syncengine.earth/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.syncengine.earth/join.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/core.css">
+  <style>
+    /* ═══ Atmosphere — single hero glow (matches index.html) ═══ */
+    .atmosphere { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .hero-glow {
+      position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px; max-width: 130vw; border-radius: 50%;
+      background: radial-gradient(circle, rgba(129,140,248,0.07) 0%, rgba(192,132,252,0.03) 40%, transparent 70%);
+    }
+
+    .join-wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Hero ── */
+    .join-hero { text-align: center; padding: 72px 0 24px; }
+    .join-eyebrow {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--indigo-light); margin-bottom: 18px;
+    }
+    .join-title {
+      font-family: var(--display); font-weight: 800;
+      font-size: clamp(32px, 6vw, 56px); letter-spacing: -0.03em; line-height: 1.05;
+      color: var(--tx); margin-bottom: 18px;
+    }
+    .join-title em { font-style: normal; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .join-subtitle { font-size: 17px; color: var(--t2); line-height: 1.8; font-weight: 300; max-width: 30ch; margin: 0 auto; }
+
+    /* ── One Commandment card ── */
+    .commandment {
+      max-width: 640px; margin: 44px auto 48px; text-align: center;
+      border: 1px solid var(--bd); border-radius: var(--radius); background: var(--card);
+      padding: 40px 28px; position: relative; overflow: hidden;
+    }
+    .commandment::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient); }
+    .commandment-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--indigo-light); margin-bottom: 18px; }
+    .commandment-words { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 3vw, 26px); line-height: 1.5; letter-spacing: -0.01em; color: var(--tx); }
+
+    /* ── Offering hero ── */
+    .offering-hero { max-width: 640px; margin: 0 auto 48px; text-align: center; }
+    .offering-lead {
+      font-family: var(--display); font-weight: 400; font-size: clamp(18px, 2.6vw, 23px);
+      line-height: 1.6; color: var(--tx); max-width: 34ch; margin: 0 auto 32px;
+    }
+
+    /* Amount grid */
+    .amount-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 560px; margin: 0 auto 14px; }
+    @media (min-width: 420px) { .amount-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 560px) { .amount-grid { grid-template-columns: repeat(5, 1fr); } }
+    .amount-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      font-family: var(--display); line-height: 1.1; color: var(--tx);
+      background: var(--card); border: 1px solid var(--bd); border-radius: var(--r-sm);
+      padding: 14px 6px; cursor: pointer; transition: border-color .2s, background .2s, transform .2s;
+    }
+    .amount-chip:hover { border-color: var(--indigo); transform: translateY(-1px); }
+    .amount-chip[aria-pressed="true"] { border-color: var(--indigo); background: rgba(129,140,248,0.10); }
+    .chip-amt { font-size: 17px; font-weight: 600; }
+    .chip-mean { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); }
+    .amount-chip:hover .chip-mean, .amount-chip[aria-pressed="true"] .chip-mean { color: var(--indigo-light); }
+
+    .amount-custom {
+      display: flex; align-items: center; gap: 8px; max-width: 560px; margin: 0 auto 22px;
+      border: 1px solid var(--bd); border-radius: var(--r-sm); background: var(--card);
+      padding: 4px 16px; transition: border-color .2s, box-shadow .2s;
+    }
+    .amount-custom:focus-within { border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(129,140,248,0.15); }
+    .amount-custom span { font-family: var(--display); font-size: 18px; color: var(--dim); }
+    .amount-custom input { flex: 1; border: none; background: transparent; color: var(--tx); font-family: var(--body); font-size: 16px; padding: 10px 0; outline: none; }
+    .amount-custom input::placeholder { color: var(--dim); }
+
+    .offering-action { margin: 0 0 16px; }
+    .offering-btn {
+      display: block; width: 100%; box-sizing: border-box; border: none;
+      font-family: var(--display); font-size: 16px; font-weight: 600; letter-spacing: 0.01em;
+      color: #fff; background: var(--gradient); border-radius: var(--r-sm);
+      padding: 18px 24px; text-decoration: none; cursor: pointer;
+      box-shadow: 0 0 24px rgba(129,140,248,0.25); transition: transform .25s, box-shadow .25s, opacity .25s;
+    }
+    .offering-btn:hover { transform: translateY(-2px); box-shadow: 0 0 34px rgba(129,140,248,0.4); }
+
+    .offer-error { color: var(--danger); font-size: 14px; margin: 12px auto 0; max-width: 440px; min-height: 1.2em; text-align: center; }
+    #checkout { max-width: 560px; margin: 24px auto 0; }
+
+    .offering-fineprint { color: var(--t3); font-size: 14px; line-height: 1.7; max-width: 46ch; margin: 24px auto 0; }
+    .offering-fineprint strong { color: var(--t2); font-weight: 500; }
+
+    /* Covenant disclosure */
+    .covenant-reveal { max-width: 560px; margin: 0 auto 32px; border: 1px solid var(--bd); border-radius: var(--radius); background: var(--bg2); overflow: hidden; }
+    .covenant-reveal summary {
+      cursor: pointer; padding: 16px 20px; list-style: none; display: flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--t3); transition: color .3s, background .3s;
+    }
+    .covenant-reveal summary::-webkit-details-marker { display: none; }
+    .covenant-reveal summary::before { content: '▸'; transition: transform .3s; display: inline-block; }
+    .covenant-reveal[open] summary::before { transform: rotate(90deg); }
+    .covenant-reveal summary:hover { color: var(--t2); background: var(--bg2); }
+    .covenant-body { padding: 4px 20px 20px; font-size: 14px; color: var(--t2); line-height: 1.8; }
+    .covenant-body a { color: var(--indigo-light); }
+
+    /* Skip-to-serve note */
+    .offering-skip { display: block; max-width: 48ch; margin: 0 auto 64px; font-size: 13px; color: var(--t3); line-height: 1.7; text-align: center; }
+    .offering-skip a { color: var(--indigo-light); }
+
+    /* Member welcome */
+    .member-welcome {
+      max-width: 560px; margin: 0 auto 64px; text-align: center;
+      border: 1px solid var(--bd); border-radius: var(--radius); background: var(--card);
+      padding: 52px 28px; position: relative; overflow: hidden;
+    }
+    .member-welcome::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gradient); }
+    .member-welcome .ok-mark { font-size: 32px; color: var(--indigo-light); margin-bottom: 14px; }
+    .member-welcome h2 { font-family: var(--display); font-weight: 800; font-size: clamp(26px, 4vw, 34px); letter-spacing: -0.02em; color: var(--tx); margin-bottom: 14px; }
+    .member-welcome p { color: var(--t2); line-height: 1.8; max-width: 42ch; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+<!-- Atmosphere -->
+<div class="atmosphere"><div class="hero-glow"></div></div>
+
+<!-- Site nav (matches covenant.html / network.html) -->
+<nav class="site-nav">
+  <a href="/" class="site-nav-logo"><span class="se-wordmark__full">Synchronicity Engine</span><span class="se-wordmark__short">SyncEngine</span></a>
+  <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <div class="site-nav-links">
+    <a href="/gift-cycle.html">Gift Cycle</a>
+    <a href="/network.html">Indra's Network</a>
+    <a href="/agents.html">AI Agents</a>
+    <a href="/articles/">Articles</a>
+    <a href="/covenant.html">Covenant</a>
+    <a href="/join.html" class="site-nav-cta active">Join</a>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="join-wrap">
+
+    <section class="join-hero">
+      <p class="join-eyebrow">The Community</p>
+      <h1 class="join-title">Join the <em>Community</em></h1>
+      <p class="join-subtitle">SyncEngine runs on your own device. This is how you join the people who gather around it.</p>
+    </section>
+
+    <p class="offering-fineprint" style="max-width: 52ch; text-align: center; margin: 0 auto 8px; color: var(--t2);">The app is yours to use, privately, without joining anything. The community is separate: the people who gather, keep the Temple network, and steward the work together. Becoming a Steward is how you step into that circle.</p>
+
+    <section class="commandment" aria-label="The One Commandment">
+      <p class="commandment-eyebrow">The One Commandment</p>
+      <p class="commandment-words">Recognize the divine in every Other and treat them as an extension of yourself.</p>
+    </section>
+
+    <section class="offering-hero" id="offering-hero" aria-label="Sign the Covenant">
+      <p class="offering-lead">To become a Steward is to affirm this Commandment and seal it with an offering — your signature on the Covenant.</p>
+
+      <div id="amount-step">
+        <div class="amount-grid" id="amount-grid" role="group" aria-label="Choose your offering">
+          <button type="button" class="amount-chip" data-cents="1100"><span class="chip-amt">$11</span><span class="chip-mean">Awakening</span></button>
+          <button type="button" class="amount-chip" data-cents="3300"><span class="chip-amt">$33</span><span class="chip-mean">Compassion</span></button>
+          <button type="button" class="amount-chip" data-cents="5500" aria-pressed="true"><span class="chip-amt">$55</span><span class="chip-mean">Change</span></button>
+          <button type="button" class="amount-chip" data-cents="7700"><span class="chip-amt">$77</span><span class="chip-mean">Wisdom</span></button>
+          <button type="button" class="amount-chip" data-cents="10800"><span class="chip-amt">$108</span><span class="chip-mean">Wholeness</span></button>
+          <button type="button" class="amount-chip" data-cents="33300"><span class="chip-amt">$333</span><span class="chip-mean">Alignment</span></button>
+          <button type="button" class="amount-chip" data-cents="55500"><span class="chip-amt">$555</span><span class="chip-mean">Rebirth</span></button>
+          <button type="button" class="amount-chip" data-cents="77700"><span class="chip-amt">$777</span><span class="chip-mean">Fortune</span></button>
+          <button type="button" class="amount-chip" data-cents="99900"><span class="chip-amt">$999</span><span class="chip-mean">Completion</span></button>
+          <button type="button" class="amount-chip" data-cents="111100"><span class="chip-amt">$1111</span><span class="chip-mean">Portal</span></button>
+        </div>
+        <label class="amount-custom">
+          <span>$</span>
+          <input type="number" id="amount-custom" inputmode="decimal" min="1" step="1" placeholder="Another amount" aria-label="Another amount in dollars">
+        </label>
+        <div class="offering-action">
+          <button type="button" class="offering-btn" id="offer-continue">Donate to Join &#8594;</button>
+        </div>
+        <p class="offer-error" id="offer-error" role="alert"></p>
+      </div>
+
+      <div id="checkout"><!-- Stripe Embedded Checkout mounts here --></div>
+
+      <p class="offering-fineprint">Your name and email travel with the offering — that is your signature, recorded. <strong>No one aligned with the Commandment is turned away for lack of funds.</strong> Membership is for life.</p>
+    </section>
+
+    <details class="covenant-reveal">
+      <summary>Read the Covenant before you sign</summary>
+      <div class="covenant-body">
+        <p>Membership is an agreement between <strong>Temples of Refuge</strong> — the association of churches that stewards the Synchronicity Engine — and those who join it: the One Commandment, attention as gift, non-extraction, and the right to fork.</p>
+        <p><a href="/covenant.html">Read the full Indra's Network Membership Covenant →</a></p>
+      </div>
+    </details>
+
+    <span class="offering-skip">
+      Offering time or skill instead of funds? That's enough — no one aligned with the Commandment is turned away. Tell us how you'd like to serve at
+      <a href="mailto:ola@templesofrefuge.earth?subject=My%20offering%20of%20time%20or%20skill">ola@templesofrefuge.earth</a>.
+    </span>
+
+    <section class="member-welcome" id="member-welcome" hidden>
+      <div class="ok-mark">✦</div>
+      <h2>Welcome, Steward</h2>
+      <p id="member-welcome-text">Your offering is your signature. You are a Steward for life — an affiliation of the heart.</p>
+    </section>
+
+  </div>
+</main>
+
+<!-- Site footer -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer-links">
+      <a href="/">Home</a>
+      <a href="/gift-cycle.html">Gift Cycle</a>
+      <a href="/network.html">Indra's Network</a>
+      <a href="/agents.html">AI Agents</a>
+      <a href="/articles/">Articles</a>
+      <a href="/whitepaper.html">White Paper</a>
+      <a href="/covenant.html">Covenant</a>
+      <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+      <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
+    </div>
+    <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Stewarded by Temples of Refuge &middot; Source-available &middot; Non-extraction</p>
+  </div>
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// CONFIGURATION — paste real values here once. Everything here is
+// PUBLIC by design (it ships in client JS); none of it is secret.
+// Offerings flow to the one Temples of Refuge Stripe account, served by
+// the shared `tor-checkout` Cloudflare Worker (see templesofrefuge.earth/
+// checkout-worker). Syncengine's origins must be in the Worker's
+// ALLOWED_ORIGINS for the inline checkout to authorize.
+// ═══════════════════════════════════════════════════════════════════
+var CFG = {
+  // Stripe PUBLISHABLE key (pk_live_… / pk_test_…) — public, safe here.
+  // LOCAL TEST value below — swap to pk_live_… before going live.
+  STRIPE_PUBLISHABLE_KEY: 'pk_test_51TqoTrGvkk6jsZYuVSiVkOQcWKt4tVtIjFSwGRwy4YtJEuKnG8PrbzLXaX12YNI0tp6RjoU1b5l8RAidlIlZr8XZ00Y0RUWKt0',
+
+  // The deployed `tor-checkout` Worker base URL, no trailing slash.
+  // LOCAL: http://localhost:8787 · LIVE: https://tor-checkout.<sub>.workers.dev
+  // SWAP to the live Worker URL before going live.
+  CHECKOUT_API_URL: 'http://localhost:8787',
+
+  // Hosted Stripe Payment Link — graceful fallback when the inline checkout
+  // backend isn't reachable. No API keys here.
+  STRIPE_PAYMENT_LINK_URL: 'https://donate.stripe.com/aFacN5ago2mI71SeAM2Nq00',
+
+  // Inbox for the mailto fallback / questions.
+  CONTACT_EMAIL: 'hello@templesofrefuge.earth'
+};
+
+var REPLACE_RE = /^REPLACE_ME/;
+function isConfigured(v) { return typeof v === 'string' && v.length > 0 && !REPLACE_RE.test(v); }
+
+// The offering is the signature. Three modes, chosen by what's configured:
+//   1. Return from checkout (?session_id=)  → membership confirmation
+//   2. Inline embedded checkout             → pick amount, pay on-page
+//   3. Fallback                             → hosted payment link / mailto
+(function joinFlow() {
+  var hero = document.getElementById('offering-hero');
+  var welcome = document.getElementById('member-welcome');
+  var apiUrl = isConfigured(CFG.CHECKOUT_API_URL) ? CFG.CHECKOUT_API_URL : null;
+
+  // ── 1. Returning from a completed checkout ──
+  var sessionId = new URLSearchParams(window.location.search).get('session_id');
+  if (sessionId && apiUrl) {
+    hero.hidden = true;
+    fetch(apiUrl + '/session-status?session_id=' + encodeURIComponent(sessionId))
+      .then(function (r) { return r.json(); })
+      .then(function (s) {
+        if (s.status === 'complete') {
+          if (s.customer_name) {
+            document.getElementById('member-welcome-text').textContent =
+              'Your offering is your signature, ' + s.customer_name +
+              '. You are a Steward for life — an affiliation of the heart.';
+          }
+          document.querySelector('.covenant-reveal').hidden = true;
+          document.querySelector('.offering-skip').hidden = true;
+          welcome.hidden = false;
+        } else {
+          hero.hidden = false; // not completed — let them try again
+        }
+      })
+      .catch(function () { hero.hidden = false; });
+    return;
+  }
+
+  var step = document.getElementById('amount-step');
+  var hasInline = apiUrl && isConfigured(CFG.STRIPE_PUBLISHABLE_KEY) && typeof Stripe !== 'undefined';
+
+  // ── 3. Fallback: hosted payment link (or mailto) ──
+  if (!hasInline) {
+    var link = isConfigured(CFG.STRIPE_PAYMENT_LINK_URL) ? CFG.STRIPE_PAYMENT_LINK_URL : null;
+    if (link) {
+      step.innerHTML = '<div class="offering-action"><a class="offering-btn" href="' + link +
+        '" target="_blank" rel="noopener">Donate to Join &#8594;</a></div>';
+    } else {
+      step.innerHTML = '<p class="offering-fineprint">Our giving page is being prepared. ' +
+        'To make your offering now, write to <a href="mailto:' + CFG.CONTACT_EMAIL +
+        '?subject=My%20offering" style="color:var(--indigo-light)">' + CFG.CONTACT_EMAIL + '</a>.</p>';
+    }
+    return;
+  }
+
+  // ── 2. Inline embedded checkout ──
+  var stripe = Stripe(CFG.STRIPE_PUBLISHABLE_KEY);
+  var grid = document.getElementById('amount-grid');
+  var custom = document.getElementById('amount-custom');
+  var errEl = document.getElementById('offer-error');
+  var continueBtn = document.getElementById('offer-continue');
+  var chips = Array.prototype.slice.call(grid.querySelectorAll('.amount-chip'));
+  var chosenCents = 5500; // default $55
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+      chosenCents = parseInt(chip.getAttribute('data-cents'), 10);
+      custom.value = '';
+      errEl.textContent = '';
+    });
+  });
+  custom.addEventListener('input', function () {
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+    var dollars = parseFloat(custom.value);
+    chosenCents = Number.isFinite(dollars) ? Math.round(dollars * 100) : 0;
+    errEl.textContent = '';
+  });
+
+  continueBtn.addEventListener('click', function () {
+    if (!(chosenCents >= 100 && chosenCents <= 1000000)) {
+      errEl.textContent = 'Please choose an offering between $1 and $10,000.';
+      return;
+    }
+    continueBtn.textContent = 'Preparing…';
+    continueBtn.style.pointerEvents = 'none';
+
+    stripe.initEmbeddedCheckout({
+      fetchClientSecret: function () {
+        return fetch(apiUrl + '/create-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: chosenCents })
+        }).then(function (r) {
+          return r.json().then(function (d) {
+            if (!r.ok) throw new Error(d.error || 'Could not start checkout.');
+            return d.client_secret;
+          });
+        });
+      }
+    }).then(function (checkout) {
+      step.hidden = true;
+      checkout.mount('#checkout');
+    }).catch(function (err) {
+      continueBtn.textContent = 'Donate to Join →';
+      continueBtn.style.pointerEvents = '';
+      errEl.textContent = err.message || 'Something went wrong. Please try again.';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

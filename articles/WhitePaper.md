@@ -2,7 +2,9 @@
 
 *A peer-to-peer protocol that tracks collective focus the way physics tracks energy — no blockchain, no global consensus*
 
-**Abstract.** Human attention is a conserved quantity — you can only focus on one thing at a time, and no act of software can change that. This paper presents a peer-to-peer protocol that tracks collective attention using a conservation law rather than global consensus: every switch of focus is a signed `(-1, +1)` pair that preserves the total, enforced locally by hash-chained event logs and BFT quorum certificates scoped to small witness sets. The result is a distributed ledger that scales naturally, resists Sybil attacks through in-person liveness attestation, and converts verified attention into tokens of gratitude — an attention-backed economy with no mining, no staking, and no blockchain.
+**Abstract.** Human attention is a conserved quantity — you can only focus on one thing at a time, and no act of software can change that. This paper presents a peer-to-peer protocol that tracks collective attention using a conservation law rather than global consensus: every switch of focus is a signed `(-1, +1)` pair that preserves the total, enforced locally by hash-chained event logs and BFT quorum certificates scoped to small witness sets. The result is a distributed ledger that scales naturally, resists Sybil attacks through in-person liveness attestation, and lets verified attention release as gratitude into a signed shared ledger — attention-backed acknowledgment with no mining, no staking, and no blockchain.
+
+*A note on scope.* SyncEngine ships an attention and time ledger today: an uptime and attention record, a collective clock, and Offerings priced in accrued time. The fuller physics in this paper — the conservation law as a strict invariant, the witness-quorum finality, the decay curves and the gratitude economy — is the design horizon this ledger is built toward. Where a section describes behavior beyond what the app does today, it is marked as forward-looking design rather than present-tense product.
 
 ## The Problem
 
@@ -20,7 +22,9 @@ The key rule: **the total number of lasers in the room is always 100.** Nobody c
 
 Now notice what happens at each project. The light from every laser pointed at it doesn't just illuminate — it charges a battery. The longer you shine, the more energy accumulates. The unique colors stored in the battery record exactly whose light powered it — provenance is built in. A project lit by thirty distinct colors holds a different charge than one lit by three beams from the same corner of the room.
 
-When the work is complete, the stored charge is released to the person who did the work — as *gratitude*. The battery is proof that real human focus backed real effort. This is how attention becomes currency without ever being money: light hits the project, charges the battery, and the battery pays the worker.
+When the work is complete, the stored charge is released to the person who did the work — as *gratitude*. The battery is proof that real human focus backed real effort. This is how attention becomes acknowledgment without ever being money: light hits the project, charges the battery, and the battery releases gratitude to the maker.
+
+*(Design horizon: today the app keeps the attention and time ledger and lets a steward's gratitude release to a maker on completion. The full battery-and-charge model above — attention accumulating as a stored, spendable quantity — is forward-looking design.)*
 
 ![Laser analogy: colored beams charge a project battery, which releases gratitude](laser_battery.svg)
 
@@ -135,7 +139,7 @@ The conservation law and BFT certificates provide strong guarantees under their 
 
 ### D. Stale Liveness / Geographic Bias
 
-**Attack:** Regions without regular in-person gatherings see all liveness scores decay toward zero. Gratitude tokens minted by stale blessers carry near-zero value. The system becomes economically inert in those regions.
+**Attack:** Regions without regular in-person gatherings see all liveness scores decay toward zero. Gratitude released by stewards with stale liveness carries near-zero weight. The system becomes economically inert in those regions.
 
 **Mitigation:** Soft degradation, not hard cutoff. Raw (unweighted) attention counts remain available. Events and chains are still valid. Applications can display unweighted counts when no members have fresh liveness.
 
@@ -374,24 +378,26 @@ The `RealmAttention` trait (`realm_attention.rs`) is the public interface that a
 
 The API surface is deliberately small. Chain validation, equivocation detection, and certificate verification all happen internally. Callers deal in intentions, members, and focus — not hashes and sequence numbers.
 
-## The Gratitude Bridge: Attention as Currency
+## The Gratitude Bridge: Attention as Acknowledgment
 
-![Gratitude cycle: intention → focus → battery → blessing → token → recycle](gratitude_pipeline.svg)
+![Gratitude cycle: intention → focus → battery → completion → gratitude release → recycle](gratitude_pipeline.svg)
 
-Remember the attention battery from the laser analogy? This is how it works. The attention ledger feeds into a *token of gratitude* economy that closes the incentive loop: point your laser at a project → the battery charges → when the work is done, that stored energy is released to the manifester as a token of gratitude, backed by verifiable attention.
+> **Design horizon.** What the app does today is the completion gesture: a maker submits a Manifestation, the intention's steward Accepts, and the steward's gratitude *releases* to the maker — recorded, signed by both, in a shared ledger. The mechanism below — accrued attention converted into a durable, weighted quantity of gratitude — is the forward-looking design that gesture is built toward. It is not a token currency: there is no minting, no transferable coin, and nothing to trade. Read this section as where the attention ledger is headed, not as present-tense product behavior.
 
-When someone's contribution to a project is blessed (acknowledged), the system mints a `TokenOfGratitude`. Each token records `event_indices` — pointers into the `AttentionDocument` identifying which focus sessions back it. `compute_attention_millis()` calculates the raw duration of those sessions. This is the objective component: "Nova spent 45 minutes focused on Project Garden, and here are the hash-chained events proving it."
+Remember the attention battery from the laser analogy? This is how the bridge is designed to work. The attention ledger feeds into a gratitude economy that closes the incentive loop: point your laser at a project → the battery charges → when the work is complete, that stored energy releases to the maker as gratitude, backed by verifiable attention.
 
-A token's value is the cumulative attention weighted by the blesser's liveness:
+When a steward Accepts someone's contribution to a project, the system records a `TokenOfGratitude` — a signed ledger entry, not a coin. Each entry records `event_indices` — pointers into the `AttentionDocument` identifying which focus sessions back it. `compute_attention_millis()` calculates the raw duration of those sessions. This is the objective component: "Nova spent 45 minutes focused on Project Garden, and here are the hash-chained events proving it."
+
+The gratitude released is the cumulative attention weighted by the accepting steward's liveness:
 
 ```
 gratitude_millis = raw_attention_millis × liveness_freshness
 ```
 
 - **Raw attention millis** — Cumulative focus duration. Computed from hash-chained events.
-- **Liveness freshness** — How recently the blesser (the person who minted the token) demonstrated liveness by attending an in-person event. Fresh attestation = full value. Stale = exponential decay. No attestation = zero.
+- **Liveness freshness** — How recently the accepting steward demonstrated liveness by attending an in-person event. Fresh attestation = full value. Stale = exponential decay. No attestation = zero.
 
-This means tokens minted by Sybil accounts (fake identities) carry zero weight — because fake accounts can't show up in person. No ban list needed. The economic filter is grounded in physical presence.
+This means gratitude released by Sybil accounts (fake identities) carries zero weight — because fake accounts can't show up in person. No ban list needed. The economic filter is grounded in physical presence.
 
 ## Anti-Sybil: Humanness-Weighted Attention
 
@@ -454,11 +460,11 @@ Two tests deserve special mention. `live_equivocation_slashing` exercises the fu
 
 **Attention ledger totals:** ~3,750 lines of Rust across 12 source files, ~1,100 lines of Lua end-to-end tests across 7 test scenarios.
 
-**Broader context:** The attention ledger is a module within IndrasNetwork, a 23-crate Rust workspace (~116,000 lines of Rust) with a simulation engine (~13,500 lines of Rust) and ~45,700 lines of Lua test scenarios. The attention ledger represents roughly 3% of the codebase — a focused subsystem within a larger peer-to-peer platform that includes quests, blessings, messaging, humanness attestation, and a token-of-gratitude economy.
+**Broader context:** The attention ledger is a module within IndrasNetwork, a 23-crate Rust workspace (~116,000 lines of Rust) with a simulation engine (~13,500 lines of Rust) and ~45,700 lines of Lua test scenarios. The attention ledger represents roughly 3% of the codebase — a focused subsystem within a larger peer-to-peer platform that includes intentions, messaging, humanness attestation, and the gratitude ledger.
 
 ## The Larger Picture
 
-The attention ledger is not a financial system. It tracks where human cognitive energy is directed — and enforces a conservation law that makes that tracking meaningful. Gratitude tokens are a downstream consequence, not the primary data structure. The ledger itself tracks focus, not money.
+The attention ledger is not a financial system. It tracks where human cognitive energy is directed — and enforces a conservation law that makes that tracking meaningful. Released gratitude is a downstream consequence, not the primary data structure, and never a coin to trade. The ledger itself tracks focus, not money.
 
 Blockchain's insight was that global consensus enables trustless finance. The attention ledger's insight is that **you don't need global consensus if what you're tracking is locally conserved.** Conservation gives you the same integrity guarantee that consensus provides for money, but without the coordination cost.
 
@@ -468,7 +474,7 @@ What becomes possible when attention is a conserved, verifiable quantity:
 
 - **Governance without polling.** A community can see where its collective focus actually is — not where people *say* it is — and allocate resources accordingly. Attention becomes a continuous, unforgeable vote.
 - **Credentialing through demonstrated focus.** A contributor's track record is not a résumé or a reputation score — it is a hash-chained, witness-certified log of sustained cognitive investment. Verified attention history could serve as a new kind of credential.
-- **Economics grounded in physical reality.** The gratitude bridge converts verified focus into tokens backed by something that cannot be manufactured: human time and attention. This is currency that inherits its scarcity from cognition, not from protocol rules.
+- **Economics grounded in physical reality.** The gratitude bridge releases acknowledgment backed by something that cannot be manufactured: human time and attention. This is value that inherits its scarcity from cognition, not from protocol rules — and it lives as a signed ledger entry, not a tradable coin. *(Design horizon; the app today ships the completion-and-release gesture this is built toward.)*
 - **Coordination without platforms.** Two unrelated projects never need a shared server, a shared token, or a shared governance structure. The system shards naturally along intention lines — each project is its own self-contained ledger.
 
 The scarce resource is attention itself — and you already have exactly one unit of it.

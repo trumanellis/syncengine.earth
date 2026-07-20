@@ -1,62 +1,112 @@
 # SyncEngine — The Synchronicity Engine
 
-> A peer-to-peer gift-economy protocol where human attention is tracked as a conserved quantity — the way physics tracks energy. Members post Intentions (honest statements of need), the community charges them with Attention, service is verified by small witness quorums, and gratitude flows back as Tokens of Gratitude. No blockchain, no mining, no staking, no central servers, no platform, no extraction. Stewarded by Temples of Refuge, an association of churches.
+> A private, on-device place for your work that you choose to share peer-to-peer. A project is an encrypted folder of files that lives only on your device — no server copy, no company in the middle. There's no middle. You edit freely as private drafts; only versions you deliberately seal (⌘S) are ever shared, and they travel directly to the peers you invite. Intentions name what you want to bring into being; Manifestations are the artifacts made as proof it came true. In a shared project the intentions form a common wish list: everyone votes with attention — time freely given — and as an intention accumulates collective attention it draws someone to manifest it. The manifester shares proof of their service, and gratitude worth the accumulated attention releases to the doer, recorded signed by both in a shared ledger; the doer tags it onward to the next wish. A game that turns intentions into manifestations through collective attention. AI agents can join a project as first-class collaborators and manifest intentions on your behalf. Built on Indra's Network, a serverless P2P substrate (Rust · Iroh/QUIC · Automerge CRDTs · BLAKE3 · redb · Dioxus) with post-quantum encryption — content is shared only with those you explicitly allow; to everyone else it is encrypted noise. No blockchain, no mining, no staking, no platform, no extraction.
 
-SyncEngine (also called the Synchronicity Engine) is source-available sovereign
-infrastructure: an Automerge-CRDT, QUIC/Iroh-based, delay-tolerant P2P stack
-("Indra's Network") with post-quantum cryptography, designed to work even when
-the internet doesn't. The economic layer is described in the whitepaper "The
-Conservation of Attention": every switch of focus is a signed (-1, +1) pair
-that preserves the total, enforced locally by hash-chained event logs and BFT
-quorum certificates scoped to small witness sets — a distributed ledger with
-no global consensus.
+SyncEngine (also called the Synchronicity Engine) is a place your work lives.
+A **Project** is just a folder of files — but those files stay encrypted on your
+own device. No server holds a copy; no company can read them. There's no middle.
+You edit freely, and your edits are **drafts** that only you can see; the engine
+never saves behind your back. When a version is ready you **seal** it (⌘S) —
+that's you deciding this version is real — and only sealed versions are ever
+shared. You share by connecting **directly** to another person's device; the two
+of you become **peers**, equal copies, with no company between you and no copy on
+a server.
 
-Status (as of June 2026): the network is live but early — running among a small
-group of members and the first Temple (Templo da Água Lila, in central
-Portugal), with access by in-person invitation through Temple gatherings rather
-than open signup. This is built, running software, not a proposal — but it is
-not yet an open public network. The project is stewarded by Temples of Refuge,
-an association of churches; it has no individual owner or commercial entity
-behind it. The source code is open to inspection by Members under a
+Under the hood it is source-available sovereign infrastructure: an
+Automerge-CRDT, QUIC/Iroh-based, delay-tolerant P2P stack ("Indra's Network")
+built in Rust with BLAKE3 content addressing, a redb store, and a Dioxus UI.
+Because a project is a real, materialized folder on your machine, an AI coding
+agent can live inside it as a peer (see "AI agents" below). A conservation-based
+economics of attention — described in the whitepaper "The Conservation of
+Attention" — underlies the gift loop: an attention/uptime ledger records time
+freely given and returned.
+
+Status (as of July 2026): the app is built, running software — the "My First
+Project" onboarding walks a new user through the whole product on first run. The
+broader network is still early, running among a small group and the first Temple
+(Templo da Água Lila, in central Portugal). The project is stewarded by Temples
+of Refuge, an association of churches; it has no individual owner or commercial
+entity behind it. The source code is open to inspection by Members under a
 non-extraction copyleft license; it is not yet publicly posted.
 
-Key terminology:
+Core concepts (as the app works today):
 
-- **Intention** — a conscious expression of what you need or desire; the unit
-  around which the community organizes. There are no tasks, tickets, or
-  bounties — only intentions.
-- **Attention** — the fundamental unit of value; a conserved quantity (you can
-  only focus on one thing at a time). Giving attention to an intention charges
-  its gratitude potential.
-- **Proof of Service** — documentation a member posts showing they manifested
-  an intention.
-- **Blessings** — the community's validation of service, releasing gratitude
-  to the giver.
-- **Tokens of Gratitude** — earned through verified acts of service, backed by
-  time-weighted attention; redeemable for future gifts and conferring
-  governance weight in the Council of Stewards. A religious acknowledgment of
-  value brought into someone's life — explicitly not a currency, security, or
-  investment.
-- **The Gift Cycle** — the five-stage loop: Intention → Attention → Proof of
-  Service → Blessings → Tokens of Gratitude.
-- **Indra's Network** — the technical stack: store-and-forward DTN routing,
-  Automerge CRDT sync, X25519/ChaCha20-Poly1305 encryption, ML-KEM
-  post-quantum readiness. Named for the Buddhist/Hindu image of an infinite
-  net of jewels, each reflecting all others.
-- **Temples of Refuge** — the association of churches (U.S./Utah law) that
-  stewards the Synchronicity Engine. Its One Commandment: "Recognize the
-  divine in every Other and treat them as an extension of yourself."
-- **The Covenant** — the membership agreement between Temples of Refuge and
-  those who join; defines non-extraction, stewardship, and forking rights.
-- **GratiDAO** — Portuguese for "gratitude"; the organizational philosophy:
-  Gratitude-based, Decentralized, Distributed, Autonomous, Alive.
-- **Templo da Água Lila** — the first member Temple, in the Montanhas Mágicas
-  of central Portugal.
+- **Project** — an encrypted folder of files that lives only on your device.
+  Drag any file in (photo, note, song); everything arrives as a draft. History
+  is kept, so nothing is truly lost.
+- **Draft → seal (⌘S)** — the core gesture. Edits are private drafts only you
+  can see; sealing marks a version as real, and only sealed versions ever travel
+  to peers. Intentional sync — it never saves or shares behind your back.
+- **Intention** — something you want to bring into being, named out loud so it's
+  real and trackable instead of a vague someday. It is a *purpose* attached to
+  your own artifact, and may be a plain personal want ("learn to bake", "call an
+  old friend"). Wears a small indigo ✦ Intention tag.
+- **Manifestation** — a *new artifact you create* as proof the intention came
+  true. Not a checkbox: you intend a thing, then you make the thing. Reads
+  ✓ Manifests <Intention> in emerald, linked back to the intention.
+- **Completion** — Purpose (Intention/Manifestation) is objective and set once;
+  **State** is per-person (everyone starts Active and reaches Complete or Archive
+  from their own vantage). When a Manifestation answers an Intention, the maker
+  submits and the intention's **steward** chooses Accept (gratitude releases to
+  the maker; recorded signed by both in a shared ledger; both read Complete),
+  Reject (nothing releases, the intention stays Active), or Archive. Deliberate,
+  never automatic — nothing moves to the shared substrate behind anyone's back.
+  There is no "blessing" gesture and no token currency.
+- **Offerings** — the outward gift: something you hold out for someone else,
+  bound to no intention. Peers who want it bid a little of the time they've
+  accrued, and you, the steward, choose who receives it. Rose Offering tag.
+- **Attention / accrued time** — a real attention/uptime ledger; a collective
+  clock of time given. Offerings are priced in accrued time. Attention given
+  freely, and returned.
+- **The Field** — a semantic search across all your projects that finds
+  artifacts similar in *meaning*, not just words. Later it will surface resonant
+  peers here too.
+- **`@ai` (on-device assistant)** — a private assistant that has read your
+  project's documents, answers from those files, and shows the exact source
+  documents it drew from as clickable cards. Runs entirely on your machine —
+  nothing you ask, and nothing it reads, ever leaves your device.
+- **Project Chat** — every project is also a room, with the same membership as
+  the project and no separate server. Peers can also co-edit live.
+- **AI agents as collaborators** — attach any file-editing coding agent (Claude
+  Code, Codex, local models) to a project; it works in its own copy-on-write
+  fork of the project folder and its finished work lands and syncs to peers like
+  a person's. Multiple agents run in parallel, conflict-free. See below.
+- **Indra's Network** — the P2P substrate (SyncEngine is the product): DTN
+  routing, Automerge CRDT sync with a braid DAG mainline, Iroh/QUIC transport,
+  BLAKE3 addressing, post-quantum encryption. Named for the image of an
+  infinite net of jewels, each reflecting all others.
 
-What SyncEngine is NOT: it is not a blockchain and uses no global consensus;
-it is not a cryptocurrency (no mining, no staking, no speculation); it is not
-a platform or service with users; it does not harvest, sell, or monetize
-attention or data — the license and Covenant prohibit it.
+AI agents as first-class collaborators:
+
+Every SyncEngine project is a real folder on your own device, so a coding agent
+can work the vault alongside your human peers — not a chat sidebar, a peer in the
+project. You **attach** an agent and SyncEngine forks the project into its own
+copy-on-write working folder (the agent's private copy of everything). You
+**task** it; it runs there with the full project as context. The project shows
+the agent thinking and flags when it has changes; you **land** its work with a
+click and it merges in and syncs to peers. In-flight work is never shared until
+it lands, so broken intermediate states stay invisible to teammates. Fork a
+project into as many parallel folders as you like and point a different agent at
+each — their edits converge with no merge conflicts, held by the same CRDT +
+braid-DAG substrate that keeps human peers in step (no blockchain, no central
+merge server). An agent can attach evidence to its work (it compiled, tests
+passed, linters clean). Works with any file-editing agent; deepest integration
+today is with Claude Code (live "thinking" status, one-line commits, attached
+test/lint evidence).
+
+Roadmap / vision (real to the broader project, not day-one app behavior):
+post-quantum identity from a 23-moment "pass story" with Argon2id / ML-KEM-768 /
+ML-DSA-65 pillars; Proof-of-Life / liveness scoring and in-person verification as
+a "bot immune system"; and the Covenant / Steward / Temples-of-Refuge join layer,
+which is the community *around* the product, not a gate on the software. Frame
+these as architecture and community, not as the core mechanic.
+
+What SyncEngine is NOT: it is not a blockchain and uses no global consensus; it
+is not a cryptocurrency (no mining, no staking, no speculation, no token
+currency); it is not a cloud platform with users — your files live on your
+device, and only sealed versions you choose to share ever travel; it does not
+harvest, sell, or monetize attention or data — the license and Covenant prohibit
+it.
 
 ## Core documents
 
@@ -65,8 +115,9 @@ attention or data — the license and Covenant prohibit it.
 
 ## Pages
 
-- [Home](https://www.syncengine.earth/): "What if helping each other was a game?" — interactive walkthrough of needs, time, gifts, people, story, and network
-- [The Gift Cycle](https://www.syncengine.earth/gift-cycle.html): how gratitude becomes currency, told through the story of a maracujá cheesecake at a community bazaar
+- [Home](https://www.syncengine.earth/): "What if helping each other was a game?" — a scroll-told story of the shared wish list: intentions gathering collective attention, a manifester stepping in with proof of service, and gratitude released to the doer and tagged onward
+- [AI Agents](https://www.syncengine.earth/agents.html): attach any coding agent (Claude Code, Codex, local models) to a project as a first-class peer; fork for parallel, conflict-free multi-agent work
+- [The Gift Cycle](https://www.syncengine.earth/gift-cycle.html): the loop of intentions named, manifestations made, and gratitude released — told through the story of a maracujá cheesecake at a community bazaar
 - [Indra's Network](https://www.syncengine.earth/network.html): technical architecture — delay-tolerant P2P networking, CRDT sync, post-quantum cryptography
 - [White paper (HTML reader)](https://www.syncengine.earth/whitepaper.html): renders the markdown whitepaper; agents should fetch the .md directly
 - [The Community](https://www.syncengine.earth/community.html): gatherings, the Community Bazaar, Oracle assistants, membership, GratiDAO principles
@@ -91,7 +142,8 @@ decentralized network. Fetch the .md files directly; the HTML reader at
 ## Participating
 
 This is a relationship-based community, not an app with open signup, and there
-is no public download or remote network to join. Participation flows through the
+is no public download. Members who join the association receive an invitation to
+the private community and the download link. Participation flows through the
 Temples and their in-person gatherings:
 
 - Follow the work through [Temples of Refuge](https://templesofrefuge.earth/) and [Aeon Myths on Substack](https://aeonmyths.substack.com/).

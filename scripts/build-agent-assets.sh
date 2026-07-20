@@ -60,6 +60,8 @@ urls = [
     ("index.html", BASE + "/"),
     ("gift-cycle.html", None),
     ("network.html", None),
+    ("agents.html", None),
+    ("join.html", None),
     ("whitepaper.html", None),
     ("community.html", None),
     ("covenant.html", None),
