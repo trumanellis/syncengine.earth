@@ -131,6 +131,27 @@
     .member-welcome .ok-mark { font-size: 32px; color: var(--indigo-light); margin-bottom: 14px; }
     .member-welcome h2 { font-family: var(--display); font-weight: 800; font-size: clamp(26px, 4vw, 34px); letter-spacing: -0.02em; color: var(--tx); margin-bottom: 14px; }
     .member-welcome p { color: var(--t2); line-height: 1.8; max-width: 42ch; margin: 0 auto; }
+
+    /* ── Founding-gift code (from the donation gateway) ── */
+    .member-code { margin-top: 26px; padding-top: 24px; border-top: 1px solid var(--bd); }
+    .member-code-label {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--indigo-light); margin-bottom: 12px;
+    }
+    .member-code-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+    .member-code-value {
+      font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; color: var(--tx);
+      background: var(--bg2); border: 1px solid var(--bd); border-radius: var(--r-sm);
+      padding: 10px 14px; word-break: break-all; max-width: 100%;
+    }
+    .member-code-copy {
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--t2); background: var(--card); border: 1px solid var(--bd); border-radius: var(--r-sm);
+      padding: 10px 14px; cursor: pointer;
+    }
+    .member-code-copy:hover { color: var(--indigo-light); border-color: var(--indigo); }
+    .member-code-note { font-size: 13px; color: var(--t3); max-width: 46ch; margin: 14px auto 0; }
+    .member-code-get { display: inline-block; margin-top: 18px; color: var(--indigo-light); font-weight: 500; }
   </style>
 </head>
 <body>
@@ -216,6 +237,15 @@
       <div class="ok-mark">✦</div>
       <h2>Welcome, Steward</h2>
       <p id="member-welcome-text">Your offering is your signature. You are a Steward for life — an affiliation of the heart.</p>
+      <div class="member-code" id="member-code" hidden>
+        <p class="member-code-label">Your founding-gift code</p>
+        <div class="member-code-row">
+          <code class="member-code-value" id="member-code-value"></code>
+          <button type="button" class="member-code-copy" id="member-code-copy">Copy</button>
+        </div>
+        <p class="member-code-note">SyncEngine asks for this code the first time it opens. Enter it there and your founding gift is sealed to your name — one use, yours alone, recognized by every peer you meet.</p>
+        <a class="member-code-get" id="member-code-get" hidden>Get the app &#8594;</a>
+      </div>
     </section>
 
   </div>
@@ -242,22 +272,34 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script>
 // ═══════════════════════════════════════════════════════════════════
-// CONFIGURATION — paste real values here once. Everything here is
-// PUBLIC by design (it ships in client JS); none of it is secret.
-// Offerings flow to the one Temples of Refuge Stripe account, served by
-// the shared `tor-checkout` Cloudflare Worker (see templesofrefuge.earth/
-// checkout-worker). Syncengine's origins must be in the Worker's
-// ALLOWED_ORIGINS for the inline checkout to authorize.
+// CONFIGURATION — everything here is PUBLIC by design (it ships in
+// client JS); none of it is secret. Offerings flow to the one Temples
+// of Refuge Stripe account via the self-hosted checkout backend on the
+// relay box (templesofrefuge.earth/checkout-worker behind Caddy);
+// syncengine's origins are in its ALLOWED_ORIGINS. The donation gateway
+// (indras-donation-gateway, same box) turns the paid session into a
+// one-shot founding-gift code the app redeems at first launch.
 // ═══════════════════════════════════════════════════════════════════
+// Local preview (localhost) uses Stripe TEST mode + local servers; the
+// live site uses LIVE mode + the self-hosted endpoints.
+var isLocal = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname);
 var CFG = {
   // Stripe PUBLISHABLE key (pk_live_… / pk_test_…) — public, safe here.
-  // LOCAL TEST value below — swap to pk_live_… before going live.
-  STRIPE_PUBLISHABLE_KEY: 'pk_test_51TqoTrGvkk6jsZYuVSiVkOQcWKt4tVtIjFSwGRwy4YtJEuKnG8PrbzLXaX12YNI0tp6RjoU1b5l8RAidlIlZr8XZ00Y0RUWKt0',
+  STRIPE_PUBLISHABLE_KEY: isLocal
+    ? 'pk_test_51TqoTrGvkk6jsZYuVSiVkOQcWKt4tVtIjFSwGRwy4YtJEuKnG8PrbzLXaX12YNI0tp6RjoU1b5l8RAidlIlZr8XZ00Y0RUWKt0'
+    : 'pk_live_51TqoTrGvkk6jsZYugRfw4uJI6WfUNALFXWtCxDg2HF55ilUc4knUVDcz2hGFoJkIs7XgI8MtuPGnnnlN51y27XVv00Wvkk4pq7',
 
-  // The deployed `tor-checkout` Worker base URL, no trailing slash.
-  // LOCAL: http://localhost:8787 · LIVE: https://tor-checkout.<sub>.workers.dev
-  // SWAP to the live Worker URL before going live.
-  CHECKOUT_API_URL: 'http://localhost:8787',
+  // Checkout backend base URL (no trailing slash) — mints the embedded-
+  // checkout session with the secret key that never ships to the client.
+  CHECKOUT_API_URL: isLocal
+    ? 'http://localhost:8787'
+    : 'https://checkout.templesofrefuge.earth',
+
+  // Donation gateway base URL — /claim turns a paid session into the
+  // founding-gift code shown on the welcome screen.
+  GATEWAY_API_URL: isLocal
+    ? 'http://localhost:8788'
+    : 'https://api.templesofrefuge.earth',
 
   // Hosted Stripe Payment Link — graceful fallback when the inline checkout
   // backend isn't reachable. No API keys here.
@@ -283,23 +325,79 @@ function isConfigured(v) { return typeof v === 'string' && v.length > 0 && !REPL
   var sessionId = new URLSearchParams(window.location.search).get('session_id');
   if (sessionId && apiUrl) {
     hero.hidden = true;
-    fetch(apiUrl + '/session-status?session_id=' + encodeURIComponent(sessionId))
-      .then(function (r) { return r.json(); })
-      .then(function (s) {
-        if (s.status === 'complete') {
-          if (s.customer_name) {
-            document.getElementById('member-welcome-text').textContent =
-              'Your offering is your signature, ' + s.customer_name +
-              '. You are a Steward for life — an affiliation of the heart.';
+    var welcomeText = document.getElementById('member-welcome-text');
+    var welcomeHead = welcome.querySelector('h2');
+    var doneHead = welcomeHead ? welcomeHead.textContent : '';
+    // Acknowledge immediately so a paying donor never sees the offering grid
+    // or a blank page while Stripe settles the session.
+    if (welcomeHead) welcomeHead.textContent = 'Confirming your offering…';
+    welcome.hidden = false;
+
+    // Poll: the session can be a beat behind the redirect, and a transient
+    // network blip shouldn't dump a paid donor back onto the form.
+    var attempts = 0, maxAttempts = 6;
+    function confirmMembership() {
+      attempts++;
+      fetch(apiUrl + '/session-status?session_id=' + encodeURIComponent(sessionId))
+        .then(function (r) { return r.json(); })
+        .then(function (s) {
+          if (s.status === 'complete') {
+            if (welcomeHead) welcomeHead.textContent = doneHead;
+            if (s.customer_name) {
+              welcomeText.textContent =
+                'Your offering is your signature, ' + s.customer_name +
+                '. You are a Steward for life — an affiliation of the heart.';
+            }
+            document.querySelector('.covenant-reveal').hidden = true;
+            document.querySelector('.offering-skip').hidden = true;
+            fetchFoundingCode();
+          } else if (attempts < maxAttempts) {
+            setTimeout(confirmMembership, 2000);
+          } else {
+            welcome.hidden = true;
+            hero.hidden = false; // never completed — let them try again
           }
-          document.querySelector('.covenant-reveal').hidden = true;
-          document.querySelector('.offering-skip').hidden = true;
-          welcome.hidden = false;
-        } else {
-          hero.hidden = false; // not completed — let them try again
-        }
-      })
-      .catch(function () { hero.hidden = false; });
+        })
+        .catch(function () {
+          if (attempts < maxAttempts) setTimeout(confirmMembership, 2000);
+          else { welcome.hidden = true; hero.hidden = false; }
+        });
+    }
+    confirmMembership();
+
+    // The founding-gift code: the donation gateway records the session when
+    // Stripe's webhook lands — that can trail the redirect by a few seconds
+    // (404 until then), so poll patiently. If the gateway isn't reachable the
+    // welcome stands on its own; revisiting this same URL recovers the code.
+    var gatewayUrl = isConfigured(CFG.GATEWAY_API_URL) ? CFG.GATEWAY_API_URL : null;
+    var codeAttempts = 0, maxCodeAttempts = 10;
+    function fetchFoundingCode() {
+      if (!gatewayUrl) return;
+      codeAttempts++;
+      fetch(gatewayUrl + '/claim?session_id=' + encodeURIComponent(sessionId))
+        .then(function (r) {
+          if (!r.ok) throw new Error('not recorded yet');
+          return r.json();
+        })
+        .then(function (c) {
+          document.getElementById('member-code-value').textContent = c.nonce;
+          var get = document.getElementById('member-code-get');
+          if (c.download_url) { get.href = c.download_url; get.hidden = false; }
+          document.getElementById('member-code').hidden = false;
+        })
+        .catch(function () {
+          if (codeAttempts < maxCodeAttempts) setTimeout(fetchFoundingCode, 3000);
+        });
+    }
+
+    var copyBtn = document.getElementById('member-code-copy');
+    copyBtn.addEventListener('click', function () {
+      navigator.clipboard.writeText(document.getElementById('member-code-value').textContent)
+        .then(function () {
+          copyBtn.textContent = 'Copied';
+          setTimeout(function () { copyBtn.textContent = 'Copy'; }, 2000);
+        });
+    });
     return;
   }
 
