@@ -1,64 +1,70 @@
-# Deploying syncengine.earth
+# Auto-deploy for the sibling sites
 
-The live site is **not** GitHub Pages. `www.syncengine.earth` resolves to the
-relay box (`refuge-relay`, Hetzner/Helsinki, `89.167.41.185`), where **Caddy**
-serves static files from a git checkout at `/var/www/syncengine`. GitHub is
-only the `origin` remote.
+Several sites (syncengine.earth, agualila.earth, …) are served by **Caddy** from
+git checkouts under `/var/www/` on the relay box (`refuge-relay`,
+`89.167.41.185`). GitHub is only the `origin`. One shared webhook service
+turns a `git push` into a live deploy for whichever site it belongs to.
 
 ## How a change goes live
 
 ```
-git push  ──▶  GitHub  ──webhook POST /_deploy──▶  Caddy  ──▶  webhook.py
-                                                                  │
-                                              git -C /var/www/syncengine
-                                                   pull --ff-only origin main
+git push ─▶ GitHub ─push webhook─▶ https://<site>/_deploy ─▶ Caddy
+                                                               │ reverse_proxy
+                                                    127.0.0.1:9000  webhook.py
+                                                               │ (picks site by Host,
+                                                               │  verifies that site's secret)
+                                              git -C /var/www/<site> pull --ff-only
 ```
 
-1. You push to `main`.
-2. GitHub sends a signed `push` webhook to `https://syncengine.earth/_deploy`.
-3. Caddy reverse-proxies it to `webhook.py` on `127.0.0.1:9000`.
-4. `webhook.py` verifies the HMAC signature, checks the ref is `refs/heads/main`,
-   and fast-forwards the checkout. Caddy serves the new files immediately (no
-   reload — it is a static file server).
+Pushing is all you do. **Watch any deploy:**
+`ssh refuge-relay 'journalctl -u webhook-deploy -f'`
 
-Pushing is all you normally do. **Watch a deploy:**
-`ssh refuge-relay 'journalctl -u syncengine-webhook -f'`
-
-## Manual deploy / fallback
-
-If the webhook is down, `./scripts/deploy.sh` pushes and then SSHes in to
-`git pull --ff-only` directly. Same end state.
-
-## Components
+## Components (one service, N sites)
 
 | Where | What |
 |-------|------|
-| `deploy/webhook.py` | The receiver. Runs from the checkout; updates with the repo. |
-| `deploy/syncengine-webhook.service` | systemd unit → installed at `/etc/systemd/system/`. |
-| `deploy/Caddyfile.snippet` | Reference copy of the site block in `/etc/caddy/Caddyfile`. |
-| `/etc/syncengine-deploy.env` | **Not in git.** Holds `DEPLOY_SECRET` (chmod 600). |
-| GitHub repo webhook | Points at `/_deploy`, content-type `json`, with the shared secret. |
+| `deploy/webhook.py` | Multi-site receiver. Routes by Host header, per-site secret. Runs from the syncengine checkout. |
+| `deploy/webhook-deploy.service` | systemd unit → `/etc/systemd/system/`. Add each site's dir to `ReadWritePaths`. |
+| `deploy/Caddyfile.snippet` | Reference: every site block gets the same `/_deploy` handler → `127.0.0.1:9000`. |
+| `/etc/webhook-deploy/sites.json` | **Not in git.** Maps `host → {dir, branch, secret}`, chmod 600. |
+| GitHub repo webhook (per site) | Points at `https://<site>/_deploy`, content-type `json`, that site's secret. |
 
-## Rotating the deploy secret
+`sites.json` (on the box only):
+
+```json
+{
+  "syncengine.earth": {"dir": "/var/www/syncengine", "branch": "main", "secret": "…"},
+  "agualila.earth":   {"dir": "/var/www/agualila",   "branch": "main", "secret": "…"}
+}
+```
+
+## Add another sibling site
+
+1. Make sure `/var/www/<site>` is a git checkout of its repo on the deploy branch.
+2. Add an entry to `/etc/webhook-deploy/sites.json` with a fresh
+   `openssl rand -hex 32` secret; add its dir to `ReadWritePaths` in the unit
+   and `sudo systemctl restart webhook-deploy`.
+3. Add the `/_deploy` handler to its Caddy block (see snippet); `sudo caddy
+   validate` then `sudo systemctl reload caddy`.
+4. Create the GitHub webhook:
+   ```bash
+   export SECRET=…   # same value as in sites.json
+   python3 -c 'import os,json,sys;json.dump({"name":"web","active":True,"events":["push"],"config":{"url":"https://<site>/_deploy","content_type":"json","secret":os.environ["SECRET"],"insecure_ssl":"0"}},sys.stdout)' \
+     | gh api repos/<owner>/<repo>/hooks --input -
+   ```
+
+## Manual deploy / fallback
+
+`./scripts/deploy.sh` (in the syncengine repo) pushes and then SSHes in to
+`git pull --ff-only` directly, for when the webhook is down.
+
+## Rotating a site's secret
 
 ```bash
 NEW=$(openssl rand -hex 32)
-ssh refuge-relay "sudo sed -i 's/^DEPLOY_SECRET=.*/DEPLOY_SECRET=$NEW/' /etc/syncengine-deploy.env && sudo systemctl restart syncengine-webhook"
-gh api -X PATCH "repos/trumanellis/syncengine.earth/hooks/<HOOK_ID>" -f config.secret="$NEW" -f config.url=https://syncengine.earth/_deploy -f config.content_type=json
+# update sites.json on the box (jq) then restart:
+ssh refuge-relay "sudo python3 -c \"import json;p='/etc/webhook-deploy/sites.json';d=json.load(open(p));d['<site>']['secret']='$NEW';json.dump(d,open(p,'w'))\" && sudo systemctl restart webhook-deploy"
+gh api -X PATCH repos/<owner>/<repo>/hooks/<HOOK_ID> --input - <<< "$(SECRET=$NEW python3 -c 'import os,json,sys;json.dump({"config":{"url":"https://<site>/_deploy","content_type":"json","secret":os.environ["SECRET"]}},sys.stdout)')"
 ```
 
-Find `<HOOK_ID>` with `gh api repos/trumanellis/syncengine.earth/hooks --jq '.[].id'`.
-
-## First-time install (already done, kept for reference)
-
-```bash
-# on refuge-relay, as truman:
-printf 'DEPLOY_SECRET=%s\nSITE_DIR=/var/www/syncengine\nDEPLOY_BRANCH=main\nPORT=9000\n' \
-  "$(openssl rand -hex 32)" | sudo tee /etc/syncengine-deploy.env >/dev/null
-sudo chmod 600 /etc/syncengine-deploy.env
-sudo cp /var/www/syncengine/deploy/syncengine-webhook.service /etc/systemd/system/
-sudo systemctl daemon-reload && sudo systemctl enable --now syncengine-webhook
-# add the /_deploy handler to the site block in /etc/caddy/Caddyfile
-sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy
-# then create the GitHub webhook with the same DEPLOY_SECRET (config.url=/_deploy)
-```
+Find `<HOOK_ID>` with `gh api repos/<owner>/<repo>/hooks --jq '.[].id'`.

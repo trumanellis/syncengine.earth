@@ -1,5 +1,5 @@
 [Unit]
-Description=SyncEngine deploy webhook (GitHub push -> git pull)
+Description=Multi-site deploy webhook (GitHub push -> git pull)
 Documentation=https://github.com/trumanellis/syncengine.earth/blob/main/deploy/README.md
 After=network-online.target
 Wants=network-online.target
@@ -7,17 +7,19 @@ Wants=network-online.target
 [Service]
 Type=simple
 User=truman
-EnvironmentFile=/etc/syncengine-deploy.env
+Environment=CONFIG=/etc/webhook-deploy/sites.json
+Environment=PORT=9000
 ExecStart=/usr/bin/python3 /var/www/syncengine/deploy/webhook.py
 Restart=on-failure
 RestartSec=3
 
-# Hardening: the service only needs to write the checkout it deploys.
+# Hardening: the service only needs to write the site checkouts it deploys.
+# Add each new site's directory to ReadWritePaths.
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=full
 ProtectHome=read-only
-ReadWritePaths=/var/www/syncengine
+ReadWritePaths=/var/www/syncengine /var/www/agualila
 
 [Install]
 WantedBy=multi-user.target
