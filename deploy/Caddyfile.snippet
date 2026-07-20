@@ -1,0 +1,22 @@
+# Caddy site block for syncengine.earth — reference copy of what is installed
+# in /etc/caddy/Caddyfile on the relay box. The only addition over a plain
+# static site is the /_deploy handler, which forwards GitHub webhook POSTs to
+# the loopback webhook service (see syncengine-webhook.service). handle blocks
+# are first-match, so /_deploy never falls through to the file server.
+
+syncengine.earth, www.syncengine.earth {
+	encode zstd gzip
+
+	header {
+		?Cache-Control "public, max-age=3600"
+	}
+
+	handle /_deploy {
+		reverse_proxy 127.0.0.1:9000
+	}
+
+	handle {
+		root * /var/www/syncengine
+		file_server
+	}
+}
