@@ -33,8 +33,9 @@ Pushing is all you do. **Watch any deploy:**
 
 ```json
 {
-  "syncengine.earth": {"dir": "/var/www/syncengine", "branch": "main", "secret": "…"},
-  "agualila.earth":   {"dir": "/var/www/agualila",   "branch": "main", "secret": "…"}
+  "syncengine.earth":     {"dir": "/var/www/syncengine",     "branch": "main", "secret": "…"},
+  "agualila.earth":       {"dir": "/var/www/agualila",       "branch": "main", "secret": "…"},
+  "templesofrefuge.earth": {"dir": "/var/www/templesofrefuge", "branch": "main", "secret": "…"}
 }
 ```
 

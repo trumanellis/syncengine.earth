@@ -19,7 +19,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=full
 ProtectHome=read-only
-ReadWritePaths=/var/www/syncengine /var/www/agualila
+ReadWritePaths=/var/www/syncengine /var/www/agualila /var/www/templesofrefuge
 
 [Install]
 WantedBy=multi-user.target

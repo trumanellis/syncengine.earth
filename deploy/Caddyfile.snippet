@@ -32,3 +32,17 @@ agualila.earth, www.agualila.earth {
 		file_server
 	}
 }
+
+templesofrefuge.earth, www.templesofrefuge.earth {
+	encode zstd gzip
+	header {
+		?Cache-Control "public, max-age=3600"
+	}
+	handle /_deploy {
+		reverse_proxy 127.0.0.1:9000
+	}
+	handle {
+		root * /var/www/templesofrefuge
+		file_server
+	}
+}
