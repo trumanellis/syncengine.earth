@@ -59,8 +59,13 @@
     .offering-hero { max-width: 640px; margin: 0 auto clamp(14px, 2.5vh, 28px); text-align: center; }
     .offering-lead {
       font-family: var(--display); font-weight: 400; font-size: clamp(17px, 2.4vw, 20px);
-      line-height: 1.45; color: var(--tx); max-width: 50ch; margin: 0 auto clamp(14px, 2vh, 22px);
+      line-height: 1.45; color: var(--tx); max-width: 50ch; margin: 0 auto clamp(8px, 1.2vh, 12px);
     }
+    .offering-choose {
+      font-size: 14px; line-height: 1.6; color: var(--t2); font-weight: 300;
+      max-width: 52ch; margin: 0 auto clamp(14px, 2vh, 22px);
+    }
+    .offering-choose em { font-style: normal; color: var(--tx); font-weight: 500; }
 
     /* Amount grid */
     .amount-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 560px; margin: 0 auto 14px; }
@@ -190,6 +195,7 @@
 
     <section class="offering-hero" id="offering-hero" aria-label="Sign the Covenant">
       <p class="offering-lead">To become a Member is to affirm this Commandment and seal it with an offering — your signature on the Covenant.</p>
+      <p class="offering-choose">A signature is meant to be seen. Your founding gift rests on your profile, where every peer you meet reads it as <em>verification of your membership</em> — so choose a number that feels representative of you.</p>
 
       <div id="amount-step">
         <div class="amount-grid" id="amount-grid" role="group" aria-label="Choose your offering">
@@ -242,7 +248,7 @@
           <code class="member-code-value" id="member-code-value"></code>
           <button type="button" class="member-code-copy" id="member-code-copy">Copy</button>
         </div>
-        <p class="member-code-note">SyncEngine asks for this code the first time it opens. Enter it there and your founding gift is sealed to your name — one use, yours alone, recognized by every peer you meet.</p>
+        <p class="member-code-note">SyncEngine asks for this code the first time it opens. Enter it there and your founding gift is sealed to your name and set on your profile — one use, yours alone, recognized by every peer you meet.</p>
         <a class="member-code-get" id="member-code-get" hidden>Get the app &#8594;</a>
       </div>
     </section>
