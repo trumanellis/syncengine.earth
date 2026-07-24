@@ -1,48 +1,56 @@
 # App downloads (`syncengine.earth/get/`)
 
 The "Get the app" target for the join/donation flow — a pick-your-platform page
-plus the macOS `.dmg` and Android `.apk`. The donation gateway's
+that links straight to the current release binaries. The donation gateway's
 `DOWNLOAD_ARTIFACT_URL` points at `https://syncengine.earth/get/`.
 
-## Where it's served
+## Where the binaries live now
 
-Caddy serves `/get/*` from **`/var/www/downloads`** on refuge-relay — a
-**non-git** directory, so the large binaries (~270 MB) stay out of the repo and
-out of the push-to-deploy path. See the `syncengine.earth` block in
-`templesofrefuge.earth/infra/Caddyfile` (`handle_path /get/*`).
+**GitHub Releases**, on a small **public** repo:
+[`trumanellis/syncengine-releases`](https://github.com/trumanellis/syncengine-releases/releases).
+The app source (`trumanellis/IndrasNetwork`) stays private; only the built
+`.dmg`/`.apk` are published to the public repo, so the website can link them
+without auth. The download buttons here point at the **stable latest-release
+permalinks**, which always resolve to the newest release's asset:
 
-Only `index.html` is tracked here (this dir); the `.dmg`/`.apk` are uploaded
-separately and live only on the box.
+```
+https://github.com/trumanellis/syncengine-releases/releases/latest/download/SyncEngine-macos.dmg
+https://github.com/trumanellis/syncengine-releases/releases/latest/download/SyncEngine-android.apk
+```
+
+Because the asset names are versionless and `…/latest/download/…` follows the
+newest release, **this page never needs editing per release** — no version
+string, no file sizes, no SHA lines to update by hand. (Contrast the old flow:
+rsync ~270 MB to refuge-relay's non-git `/var/www/downloads`, then hand-edit
+this HTML and scp it up. Retired.)
 
 ## Publishing a new release
 
-Artifacts come from the app repo's release pipeline
-(`IndrasNetwork/agent4: scripts/release.sh` → `dist/v<ver>/`). To publish:
+Fully automated from the app repo — no manual upload:
 
-```bash
-# from the app repo's dist/v<ver>/ (verify first)
-shasum -a 256 -c SHA256SUMS.txt
+1. In `IndrasNetwork`, bump `[workspace.package] version` in `Cargo.toml` if needed.
+2. Tag and push: `git tag v1.0.2 && git push origin v1.0.2`.
+3. The `Release` GitHub Actions workflow builds the macOS `.dmg` + Android `.apk`,
+   renames them to the stable names, and publishes a GitHub Release (with
+   `SHA256SUMS.txt`) to `syncengine-releases`. This page picks it up
+   automatically.
 
-# upload to the box (rsync resumes if the connection drops)
-rsync -az --partial SynchronicityEngine-<ver>.dmg SynchronicityEngine-<ver>.apk \
-  SHA256SUMS.txt README.txt refuge-relay:~/dl-staging/
+One-time setup the workflow depends on:
+- **`ANDROID_KEYSTORE_B64`** secret (base64 of the release keystore).
+- **`RELEASES_REPO_TOKEN`** secret — a PAT / fine-grained token with
+  `contents:write` on `syncengine-releases`.
+- The `syncengine-releases` public repo must exist (needs one commit so tags
+  can be created against its default branch).
 
-# place + verify on the box
-ssh refuge-relay '
-  sudo mv ~/dl-staging/* /var/www/downloads/ && sudo rmdir ~/dl-staging
-  sudo chown -R root:root /var/www/downloads
-  sudo find /var/www/downloads -type f -exec chmod 644 {} \;
-  cd /var/www/downloads && sha256sum -c SHA256SUMS.txt'
-```
+## Notes
 
-Then update `index.html` here (version string, file names, sizes, the two
-SHA-256 lines) and copy it up:
-
-```bash
-scp deploy/downloads/index.html refuge-relay:/tmp/dl-index.html
-ssh refuge-relay 'sudo mv /tmp/dl-index.html /var/www/downloads/index.html && sudo chmod 644 /var/www/downloads/index.html'
-```
-
-macOS `.dmg` is ad-hoc-signed (not notarized) — the page documents the one-time
-right-click→Open Gatekeeper step. Notarize later if/when there's an Apple
-Developer account.
+- macOS `.dmg` is ad-hoc-signed (not notarized) — the page documents the one-time
+  "Open Anyway" Gatekeeper step. Notarize later if/when there's an Apple
+  Developer account.
+- **Intel Mac** and **Linux/Windows/iOS** are not yet in the pipeline (Phase 1 =
+  Apple Silicon + Android). The page says "Intel build coming soon"; add the
+  button back when the workflow's Intel/Linux legs land and start emitting
+  `SyncEngine-macos-intel.dmg` etc.
+- The Caddy `handle_path /get/*` block that served the old box-hosted binaries
+  can be simplified/retired now that nothing large is served from the box — the
+  only file left is this `index.html`.

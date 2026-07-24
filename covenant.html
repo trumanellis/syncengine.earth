@@ -35,22 +35,55 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
   <link rel="stylesheet" href="/styles/core.css">
 
   <style>
-    /* ── Hero ── */
+    /* ═══ Atmosphere — single hero glow (DESIGN.md §6) ═══ */
+    .atmosphere {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -10%; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px; max-width: 130vw;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(192,132,252,0.05) 0%,
+        rgba(129,140,248,0.04) 42%,
+        transparent 70%);
+    }
+    main { position: relative; z-index: 10; }
+
+    /* ── Hero over aura ── */
     .doc-hero {
-      padding: 96px 0 56px;
+      padding: 150px 24px 60px;
       text-align: center;
       position: relative;
+      background:
+        radial-gradient(ellipse 68% 52% at 50% 38%,
+          rgba(9,9,11,0.42), transparent 72%),
+        linear-gradient(180deg,
+          rgba(9,9,11,0.30) 0%,
+          rgba(9,9,11,0.50) 55%,
+          rgba(9,9,11,0.88) 88%,
+          var(--void) 100%),
+        url('assets/covenant-hero.webp') center top / cover no-repeat;
     }
+    .doc-hero > * { position: relative; z-index: 1; }
     .doc-hero::after {
       content: '';
       display: block;
       width: 80px;
       height: 1px;
       margin: 56px auto 0;
-      background: linear-gradient(90deg, transparent, var(--moss-dim), transparent);
+      background: linear-gradient(90deg, transparent, var(--violet), transparent);
+      position: relative; z-index: 1;
     }
     .doc-eyebrow {
       font-family: var(--mono);
@@ -313,7 +346,7 @@
 
   <!-- Site nav (matches whitepaper.html / network.html / gift-cycle.html) -->
   <nav class="site-nav">
-    <a href="/" class="site-nav-logo"><span class="se-wordmark__full">Synchronicity Engine</span><span class="se-wordmark__short">SyncEngine</span></a>
+    <a href="/" class="site-nav-logo" aria-label="Synchronicity Engine — home"><img class="site-nav-mark" src="/assets/app-icon-badge.png" alt=""><span class="site-nav-word"><span class="se-wordmark__full">Synchronicity Engine</span><span class="se-wordmark__short">SyncEngine</span></span></a>
     <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
     <div class="site-nav-links">
       <a href="/gift-cycle.html">Gift Cycle</a>
@@ -324,6 +357,11 @@
       <a href="/join.html" class="site-nav-cta">Join</a>
     </div>
   </nav>
+
+  <!-- Atmosphere -->
+  <div class="atmosphere">
+    <div class="hero-glow"></div>
+  </div>
 
   <main>
     <!-- Hero -->

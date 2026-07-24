@@ -31,6 +31,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
   <link rel="stylesheet" href="styles/core.css">
 
   <style>
@@ -63,38 +68,64 @@
     }
 
     /* ============================================
-       HERO
+       ATMOSPHERE + HERO (matches agents.html)
     ============================================ */
-    .hero {
-      padding: 8rem 0 6rem;
-      text-align: center;
-      position: relative;
+    .atmosphere {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -10%; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px; max-width: 130vw;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(107,207,255,0.05) 0%,
+        rgba(129,140,248,0.045) 42%,
+        transparent 70%);
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(129, 140, 248, 0.07) 0%, transparent 70%);
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      pointer-events: none;
+    .hero {
+      min-height: 62vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 150px 0 5rem;
+      text-align: center;
+      position: relative;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 40%,
+          rgba(9,9,11,0.42), transparent 72%),
+        linear-gradient(180deg,
+          rgba(9,9,11,0.25) 0%,
+          rgba(9,9,11,0.48) 55%,
+          rgba(9,9,11,0.86) 88%,
+          var(--void) 100%),
+        url('assets/network-hero.webp') center top / cover no-repeat;
+    }
+    .hero .wide { position: relative; z-index: 1; }
+
+    .hero-over {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--glow-teal); margin-bottom: 26px;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 6px 18px; border: 1px solid rgba(107,207,255,0.22);
+      border-radius: 100px;
     }
 
     .hero h1 {
       font-family: var(--display);
-      font-size: 3.5rem;
+      font-size: clamp(2.4rem, 6vw, 3.75rem);
       font-weight: 800;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
       margin-bottom: 1.5rem;
       color: var(--tx);
     }
 
     .hero h1 em {
       font-style: normal;
-      background: linear-gradient(135deg, var(--indigo-light), var(--purple));
+      background: linear-gradient(135deg, var(--indigo-light), var(--glow-teal));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -105,14 +136,16 @@
       color: var(--t2);
       max-width: 700px;
       margin: 0 auto 2rem;
-      line-height: 1.8;
+      line-height: 1.9;
+      font-weight: 300;
     }
 
     .hero .back-link {
       display: inline-block;
       margin-bottom: 2rem;
       font-size: 0.875rem;
-      font-family: var(--display);
+      font-family: var(--mono);
+      letter-spacing: 0.04em;
       color: var(--t3);
       text-decoration: none;
       transition: color 0.3s;
@@ -120,16 +153,6 @@
 
     .hero .back-link:hover {
       color: var(--tx);
-    }
-
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.25rem;
-      }
-
-      .hero p {
-        font-size: 1rem;
-      }
     }
 
     /* ============================================
@@ -315,8 +338,8 @@
     }
 
     .module-tag {
-      background: rgba(138, 173, 110, 0.12);
-      color: var(--moss-light);
+      background: rgba(129, 140, 248, 0.12);
+      color: var(--indigo-light);
       padding: 0.25rem 0.75rem;
       border-radius: 4px;
       font-size: 0.8rem;
@@ -487,8 +510,8 @@
     }
 
     .use-case {
-      background: linear-gradient(135deg, rgba(138, 173, 110, 0.05) 0%, rgba(129, 140, 248, 0.05) 100%);
-      border: 1px solid rgba(164, 196, 138, 0.18);
+      background: linear-gradient(135deg, rgba(107, 207, 255, 0.05) 0%, rgba(129, 140, 248, 0.05) 100%);
+      border: 1px solid rgba(129, 140, 248, 0.18);
       border-radius: var(--radius);
       padding: 1.75rem;
       transition: border-color 0.3s;
@@ -555,7 +578,7 @@
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(138, 173, 110, 0.3);
+      box-shadow: 0 10px 40px rgba(129, 140, 248, 0.3);
       color: var(--bg);
     }
 
@@ -574,7 +597,7 @@
 </head>
 <body>
   <nav class="site-nav">
-    <a href="/" class="site-nav-logo"><span class="se-wordmark__full">Synchronicity Engine</span><span class="se-wordmark__short">SyncEngine</span></a>
+    <a href="/" class="site-nav-logo" aria-label="Synchronicity Engine — home"><img class="site-nav-mark" src="/assets/app-icon-badge.png" alt=""><span class="site-nav-word"><span class="se-wordmark__full">Synchronicity Engine</span><span class="se-wordmark__short">SyncEngine</span></span></a>
     <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
     <div class="site-nav-links">
       <a href="/gift-cycle.html">Gift Cycle</a>
@@ -586,11 +609,16 @@
     </div>
   </nav>
 
+  <!-- Atmosphere -->
+  <div class="atmosphere">
+    <div class="hero-glow"></div>
+  </div>
+
   <!-- Hero -->
   <section class="hero r">
     <div class="wide">
-      <a href="index.html" class="back-link">&larr; Back to Synchronicity Engine</a>
-      <h1>Indra's Network: <em>The Net</em> Made Digital</h1>
+      <div class="hero-over">Every Node a Jewel</div>
+      <h1>Indra's Network:<br><em>The Net</em> Made Digital</h1>
       <p>
         A delay-tolerant P2P networking stack with store-and-forward routing, CRDT synchronization,
         and post-quantum cryptography. Built for networks where connectivity is intermittent and

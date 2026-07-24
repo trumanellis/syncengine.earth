@@ -55,6 +55,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/assets/site.webmanifest">
 <link rel="stylesheet" href="styles/core.css">
 <style>
 /* ═══ Atmosphere — single hero glow (DESIGN.md §6); page texture is the
@@ -167,6 +172,41 @@
   display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
   gap: 64px; align-items: start;
 }
+
+/* ═══ Loop scrollytelling background — a full-bleed image pinned behind the
+   card that crossfades as each stage scrolls in. Layers are driven purely by
+   CSS keyed off [data-stage] on .scrolly (via :has), so the no-JS default
+   markup (stage 5) lands on the finished "mural" frame. ═══ */
+#loop-sect { position: relative; }
+#loop-sect > .wrap { position: relative; z-index: 1; }
+.loop-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.loop-bg-stick {
+  position: sticky; top: 56px; height: calc(100vh - 56px);
+  overflow: hidden;
+}
+.loop-bg-layer {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 1.4s var(--ease); will-change: opacity;
+}
+.loop-bg-scrim {
+  position: absolute; inset: 0;
+  background:
+    /* darker under the prose column (right) and the card (left); let the
+       image breathe through the central gutter between them */
+    linear-gradient(90deg,
+      rgba(9,9,11,0.60) 0%, rgba(9,9,11,0.30) 32%,
+      rgba(9,9,11,0.42) 60%, rgba(9,9,11,0.74) 100%),
+    /* fade top + bottom into the void so section edges are seamless */
+    linear-gradient(180deg,
+      var(--void) 0%, rgba(9,9,11,0.32) 16%,
+      rgba(9,9,11,0.30) 62%, var(--void) 100%);
+}
+#loop-sect:has(.scrolly[data-stage="1"]) .loop-bg-layer[data-s="1"],
+#loop-sect:has(.scrolly[data-stage="2"]) .loop-bg-layer[data-s="2"],
+#loop-sect:has(.scrolly[data-stage="3"]) .loop-bg-layer[data-s="3"],
+#loop-sect:has(.scrolly[data-stage="4"]) .loop-bg-layer[data-s="4"],
+#loop-sect:has(.scrolly[data-stage="5"]) .loop-bg-layer[data-s="5"] { opacity: 1; }
 .loop-sticky {
   position: sticky; top: 56px;
   height: calc(100vh - 56px);
@@ -308,8 +348,21 @@
 .loop-step p { font-size: 16px; color: var(--t2); line-height: 1.9; font-weight: 300; max-width: 420px; }
 .loop-step p strong { color: var(--tx); font-weight: 500; }
 
-/* ═══ Thesis — the "breath" between showpieces ═══ */
-#thesis { position: relative; overflow: hidden; }
+/* ═══ Thesis — the "breath" between showpieces. An idea (a seed of light in
+   an open hand) rising into its manifestation (a greenhouse) — the literal
+   picture of the sentence, held behind a heavy scrim so the text stays crisp.
+   ═══ */
+#thesis {
+  position: relative; overflow: hidden;
+  min-height: 78vh; display: flex; align-items: center;
+  background:
+    radial-gradient(64% 76% at 50% 50%,
+      rgba(9,9,11,0.80), rgba(9,9,11,0.42) 54%, transparent 82%),
+    linear-gradient(180deg,
+      var(--void) 0%, rgba(9,9,11,0.30) 20%,
+      rgba(9,9,11,0.30) 70%, var(--void) 100%),
+    url('assets/idea-seed-structure.webp') center / cover no-repeat;
+}
 #thesis::before {
   content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background: radial-gradient(52% 60% at 50% 44%,
@@ -375,13 +428,13 @@
 .net-visual { position: relative; }
 .network-aura {
   position: absolute; inset: -16% -12%; z-index: 0; border-radius: 30px;
-  filter: blur(36px);
+  filter: blur(28px);
   background:
     radial-gradient(56% 56% at 28% 30%, rgba(192,132,252,0.22), transparent 70%),
     radial-gradient(56% 56% at 76% 82%, rgba(129,140,248,0.16), transparent 70%),
-    url('/assets/network-aura.webp');
+    url('/assets/valley-light-web.webp');
   background-size: cover; background-position: center;
-  opacity: 0.55; mix-blend-mode: screen;
+  opacity: 0.6; mix-blend-mode: screen;
 }
 
 /* ═══ Covenant — a veiled "gate" backdrop over the whole section ═══ */
@@ -392,9 +445,9 @@
   filter: blur(22px);
   background:
     radial-gradient(46% 62% at 50% 42%, rgba(244,114,182,0.16), transparent 72%),
-    url('/assets/covenant-aura.webp');
+    url('/assets/sanctuary-threshold.webp');
   background-size: cover; background-position: center;
-  opacity: 0.5; mix-blend-mode: screen;
+  opacity: 0.55; mix-blend-mode: screen;
 }
 
 /* ═══ Agents — a live "dispatch" card mirroring the loop's wish-card ═══ */
@@ -413,13 +466,13 @@
   background:
     radial-gradient(58% 58% at 72% 28%, rgba(244,114,182,0.20), transparent 70%),
     radial-gradient(58% 58% at 26% 82%, rgba(129,140,248,0.18), transparent 70%);
-  filter: blur(34px);
+  filter: blur(28px);
   background-image:
     radial-gradient(58% 58% at 72% 28%, rgba(244,114,182,0.20), transparent 70%),
     radial-gradient(58% 58% at 26% 82%, rgba(129,140,248,0.18), transparent 70%),
-    url('/assets/agents-aura.webp');
+    url('/assets/luminous-helper-workbench.webp');
   background-size: cover; background-position: center;
-  opacity: 0.55; mix-blend-mode: screen;
+  opacity: 0.6; mix-blend-mode: screen;
 }
 .agent-card {
   position: relative; z-index: 1;
@@ -504,6 +557,80 @@
   letter-spacing: 0.04em; margin-top: 18px;
 }
 .closing-line { margin-top: 64px; font-size: 15px; color: var(--moss-light); font-style: italic; }
+.gate-kicker { color: var(--s6); }
+.join-kicker { color: var(--indigo); }
+
+/* ── Covenant seal: a hexagonal jewel-sigil that scribes itself as the gate
+   comes into view. Six facets echo the six peers of the mesh above, so the
+   covenant reads as a single jewel in Indra's net. Pure CSS, keyed off .r.v. ── */
+.gate-seal { width: 108px; height: 108px; margin: 0 auto 26px; position: relative; }
+.gate-seal svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.seal-draw {
+  fill: none; stroke: var(--s6); stroke-width: 1.4;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset 1.5s var(--ease);
+}
+.gate-seal.v .seal-ring { stroke-dashoffset: 0; transition-delay: 0.05s; }
+.gate-seal.v .seal-hex  { stroke-dashoffset: 0; transition-delay: 0.45s; }
+.seal-glow {
+  fill: var(--s6); opacity: 0; filter: blur(6px);
+  transition: opacity 1.2s var(--ease) 1.05s;
+}
+.gate-seal.v .seal-glow { opacity: 0.45; animation: sealBreath 3.6s var(--ease) 1.6s infinite; }
+.seal-core {
+  fill: var(--s6); opacity: 0;
+  transform: scale(0.3); transform-origin: 60px 60px;
+  transition: opacity 0.9s var(--ease) 0.95s, transform 0.9s var(--ease) 0.95s;
+}
+.gate-seal.v .seal-core { opacity: 1; transform: scale(1); }
+@keyframes sealBreath { 0%, 100% { opacity: 0.30; } 50% { opacity: 0.58; } }
+
+/* ── Join: you become a jewel in Indra's net. The perimeter net is already
+   there, faint; as the section reveals, six links scribe inward from You and
+   every jewel brightens — paying off "every jewel reflects all others." ── */
+.join-net { width: min(340px, 84%); margin: 6px auto 34px; }
+.join-net svg { width: 100%; height: auto; display: block; overflow: visible; }
+.jn-perim { stroke: rgba(129,140,248,0.14); stroke-width: 1.1; fill: none; }
+.jn-link {
+  stroke: rgba(129,140,248,0.55); stroke-width: 1.3; fill: none;
+  stroke-dasharray: 100; stroke-dashoffset: 100;
+  transition: stroke-dashoffset 0.85s var(--ease);
+}
+.join-net.v .jn-links > :nth-child(1) { stroke-dashoffset: 0; transition-delay: 0.50s; }
+.join-net.v .jn-links > :nth-child(2) { stroke-dashoffset: 0; transition-delay: 0.62s; }
+.join-net.v .jn-links > :nth-child(3) { stroke-dashoffset: 0; transition-delay: 0.74s; }
+.join-net.v .jn-links > :nth-child(4) { stroke-dashoffset: 0; transition-delay: 0.86s; }
+.join-net.v .jn-links > :nth-child(5) { stroke-dashoffset: 0; transition-delay: 0.98s; }
+.join-net.v .jn-links > :nth-child(6) { stroke-dashoffset: 0; transition-delay: 1.10s; }
+.jn-jewel {
+  fill: var(--card); stroke: var(--indigo); stroke-width: 1.5;
+  opacity: 0.28; transition: opacity 0.7s var(--ease);
+}
+.join-net.v .jn-jewels > :nth-child(1) { opacity: 1; transition-delay: 0.90s; }
+.join-net.v .jn-jewels > :nth-child(2) { opacity: 1; transition-delay: 1.00s; }
+.join-net.v .jn-jewels > :nth-child(3) { opacity: 1; transition-delay: 1.10s; }
+.join-net.v .jn-jewels > :nth-child(4) { opacity: 1; transition-delay: 1.20s; }
+.join-net.v .jn-jewels > :nth-child(5) { opacity: 1; transition-delay: 1.30s; }
+.join-net.v .jn-jewels > :nth-child(6) { opacity: 1; transition-delay: 1.40s; }
+.jn-you-glow {
+  fill: url(#jnGrad); opacity: 0; filter: blur(9px);
+  transition: opacity 1s var(--ease) 0.3s;
+}
+.join-net.v .jn-you-glow { opacity: 0.5; animation: jnBreath 3.8s var(--ease) 1.3s infinite; }
+.jn-you-core {
+  fill: url(#jnGrad); opacity: 0;
+  transform: scale(0.3); transform-origin: 160px 100px;
+  transition: opacity 0.8s var(--ease) 0.2s, transform 0.8s var(--ease) 0.2s;
+}
+.join-net.v .jn-you-core { opacity: 1; transform: scale(1); }
+.jn-you-label {
+  font-family: var(--display); font-size: 10px; font-weight: 700;
+  fill: var(--void); text-anchor: middle; letter-spacing: 0.04em;
+  opacity: 0; transition: opacity 0.7s var(--ease) 0.7s;
+}
+.join-net.v .jn-you-label { opacity: 1; }
+@keyframes jnBreath { 0%, 100% { opacity: 0.36; } 50% { opacity: 0.66; } }
 
 /* ═══ Responsive ═══ */
 @media (max-width: 768px) {
@@ -523,10 +650,16 @@
   .net-cols { grid-template-columns: 1fr; gap: 32px; }
   .agent-cols { grid-template-columns: 1fr; gap: 30px; margin-top: 32px; }
   .agent-copy .gate-p { max-width: none; margin-bottom: 24px; }
+  /* Single-column: prose stacks over the image, so darken uniformly. */
+  .loop-bg-scrim {
+    background: linear-gradient(180deg,
+      var(--void) 0%, rgba(9,9,11,0.62) 14%,
+      rgba(9,9,11,0.58) 74%, var(--void) 100%);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   /* Stages still switch, but snap instead of animate. */
-  .scrolly *, .progress-fill, .data-pulse, .r,
+  .scrolly *, .progress-fill, .data-pulse, .r, .loop-bg-layer,
   .agent-step, .agent-proof, .agent-grat, .agent-live::before {
     transition: none !important; animation: none !important;
   }
@@ -540,6 +673,16 @@
   .hero-h, .hero-p, .hero-actions, .hero-hint {
     animation: none !important; opacity: 1 !important; transform: none !important;
   }
+  /* Covenant seal + join net scribe via transition — land them fully drawn. */
+  .seal-draw { transition: none !important; stroke-dashoffset: 0 !important; }
+  .seal-core, .seal-glow { transition: none !important; animation: none !important;
+    opacity: 1 !important; transform: none !important; }
+  .seal-glow { opacity: 0.4 !important; }
+  .jn-link { transition: none !important; stroke-dashoffset: 0 !important; }
+  .jn-jewel { transition: none !important; opacity: 1 !important; }
+  .jn-you-core, .jn-you-label { transition: none !important;
+    opacity: 1 !important; transform: none !important; }
+  .jn-you-glow { transition: none !important; animation: none !important; opacity: 0.45 !important; }
   .r { opacity: 1 !important; transform: none !important; }
 }
 </style>
@@ -547,7 +690,7 @@
 <body>
 
 <nav class="site-nav">
-  <a href="/" class="site-nav-logo"><span class="se-wordmark__full">Synchronicity Engine</span><span class="se-wordmark__short">SyncEngine</span></a>
+  <a href="/" class="site-nav-logo" aria-label="Synchronicity Engine — home"><img class="site-nav-mark" src="/assets/app-icon-badge.png" alt=""><span class="site-nav-word"><span class="se-wordmark__full">Synchronicity Engine</span><span class="se-wordmark__short">SyncEngine</span></span></a>
   <button class="site-nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')" aria-label="Menu">&#9776;</button>
   <div class="site-nav-links">
     <a href="/gift-cycle.html">Gift Cycle</a>
@@ -582,6 +725,16 @@
 
 <!-- ═══════════ THE LOOP · SCROLLYTELLING ═══════════ -->
 <section class="sect-short" id="loop-sect">
+  <div class="loop-bg" aria-hidden="true">
+    <div class="loop-bg-stick">
+      <div class="loop-bg-layer" data-s="1" style="background-image:url('assets/wish-circle.webp')"></div>
+      <div class="loop-bg-layer" data-s="2" style="background-image:url('assets/attention-wishes.webp')"></div>
+      <div class="loop-bg-layer" data-s="3" style="background-image:url('assets/greenhouse-choice.webp')"></div>
+      <div class="loop-bg-layer" data-s="4" style="background-image:url('assets/greenhouse-gratitude.webp')"></div>
+      <div class="loop-bg-layer" data-s="5" style="background-image:url('assets/mural-gift-loop.webp')"></div>
+      <div class="loop-bg-scrim"></div>
+    </div>
+  </div>
   <div class="wrap">
     <div class="scrolly" id="loop" data-stage="5">
 
@@ -802,9 +955,18 @@
 <section class="sect-short" id="covenant" style="text-align:center">
   <div class="covenant-aura" aria-hidden="true"></div>
   <div class="wrap">
-    <h2 class="r stage-h" style="font-size:clamp(26px,4vw,44px)">This Technology Is<br><span style="color:var(--s6)">Not for Everyone</span></h2>
-    <p class="r r-d1 gate-p">The Engine is only available to <strong>values-aligned individuals</strong>. The Covenant names those values, plainly. Read it — and find out whether you qualify.</p>
-    <div class="r r-d2">
+    <div class="gate-seal r" aria-hidden="true">
+      <svg viewBox="0 0 120 120" role="img" aria-label="A jewel-sigil marking the covenant gate">
+        <circle class="seal-draw seal-ring" cx="60" cy="60" r="50" pathLength="100"/>
+        <path class="seal-draw seal-hex" pathLength="100" d="M60 26 L89.4 43 L89.4 77 L60 94 L30.6 77 L30.6 43 Z"/>
+        <circle class="seal-glow" cx="60" cy="60" r="13"/>
+        <circle class="seal-core" cx="60" cy="60" r="6"/>
+      </svg>
+    </div>
+    <p class="r stage-num gate-kicker">Membership · by Covenant</p>
+    <h2 class="r r-d1 stage-h" style="font-size:clamp(26px,4vw,44px)">This Technology Is<br><span style="color:var(--s6)">Not for Everyone</span></h2>
+    <p class="r r-d2 gate-p">The Engine is only available to <strong>values-aligned individuals</strong>. The Covenant names those values, plainly. Read it — and find out whether you qualify.</p>
+    <div class="r r-d3">
       <a href="/covenant.html" class="btn btn-moss">Read the Covenant &#8594;</a>
     </div>
   </div>
@@ -814,9 +976,48 @@
 <!-- ═══════════ JOIN ═══════════ -->
 <section class="sect-short" id="join" style="text-align:center">
   <div class="wrap">
-    <h2 class="r stage-h" style="font-size:clamp(26px,4vw,44px)">If It Resonates, <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Join</span></h2>
-    <p class="r r-d1 gate-p">If you are in resonance with the values expressed, join the association through a donation to <strong>Temples of Refuge</strong> — the nonprofit that stewards the technology and the land network. You'll receive an invitation to the private community, and the download link. No one aligned is turned away for lack of funds.</p>
-    <div class="r r-d2">
+    <div class="join-net r" aria-hidden="true">
+      <svg viewBox="0 0 320 200" role="img" aria-label="You joining Indra's network — a new jewel connects and every jewel reflects it">
+        <defs>
+          <linearGradient id="jnGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#818cf8"/>
+            <stop offset="0.5" stop-color="#c084fc"/>
+            <stop offset="1" stop-color="#f472b6"/>
+          </linearGradient>
+        </defs>
+        <g class="jn-perimeter">
+          <line class="jn-perim" x1="46" y1="44" x2="274" y2="44"/>
+          <line class="jn-perim" x1="46" y1="44" x2="26" y2="116"/>
+          <line class="jn-perim" x1="274" y1="44" x2="294" y2="116"/>
+          <line class="jn-perim" x1="26" y1="116" x2="104" y2="172"/>
+          <line class="jn-perim" x1="294" y1="116" x2="216" y2="172"/>
+          <line class="jn-perim" x1="104" y1="172" x2="216" y2="172"/>
+        </g>
+        <g class="jn-links">
+          <line class="jn-link" x1="160" y1="100" x2="46" y2="44" pathLength="100"/>
+          <line class="jn-link" x1="160" y1="100" x2="274" y2="44" pathLength="100"/>
+          <line class="jn-link" x1="160" y1="100" x2="26" y2="116" pathLength="100"/>
+          <line class="jn-link" x1="160" y1="100" x2="294" y2="116" pathLength="100"/>
+          <line class="jn-link" x1="160" y1="100" x2="104" y2="172" pathLength="100"/>
+          <line class="jn-link" x1="160" y1="100" x2="216" y2="172" pathLength="100"/>
+        </g>
+        <g class="jn-jewels">
+          <circle class="jn-jewel" cx="46" cy="44" r="6.5"/>
+          <circle class="jn-jewel" cx="274" cy="44" r="6.5"/>
+          <circle class="jn-jewel" cx="26" cy="116" r="6.5"/>
+          <circle class="jn-jewel" cx="294" cy="116" r="6.5"/>
+          <circle class="jn-jewel" cx="104" cy="172" r="6.5"/>
+          <circle class="jn-jewel" cx="216" cy="172" r="6.5"/>
+        </g>
+        <circle class="jn-you-glow" cx="160" cy="100" r="22"/>
+        <circle class="jn-you-core" cx="160" cy="100" r="13"/>
+        <text class="jn-you-label" x="160" y="104">you</text>
+      </svg>
+    </div>
+    <p class="r stage-num join-kicker">Join the Association</p>
+    <h2 class="r r-d1 stage-h" style="font-size:clamp(26px,4vw,44px)">If It Resonates, <span style="background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Join</span></h2>
+    <p class="r r-d2 gate-p">If you are in resonance with the values expressed, join the association through a donation to <strong>Temples of Refuge</strong> — the nonprofit that stewards the technology and the land network. You'll receive an invitation to the private community, and the download link. No one aligned is turned away for lack of funds.</p>
+    <div class="r r-d3">
       <a href="/join.html" class="btn btn-final" style="padding:16px 44px">Join the Community &#8594;</a>
       <p class="join-fine">Temples of Refuge · 508(c)(1)(a) · Membership for life</p>
     </div>

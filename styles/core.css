@@ -415,23 +415,35 @@ h1, h2, h3, h4, h5, h6 {
    letter-spacing in em so it stays proportional. */
 .site-nav-logo {
   position: relative;
+  display: inline-flex; align-items: center; gap: 11px;
+  text-decoration: none;
+}
+/* App-icon badge — a standalone, full-bleed rounded square. Opaque tile (its
+   transparent safe-area margin was cropped out), so nothing shows around it on
+   any background. */
+.site-nav-mark {
+  height: 40px; width: 40px; flex: none; display: block;
+  object-fit: cover; border-radius: 11px;
+}
+/* Wordmark — gradient clipped into the text, riding its own glass pill so it
+   stays legible over hero imagery. The pill is a ::before because the element's
+   own background is spent on the text gradient. */
+.site-nav-word {
+  position: relative;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 500;
   font-size: 15px;
   letter-spacing: 0.04em;
   text-transform: none;   /* keep natural "Synchronicity Engine" casing */
   white-space: nowrap;
-  text-decoration: none;
-  padding: 8px 16px;
+  padding: 9px 18px;
   background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;     /* non-WebKit fallback for the clip */
 }
-/* The wordmark clips a gradient into its text, so its own background is
-   occupied — the dark blur pill rides on a pseudo-element behind it. */
-.site-nav-logo::before {
+.site-nav-word::before {
   content: "";
   position: absolute;
   inset: 0;

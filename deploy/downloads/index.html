@@ -55,6 +55,15 @@
       transition:transform .15s ease, background .15s ease;
     }
     .btn:hover { transform:translateY(-1px); background:#fff; }
+    /* Secondary download (Intel Mac) — present but visibly subordinate to the
+       Apple Silicon build, which is what nearly every visitor wants. */
+    .btn-alt {
+      background:transparent; color:var(--t2);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+    }
+    .btn-alt:hover { background:rgba(255,255,255,.06); color:#fff; }
+    .btn + .btn { margin-top:8px; }
+    .pick { color:var(--t3); font-size:12px; line-height:1.6; margin-top:10px; }
     .note { color:var(--t3); font-size:12.5px; line-height:1.7; margin-top:16px; }
     .note strong { color:var(--t2); font-weight:500; }
 
@@ -69,19 +78,20 @@
     <p class="eyebrow">Synchronicity Engine</p>
     <h1>Bring the <em>app</em> home</h1>
     <p class="lead">SyncEngine runs privately, on your own device. Choose your platform and install it.</p>
-    <p class="ver">Version 1.0.0</p>
+    <p class="ver">Always the latest release · <a href="https://github.com/trumanellis/syncengine-releases/releases/latest">release notes &amp; checksums</a></p>
 
     <div class="cards">
       <div class="card">
         <h2>macOS</h2>
-        <p class="meta">.dmg · 59&nbsp;MB · Apple&nbsp;Silicon</p>
-        <a class="btn" href="SynchronicityEngine-1.0.0.dmg">Get for Mac</a>
+        <p class="meta">.dmg · Apple&nbsp;Silicon (M-series)</p>
+        <a class="btn" href="https://github.com/trumanellis/syncengine-releases/releases/latest/download/SyncEngine-macos.dmg">Get for Mac — Apple Silicon</a>
+        <p class="pick">Apple&nbsp;Silicon = any Mac from 2020 on ( → <strong>About This Mac</strong> shows "Chip: Apple&nbsp;M…"). An Intel build is coming soon.</p>
         <p class="note">Open the <strong>.dmg</strong> and drag SyncEngine to Applications. The first time you open it, macOS says it "could not verify" the app — it isn't notarized by Apple yet. Approve it once in <strong>System&nbsp;Settings → Privacy&nbsp;&amp;&nbsp;Security</strong>: scroll down and click <strong>Open&nbsp;Anyway</strong>, then confirm.</p>
       </div>
       <div class="card">
         <h2>Android</h2>
-        <p class="meta">.apk · 204&nbsp;MB · arm64</p>
-        <a class="btn" href="SynchronicityEngine-1.0.0.apk">Get for Android</a>
+        <p class="meta">.apk · arm64</p>
+        <a class="btn" href="https://github.com/trumanellis/syncengine-releases/releases/latest/download/SyncEngine-android.apk">Get for Android</a>
         <p class="note">Allow <strong>"Install unknown apps"</strong> for your browser, then open the <strong>.apk</strong>. It's release-signed, so future versions install over the top.</p>
       </div>
     </div>
