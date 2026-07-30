@@ -26,14 +26,17 @@ this HTML and scp it up. Retired.)
 
 ## Publishing a new release
 
-Fully automated from the app repo — no manual upload:
+Fully automated from the app repo — no manual upload, no version bump:
 
-1. In `IndrasNetwork`, bump `[workspace.package] version` in `Cargo.toml` if needed.
-2. Tag and push: `git tag v1.0.2 && git push origin v1.0.2`.
-3. The `Release` GitHub Actions workflow builds the macOS `.dmg` + Android `.apk`,
+1. Tag with today's date (CalVer `YYYY.MM.DD.N`, N = the day's build number) and push:
+   `git tag 2026.07.30.1 && git push origin 2026.07.30.1`.
+2. The `Release` GitHub Actions workflow builds the macOS `.dmg` + Android `.apk`,
+   stamps the date as the version (Android `versionCode` = `YYYYMMDD*10+N`),
    renames them to the stable names, and publishes a GitHub Release (with
    `SHA256SUMS.txt`) to `syncengine-releases`. This page picks it up
    automatically.
+
+The date tag is the single source of truth — no `Cargo.toml` version to bump.
 
 One-time setup the workflow depends on:
 - **`ANDROID_KEYSTORE_B64`** secret (base64 of the release keystore).
