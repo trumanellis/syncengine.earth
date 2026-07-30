@@ -20,7 +20,7 @@ BRANCH="main"
 echo "→ pushing $BRANCH to origin…"
 git push origin "$BRANCH"
 
-echo "→ fast-forwarding $HOST:$SITE_DIR…"
+echo "→ fast-forwarding ${HOST}:${SITE_DIR}…"
 ssh "$HOST" "git -C '$SITE_DIR' pull --ff-only origin '$BRANCH' && git -C '$SITE_DIR' log --oneline -1"
 
 echo "→ verifying live site…"
