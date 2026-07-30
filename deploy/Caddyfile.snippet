@@ -5,6 +5,12 @@
 # it through), so the handler is identical across sites. handle blocks are
 # first-match, so /_deploy never falls through to the file server.
 
+# syncengine.earth serves extensionless URLs (/join, not /join.html). The pages
+# are still plain .html files on disk; try_files maps the clean URL onto them,
+# and old .html URLs 301 to the clean form so shared links and Stripe's
+# return_url keep working. Wrapped in `route` because Caddy's default directive
+# order would otherwise run try_files before redir and the .html URLs would
+# serve directly instead of redirecting — two URLs for every page.
 syncengine.earth, www.syncengine.earth {
 	encode zstd gzip
 	header {
@@ -13,9 +19,41 @@ syncengine.earth, www.syncengine.earth {
 	handle /_deploy {
 		reverse_proxy 127.0.0.1:9000
 	}
+
+	# App downloads (the .dmg/.apk + pick-your-platform page). Served from a
+	# non-git dir so the large binaries stay out of the repo and auto-deploy.
+	# DOWNLOAD_ARTIFACT_URL (donation gateway) points at https://syncengine.earth/get/.
+	# Matched before the catch-all handle, so the .html rules below never see it.
+	redir /get /get/
+	handle_path /get/* {
+		root * /var/www/downloads
+		file_server
+	}
+
 	handle {
 		root * /var/www/syncengine
-		file_server
+		route {
+			# /index.html -> /  and  /articles/index.html -> /articles/
+			@indexhtml path_regexp idx ^(.*/)?index\.html$
+			redir @indexhtml {re.idx.1} 301
+
+			# /join.html -> /join  (two matchers so a query-less URL
+			# doesn't pick up a trailing "?")
+			@htmlq {
+				path_regexp oldhtml ^/(.*)\.html$
+				expression {query} != ""
+			}
+			redir @htmlq /{re.oldhtml.1}?{query} 301
+			@htmlnq {
+				path_regexp oldhtml2 ^/(.*)\.html$
+				expression {query} == ""
+			}
+			redir @htmlnq /{re.oldhtml2.1} 301
+
+			# /join -> join.html on disk
+			try_files {path} {path}.html {path}/index.html
+			file_server
+		}
 	}
 }
 

@@ -116,18 +116,18 @@ it.
 ## Pages
 
 - [Home](https://www.syncengine.earth/): "What if helping each other was a game?" — a scroll-told story of the shared wish list: intentions gathering collective attention, a manifester stepping in with proof of service, and gratitude released to the doer and tagged onward
-- [AI Agents](https://www.syncengine.earth/agents.html): attach any coding agent (Claude Code, Codex, local models) to a project as a first-class peer; fork for parallel, conflict-free multi-agent work
-- [The Gift Cycle](https://www.syncengine.earth/gift-cycle.html): the loop of intentions named, manifestations made, and gratitude released — told through the story of a maracujá cheesecake at a community bazaar
-- [Indra's Network](https://www.syncengine.earth/network.html): technical architecture — delay-tolerant P2P networking, CRDT sync, post-quantum cryptography
-- [White paper (HTML reader)](https://www.syncengine.earth/whitepaper.html): renders the markdown whitepaper; agents should fetch the .md directly
-- [The Community](https://www.syncengine.earth/community.html): gatherings, the Community Bazaar, Oracle assistants, membership, GratiDAO principles
-- [The Covenant (HTML reader)](https://www.syncengine.earth/covenant.html): renders the markdown covenant; agents should fetch the .md directly
+- [AI Agents](https://www.syncengine.earth/agents): attach any coding agent (Claude Code, Codex, local models) to a project as a first-class peer; fork for parallel, conflict-free multi-agent work
+- [The Gift Cycle](https://www.syncengine.earth/gift-cycle): the loop of intentions named, manifestations made, and gratitude released — told through the story of a maracujá cheesecake at a community bazaar
+- [Indra's Network](https://www.syncengine.earth/network): technical architecture — delay-tolerant P2P networking, CRDT sync, post-quantum cryptography
+- [White paper (HTML reader)](https://www.syncengine.earth/whitepaper): renders the markdown whitepaper; agents should fetch the .md directly
+- [The Community](https://www.syncengine.earth/community): gatherings, the Community Bazaar, Oracle assistants, membership, GratiDAO principles
+- [The Covenant (HTML reader)](https://www.syncengine.earth/covenant): renders the markdown covenant; agents should fetch the .md directly
 
 ## Articles
 
 The Indra's Network series — philosophy, architecture, and design of a truly
 decentralized network. Fetch the .md files directly; the HTML reader at
-/articles/read.html?slug=… requires JavaScript.
+/articles/read?slug=… requires JavaScript.
 
 - [Every Node a Mirror](https://www.syncengine.earth/articles/indras-network-every-node-a-mirror.md): the vision of Indra's Network — how an ancient metaphor of infinite interconnection becomes the blueprint for a network where every device reflects the whole
 - [Your Story Is Your Key](https://www.syncengine.earth/articles/your-story-is-your-key.md): identity without permission — cryptographic keys that emerge from your own narrative, with no authority between you and your name
