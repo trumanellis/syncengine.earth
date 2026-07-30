@@ -64,8 +64,48 @@ def verify(secret, body, sig):
     return hmac.compare_digest(expected, sig)
 
 
+def _rev(d):
+    return subprocess.run(["git", "-C", d, "rev-parse", "HEAD"],
+                          capture_output=True, text=True).stdout.strip()
+
+
+def _changed_files(d, old, new):
+    """Files that changed between two revs (empty on first deploy / no move)."""
+    if not old or not new or old == new:
+        return []
+    r = subprocess.run(["git", "-C", d, "diff", "--name-only", old, new],
+                       capture_output=True, text=True)
+    return [ln.strip() for ln in r.stdout.splitlines() if ln.strip()]
+
+
+def run_post_deploy(host, d, changed):
+    """Run the site's own deploy/post-deploy.sh (if present + executable) after
+    a successful pull. The changed-file list is fed on stdin, one path per line,
+    so each repo owns its "if these files changed, restart X / reload Y" logic —
+    keeping site-specific deploy steps in the site's repo, not in this service.
+    Runs as this service's user (truman); it may sudo -n for allow-listed steps."""
+    hook = os.path.join(d, "deploy", "post-deploy.sh")
+    if not (os.path.isfile(hook) and os.access(hook, os.X_OK)):
+        return True
+    log(f"{host}: post-deploy hook ({len(changed)} changed file(s))")
+    try:
+        r = subprocess.run(["bash", hook], cwd=d, timeout=180,
+                           input="\n".join(changed) + "\n",
+                           capture_output=True, text=True,
+                           env={**os.environ, "DEPLOY_DIR": d, "DEPLOY_HOST": host})
+    except subprocess.TimeoutExpired:
+        log(f"{host}: post-deploy TIMEOUT")
+        return False
+    for line in (r.stdout + r.stderr).splitlines():
+        if line.strip():
+            log(f"  [post-deploy] {line.strip()}")
+    log(f"{host}: post-deploy exit={r.returncode}")
+    return r.returncode == 0
+
+
 def deploy(host, cfg):
     d, br = cfg["dir"], cfg.get("branch", "main")
+    old = _rev(d)
     log(f"{host}: git -C {d} pull --ff-only origin {br}")
     try:
         r = subprocess.run(["git", "-C", d, "pull", "--ff-only", "origin", br],
@@ -76,10 +116,13 @@ def deploy(host, cfg):
     for line in (r.stdout + r.stderr).splitlines():
         if line.strip():
             log(f"  {line.strip()}")
+    new = _rev(d)
     head = subprocess.run(["git", "-C", d, "log", "--oneline", "-1"],
                           capture_output=True, text=True).stdout.strip()
     log(f"{host}: exit={r.returncode} HEAD={head}")
-    return r.returncode == 0
+    if r.returncode != 0:
+        return False
+    return run_post_deploy(host, d, _changed_files(d, old, new))
 
 
 class Handler(BaseHTTPRequestHandler):

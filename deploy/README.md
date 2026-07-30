@@ -19,6 +19,24 @@ git push ─▶ GitHub ─push webhook─▶ https://<site>/_deploy ─▶ Caddy
 Pushing is all you do. **Watch any deploy:**
 `ssh refuge-relay 'journalctl -u webhook-deploy -f'`
 
+## Per-site post-deploy hooks (optional)
+
+After a successful pull, `webhook.py` diffs old→new HEAD and, if the site's repo
+has an executable `deploy/post-deploy.sh`, runs it with the changed files on
+stdin (one repo-relative path per line; cwd is the checkout root). This keeps
+"if these files changed, do X" logic in each site's own repo — the service stays
+generic. A non-zero hook exit makes the deploy report failure (500 → visible as a
+failed GitHub delivery). Sites without the script are unaffected.
+
+The hook runs **unprivileged** — this unit is `NoNewPrivileges=true`, so it can't
+sudo, on purpose. A hook that needs a privileged step (restart a service, touch
+`/etc/…`) should not hold root; instead it enqueues a request that a separate
+root unit applies. templesofrefuge does this: its hook writes a fixed-token
+`.deploy-request`, and a root `tor-post-deploy.path` + `.service` run a fixed
+helper (`/usr/local/bin/tor-post-deploy`, installed out of band, not from the
+repo) that performs only its hardcoded actions. See
+`templesofrefuge.earth/infra/tor-post-deploy.*` for the pattern.
+
 ## Components (one service, N sites)
 
 | Where | What |
