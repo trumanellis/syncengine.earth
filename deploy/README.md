@@ -74,8 +74,20 @@ repo) that performs only its hardcoded actions. See
 
 ## Manual deploy / fallback
 
-`./scripts/deploy.sh` (in the syncengine repo) pushes and then SSHes in to
-`git pull --ff-only` directly, for when the webhook is down.
+`./scripts/deploy.sh` (in the syncengine repo) pushes, then waits up to 45s for
+the webhook to land the new commit on the box, and only SSHes in to
+fast-forward the checkout itself if it doesn't — for when the webhook is down.
+
+Waiting matters: the webhook runs its own `git pull` in that same working tree,
+and two git processes in one worktree collide. The script used to pull
+unconditionally, so its fetch could move `refs/heads/main` while the webhook was
+mid-checkout, failing with `Cannot fast-forward your working tree`. The fallback
+now fetches into the remote-tracking ref only and `merge --ff-only`s an exact
+commit, which is a no-op if the webhook wins the race. Both paths finish by
+asserting the live HEAD matches and the tree is clean.
+
+Tune the grace period with `DEPLOY_WEBHOOK_WAIT=<seconds>` (`0` skips straight
+to the manual fast-forward).
 
 ## Rotating a site's secret
 
