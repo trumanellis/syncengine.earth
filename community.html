@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Community — SyncEngine</title>
-  <meta name="description" content="Where the regeneration game leaves the screen: Gatherings of the Tribe, the Community Bazaar, membership by founding gift, and the ecosystem of Temples of Refuge, Agua Lila, and SyncEngine.">
+  <meta name="description" content="Where the game leaves the screen: Gatherings of the Tribe at Temples around the world, the Community Bazaar where the wish list comes true at real tables, membership by founding gift, and the ecosystem of Temples of Refuge, Agua Lila, and SyncEngine.">
   <link rel="canonical" href="https://www.syncengine.earth/community">
 
   <meta property="og:type" content="website">
@@ -13,13 +13,17 @@
   <meta property="og:description" content="Where the game leaves the screen: gatherings, temples, and land — the people regenerating the real world together.">
   <meta property="og:url" content="https://www.syncengine.earth/community">
   <meta property="og:image" content="https://www.syncengine.earth/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Community — SyncEngine">
+  <meta name="twitter:description" content="Where the game leaves the screen: gatherings, temples, and land — the people regenerating the real world together.">
+  <meta name="twitter:image" content="https://www.syncengine.earth/assets/og-image.png">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "name": "The Community — SyncEngine",
-    "description": "Gatherings of the Tribe, the Community Bazaar, Oracle assistants trained on collective wisdom, membership by founding gift to Temples of Refuge, and the GratiDAO organizational philosophy.",
+    "description": "Gatherings of the Tribe, the Community Bazaar where intentions are fulfilled at real tables, membership by founding gift to Temples of Refuge, Oracle assistants trained on collective wisdom, and the GratiDAO organizational philosophy.",
     "url": "https://www.syncengine.earth/community",
     "isPartOf": { "@id": "https://www.syncengine.earth/#website" }
   }
@@ -39,27 +43,216 @@
     a { color: var(--moss-light); text-decoration: none; transition: color 0.2s; }
     a:hover { color: var(--tx); }
 
-    /* ── Gatherings ── */
-    .gathering-icon {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: var(--bg2); border: 2px solid var(--bd2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 32px; margin: 0 auto 16px;
+    /* ═══ Atmosphere — single hero glow (DESIGN.md §6); rose-warmed for the
+       people-and-places page. ═══ */
+    .atmosphere {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      overflow: hidden;
     }
-    .gathering-title {
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: -0.02em;
-      margin-bottom: 10px;
-    }
-    .gathering-desc {
-      font-size: 15px;
-      color: var(--t2);
-      line-height: 1.85;
+    .hero-glow {
+      position: absolute;
+      top: -10%; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px; max-width: 130vw;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(244,114,182,0.05) 0%,
+        rgba(129,140,248,0.04) 40%,
+        transparent 70%);
     }
 
-    /* ── Oracle badge ── */
+    /* ═══ Page hero — full-bleed gathering circle (matches agents.html) ═══ */
+    .page-hero {
+      /* Pull up under the transparent fixed nav so the artwork fills the top
+         edge; body has padding-top:56px to clear the nav on content pages. */
+      margin-top: -56px;
+      min-height: calc(62vh + 56px); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 196px 24px 60px; position: relative;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 40%,
+          rgba(9,9,11,0.45), transparent 72%),
+        linear-gradient(180deg,
+          rgba(9,9,11,0.25) 0%,
+          rgba(9,9,11,0.45) 55%,
+          rgba(9,9,11,0.85) 88%,
+          var(--void) 100%),
+        url('assets/homecoming-circle.webp') center 30% / cover no-repeat;
+    }
+    .page-hero > * { position: relative; z-index: 1; }
+    .page-hero-over {
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--rose-light); margin-bottom: 28px;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 6px 18px; border: 1px solid rgba(244,114,182,0.2);
+      border-radius: 100px;
+    }
+    .page-hero h1 {
+      font-family: var(--display); font-weight: 800;
+      font-size: clamp(34px, 6vw, 60px);
+      letter-spacing: -0.04em; line-height: 1.05;
+      margin-bottom: 26px;
+    }
+    .page-hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--rose), var(--violet), var(--indigo));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-hero p {
+      font-size: 17px; color: var(--t2); max-width: 580px;
+      line-height: 1.9; font-weight: 300;
+    }
+    .page-hero p strong { color: var(--tx); font-weight: 500; }
+
+    /* ═══ SCROLLYTELLING — one Gathering, beat by beat ═══
+       Left column: pinned gathering card whose state is driven purely by CSS
+       keyed off [data-stage="1..4"] on .scrolly. Default markup stage is 4, so
+       without JS the card renders complete. Hidden elements collapse
+       (max-height 0) so early stages show no blank gaps. */
+    .scrolly {
+      display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: 64px; align-items: start;
+    }
+
+    /* Full-bleed background pinned behind the card, crossfading per stage.
+       Driven purely by CSS via :has(), so the no-JS default (stage 4) lands on
+       the gratitude frame. */
+    #gathering-sect { position: relative; }
+    #gathering-sect > .wrap { position: relative; z-index: 1; }
+    .loop-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .loop-bg-stick {
+      position: sticky; top: 56px; height: calc(100vh - 56px);
+      overflow: hidden;
+    }
+    .loop-bg-layer {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.4s var(--ease); will-change: opacity;
+    }
+    .loop-bg-scrim {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(90deg,
+          rgba(9,9,11,0.60) 0%, rgba(9,9,11,0.30) 32%,
+          rgba(9,9,11,0.42) 60%, rgba(9,9,11,0.74) 100%),
+        linear-gradient(180deg,
+          var(--void) 0%, rgba(9,9,11,0.32) 16%,
+          rgba(9,9,11,0.30) 62%, var(--void) 100%);
+    }
+    #gathering-sect:has(.scrolly[data-stage="1"]) .loop-bg-layer[data-s="1"],
+    #gathering-sect:has(.scrolly[data-stage="2"]) .loop-bg-layer[data-s="2"],
+    #gathering-sect:has(.scrolly[data-stage="3"]) .loop-bg-layer[data-s="3"],
+    #gathering-sect:has(.scrolly[data-stage="4"]) .loop-bg-layer[data-s="4"] { opacity: 1; }
+
+    .loop-sticky {
+      position: sticky; top: 56px;
+      height: calc(100vh - 56px);
+      display: flex; align-items: center;
+    }
+
+    /* ── The Gathering card (sibling of index.html's wish-card) ── */
+    .gath-card {
+      width: 100%;
+      background: var(--card); border: 1px solid var(--bd);
+      border-radius: var(--r-special); padding: 28px;
+      position: relative; overflow: hidden;
+    }
+    .gath-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--rose), var(--violet), var(--indigo));
+    }
+    .gath-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 12px; margin-bottom: 18px;
+    }
+    .gath-title { font-family: var(--display); font-size: 17px; font-weight: 700; color: var(--tx); }
+    .gath-sub { font-family: var(--mono); font-size: 10px; color: var(--t3); letter-spacing: 0.06em; text-align: right; }
+    .gath-row {
+      padding: 13px 2px; border-bottom: 1px solid var(--bd2);
+      transition: all 0.6s var(--ease);
+    }
+    .gath-row:last-of-type { border-bottom: none; }
+    .gath-main { display: flex; align-items: baseline; gap: 10px; }
+    .gath-tag { color: var(--rose); font-size: 13px; flex-shrink: 0; }
+    .gath-name { font-size: 14px; color: var(--tx); font-weight: 500; flex: 1; min-width: 0; }
+    .gath-meta { font-family: var(--mono); font-size: 11px; color: var(--t3); letter-spacing: 0.04em; }
+    /* Peer pips — the app's member identity colors, arriving in person */
+    .gath-pips { display: flex; align-items: center; gap: 6px; margin-top: 9px; }
+    .gath-pip { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .gath-pips-label { font-family: var(--mono); font-size: 10px; color: var(--t3); letter-spacing: 0.05em; margin-left: 4px; }
+    .gath-note { font-family: var(--mono); font-size: 10.5px; color: var(--t3); letter-spacing: 0.04em; margin-top: 7px; }
+
+    /* Bazaar items — collapsed until the Bazaar opens (stage 3) */
+    .bazaar-item {
+      max-height: 100px; opacity: 1; overflow: hidden;
+      margin-top: 10px; padding-left: 23px;
+      transition: all 0.6s var(--ease);
+    }
+    .bz-main { display: flex; align-items: baseline; gap: 10px; }
+    .bz-name { font-size: 13px; color: var(--t2); flex: 1; min-width: 0; }
+    .bz-time { font-family: var(--mono); font-size: 11.5px; color: var(--glow-amber); }
+    .bz-stamp {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em;
+      color: var(--rose-light);
+      max-height: 22px; margin-top: 4px; overflow: hidden;
+      opacity: 1; transition: all 0.6s var(--ease) 0.15s;
+    }
+    .gath-loopline {
+      text-align: center; font-family: var(--mono); font-size: 10.5px;
+      color: var(--t3); letter-spacing: 0.06em;
+      border-top: 1px solid var(--bd2); overflow: hidden;
+      max-height: 40px; padding-top: 16px; margin-top: 4px;
+      opacity: 1; transition: all 0.7s var(--ease) 0.2s;
+    }
+
+    /* Stage subtraction — default (stage 4 / no-JS) shows the finished
+       gathering. Earlier stages dim future rows and collapse later beats. */
+    .scrolly[data-stage="1"] .gath-row[data-p="2"],
+    .scrolly[data-stage="1"] .gath-row[data-p="3"],
+    .scrolly[data-stage="2"] .gath-row[data-p="3"] { opacity: 0.45; }
+
+    .scrolly[data-stage="1"] .bazaar-item,
+    .scrolly[data-stage="2"] .bazaar-item {
+      max-height: 0; opacity: 0; margin-top: 0;
+    }
+    .scrolly[data-stage="1"] .bz-stamp,
+    .scrolly[data-stage="2"] .bz-stamp,
+    .scrolly[data-stage="3"] .bz-stamp {
+      max-height: 0; margin-top: 0; opacity: 0;
+    }
+    .scrolly[data-stage="1"] .gath-loopline,
+    .scrolly[data-stage="2"] .gath-loopline,
+    .scrolly[data-stage="3"] .gath-loopline {
+      max-height: 0; padding-top: 0; margin-top: 0; opacity: 0;
+    }
+
+    /* The current beat glows rose */
+    .scrolly[data-stage="1"] .gath-row[data-p="1"],
+    .scrolly[data-stage="2"] .gath-row[data-p="2"],
+    .scrolly[data-stage="3"] .gath-row[data-p="3"],
+    .scrolly[data-stage="4"] .gath-row[data-p="3"] {
+      background: linear-gradient(90deg, rgba(244,114,182,0.07), transparent 80%);
+      border-radius: 8px; padding-left: 10px; padding-right: 10px;
+      margin-left: -8px; margin-right: -8px;
+    }
+
+    /* Prose steps */
+    .loop-steps { padding: 10vh 0 6vh; }
+    .loop-step {
+      min-height: 88vh; display: flex; flex-direction: column; justify-content: center;
+      opacity: 0.3; transition: opacity 0.5s var(--ease);
+    }
+    .loop-step.on { opacity: 1; }
+    .loop-step .stage-num { margin-bottom: 10px; }
+    .loop-step h3 {
+      font-family: var(--display); font-size: clamp(24px, 3vw, 34px);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1.15;
+      margin-bottom: 16px; color: var(--tx);
+    }
+    .loop-step p { font-size: 16px; color: var(--t2); line-height: 1.9; font-weight: 300; max-width: 420px; }
+    .loop-step p strong { color: var(--tx); font-weight: 500; }
+
+    /* ── Oracle badge & items ── */
     .oracle-badge {
       display: inline-block;
       padding: 6px 18px; border-radius: 100px;
@@ -69,11 +262,9 @@
       color: var(--violet-light);
       margin-bottom: 32px;
     }
-
-    /* ── Oracle items ── */
     .oracle-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0,1fr));
       gap: 24px;
       margin-top: 32px;
     }
@@ -83,10 +274,9 @@
       border-radius: var(--radius);
       padding: 24px;
     }
-    .oracle-item-icon {
-      font-size: 28px;
-      display: block;
-      margin-bottom: 12px;
+    .oracle-item-mark {
+      display: block; color: var(--violet);
+      font-size: 18px; margin-bottom: 12px;
     }
     .oracle-item h4 {
       font-family: var(--display);
@@ -144,7 +334,6 @@
       color: var(--moss-light);
       text-decoration: none;
       transition: color 0.2s;
-      margin-bottom: 28px;
     }
     .article-link:hover { color: var(--tx); }
 
@@ -165,13 +354,14 @@
       margin-bottom: 28px;
     }
 
-    .temple-icon-wrap {
-      width: 100%; height: 180px;
-      background: var(--bg2);
+    /* Threshold artwork above the membership CTA */
+    .temple-photo {
+      width: 100%; height: 200px;
       border: 1px solid var(--bd);
       border-radius: var(--radius);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 56px;
+      background:
+        linear-gradient(180deg, rgba(9,9,11,0.15), rgba(9,9,11,0.35)),
+        url('assets/sanctuary-threshold.webp') center 38% / cover no-repeat;
       margin-bottom: 28px;
     }
 
@@ -186,15 +376,17 @@
     /* ── Ecosystem ── */
     .eco-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0,1fr));
       gap: 24px;
     }
     .eco-icon {
       width: 64px; height: 64px; border-radius: 50%;
       background: var(--bg2); border: 2px solid var(--bd2);
       display: flex; align-items: center; justify-content: center;
-      font-size: 26px; margin-bottom: 16px;
+      margin-bottom: 16px;
     }
+    .eco-icon svg { width: 26px; height: 26px; }
+    .eco-icon .eco-mark { font-size: 24px; line-height: 1; }
     .eco-domain {
       font-family: var(--mono);
       font-size: 12px;
@@ -233,6 +425,19 @@
       color: var(--moss-light);
       transform: translateY(-1px);
     }
+    .eco-here {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 20px; border-radius: 100px;
+      border: 1px solid rgba(129,140,248,0.3);
+      background: rgba(129,140,248,0.06);
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--indigo-light);
+    }
+    .eco-here::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--indigo); box-shadow: 0 0 8px var(--indigo);
+    }
 
     /* ── Section divider ── */
     .section-label {
@@ -259,10 +464,34 @@
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
+      .page-hero { padding: 176px 20px 40px; }
+      .scrolly { display: block; }
+      .loop-sticky {
+        top: 56px; height: auto; z-index: 5;
+        padding: 10px 0 14px;
+        background: var(--void);
+        box-shadow: 0 22px 26px -18px rgba(0,0,0,0.9);
+      }
+      .gath-card { padding: 18px; }
+      .gath-row { padding: 9px 2px; }
+      .loop-steps { padding: 4vh 0; }
+      .loop-step { min-height: 74vh; }
+      /* Single-column: prose stacks over the image, so darken uniformly. */
+      .loop-bg-scrim {
+        background: linear-gradient(180deg,
+          var(--void) 0%, rgba(9,9,11,0.62) 14%,
+          rgba(9,9,11,0.58) 74%, var(--void) 100%);
+      }
       .oracle-grid { grid-template-columns: 1fr; }
       .eco-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <noscript>
+    <style>
+      .r { opacity: 1; transform: none; }
+      .loop-step { opacity: 1; }
+    </style>
+  </noscript>
 </head>
 <body>
 
@@ -280,40 +509,159 @@
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="sect" style="min-height:50vh; padding-bottom:40px">
-  <div class="wrap" style="text-align:center">
-    <div class="r">
-      <div class="stage-num" style="color:var(--rose)">People &amp; Places</div>
-      <h1 class="stage-h">The Community</h1>
-      <p class="stage-p" style="max-width:600px;margin:0 auto">Where the game leaves the screen: gatherings, temples, and land — the people regenerating the real world together.</p>
+<!-- Atmosphere -->
+<div class="atmosphere">
+  <div class="hero-glow"></div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="page-hero">
+  <div class="page-hero-over">People &amp; Places · The Community</div>
+  <h1>Where the Game<br><em>Leaves the Screen</em></h1>
+  <p>Gatherings at Temples around the world. A Bazaar where the wish list comes true at real tables. Land where the community takes root. <strong>The people regenerating the real world together.</strong></p>
+</header>
+
+<!-- ═══════════ ONE GATHERING · SCROLLYTELLING ═══════════ -->
+<section class="sect-short" id="gathering-sect">
+  <div class="loop-bg" aria-hidden="true">
+    <div class="loop-bg-stick">
+      <div class="loop-bg-layer" data-s="1" style="background-image:url('assets/valley-light-web-dawn.webp')"></div>
+      <div class="loop-bg-layer" data-s="2" style="background-image:url('assets/wish-circle.webp')"></div>
+      <div class="loop-bg-layer" data-s="3" style="background-image:url('assets/streams-of-luminous-motes.webp')"></div>
+      <div class="loop-bg-layer" data-s="4" style="background-image:url('assets/greenhouse-gratitude.webp')"></div>
+      <div class="loop-bg-scrim"></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="scrolly" id="gathering" data-stage="4">
+
+      <div class="loop-sticky">
+        <div class="gath-card" id="gatherings" role="img" aria-label="One Gathering of the Tribe: peers arrive at a Temple, ceremony is co-created, the Community Bazaar opens on the final morning, and gratitude releases to each doer — recorded and signed by both">
+          <div class="gath-head">
+            <span class="gath-title">Gathering of the Tribe</span>
+            <span class="gath-sub">Temple of the Valley · 3 days</span>
+          </div>
+          <div class="gath-row" data-p="1">
+            <div class="gath-main">
+              <span class="gath-tag">✦</span>
+              <span class="gath-name">The homecoming</span>
+              <span class="gath-meta">23 peers</span>
+            </div>
+            <div class="gath-pips">
+              <span class="gath-pip" style="background:var(--love)"></span>
+              <span class="gath-pip" style="background:var(--joy)"></span>
+              <span class="gath-pip" style="background:var(--peace)"></span>
+              <span class="gath-pip" style="background:var(--grace)"></span>
+              <span class="gath-pip" style="background:var(--hope)"></span>
+              <span class="gath-pip" style="background:var(--faith)"></span>
+              <span class="gath-pips-label">six countries · one circle</span>
+            </div>
+          </div>
+          <div class="gath-row" data-p="2">
+            <div class="gath-main">
+              <span class="gath-tag">✦</span>
+              <span class="gath-name">Ceremony &amp; celebration</span>
+              <span class="gath-meta">night by night</span>
+            </div>
+            <div class="gath-note">co-created — however the circle decides</div>
+          </div>
+          <div class="gath-row" data-p="3">
+            <div class="gath-main">
+              <span class="gath-tag">✦</span>
+              <span class="gath-name">The Community Bazaar</span>
+              <span class="gath-meta">final morning</span>
+            </div>
+            <div class="bazaar-item">
+              <div class="bz-main">
+                <span class="bz-name">A jar of forest honey</span>
+                <span class="bz-time">2h 10m</span>
+              </div>
+              <div class="bz-stamp">gratitude released · signed by both</div>
+            </div>
+            <div class="bazaar-item">
+              <div class="bz-main">
+                <span class="bz-name">Bodywork for the builders</span>
+                <span class="bz-time">1h 25m</span>
+              </div>
+              <div class="bz-stamp">gratitude released · signed by both</div>
+            </div>
+            <div class="bazaar-item">
+              <div class="bz-main">
+                <span class="bz-name">Maracujá cheesecake</span>
+                <span class="bz-time">4h 40m</span>
+              </div>
+              <div class="bz-stamp">gratitude released · signed by both</div>
+            </div>
+          </div>
+          <div class="gath-loopline">the wish list walks off the screen</div>
+        </div>
+      </div>
+
+      <div class="loop-steps">
+        <div class="loop-step" data-stage="1">
+          <div class="stage-num" style="color:var(--rose)">01 · Arrive</div>
+          <h3>You arrive as a peer</h3>
+          <p>Some of the people on your wish list you've only ever known as sigils and signatures. Then you walk into a Temple courtyard and one of them hands you a bowl of soup. <strong>Gatherings of the Tribe</strong> are hosted at Temples around the world — the same circle, in person.</p>
+        </div>
+        <div class="loop-step" data-stage="2">
+          <div class="stage-num" style="color:var(--rose)">02 · Ceremony</div>
+          <h3>Co-created, night by night</h3>
+          <p>There is no fixed program. Ceremony, celebration, music, work on the land — <strong>however the community decides to come together</strong>. The way intentions gather attention in the game, the gathering itself takes the shape of what the circle cares about.</p>
+        </div>
+        <div class="loop-step" data-stage="3">
+          <div class="stage-num" style="color:var(--rose)">03 · The Bazaar</div>
+          <h3>The Bazaar opens</h3>
+          <p>At the close of every Gathering, a marketplace emerges. The wish list walks off the screen: a jar of honey, bodywork for tired shoulders, a cheesecake carrying <strong>4h 40m of collective attention</strong> — intentions fulfilled at real tables, between real hands.</p>
+        </div>
+        <div class="loop-step" data-stage="4">
+          <div class="stage-num" style="color:var(--rose)">04 · Gratitude</div>
+          <h3>Gratitude flows onward</h3>
+          <p>Gratitude worth each intention's accumulated attention <strong>releases to the doer — recorded, and signed by both</strong> — in the same ledger the game runs on. Tagged onward to the next wish, it keeps the loop turning long after everyone has gone home.</p>
+          <p style="margin-top:18px"><a href="/gift-cycle" class="article-link">Watch one full playthrough of the game →</a></p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- Gatherings -->
-<section class="sect-short" id="gatherings">
+<!-- ═══════════ JOIN / MEMBERSHIP ═══════════ -->
+<section class="sect-short" id="join">
   <div class="wrap">
     <div class="r" style="margin-bottom:40px">
-      <div class="section-label" style="color:var(--rose)">Gatherings</div>
-      <h2 class="section-h">Where the Mesh Manifests Physically</h2>
+      <div class="section-label" style="color:var(--moss)">Membership</div>
+      <h2 class="section-h">Join the Community</h2>
+      <p class="section-sub">Become a steward of the gift economy</p>
     </div>
-    <div class="two">
-      <div class="r r-d1 panel" style="text-align:center">
-        <div class="gathering-icon">🔥</div>
-        <div class="gathering-title">Gatherings of the Tribe</div>
-        <p class="gathering-desc">Community gatherings hosted at Temples around the world. Co-created ceremony, celebration, and connection—however the community decides to come together.</p>
+    <div class="feature-section" style="align-items:start">
+      <!-- Left: Info -->
+      <div class="r r-d1">
+        <h3 style="font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-0.02em;margin-bottom:14px">GratiDAO Principles</h3>
+        <p class="join-prose"><em>GratiDAO</em>—Portuguese for Gratitude—represents our organizational philosophy: Gratitude-based, Decentralized, Distributed, Autonomous, and Alive.</p>
+        <ul class="join-features">
+          <li><strong>The One Commandment:</strong> Recognize the divine in every Other and treat them as an extension of yourself. Membership is affirming this — and sealing it with an offering.</li>
+          <li><strong>A founding gift, once:</strong> Your offering is your signature on the Covenant. It rests on your profile, read by every peer as proof of membership — for life.</li>
+          <li><strong>Temple Network Access:</strong> Land-based sanctuaries around the world where the community gathers.</li>
+          <li><strong>The Right to Fork:</strong> Written into the Bylaws — the Covenant guarantees non-extraction, attention as gift, and the community's right to fork the codebase.</li>
+        </ul>
+        <a href="https://templesofrefuge.earth/articles/read.html?slug=gene-editing-collective" class="article-link" target="_blank" rel="noopener noreferrer">Read: The Organizational Philosophy →</a>
       </div>
-      <div class="r r-d2 panel" style="text-align:center">
-        <div class="gathering-icon">🤝</div>
-        <div class="gathering-title">The Community Bazaar</div>
-        <p class="gathering-desc">At the close of every Gathering, a marketplace emerges where Intentions are fulfilled, gratitude flows, and the gift economy becomes tangible, delicious reality.</p>
+      <!-- Right: CTA -->
+      <div class="r r-d2 panel cta-panel">
+        <div class="panel-accent" style="background: linear-gradient(90deg, var(--indigo), var(--purple));"></div>
+        <div class="temple-photo" role="img" aria-label="The threshold of a temple sanctuary, lit from within"></div>
+        <h3>Become a Member</h3>
+        <p>Join through a founding gift to Temples of Refuge — your signature on the Covenant, membership for life. No one aligned is turned away for lack of funds.</p>
+        <a href="/join" class="btn btn-final" style="width:100%;justify-content:center;font-size:15px;padding:16px 30px">Donate to Join &#8594;</a>
+        <p class="legal-note">Temples of Refuge is a <strong>508(c)(1)(a)</strong> religious nonprofit registered in Utah, providing First Amendment protections for community gatherings.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Oracle -->
+<!-- ═══════════ ORACLE · THE HORIZON ═══════════ -->
 <section class="sect-short" id="oracle">
   <div class="wrap">
     <div class="r panel" style="position:relative; overflow:hidden">
@@ -325,94 +673,70 @@
       </div>
       <div class="oracle-grid">
         <div class="oracle-item r r-d1">
-          <span class="oracle-item-icon">🧙‍♂️</span>
+          <span class="oracle-item-mark">✦</span>
           <h4>Community Wisdom Keepers</h4>
           <p>AI companions trained exclusively on the collective highest wisdom of community members—not corporate data harvesting.</p>
         </div>
         <div class="oracle-item r r-d2">
-          <span class="oracle-item-icon">🌟</span>
+          <span class="oracle-item-mark">✦</span>
           <h4>Reflecting the Best of Us</h4>
           <p>Members consciously contribute their highest-self knowledge. The Oracle becomes a living repository of collective excellence.</p>
         </div>
         <div class="oracle-item r r-d3">
-          <span class="oracle-item-icon">🔮</span>
+          <span class="oracle-item-mark">✦</span>
           <h4>Growing Intelligence</h4>
           <p>Attention flows where the community focuses — and the Oracle grows with the community it serves, wiser with every gathering.</p>
         </div>
       </div>
       <div style="text-align:center;margin-top:28px">
-        <a href="/agents" class="article-link" style="margin-bottom:0">The first step is already here: AI agents working as peers &#8594;</a>
+        <a href="/agents" class="article-link">The first step is already here: AI agents working as peers &#8594;</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Join / Membership -->
-<section class="sect-short" id="join">
-  <div class="wrap">
-    <div class="r" style="margin-bottom:40px">
-      <div class="section-label" style="color:var(--moss)">Membership</div>
-      <h2 class="section-h">Join the Tribe</h2>
-      <p class="section-sub">Become a steward of the gift economy</p>
-    </div>
-    <div class="feature-section" style="align-items:start">
-      <!-- Left: Info -->
-      <div class="r r-d1">
-        <h3 style="font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-0.02em;margin-bottom:14px">GratiDAO Principles</h3>
-        <p class="join-prose"><em>GratiDAO</em>—Portuguese for Gratitude—represents our organizational philosophy: Gratitude-based, Decentralized, Distributed, Autonomous, and Alive.</p>
-        <a href="https://templesofrefuge.earth/articles/read.html?slug=gene-editing-collective" class="article-link" target="_blank" rel="noopener noreferrer">Read: The Organizational Philosophy →</a>
-        <ul class="join-features">
-          <li><strong>The One Commandment:</strong> Recognize the divine in every Other and treat them as an extension of yourself. Membership is affirming this — and sealing it with an offering.</li>
-          <li><strong>A founding gift, once:</strong> Your offering is your signature on the Covenant. It rests on your profile, read by every peer as proof of membership — for life.</li>
-          <li><strong>Temple Network Access:</strong> Land-based sanctuaries around the world where the community gathers.</li>
-          <li><strong>The Right to Fork:</strong> Written into the Bylaws — the Covenant guarantees non-extraction, attention as gift, and the community's right to fork the codebase.</li>
-        </ul>
-      </div>
-      <!-- Right: CTA -->
-      <div class="r r-d2 panel cta-panel">
-        <div class="panel-accent" style="background: linear-gradient(90deg, var(--indigo), var(--purple));"></div>
-        <div class="temple-icon-wrap">🏛️</div>
-        <h3>Become a Member</h3>
-        <p>Join through a founding gift to Temples of Refuge — your signature on the Covenant, membership for life. No one aligned is turned away for lack of funds.</p>
-        <a href="/join" class="btn btn-final" style="width:100%;justify-content:center;font-size:15px;padding:16px 30px">Donate to Join &#8594;</a>
-        <p class="legal-note">Temples of Refuge is a <strong>508(c)(1)(a)</strong> religious nonprofit registered in Utah, providing First Amendment protections for community gatherings.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Ecosystem -->
+<!-- ═══════════ ECOSYSTEM ═══════════ -->
 <section class="sect-short" id="ecosystem">
   <div class="wrap">
     <div class="r" style="margin-bottom:40px">
       <div class="section-label" style="color:var(--indigo-light)">Ecosystem</div>
-      <h2 class="section-h">The Ecosystem</h2>
-      <p class="section-sub">Three nodes in a larger pattern</p>
+      <h2 class="section-h">Three Nodes in a Larger Pattern</h2>
     </div>
     <div class="eco-grid">
       <div class="r r-d1 panel eco-card">
-        <div class="eco-icon">⛩️</div>
+        <div class="eco-icon" style="color:var(--violet)" aria-hidden="true">
+          <!-- Lucide: landmark -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+        </div>
         <h3>Temples of Refuge</h3>
         <p class="eco-domain">templesofrefuge.earth</p>
         <p>The steward organization. A regenerative legal structure holding the vision for ethical technology. Temples of Refuge ensures the code serves human flourishing, not extraction.</p>
         <a href="https://templesofrefuge.earth" class="btn-ghost" target="_blank" rel="noopener noreferrer">Visit Temples →</a>
       </div>
       <div class="r r-d2 panel eco-card">
-        <div class="eco-icon">🌿</div>
+        <div class="eco-icon" style="color:var(--glow-green)" aria-hidden="true">
+          <!-- Lucide: sprout -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+        </div>
         <h3>Agua Lila</h3>
         <p class="eco-domain">agualila.earth</p>
         <p>Where code meets soil. A physical place in nature where developers, designers, and dreamers gather to build the technologies of regeneration.</p>
         <a href="https://agualila.earth" class="btn-ghost" target="_blank" rel="noopener noreferrer">Visit Agua Lila →</a>
       </div>
       <div class="r r-d3 panel eco-card">
-        <div class="eco-icon">◈</div>
+        <div class="eco-icon" style="color:var(--indigo)" aria-hidden="true">
+          <span class="eco-mark">◈</span>
+        </div>
         <h3>Synchronicity Engine</h3>
         <p class="eco-domain">syncengine.earth</p>
         <p>The technology platform. Source-available, local-first, quantum-secure collaboration software. This is where intention becomes infrastructure.</p>
+        <span class="eco-here">You are here</span>
       </div>
     </div>
   </div>
 </section>
+
+</div>
 
 <footer class="site-footer">
   <div class="wrap">
@@ -433,6 +757,23 @@
 </footer>
 
 <script>
+// ═══ SCROLLYTELLING — stage driver (same pattern as index.html) ═══
+const scrolly = document.getElementById('gathering');
+const steps = document.querySelectorAll('.loop-step');
+if (scrolly && 'IntersectionObserver' in window) {
+  scrolly.dataset.stage = '1'; // JS available: start the story at stage 1
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) {
+      scrolly.dataset.stage = e.target.dataset.stage;
+      steps.forEach(s => s.classList.toggle('on', s === e.target));
+    }
+  }), { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach(s => io.observe(s));
+} else {
+  steps.forEach(s => s.classList.add('on')); // no-JS markup already shows stage 4
+}
+
+// ═══ Reveal ═══
 const obs = new IntersectionObserver(els => els.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); obs.unobserve(e.target); } }), { threshold: 0.15 });
 document.querySelectorAll('.r').forEach(el => obs.observe(el));
 </script>
