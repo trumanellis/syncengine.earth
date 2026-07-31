@@ -31,6 +31,11 @@ remote_head() {
   ssh "$HOST" "git -C '$SITE_DIR' rev-parse HEAD" 2>/dev/null | tr -d '[:space:]'
 }
 
+# Read the live HEAD before pushing, so the report afterwards can tell "the
+# site was already current" apart from "the webhook deployed it" — the webhook
+# often wins before our first poll even gets a reply.
+before="$(remote_head)"
+
 echo "→ pushing $BRANCH to origin…"
 git push origin "$BRANCH"
 TARGET="$(git rev-parse "$BRANCH")"
@@ -38,19 +43,17 @@ SHORT="${TARGET:0:8}"
 
 echo "→ waiting up to ${WEBHOOK_WAIT}s for the webhook to deploy ${SHORT}…"
 head=""
-polls=0
 deadline=$(( SECONDS + WEBHOOK_WAIT ))
 while :; do
   head="$(remote_head)"
-  polls=$(( polls + 1 ))
   [ "$head" = "$TARGET" ] && break
   [ "$SECONDS" -ge "$deadline" ] && break
   sleep 2
 done
 
 if [ "$head" = "$TARGET" ]; then
-  if [ "$polls" -eq 1 ]; then
-    echo "  live checkout already at ${SHORT}."
+  if [ "$before" = "$TARGET" ]; then
+    echo "  nothing to deploy, live checkout already at ${SHORT}."
   else
     echo "  webhook deployed it."
   fi
