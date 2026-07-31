@@ -62,7 +62,10 @@
 
     /* ── Hero over aura ── */
     .doc-hero {
-      padding: 150px 24px 60px;
+      /* Pull up under the transparent fixed nav so the artwork fills the top
+         edge; body has padding-top:56px to clear the nav on content pages. */
+      margin-top: -56px;
+      padding: 206px 24px 60px;
       text-align: center;
       position: relative;
       background:

@@ -86,10 +86,13 @@
     }
 
     .hero {
-      min-height: 62vh;
+      /* Pull up under the transparent fixed nav so the artwork fills the top
+         edge; body has padding-top:56px to clear the nav on content pages. */
+      margin-top: -56px;
+      min-height: calc(62vh + 56px);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 150px 0 5rem;
+      padding: 206px 0 5rem;
       text-align: center;
       position: relative;
       background:
