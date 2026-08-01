@@ -3,3 +3,21 @@ node_modules/
 *.log
 .gstack/
 .omc/
+
+# PNG masters for the artwork. The site only ever loads the .webp — those are
+# tracked and are the deliverable; these originals are ~10x the size and no
+# page requests them. The repo is deployed by `git checkout` onto the live web
+# server (deploy/README.md), so anything committed here also ships there.
+# Keep the masters locally, or archive them outside the repo.
+assets/*.png
+assets/screenshots/*.png
+assets/Streams of tiny luminous motes
+
+# …except the PNGs the site genuinely serves: favicons, app/manifest icons,
+# and the social card. (Already-tracked files are unaffected by .gitignore
+# either way; these negations are so a NEW one doesn't get silently ignored.)
+!assets/favicon-*.png
+!assets/app-icon*.png
+!assets/apple-touch-icon.png
+!assets/icon-*.png
+!assets/og-image.png
