@@ -286,7 +286,7 @@
       <a href="/articles/">Articles</a>
       <a href="/whitepaper">White Paper</a>
       <a href="/covenant">Covenant</a>
-      <a href="https://templesofrefuge.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
+      <a href="https://templesof.earth" target="_blank" rel="noopener noreferrer">Temples of Refuge</a>
       <a href="https://agualila.earth" target="_blank" rel="noopener noreferrer">Agua Lila</a>
     </div>
     <p class="site-footer-copy">&copy; 2026 Synchronicity Engine &middot; Stewarded by Temples of Refuge &middot; Source-available &middot; Non-extraction</p>
@@ -315,15 +315,18 @@ var CFG = {
 
   // Checkout backend base URL (no trailing slash) — mints the embedded-
   // checkout session with the secret key that never ships to the client.
+  // On the templesof.earth alias (the domain Temples of Refuge is migrating
+  // to); it and checkout.templesofrefuge.earth are the same service. Keep in
+  // step with templesofrefuge.earth/shared/cta-widgets.js.
   CHECKOUT_API_URL: isLocal
     ? 'http://localhost:8787'
-    : 'https://checkout.templesofrefuge.earth',
+    : 'https://checkout.templesof.earth',
 
   // Donation gateway base URL — /claim turns a paid session into the
   // founding-gift code shown on the welcome screen.
   GATEWAY_API_URL: isLocal
     ? 'http://localhost:8788'
-    : 'https://api.templesofrefuge.earth',
+    : 'https://api.templesof.earth',
 
   // Hosted Stripe Payment Link — graceful fallback when the inline checkout
   // backend isn't reachable. No API keys here.

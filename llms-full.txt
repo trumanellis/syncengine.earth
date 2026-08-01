@@ -145,13 +145,13 @@ This is a relationship-based community, not an app with open signup, and there
 is no public download or remote network to join. Participation flows through the
 Temples and their in-person gatherings:
 
-- Follow the work through [Temples of Refuge](https://templesofrefuge.earth/) and [Aeon Myths on Substack](https://aeonmyths.substack.com/).
+- Follow the work through [Temples of Refuge](https://templesof.earth/) and [Aeon Myths on Substack](https://aeonmyths.substack.com/).
 - **Become a Member** by making a donation you can genuinely offer and signing the Covenant — an affiliation of the heart, not a fee for a service. No one aligned with the One Commandment is turned away for lack of funds.
 - **Become a Steward** (which carries governance weight) through the Initiatory Practice: sponsorship by two existing Stewards, in-person recognition at a gathering of a member Temple, and affirmation by the Council of Stewards. The in-person step is irreducible — face-to-face recognition is the protocol's proof-of-personhood and Sybil resistance, not ceremony layered on top.
 
 ## Ecosystem
 
-- [Temples of Refuge](https://templesofrefuge.earth/): the association of churches that stewards the Synchronicity Engine — canonical home of the Covenant and the Bylaws (Article III names the Synchronicity Engine as the medium through which the Association decides; Articles IX and XI define forking rights). The project has no individual owner; Temples of Refuge is the responsible entity.
+- [Temples of Refuge](https://templesof.earth/): the association of churches that stewards the Synchronicity Engine — canonical home of the Covenant and the Bylaws (Article III names the Synchronicity Engine as the medium through which the Association decides; Articles IX and XI define forking rights). The project has no individual owner; Temples of Refuge is the responsible entity.
 - [Aeon Myths on Substack](https://aeonmyths.substack.com/): essays and updates from the community
 
 ## Optional

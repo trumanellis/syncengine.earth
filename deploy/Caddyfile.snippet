@@ -71,7 +71,12 @@ agualila.earth, www.agualila.earth {
 	}
 }
 
-templesofrefuge.earth, www.templesofrefuge.earth {
+# Abridged — this block exists here only to show the /_deploy wiring. The
+# authoritative version (extensionless URLs, /mats short link, the checkout and
+# api subdomains) lives in templesofrefuge.earth/infra/Caddyfile; edit it there.
+# templesof.earth is the shorter domain the site is migrating to; both names are
+# served off the one /var/www/templesofrefuge checkout so they cannot drift.
+templesofrefuge.earth, www.templesofrefuge.earth, templesof.earth, www.templesof.earth {
 	encode zstd gzip
 	header {
 		?Cache-Control "public, max-age=3600"
