@@ -2,7 +2,7 @@
 # sync-covenant.sh — re-mirror the canonical Covenant from templesofrefuge.earth
 #
 # The Covenant's canonical home is the templesofrefuge.earth repo
-# (the website of the church that stewards the Synchronicity Engine).
+# (the website of Temples of Refuge).
 # This site keeps a vendored copy at ./COVENANT.md so /covenant.html
 # can render it instantly without depending on a cross-origin fetch.
 #
