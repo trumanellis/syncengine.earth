@@ -2,9 +2,8 @@
 #
 # Agent-facing overview:   https://www.syncengine.earth/llms.txt
 # Full corpus, one fetch:  https://www.syncengine.earth/llms-full.txt
-# The whitepaper and covenant are plain markdown:
+# The whitepaper is plain markdown:
 #   https://www.syncengine.earth/articles/WhitePaper.md
-#   https://www.syncengine.earth/COVENANT.md
 
 User-agent: *
 Allow: /

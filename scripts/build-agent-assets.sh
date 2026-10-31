@@ -4,13 +4,13 @@
 # llms.txt is hand-authored (it is the project's voice toward agents — edit
 # it directly). This script derives the two mechanical assets from it:
 #
-#   llms-full.txt  = llms.txt + full whitepaper + full Covenant + all article
+#   llms-full.txt  = llms.txt + full whitepaper + all article
 #                    markdown, concatenated for agents that prefer one fetch
 #   sitemap.xml    = the HTML pages + article reader URLs + markdown sources
 #                    + the llms files, with lastmod from git
 #
-# Run after ./scripts/sync-articles.sh, after editing the whitepaper or
-# Covenant, or after editing llms.txt:
+# Run after ./scripts/sync-articles.sh, after editing the whitepaper,
+# or after editing llms.txt:
 #
 #   ./scripts/build-agent-assets.sh
 
@@ -39,8 +39,6 @@ def section(title, path):
 parts = [open("llms.txt").read().strip()]
 parts.append(section("The Conservation of Attention (whitepaper)",
                      "articles/WhitePaper.md"))
-parts.append(section("The Indra's Network Membership Covenant",
-                     "COVENANT.md"))
 for a in articles:
     parts.append(section(f"Article: {a['title']} — {a['subtitle']}",
                          f"articles/{a['slug']}.md"))
@@ -64,10 +62,8 @@ urls = [
     ("join.html", None),
     ("whitepaper.html", None),
     ("community.html", None),
-    ("covenant.html", None),
     ("articles/index.html", BASE + "/articles/"),
     ("articles/WhitePaper.md", None),
-    ("COVENANT.md", None),
     ("llms.txt", None),
     ("llms-full.txt", None),
 ]

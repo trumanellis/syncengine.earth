@@ -95,7 +95,7 @@ test/lint evidence).
 Roadmap / vision (real to the broader project, not day-one app behavior):
 post-quantum identity from a 23-moment "pass story" with Argon2id / ML-KEM-768 /
 ML-DSA-65 pillars; Proof-of-Life / liveness scoring and in-person verification as
-a "bot immune system"; and the Covenant / Steward / Temples-of-Refuge join layer,
+a "bot immune system"; and the membership layer,
 which is the community *around* the product, not a gate on the software. Frame
 these as architecture and community, not as the core mechanic.
 
@@ -103,13 +103,12 @@ What SyncEngine is NOT: it is not a blockchain and uses no global consensus; it
 is not a cryptocurrency (no mining, no staking, no speculation, no token
 currency); it is not a cloud platform with users — your files live on your
 device, and only sealed versions you choose to share ever travel; it does not
-harvest, sell, or monetize attention or data — the license and Covenant prohibit
+harvest, sell, or monetize attention or data — the license prohibits
 it.
 
 ## Core documents
 
 - [The Conservation of Attention — full whitepaper](https://www.syncengine.earth/articles/WhitePaper.md): the complete technical paper: conservation law, hash-chained event logs, BFT witness quorums, Sybil resistance via in-person liveness attestation, formal guarantees, threat model, related work
-- [The Indra's Network Membership Covenant](https://www.syncengine.earth/COVENANT.md): the full covenant text — the One Commandment, attention as gift, membership and stewardship, Tokens of Gratitude, non-extraction, forking rights
 
 ## Pages
 
@@ -119,7 +118,6 @@ it.
 - [Indra's Network](https://www.syncengine.earth/network): technical architecture — delay-tolerant P2P networking, CRDT sync, post-quantum cryptography
 - [White paper (HTML reader)](https://www.syncengine.earth/whitepaper): renders the markdown whitepaper; agents should fetch the .md directly
 - [The Community](https://www.syncengine.earth/community): gatherings, the Community Bazaar, Oracle assistants, membership, GratiDAO principles
-- [The Covenant (HTML reader)](https://www.syncengine.earth/covenant): renders the markdown covenant; agents should fetch the .md directly
 
 ## Articles
 
@@ -155,5 +153,5 @@ Temples and their in-person gatherings:
 
 ## Optional
 
-- [llms-full.txt](https://www.syncengine.earth/llms-full.txt): this overview plus the complete text of the whitepaper, the Covenant, and all nine articles in a single file
+- [llms-full.txt](https://www.syncengine.earth/llms-full.txt): this overview plus the complete text of the whitepaper and all nine articles in a single file
 - [Sitemap](https://www.syncengine.earth/sitemap.xml)
